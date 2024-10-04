@@ -2,16 +2,16 @@ name: Distribute Web to FTP
 
 on:
   push:
-    branches: [ "release" ]
+    branches: ["release"]
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v4
-      - name: set up JDK 17
+
+      - name: Set up JDK 17
         uses: actions/setup-java@v4
         with:
           java-version: '17'
@@ -31,15 +31,15 @@ jobs:
 
       - name: Upload files to FTP
         run: |
-            # Define the base directory
-            base_dir="${{ github.workspace }}/composeApp/build/dist/wasmJs/productionExecutable"
-            
-            # Find all files in the directory and upload them individually
-            find "$base_dir" -type f | while read -r file; do
-              # Extract the relative path of the file for FTP structure
-              relative_path=$(realpath --relative-to="$base_dir" "$file")
-            
-              # Upload file to the corresponding location on the FTP server
-              curl -T "$file" "ftp://${{ secrets.FTP_SERVER_DOMAIN }}/www/$relative_path" --user "${{ secrets.FTP_USERNAME }}:${{ secrets.FTP_PASSWORD }}"
-            done
-          shell: bash
+          # Define the base directory
+          base_dir="${{ github.workspace }}/composeApp/build/dist/wasmJs/productionExecutable"
+
+          # Find all files in the directory and upload them individually
+          find "$base_dir" -type f | while read -r file; do
+            # Extract the relative path of the file for FTP structure
+            relative_path=$(realpath --relative-to="$base_dir" "$file")
+
+            # Upload file to the corresponding location on the FTP server
+            curl -T "$file" "ftp://${{ secrets.FTP_SERVER_DOMAIN }}/www/$relative_path" --user "${{ secrets.FTP_USERNAME }}:${{ secrets.FTP_PASSWORD }}"
+          done
+        shell: bash
