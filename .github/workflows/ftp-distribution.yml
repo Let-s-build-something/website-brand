@@ -1,0 +1,40 @@
+name: Distribute Web to FTP
+
+on:
+  push:
+    branches: ["release"]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: gradle
+
+      # Prepare access to everything
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+
+      # Linux - Deb
+      - name: Build Linux Release
+        run: ./gradlew wasmJsBrowserDistribution
+
+      - name: List Files
+        run: ls -R ${{ github.workspace }}/composeApp/build/dist/wasmJs/productionExecutable
+
+      - name: Upload DEB file to FTP
+        run: |
+          find "${{ github.workspace }}/composeApp/build/dist/wasmJs/productionExecutable" -type f | while read file; do
+            # Extract the relative path of the file for FTP structure
+            relative_path=$(realpath --relative-to="${{ github.workspace }}/composeApp/build/dist/wasmJs/productionExecutable" "$file")
+
+            # Upload file to the corresponding location on the FTP server
+            curl -T "$file" "ftp://${{ secrets.FTP_SERVER_DOMAIN }}/www/$relative_path" --user "${{ secrets.FTP_USERNAME }}:${{ secrets.FTP_PASSWORD }}"
+          done
