@@ -1,5 +1,6 @@
 package augmy.interactive.com
 
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
@@ -42,15 +43,15 @@ fun App(
         isDarkTheme = when(localSettings.value?.theme) {
             ThemeChoice.DARK -> true
             ThemeChoice.LIGHT -> false
-            else -> false//isSystemInDarkTheme()
+            else -> isSystemInDarkTheme()
         }
     ) {
         Scaffold(
             snackbarHost = {
                 BaseSnackbarHost(hostState = snackbarHostState)
             },
-            containerColor = LocalTheme.current.colors.brandMainDark,
-            contentColor = LocalTheme.current.colors.brandMainDark
+            containerColor = LocalTheme.current.colors.backgroundLight,
+            contentColor = LocalTheme.current.colors.backgroundLight
         ) { _ ->
             BaseScreen {
                 ModalScreenContent {

@@ -2,7 +2,7 @@ name: Distribute Web to FTP
 
 on:
   push:
-    branches: ["release"]
+    branches: [ "release" ]
 
 jobs:
   build:

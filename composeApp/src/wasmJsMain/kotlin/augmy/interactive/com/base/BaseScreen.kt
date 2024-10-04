@@ -2,7 +2,6 @@ package augmy.interactive.com.base
 
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -131,7 +130,7 @@ val LocalScreenSize = staticCompositionLocalOf {
 }
 
 /** Maximum width of a modal element - this can include a screen in case the device is a desktop */
-const val MaxModalWidthDp = 520
+const val MaxModalWidthDp = 1300
 
 /** Callable onbackpressed function */
 val LocalOnBackPress = staticCompositionLocalOf<(() -> Unit)?> { null }

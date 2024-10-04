@@ -1,6 +1,5 @@
 package augmy.interactive.com.navigation
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -12,7 +11,6 @@ import augmy.interactive.com.ui.about.AboutBusinessScreen
 import augmy.interactive.com.ui.about.AboutResearchScreen
 import augmy.interactive.com.ui.about.AboutScreen
 import augmy.interactive.com.ui.about.ContactsScreen
-import augmy.interactive.shared.ui.theme.LocalTheme
 
 val DEFAULT_START_DESTINATION = NavigationNode.Landing.route
 
@@ -24,9 +22,7 @@ fun NavigationHost(
     startDestination: String? = null
 ) {
     NavHost(
-        modifier = modifier
-            .fillMaxSize()
-            .background(LocalTheme.current.colors.backgroundLight),
+        modifier = modifier.fillMaxSize(),
         navController = navController,
         startDestination = startDestination ?: DEFAULT_START_DESTINATION
     ) {
