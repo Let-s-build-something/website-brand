@@ -20,7 +20,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalFocusManager
-import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import augmy.interactive.com.shared.SharedViewModel
@@ -110,11 +109,6 @@ fun ModalScreenContent(
     )
 }
 
-/** Current device screen size in DP (density pixels) */
-val LocalScreenSize = staticCompositionLocalOf {
-    IntSize(0, 0)
-}
-
 /** Maximum width of a modal element - this can include a screen in case the device is a desktop */
 const val MaxModalWidthDp = 1300
 
@@ -132,6 +126,3 @@ val LocalSnackbarHost = staticCompositionLocalOf<SnackbarHostState?> { null }
 
 /** Default page size based on current device tye */
 val LocalNavController = staticCompositionLocalOf<NavHostController?> { null }
-
-/** Custom on back pressed provided by parent */
-val LocalOnBackPressDispatcher = staticCompositionLocalOf<(() -> Unit)?> { null }

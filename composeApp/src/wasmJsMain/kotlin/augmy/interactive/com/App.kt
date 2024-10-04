@@ -53,13 +53,13 @@ fun App(
             containerColor = LocalTheme.current.colors.backgroundLight,
             contentColor = LocalTheme.current.colors.backgroundLight
         ) { _ ->
-            BaseScreen(viewModel = viewModel) {
-                ModalScreenContent {
-                    CompositionLocalProvider(
-                        LocalNavController provides navController,
-                        LocalSnackbarHost provides snackbarHostState,
-                        LocalDeviceType provides windowSizeClass.widthSizeClass
-                    ) {
+            CompositionLocalProvider(
+                LocalNavController provides navController,
+                LocalSnackbarHost provides snackbarHostState,
+                LocalDeviceType provides windowSizeClass.widthSizeClass
+            ) {
+                BaseScreen(viewModel = viewModel) {
+                    ModalScreenContent {
                         NavigationHost(
                             navController = navController,
                             startDestination = startDestination

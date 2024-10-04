@@ -38,7 +38,7 @@ import website_brand.composeapp.generated.resources.accessibility_light_mode
 const val AppBarHeightMobileDp = 48
 
 /** Default, and minimum height of toolbar - desktop */
-const val ToolBarHeightDesktopDpDesktop = 120
+const val ToolBarHeightDesktopDpDesktop = 72
 
 /**
  * Custom app bar with options of customization
