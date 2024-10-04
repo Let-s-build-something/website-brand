@@ -18,31 +18,23 @@ import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
+import augmy.interactive.com.shared.SharedViewModel
 import augmy.interactive.com.ui.components.HorizontalAppBar
 import augmy.interactive.shared.ui.base.BaseSnackbarHost
 
 /**
  * Most basic all-in-one implementation of a screen with action bar, without bottom bar
- * @param navigationIcon what type of navigation icon screen should have
- * @param title capital title of the screen
- * @param subtitle lower case subtitle of the screen
- * @param actionIcons right side actions to be displayed
  * @param content screen content under the action bar
  */
 @Composable
 fun BaseScreen(
     modifier: Modifier = Modifier,
-    navigationIcon: Pair<ImageVector, String>? = null,
-    title: String? = null,
-    subtitle: String? = null,
-    onNavigationIconClick: () -> Unit = {},
-    actionIcons: @Composable (Boolean) -> Unit = {},
+    viewModel: SharedViewModel,
     appBarVisible: Boolean = LocalHeyIamScreen.current.not(),
     contentColor: Color = Color.Transparent,
     floatingActionButtonPosition: FabPosition = FabPosition.End,
@@ -83,13 +75,7 @@ fun BaseScreen(
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     if(appBarVisible) {
-                        HorizontalAppBar(
-                            title = title,
-                            navigationIcon = navigationIcon,
-                            subtitle = subtitle,
-                            actions = actionIcons,
-                            onNavigationIconClick = onNavigationIconClick
-                        )
+                        HorizontalAppBar(viewModel = viewModel)
                     }
                     content(this)
                 }

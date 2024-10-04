@@ -1,7 +1,7 @@
 package augmy.interactive.com.base.theme
 
 import androidx.compose.ui.graphics.Color
-import augmy.interactive.shared.ui.theme.BaseColors
+import augmy.interactive.com.theme.BaseColors
 
 object LightAppColors: BaseColors {
 
@@ -21,4 +21,6 @@ object LightAppColors: BaseColors {
 
     override val shimmer: Color = Colors.HunterGreen16
     override val overShimmer: Color = Colors.HunterGreen42
+
+    override val toolbarColor: Color = backgroundLight
 }

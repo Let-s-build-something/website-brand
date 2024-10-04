@@ -23,18 +23,23 @@ jobs:
         run: chmod +x gradlew
 
       # Linux - Deb
-      - name: Build Linux Release
+      - name: Run WasmJsBrowserDistribution script to generate web assembly files
         run: ./gradlew wasmJsBrowserDistribution
 
       - name: List Files
         run: ls -R ${{ github.workspace }}/composeApp/build/dist/wasmJs/productionExecutable
 
-      - name: Upload DEB file to FTP
+      - name: Upload files to FTP
         run: |
-          find "${{ github.workspace }}/composeApp/build/dist/wasmJs/productionExecutable" -type f | while read file; do
-            # Extract the relative path of the file for FTP structure
-            relative_path=$(realpath --relative-to="${{ github.workspace }}/composeApp/build/dist/wasmJs/productionExecutable" "$file")
-
-            # Upload file to the corresponding location on the FTP server
-            curl -T "$file" "ftp://${{ secrets.FTP_SERVER_DOMAIN }}/www/$relative_path" --user "${{ secrets.FTP_USERNAME }}:${{ secrets.FTP_PASSWORD }}"
-          done
+            # Define the base directory
+            base_dir="${{ github.workspace }}/composeApp/build/dist/wasmJs/productionExecutable"
+            
+            # Find all files in the directory and upload them individually
+            find "$base_dir" -type f | while read -r file; do
+              # Extract the relative path of the file for FTP structure
+              relative_path=$(realpath --relative-to="$base_dir" "$file")
+            
+              # Upload file to the corresponding location on the FTP server
+              curl -T "$file" "ftp://${{ secrets.FTP_SERVER_DOMAIN }}/www/$relative_path" --user "${{ secrets.FTP_USERNAME }}:${{ secrets.FTP_PASSWORD }}"
+            done
+          shell: bash

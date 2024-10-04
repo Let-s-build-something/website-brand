@@ -1,4 +1,4 @@
-package augmy.interactive.shared.ui.theme
+package augmy.interactive.com.theme
 
 import androidx.compose.ui.graphics.Color
 
@@ -33,4 +33,7 @@ interface BaseColors {
 
     /** darker background */
     val backgroundDark: Color
+
+    /** background of a toolbar */
+    val toolbarColor: Color
 }

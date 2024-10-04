@@ -1,111 +1,105 @@
 package augmy.interactive.com.ui.components
 
-import androidx.compose.animation.animateContentSize
-import androidx.compose.animation.core.Spring
-import androidx.compose.animation.core.spring
+import androidx.compose.foundation.background
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.widthIn
+import androidx.compose.material.Icon
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.Home
+import androidx.compose.material.icons.outlined.DarkMode
+import androidx.compose.material.icons.outlined.LightMode
+import androidx.compose.material3.Switch
+import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableFloatStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.text.SpanStyle
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.buildAnnotatedString
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.text.withStyle
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
+import augmy.interactive.com.base.LocalDeviceType
+import augmy.interactive.com.base.MaxModalWidthDp
+import augmy.interactive.com.shared.SharedViewModel
+import augmy.interactive.com.shared.ThemeChoice
 import augmy.interactive.shared.ui.theme.LocalTheme
+import org.jetbrains.compose.resources.stringResource
+import website_brand.composeapp.generated.resources.Res
+import website_brand.composeapp.generated.resources.accessibility_dark_mode
+import website_brand.composeapp.generated.resources.accessibility_light_mode
 
 /** Default, and minimum height of appbar */
-const val AppBarHeightDp = 48
+const val AppBarHeightMobileDp = 48
+
+/** Default, and minimum height of toolbar - desktop */
+const val ToolBarHeightDesktopDpDesktop = 120
 
 /**
  * Custom app bar with options of customization
- * @param title title of the screen/app
- * @param navigationIcon current icon for navigation back/closing or none in case of null
- * @param actions other actions on the right side of the action bar
- * @param onNavigationIconClick event upon clicking on navigation back
  */
 @Composable
 fun HorizontalAppBar(
     modifier: Modifier = Modifier,
-    title: String? = null,
-    subtitle: String? = null,
-    navigationIcon: Pair<ImageVector, String>? = Icons.Outlined.Home to "",
-    actions: @Composable (Boolean) -> Unit = {},
-    onNavigationIconClick: () -> Unit = {}
+    viewModel: SharedViewModel
 ) {
-    Row(
-        modifier = modifier,
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        navigationIcon?.let { navigationIcon ->
-            NavigationIcon(
-                onClick = onNavigationIconClick,
-                imageVector = navigationIcon.first,
-                contentDescription = navigationIcon.second
-            )
-        }
-        Column(
-            modifier = Modifier
-                .animateContentSize(
-                    animationSpec = spring(
-                        dampingRatio = Spring.DampingRatioMediumBouncy,
-                        stiffness = Spring.StiffnessMedium
-                    )
-                )
-                .padding(start = 4.dp)
-                .weight(1f)
-                .heightIn(min = AppBarHeightDp.dp),
-            verticalArrangement = Arrangement.Center
-        ) {
-            var fontSizeValue by remember { mutableFloatStateOf(22f) }
+    val localSettings = viewModel.localSettings.collectAsState()
 
-            AutoResizeText(
-                modifier = Modifier.animateContentSize(),
-                text = buildAnnotatedString {
-                    if(title != null) {
-                        withStyle(SpanStyle(fontSize = fontSizeValue.sp)) {
-                            append(title)
-                        }
+    print(LocalDeviceType.current.toString())
+    Box(
+        modifier = modifier
+            .shadow(elevation = 4.dp)
+            .fillMaxWidth()
+            .heightIn(min = if(LocalDeviceType.current == WindowWidthSizeClass.Expanded) {
+                ToolBarHeightDesktopDpDesktop.dp
+            }else AppBarHeightMobileDp.dp)
+            .background(color = LocalTheme.current.colors.toolbarColor)
+    ) {
+        Row(
+            modifier = Modifier
+                .align(Alignment.Center)
+                .widthIn(max = MaxModalWidthDp.dp)
+                .fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+            Spacer(modifier = Modifier.width(10.dp))
+            Row(
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Spacer(modifier = Modifier.width(16.dp))
+                Icon(
+                    modifier = Modifier.size(24.dp),
+                    imageVector = Icons.Outlined.LightMode,
+                    contentDescription = stringResource(Res.string.accessibility_light_mode),
+                    tint = LocalTheme.current.colors.secondary
+                )
+                Switch(
+                    modifier = Modifier.padding(horizontal = 6.dp),
+                    checked = when(localSettings.value?.theme) {
+                        ThemeChoice.DARK -> true
+                        ThemeChoice.LIGHT -> false
+                        else -> isSystemInDarkTheme()
+                    },
+                    colors = LocalTheme.current.styles.switchColorsDefault.copy(
+                        checkedTrackColor = LocalTheme.current.colors.backgroundDark
+                    ),
+                    onCheckedChange = { isChecked ->
+                        viewModel.updateTheme(isChecked)
                     }
-                    if(subtitle != null) {
-                        if(title != null) append("\n")
-                        withStyle(SpanStyle(fontSize = fontSizeValue.times(0.65f).sp, fontWeight = FontWeight.Normal)) {
-                            append(subtitle)
-                        }
-                    }
-                },
-                style = TextStyle(
-                    fontWeight = FontWeight.Bold,
-                    color = LocalTheme.current.colors.tetrial
-                ),
-                fontSizeRange = FontSizeRange(
-                    min = 14.sp,
-                    max = 22.sp
-                ),
-                overflow = TextOverflow.Ellipsis,
-                maxLines = 2,
-                onFontSizeChange = { fontSize ->
-                    fontSizeValue = fontSize
-                }
-            )
+                )
+                Icon(
+                    modifier = Modifier.size(24.dp),
+                    imageVector = Icons.Outlined.DarkMode,
+                    contentDescription = stringResource(Res.string.accessibility_dark_mode),
+                    tint = LocalTheme.current.colors.secondary
+                )
+            }
         }
-        actions(true)
-        Spacer(modifier = Modifier.width(4.dp))
     }
 }

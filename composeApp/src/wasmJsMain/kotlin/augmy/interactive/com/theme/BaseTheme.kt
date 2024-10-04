@@ -17,12 +17,12 @@ import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import augmy.interactive.com.theme.BaseColors
 import augmy.interactive.com.theme.ThemeIcons
 import augmy.interactive.shared.ui.theme.DefaultValues.defaultBaseColors
 import augmy.interactive.shared.ui.theme.DefaultValues.defaultThemeIcons
 import augmy.interactive.shared.ui.theme.DefaultValues.defaultThemeShapes
 import augmy.interactive.shared.ui.theme.DefaultValues.defaultThemeStyle
-import org.jetbrains.compose.resources.DrawableResource
 
 interface BaseTheme {
 
@@ -131,6 +131,7 @@ private object DefaultValues {
         override val overShimmer: Color = Color(0x00000000)
         override val backgroundLight: Color = Color(0x00000000)
         override val backgroundDark: Color = Color(0x00000000)
+        override val toolbarColor: Color = Color(0x00000000)
     }
 }
 

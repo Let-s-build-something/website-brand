@@ -1,0 +1,6 @@
+<resources>
+  <string name="app_name">Augmy Interactive</string>
+
+  <string name="accessibility_light_mode">Light mode</string>
+  <string name="accessibility_dark_mode">Dark mode</string>
+</resources>

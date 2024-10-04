@@ -53,7 +53,7 @@ fun App(
             containerColor = LocalTheme.current.colors.backgroundLight,
             contentColor = LocalTheme.current.colors.backgroundLight
         ) { _ ->
-            BaseScreen {
+            BaseScreen(viewModel = viewModel) {
                 ModalScreenContent {
                     CompositionLocalProvider(
                         LocalNavController provides navController,

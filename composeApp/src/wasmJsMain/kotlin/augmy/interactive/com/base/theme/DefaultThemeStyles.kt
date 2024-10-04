@@ -104,11 +104,12 @@ open class DefaultThemeStyles: ThemeStyle {
 
     override val switchColorsDefault: SwitchColors
         @Composable get() = SwitchDefaults.colors(
-            checkedTrackColor = LocalTheme.current.colors.brandMain,
-            checkedThumbColor = LocalTheme.current.colors.tetrial,
+            checkedTrackColor = LocalTheme.current.colors.secondary,
+            checkedThumbColor = LocalTheme.current.colors.secondary,
+            checkedBorderColor = LocalTheme.current.colors.secondary,
             uncheckedBorderColor = LocalTheme.current.colors.secondary,
             uncheckedThumbColor = LocalTheme.current.colors.secondary,
-            uncheckedTrackColor = LocalTheme.current.colors.backgroundLight
+            uncheckedTrackColor = LocalTheme.current.colors.backgroundDark
         )
 
     override val componentElevation: Dp = 6.dp

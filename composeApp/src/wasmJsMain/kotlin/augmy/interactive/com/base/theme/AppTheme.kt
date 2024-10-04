@@ -1,7 +1,7 @@
 package augmy.interactive.com.base.theme
 
 import androidx.compose.runtime.Composable
-import augmy.interactive.shared.ui.theme.BaseColors
+import augmy.interactive.com.theme.BaseColors
 import augmy.interactive.shared.ui.theme.BaseTheme
 import augmy.interactive.shared.ui.theme.LocalThemeColors
 import augmy.interactive.shared.ui.theme.LocalThemeIcons
