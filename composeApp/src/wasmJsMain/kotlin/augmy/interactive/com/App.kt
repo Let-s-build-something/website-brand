@@ -1,6 +1,5 @@
 package augmy.interactive.com
 
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
@@ -10,9 +9,7 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.remember
-import androidx.navigation.NavController
 import androidx.navigation.NavHostController
-import androidx.navigation.compose.rememberNavController
 import augmy.interactive.com.base.BaseScreen
 import augmy.interactive.com.base.LocalDeviceType
 import augmy.interactive.com.base.LocalNavController
@@ -45,7 +42,7 @@ fun App(
         isDarkTheme = when(localSettings.value?.theme) {
             ThemeChoice.DARK -> true
             ThemeChoice.LIGHT -> false
-            else -> isSystemInDarkTheme()
+            else -> false//isSystemInDarkTheme()
         }
     ) {
         Scaffold(
