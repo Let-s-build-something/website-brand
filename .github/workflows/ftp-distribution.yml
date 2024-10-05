@@ -26,21 +26,11 @@ jobs:
       - name: Run WasmJsBrowserDistribution script to generate web assembly files
         run: ./gradlew wasmJsBrowserDistribution
 
-      - name: List Files
-        run: |
-          cd "${{ github.workspace }}/composeApp/build/dist/wasmJs/productionExecutable"
-          ls -R
+      - name: Install lftp
+        run: sudo apt-get update && sudo apt-get install -y lftp
+        shell: bash
 
       - name: Upload files to FTP using lftp
         run: |
-          sudo apt-get update && sudo apt-get install -y lftp
-
-          # Define variables
-          base_dir="${{ github.workspace }}/composeApp/build/dist/wasmJs/productionExecutable"
-          ftp_url="ftp://${{ secrets.FTP_USERNAME }}:${{ secrets.FTP_PASSWORD }}@${{ secrets.FTP_SERVER_DOMAIN }}/www"
-
-          # Upload files recursively using lftp
-          lftp -c "
-            open $ftp_url;
-            mirror --reverse --continue --verbose --delete --parallel=5 $base_dir /www"
+          lftp -e "mirror --reverse --continue --verbose --delete --parallel=5 ${{ github.workspace }}/composeApp/build/dist/wasmJs/productionExecutable /www; quit" -u "${{ secrets.FTP_USERNAME }},${{ secrets.FTP_PASSWORD }}" "${{ secrets.FTP_SERVER_DOMAIN }}"
         shell: bash

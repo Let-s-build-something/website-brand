@@ -17,6 +17,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.text.AnnotatedString
+import androidx.compose.ui.text.LinkAnnotation
+import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.withLink
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import augmy.interactive.com.base.LocalContentSizeDp
@@ -25,6 +29,7 @@ import augmy.interactive.com.data.Asset
 import augmy.interactive.com.ui.components.AsyncImageThumbnail
 import augmy.interactive.com.ui.components.SelectableText
 import augmy.interactive.shared.ui.theme.LocalTheme
+import kotlinx.browser.window
 import org.jetbrains.compose.resources.stringResource
 import website_brand.composeapp.generated.resources.Res
 import website_brand.composeapp.generated.resources.contacts_email
@@ -39,11 +44,28 @@ fun ContactsScreen() {
     val verticalPadding = (LocalContentSizeDp.current.height / 8).dp
     val horizontalPadding = (LocalContentSizeDp.current.width / 20).dp
 
+    val email = stringResource(Res.string.contacts_email_value)
+    val emailValue = buildAnnotatedString {
+        withLink(
+            link = LinkAnnotation.Clickable(
+                tag = "EMAIL",
+                linkInteractionListener = {
+                    window.open("mailto:$email", "_self")
+                },
+            ),
+        ) {
+            append(email.plus(" "))
+        }
+    }
 
     if(LocalDeviceType.current == WindowWidthSizeClass.Compact) {
-        CompactLayout(verticalPadding = verticalPadding)
+        CompactLayout(
+            emailValue = emailValue,
+            verticalPadding = verticalPadding
+        )
     }else {
         LargeLayout(
+            emailValue = emailValue,
             verticalPadding = verticalPadding,
             horizontalPadding = horizontalPadding
         )
@@ -52,7 +74,10 @@ fun ContactsScreen() {
 
 
 @Composable
-private fun CompactLayout(verticalPadding: Dp) {
+private fun CompactLayout(
+    emailValue: AnnotatedString,
+    verticalPadding: Dp
+) {
     Column(
         modifier = Modifier.padding(top = 24.dp, start = 12.dp, end = 12.dp),
         verticalArrangement = Arrangement.spacedBy(verticalPadding)
@@ -92,7 +117,7 @@ private fun CompactLayout(verticalPadding: Dp) {
                 ) {
                     Icon(
                         modifier = Modifier.size(32.dp),
-                        imageVector = Icons.Outlined.AlternateEmail,
+                        imageVector = Icons.Outlined.LocationCity,
                         contentDescription = null,
                         tint = LocalTheme.current.colors.secondary
                     )
@@ -118,7 +143,7 @@ private fun CompactLayout(verticalPadding: Dp) {
                 ) {
                     Icon(
                         modifier = Modifier.size(32.dp),
-                        imageVector = Icons.Outlined.LocationCity,
+                        imageVector = Icons.Outlined.AlternateEmail,
                         contentDescription = null,
                         tint = LocalTheme.current.colors.secondary
                     )
@@ -128,7 +153,7 @@ private fun CompactLayout(verticalPadding: Dp) {
                     )
                 }
                 SelectableText(
-                    text = stringResource(Res.string.contacts_email_value),
+                    text = emailValue,
                     style = LocalTheme.current.styles.title
                 )
             }
@@ -138,6 +163,7 @@ private fun CompactLayout(verticalPadding: Dp) {
 
 @Composable
 private fun LargeLayout(
+    emailValue: AnnotatedString,
     horizontalPadding: Dp,
     verticalPadding: Dp
 ) {
@@ -163,7 +189,7 @@ private fun LargeLayout(
                 ) {
                     Icon(
                         modifier = Modifier.size(32.dp),
-                        imageVector = Icons.Outlined.AlternateEmail,
+                        imageVector = Icons.Outlined.LocationCity,
                         contentDescription = null,
                         tint = LocalTheme.current.colors.secondary
                     )
@@ -189,7 +215,7 @@ private fun LargeLayout(
                 ) {
                     Icon(
                         modifier = Modifier.size(32.dp),
-                        imageVector = Icons.Outlined.LocationCity,
+                        imageVector = Icons.Outlined.AlternateEmail,
                         contentDescription = null,
                         tint = LocalTheme.current.colors.secondary
                     )
@@ -199,7 +225,7 @@ private fun LargeLayout(
                     )
                 }
                 SelectableText(
-                    text = stringResource(Res.string.contacts_email_value),
+                    text = emailValue,
                     style = LocalTheme.current.styles.title
                 )
             }
