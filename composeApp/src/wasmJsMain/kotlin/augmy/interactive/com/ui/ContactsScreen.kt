@@ -1,5 +1,6 @@
 package augmy.interactive.com.ui
 
+import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -58,17 +59,19 @@ fun ContactsScreen() {
         }
     }
 
-    if(LocalDeviceType.current == WindowWidthSizeClass.Compact) {
-        CompactLayout(
-            emailValue = emailValue,
-            verticalPadding = verticalPadding
-        )
-    }else {
-        LargeLayout(
-            emailValue = emailValue,
-            verticalPadding = verticalPadding,
-            horizontalPadding = horizontalPadding
-        )
+    Crossfade(LocalDeviceType.current == WindowWidthSizeClass.Compact) { isCompact ->
+        if(isCompact) {
+            CompactLayout(
+                emailValue = emailValue,
+                verticalPadding = verticalPadding
+            )
+        }else {
+            LargeLayout(
+                emailValue = emailValue,
+                verticalPadding = verticalPadding,
+                horizontalPadding = horizontalPadding
+            )
+        }
     }
 }
 

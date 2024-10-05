@@ -19,6 +19,10 @@
   <string name="contacts_email">Email</string>
   <string name="contacts_email_value">info@augmyinteractive.com</string>
 
+  <string name="about_content">Content here</string>
+  <string name="about_research_content">Content here</string>
+  <string name="about_business_content">Content here</string>
+
 
   <string name="accessibility_light_mode">Light mode</string>
   <string name="accessibility_dark_mode">Dark mode</string>

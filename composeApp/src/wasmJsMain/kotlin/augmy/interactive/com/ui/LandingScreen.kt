@@ -1,5 +1,6 @@
 package augmy.interactive.com.ui
 
+import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -42,13 +43,15 @@ fun LandingScreen() {
     val verticalPadding = (LocalContentSizeDp.current.height / 8).dp
     val horizontalPadding = (LocalContentSizeDp.current.width / 20).dp
 
-    if(LocalDeviceType.current == WindowWidthSizeClass.Compact) {
-        CompactLayout(verticalPadding = verticalPadding)
-    }else {
-        LargeLayout(
-            verticalPadding = verticalPadding,
-            horizontalPadding = horizontalPadding
-        )
+    Crossfade(LocalDeviceType.current == WindowWidthSizeClass.Compact) { isCompact ->
+        if(isCompact) {
+            CompactLayout(verticalPadding = verticalPadding)
+        }else {
+            LargeLayout(
+                verticalPadding = verticalPadding,
+                horizontalPadding = horizontalPadding
+            )
+        }
     }
 }
 
