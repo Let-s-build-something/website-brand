@@ -93,6 +93,7 @@ private fun CompactLayout(
         ) {
             AsyncImageThumbnail(
                 modifier = Modifier
+                    .fillMaxWidth()
                     .clip(LocalTheme.current.shapes.componentShape),
                 thumbnail = Asset.Image.Cooperation.placeholder,
                 url = Asset.Image.Cooperation.url
@@ -242,6 +243,7 @@ private fun LargeLayout(
         ) {
             AsyncImageThumbnail(
                 modifier = Modifier
+                    .fillMaxWidth()
                     .clip(LocalTheme.current.shapes.componentShape),
                 thumbnail = Asset.Image.Cooperation.placeholder,
                 url = Asset.Image.Cooperation.url

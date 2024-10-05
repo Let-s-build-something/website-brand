@@ -6,10 +6,11 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout Code
+        uses: actions/checkout@v4
 
       - name: Set up JDK 17
         uses: actions/setup-java@v4
@@ -22,13 +23,28 @@ jobs:
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
 
-      # Linux - Deb
-      - name: Run WasmJsBrowserDistribution script to generate web assembly files
-        run: ./gradlew wasmJsBrowserDistribution
+      # Run WasmJsBrowserDistribution script to generate web assembly files
+      - name: Run WasmJsBrowserDistribution
+        run: .\gradlew wasmJsBrowserDistribution
 
-      - name: Upload files to FTP using lftp
+      - name: Upload files to FTP using PowerShell
         run: |
-          find "$base_dir" -type f -print0 | while IFS= read -r -d '' file; do
-              RELATIVE_PATH="${file#$base_dir}"
-              curl --ftp-create-dirs -T "$file" "ftp://${{ secrets.FTP_SERVER_DOMAIN }}/www/$RELATIVE_PATH" --user "${{ secrets.FTP_USERNAME }}:${{ secrets.FTP_PASSWORD }}"
-          done
+          $baseDir = "C:\Users\runneradmin\path\to\composeApp\build\dist\wasmJs\productionExecutable"  # Adjust this path
+          $ftpServer = "${{ secrets.FTP_SERVER_DOMAIN }}"
+          $ftpUsername = "${{ secrets.FTP_USERNAME }}"
+          $ftpPassword = "${{ secrets.FTP_PASSWORD }}"
+
+          # Get all files recursively in the base directory
+          Get-ChildItem -Path $baseDir -Recurse -File | ForEach-Object {
+              # Create the relative path for FTP
+              $relativePath = $_.FullName.Substring($baseDir.Length).Replace("\", "/")  # Convert backslashes to slashes
+              $ftpUrl = "ftp://$ftpServer/www$relativePath"
+
+              # Create the target directory on the FTP server
+              $createDirCmd = "curl --ftp-create-dirs -u $ftpUsername:$ftpPassword $ftpUrl"
+              Invoke-Expression $createDirCmd
+
+              # Upload the file to FTP
+              $uploadCmd = "curl -T `"$($_.FullName)`" -u $ftpUsername:$ftpPassword $ftpUrl"
+              Invoke-Expression $uploadCmd
+          }

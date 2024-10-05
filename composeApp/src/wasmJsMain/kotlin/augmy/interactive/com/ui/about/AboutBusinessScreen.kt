@@ -32,6 +32,7 @@ fun AboutBusinessScreen() {
         ) {
             AsyncImageThumbnail(
                 modifier = Modifier
+                    .fillMaxWidth()
                     .clip(LocalTheme.current.shapes.componentShape),
                 thumbnail = Asset.Image.EarHelp.placeholder,
                 url = Asset.Image.EarHelp.url

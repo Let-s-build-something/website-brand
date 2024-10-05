@@ -32,6 +32,7 @@ fun AboutScreen() {
         ) {
             AsyncImageThumbnail(
                 modifier = Modifier
+                    .fillMaxWidth()
                     .clip(LocalTheme.current.shapes.componentShape),
                 thumbnail = Asset.Image.DesignConstruction.placeholder,
                 url = Asset.Image.DesignConstruction.url

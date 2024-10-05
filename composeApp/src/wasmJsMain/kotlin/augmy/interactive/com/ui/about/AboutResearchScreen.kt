@@ -32,6 +32,7 @@ fun AboutResearchScreen() {
         ) {
             AsyncImageThumbnail(
                 modifier = Modifier
+                    .fillMaxWidth()
                     .clip(LocalTheme.current.shapes.componentShape),
                 thumbnail = Asset.Image.Experiment.placeholder,
                 url = Asset.Image.Experiment.url

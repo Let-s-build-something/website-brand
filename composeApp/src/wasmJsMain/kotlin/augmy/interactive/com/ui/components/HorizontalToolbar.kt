@@ -78,7 +78,6 @@ fun HorizontalToolbar(
     modifier: Modifier = Modifier,
     viewModel: SharedViewModel
 ) {
-    val localSettings = viewModel.localSettings.collectAsState()
     val navController = LocalNavController.current
 
     val composition by rememberLottieComposition {
@@ -138,32 +137,7 @@ fun HorizontalToolbar(
                             }
 
                             Spacer(modifier = Modifier.width(16.dp))
-                            Icon(
-                                modifier = Modifier.size(24.dp),
-                                imageVector = Icons.Outlined.LightMode,
-                                contentDescription = stringResource(Res.string.accessibility_light_mode),
-                                tint = LocalTheme.current.colors.secondary
-                            )
-                            Switch(
-                                modifier = Modifier.padding(horizontal = 6.dp),
-                                checked = when(localSettings.value?.theme) {
-                                    ThemeChoice.DARK -> true
-                                    ThemeChoice.LIGHT -> false
-                                    else -> isSystemInDarkTheme()
-                                },
-                                colors = LocalTheme.current.styles.switchColorsDefault.copy(
-                                    checkedTrackColor = LocalTheme.current.colors.toolbarColor
-                                ),
-                                onCheckedChange = { isChecked ->
-                                    viewModel.updateTheme(isChecked)
-                                }
-                            )
-                            Icon(
-                                modifier = Modifier.size(24.dp),
-                                imageVector = Icons.Outlined.DarkMode,
-                                contentDescription = stringResource(Res.string.accessibility_dark_mode),
-                                tint = LocalTheme.current.colors.secondary
-                            )
+                            ThemeSwitch(viewModel = viewModel)
                         }
                     }else {
                         Crossfade(targetState = isMenuExpanded.value) { isExpanded ->
@@ -190,6 +164,10 @@ fun HorizontalToolbar(
                     verticalArrangement = Arrangement.spacedBy(6.dp)
                 ) {
                     ToolbarActions()
+                    ThemeSwitch(
+                        modifier = Modifier.align(Alignment.End),
+                        viewModel = viewModel
+                    )
                 }
             }
         }
@@ -197,25 +175,41 @@ fun HorizontalToolbar(
 }
 
 @Composable
-private fun ParentLayout(
-    modifier: Modifier,
-    content: @Composable () -> Unit
+private fun ThemeSwitch(
+    modifier: Modifier = Modifier,
+    viewModel: SharedViewModel
 ) {
-    if(LocalDeviceType.current == WindowWidthSizeClass.Compact) {
-        Column(
-            modifier = modifier,
-            content = {
-                content()
+    val localSettings = viewModel.localSettings.collectAsState()
+
+    Row(
+        modifier = modifier,
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Icon(
+            modifier = Modifier.size(24.dp),
+            imageVector = Icons.Outlined.LightMode,
+            contentDescription = stringResource(Res.string.accessibility_light_mode),
+            tint = LocalTheme.current.colors.secondary
+        )
+        Switch(
+            modifier = Modifier.padding(horizontal = 6.dp),
+            checked = when(localSettings.value?.theme) {
+                ThemeChoice.DARK -> true
+                ThemeChoice.LIGHT -> false
+                else -> isSystemInDarkTheme()
+            },
+            colors = LocalTheme.current.styles.switchColorsDefault.copy(
+                checkedTrackColor = LocalTheme.current.colors.toolbarColor
+            ),
+            onCheckedChange = { isChecked ->
+                viewModel.updateTheme(isChecked)
             }
         )
-    }else {
-        Row(
-            modifier = modifier,
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceBetween,
-            content = {
-                content()
-            }
+        Icon(
+            modifier = Modifier.size(24.dp),
+            imageVector = Icons.Outlined.DarkMode,
+            contentDescription = stringResource(Res.string.accessibility_dark_mode),
+            tint = LocalTheme.current.colors.secondary
         )
     }
 }

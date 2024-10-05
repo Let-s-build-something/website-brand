@@ -71,6 +71,7 @@ private fun CompactLayout(verticalPadding: Dp) {
         ) {
             AsyncImageThumbnail(
                 modifier = Modifier
+                    .fillMaxWidth()
                     .clip(LocalTheme.current.shapes.componentShape),
                 thumbnail = Asset.Image.NaturePalette.placeholder,
                 url = Asset.Image.NaturePalette.url
@@ -166,6 +167,7 @@ private fun LargeLayout(
             ) {
                 AsyncImageThumbnail(
                     modifier = Modifier
+                        .fillMaxWidth()
                         .clip(LocalTheme.current.shapes.componentShape),
                     thumbnail = Asset.Image.NaturePalette.placeholder,
                     url = Asset.Image.NaturePalette.url
