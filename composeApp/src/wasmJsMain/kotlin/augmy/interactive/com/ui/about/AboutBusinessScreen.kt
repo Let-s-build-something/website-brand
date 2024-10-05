@@ -25,7 +25,7 @@ fun AboutBusinessScreen() {
             Modifier
                 .fillMaxWidth(0.5f)
                 .background(
-                    LocalTheme.current.colors.tetrial,
+                    LocalTheme.current.colors.brandMainDark,
                     LocalTheme.current.shapes.roundShape
                 )
                 .padding(verticalPadding / 7)

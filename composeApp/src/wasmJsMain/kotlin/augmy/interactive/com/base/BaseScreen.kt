@@ -144,6 +144,7 @@ fun ModalScreenContent(
         SelectionContainer {
             Text(
                 modifier = Modifier
+                    .padding(top = 16.dp)
                     .fillMaxWidth()
                     .shadow(4.dp)
                     .background(LocalTheme.current.colors.toolbarColor)

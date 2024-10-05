@@ -1,5 +1,6 @@
 package augmy.interactive.com.ui.components
 
+import androidx.compose.animation.animateContentSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -21,7 +22,7 @@ fun AsyncImageThumbnail(
     }
 
     AsyncImage(
-        modifier = modifier,
+        modifier = modifier.animateContentSize(),
         model = ImageRequest.Builder(PlatformContext.INSTANCE)
             .data(if(displayOriginal.value) url else thumbnail)
             .crossfade(true)

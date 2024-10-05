@@ -1,5 +1,6 @@
 package augmy.interactive.com.ui.components
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.Crossfade
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.Image
@@ -12,6 +13,7 @@ import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -23,6 +25,7 @@ import androidx.compose.foundation.layout.widthIn
 import androidx.compose.material.Icon
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.MenuOpen
+import androidx.compose.material.icons.outlined.Close
 import androidx.compose.material.icons.outlined.DarkMode
 import androidx.compose.material.icons.outlined.LightMode
 import androidx.compose.material3.Switch
@@ -34,6 +37,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
@@ -75,11 +79,15 @@ fun HorizontalToolbar(
     viewModel: SharedViewModel
 ) {
     val localSettings = viewModel.localSettings.collectAsState()
+    val navController = LocalNavController.current
 
     val composition by rememberLottieComposition {
         LottieCompositionSpec.JsonString(Res.readBytes("files/arrow_right.json").decodeToString())
     }
-    val navController = LocalNavController.current
+
+    val isMenuExpanded = rememberSaveable {
+        mutableStateOf(false)
+    }
 
     Box(
         modifier = modifier
@@ -87,105 +95,149 @@ fun HorizontalToolbar(
             .fillMaxWidth()
             .background(color = LocalTheme.current.colors.toolbarColor)
     ) {
-        Row(
+        Column(
             modifier = Modifier
                 .align(Alignment.Center)
                 .widthIn(max = MaxModalWidthDp.dp)
                 .fillMaxWidth(),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            Row(verticalAlignment = Alignment.CenterVertically) {
-                Image(
-                    modifier = Modifier.height(24.dp),
-                    painter = rememberLottiePainter(
-                        composition = composition,
-                        iterations = 100
-                    ),
-                    colorFilter = ColorFilter.tint(LocalTheme.current.colors.secondary),
-                    contentDescription = null
-                )
-                Text(
-                    modifier = Modifier
-                        .clickable {
-                            navController?.navigate(NavigationNode.Landing.route)
-                        }
-                        .padding(start = 6.dp, top = 4.dp, bottom = 4.dp),
-                    text = stringResource(Res.string.app_name),
-                    style = LocalTheme.current.styles.subheading
-                )
-            }
-
-            Crossfade(
-                targetState = LocalDeviceType.current == WindowWidthSizeClass.Expanded
-            ) { isExpanded ->
-                if(isExpanded) {
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        Row(horizontalArrangement = Arrangement.spacedBy(6.dp)) {
-                            ToolbarAction(
-                                text = stringResource(Res.string.toolbar_action_about),
-                                route = NavigationNode.PublicAbout.route
-                            )
-                            ToolbarAction(
-                                text = stringResource(Res.string.toolbar_action_about_research),
-                                route = NavigationNode.ResearchAbout.route
-                            )
-                            ToolbarAction(
-                                text = stringResource(Res.string.toolbar_action_about_business),
-                                route = NavigationNode.BusinessAbout.route
-                            )
-                            ToolbarAction(
-                                text = stringResource(Res.string.toolbar_action_contacts),
-                                route = NavigationNode.Contacts.route
-                            )
-                        }
-
-                        Spacer(modifier = Modifier.width(16.dp))
-                        Icon(
-                            modifier = Modifier.size(24.dp),
-                            imageVector = Icons.Outlined.LightMode,
-                            contentDescription = stringResource(Res.string.accessibility_light_mode),
-                            tint = LocalTheme.current.colors.secondary
-                        )
-                        Switch(
-                            modifier = Modifier.padding(horizontal = 6.dp),
-                            checked = when(localSettings.value?.theme) {
-                                ThemeChoice.DARK -> true
-                                ThemeChoice.LIGHT -> false
-                                else -> isSystemInDarkTheme()
-                            },
-                            colors = LocalTheme.current.styles.switchColorsDefault.copy(
-                                checkedTrackColor = LocalTheme.current.colors.toolbarColor
-                            ),
-                            onCheckedChange = { isChecked ->
-                                viewModel.updateTheme(isChecked)
-                            }
-                        )
-                        Icon(
-                            modifier = Modifier.size(24.dp),
-                            imageVector = Icons.Outlined.DarkMode,
-                            contentDescription = stringResource(Res.string.accessibility_dark_mode),
-                            tint = LocalTheme.current.colors.secondary
-                        )
-                    }
-                }else {
-                    Icon(
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Image(
+                        modifier = Modifier.height(24.dp),
+                        painter = rememberLottiePainter(
+                            composition = composition,
+                            iterations = 100
+                        ),
+                        colorFilter = ColorFilter.tint(LocalTheme.current.colors.secondary),
+                        contentDescription = null
+                    )
+                    Text(
                         modifier = Modifier
                             .clickable {
-                                //TODO open hamburger menu
+                                navController?.navigate(NavigationNode.Landing.route)
                             }
-                            .padding(8.dp)
-                            .size(32.dp),
-                        imageVector = Icons.AutoMirrored.Outlined.MenuOpen,
-                        contentDescription = stringResource(Res.string.accessibility_menu),
-                        tint = LocalTheme.current.colors.secondary
+                            .padding(start = 6.dp, top = 4.dp, bottom = 4.dp),
+                        text = stringResource(Res.string.app_name),
+                        style = LocalTheme.current.styles.subheading
                     )
+                }
+                Crossfade(
+                    targetState = LocalDeviceType.current == WindowWidthSizeClass.Expanded
+                ) { isDesktop ->
+                    if(isDesktop) {
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Row(horizontalArrangement = Arrangement.spacedBy(6.dp)) {
+                                ToolbarActions()
+                            }
+
+                            Spacer(modifier = Modifier.width(16.dp))
+                            Icon(
+                                modifier = Modifier.size(24.dp),
+                                imageVector = Icons.Outlined.LightMode,
+                                contentDescription = stringResource(Res.string.accessibility_light_mode),
+                                tint = LocalTheme.current.colors.secondary
+                            )
+                            Switch(
+                                modifier = Modifier.padding(horizontal = 6.dp),
+                                checked = when(localSettings.value?.theme) {
+                                    ThemeChoice.DARK -> true
+                                    ThemeChoice.LIGHT -> false
+                                    else -> isSystemInDarkTheme()
+                                },
+                                colors = LocalTheme.current.styles.switchColorsDefault.copy(
+                                    checkedTrackColor = LocalTheme.current.colors.toolbarColor
+                                ),
+                                onCheckedChange = { isChecked ->
+                                    viewModel.updateTheme(isChecked)
+                                }
+                            )
+                            Icon(
+                                modifier = Modifier.size(24.dp),
+                                imageVector = Icons.Outlined.DarkMode,
+                                contentDescription = stringResource(Res.string.accessibility_dark_mode),
+                                tint = LocalTheme.current.colors.secondary
+                            )
+                        }
+                    }else {
+                        Crossfade(targetState = isMenuExpanded.value) { isExpanded ->
+                            Icon(
+                                modifier = Modifier
+                                    .clickable {
+                                        isMenuExpanded.value = isMenuExpanded.value.not()
+                                    }
+                                    .padding(8.dp)
+                                    .size(32.dp),
+                                imageVector = if(isExpanded) {
+                                    Icons.Outlined.Close
+                                }else Icons.AutoMirrored.Outlined.MenuOpen,
+                                contentDescription = stringResource(Res.string.accessibility_menu),
+                                tint = LocalTheme.current.colors.secondary
+                            )
+                        }
+                    }
+                }
+            }
+            AnimatedVisibility(isMenuExpanded.value) {
+                Column(
+                    modifier = Modifier.padding(horizontal = 8.dp),
+                    verticalArrangement = Arrangement.spacedBy(6.dp)
+                ) {
+                    ToolbarActions()
                 }
             }
         }
     }
+}
+
+@Composable
+private fun ParentLayout(
+    modifier: Modifier,
+    content: @Composable () -> Unit
+) {
+    if(LocalDeviceType.current == WindowWidthSizeClass.Compact) {
+        Column(
+            modifier = modifier,
+            content = {
+                content()
+            }
+        )
+    }else {
+        Row(
+            modifier = modifier,
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceBetween,
+            content = {
+                content()
+            }
+        )
+    }
+}
+
+@Composable
+private fun ToolbarActions() {
+    ToolbarAction(
+        text = stringResource(Res.string.toolbar_action_about),
+        route = NavigationNode.PublicAbout.route
+    )
+    ToolbarAction(
+        text = stringResource(Res.string.toolbar_action_about_research),
+        route = NavigationNode.ResearchAbout.route
+    )
+    ToolbarAction(
+        text = stringResource(Res.string.toolbar_action_about_business),
+        route = NavigationNode.BusinessAbout.route
+    )
+    ToolbarAction(
+        text = stringResource(Res.string.toolbar_action_contacts),
+        route = NavigationNode.Contacts.route
+    )
 }
 
 @Composable

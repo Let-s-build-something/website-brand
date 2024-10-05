@@ -25,7 +25,7 @@ fun AboutResearchScreen() {
             Modifier
                 .fillMaxWidth(0.5f)
                 .background(
-                    LocalTheme.current.colors.tetrial,
+                    LocalTheme.current.colors.brandMain,
                     LocalTheme.current.shapes.roundShape
                 )
                 .padding(verticalPadding / 7)

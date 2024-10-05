@@ -41,7 +41,6 @@ sealed class NavigationNode {
         override val route: String = "/contacts"
     }
 
-
     companion object {
         val allDestinations = listOf(
             Landing.route,

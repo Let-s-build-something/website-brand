@@ -34,9 +34,18 @@ jobs:
       - name: Upload files to FTP
         run: |
           # Define the base directory
-          # Upload all files and folders recursively
-          find "${{ github.workspace }}/composeApp/build/dist/wasmJs/productionExecutable" -type f | while read file; do
-            RELATIVE_PATH="${file#${{ github.workspace }}/composeApp/build/dist/wasmJs/productionExecutable}"
-            curl --ftp-create-dirs -T "$file" "ftp://${{ secrets.FTP_SERVER_DOMAIN }}/www/$RELATIVE_PATH" --user "${{ secrets.FTP_USERNAME }}:${{ secrets.FTP_PASSWORD }}"
+          base_dir="${{ github.workspace }}/composeApp/build/dist/wasmJs/productionExecutable"
+
+          # Find all files in the directory and upload them
+          find "$base_dir" -type f | while read -r file; do
+            # Get the relative path of the file for FTP upload using realpath
+            relative_path=$(realpath --relative-to="$base_dir" "$file")
+
+            # Debugging: Print the relative path for troubleshooting
+            echo "Uploading file: $file"
+            echo "Relative path: $relative_path"
+
+            # Upload the file to the FTP server, creating directories as needed
+            curl --ftp-create-dirs -T "$file" "ftp://${{ secrets.FTP_SERVER_DOMAIN }}/www/$relative_path" --user "${{ secrets.FTP_USERNAME }}:${{ secrets.FTP_PASSWORD }}"
           done
         shell: bash
