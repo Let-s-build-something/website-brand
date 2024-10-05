@@ -27,7 +27,7 @@ jobs:
         run: ./gradlew wasmJsBrowserDistribution
 
       - name: List Files
-        run:
+        run: |
           cd "${{ github.workspace }}/composeApp/build/dist/wasmJs/productionExecutable"
           ls -R
 

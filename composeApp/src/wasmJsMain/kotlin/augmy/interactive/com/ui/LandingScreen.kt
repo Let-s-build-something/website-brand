@@ -41,10 +41,7 @@ fun LandingScreen() {
     val verticalPadding = (LocalContentSizeDp.current.height / 8).dp
     val horizontalPadding = (LocalContentSizeDp.current.width / 20).dp
 
-    Column(
-        modifier = Modifier.padding(16.dp),
-        verticalArrangement = Arrangement.spacedBy(verticalPadding)
-    ) {
+    Column(verticalArrangement = Arrangement.spacedBy(verticalPadding)) {
         Spacer(Modifier)
         ConditionalParent(
             verticalPadding = verticalPadding,

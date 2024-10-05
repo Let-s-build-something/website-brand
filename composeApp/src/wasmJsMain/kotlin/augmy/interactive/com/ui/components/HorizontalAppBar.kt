@@ -106,7 +106,11 @@ fun HorizontalToolbar(
                     contentDescription = null
                 )
                 Text(
-                    modifier = Modifier.padding(start = 6.dp, top = 4.dp, bottom = 4.dp),
+                    modifier = Modifier
+                        .clickable {
+                            navController?.navigate(NavigationNode.Landing.route)
+                        }
+                        .padding(start = 6.dp, top = 4.dp, bottom = 4.dp),
                     text = stringResource(Res.string.app_name),
                     style = LocalTheme.current.styles.subheading
                 )
