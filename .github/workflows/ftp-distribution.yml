@@ -41,10 +41,10 @@ jobs:
               $ftpUrl = "ftp://$ftpServer/www$relativePath"
 
               # Create the target directory on the FTP server
-              $createDirCmd = "curl --ftp-create-dirs -u $ftpUsername:$ftpPassword $ftpUrl"
+              $createDirCmd = "curl --ftp-create-dirs -u ${ftpUsername}:${ftpPassword} ${ftpUrl}"
               Invoke-Expression $createDirCmd
 
               # Upload the file to FTP
-              $uploadCmd = "curl -T `"$($_.FullName)`" -u $ftpUsername:$ftpPassword $ftpUrl"
+              $uploadCmd = "curl -T `"$($_.FullName)`" -u ${ftpUsername}:${ftpPassword} ${ftpUrl}"
               Invoke-Expression $uploadCmd
           }
