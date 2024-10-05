@@ -28,7 +28,7 @@ jobs:
 
       - name: List Files
         run:
-          cd ${{ github.workspace }}/composeApp/build/dist/wasmJs/productionExecutable
+          cd "${{ github.workspace }}/composeApp/build/dist/wasmJs/productionExecutable"
           ls -R
 
       - name: Upload files to FTP
