@@ -1,7 +1,7 @@
 <resources>
   <string name="app_name">Augmy Interactive</string>
 
-  <string name="copyright">© %1$d Augmy Interactive</string>
+  <string name="website_footer">© %1$d Augmy Interactive, built with Compose Multiplatform</string>
 
   <string name="landing_block_0_heading">Express yourself without missing a beat</string>
   <string name="landing_block_0_content">Be closer to people you want to be close to. Because that is something everyone deserves. Make yourself more understood by expressive messages that are not just messages, they are your emotional state.</string>
@@ -13,6 +13,12 @@
   <string name="toolbar_action_about_research">Research</string>
   <string name="toolbar_action_about_business">Business</string>
   <string name="toolbar_action_contacts">Contacts</string>
+
+  <string name="contacts_workplace">Workplace</string>
+  <string name="contacts_workplace_value">Prague, Czechia</string>
+  <string name="contacts_email">Email</string>
+  <string name="contacts_email_value">info@augmyinteractive.com</string>
+
 
   <string name="accessibility_light_mode">Light mode</string>
   <string name="accessibility_dark_mode">Dark mode</string>

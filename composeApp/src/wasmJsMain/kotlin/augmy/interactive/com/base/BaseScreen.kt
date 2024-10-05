@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.rememberScrollState
@@ -43,7 +44,7 @@ import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
 import org.jetbrains.compose.resources.stringResource
 import website_brand.composeapp.generated.resources.Res
-import website_brand.composeapp.generated.resources.copyright
+import website_brand.composeapp.generated.resources.website_footer
 
 /**
  * Most basic all-in-one implementation of a screen with action bar, without bottom bar
@@ -87,15 +88,28 @@ fun BaseScreen(
             floatingActionButton = floatingActionButton,
             floatingActionButtonPosition = floatingActionButtonPosition,
             content = { paddingValues ->
+                val density = LocalDensity.current
+                val contentSize = remember {
+                    mutableStateOf(Size(0f, 0f))
+                }
+
                 Column(
-                    modifier = modifier.padding(paddingValues),
+                    modifier = modifier
+                        .padding(paddingValues)
+                        .onGloballyPositioned {
+                            contentSize.value = with(density) {
+                                Size(it.size.width.toDp().value, it.size.height.toDp().value)
+                            }
+                        },
                     verticalArrangement = Arrangement.Top,
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     if(appBarVisible) {
                         HorizontalToolbar(viewModel = viewModel)
                     }
-                    content(this)
+                    CompositionLocalProvider(LocalContentSizeDp provides contentSize.value) {
+                        content(this)
+                    }
                 }
             }
         )
@@ -119,26 +133,14 @@ fun ModalScreenContent(
             .fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        val density = LocalDensity.current
-        val contentSize = remember {
-            mutableStateOf(Size(0f, 0f))
-        }
-
         Column(
             modifier = Modifier
                 .widthIn(max = MaxModalWidthDp.dp)
-                .onGloballyPositioned {
-                    contentSize.value = with(density) {
-                        Size(it.size.width.toDp().value, it.size.height.toDp().value)
-                    }
-                },
+                .heightIn(min = LocalContentSizeDp.current.height.dp),
             verticalArrangement = verticalArrangement,
-            horizontalAlignment = horizontalAlignment
-        ) {
-            CompositionLocalProvider(LocalContentSizeDp provides contentSize.value) {
-                content()
-            }
-        }
+            horizontalAlignment = horizontalAlignment,
+            content = content
+        )
         SelectionContainer {
             Text(
                 modifier = Modifier
@@ -147,7 +149,7 @@ fun ModalScreenContent(
                     .background(LocalTheme.current.colors.toolbarColor)
                     .padding(16.dp),
                 text = stringResource(
-                    Res.string.copyright,
+                    Res.string.website_footer,
                     Clock.System.now().toLocalDateTime(
                         TimeZone.currentSystemDefault()
                     ).year

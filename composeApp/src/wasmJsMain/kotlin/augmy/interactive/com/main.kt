@@ -46,11 +46,9 @@ fun main() {
 
                 LaunchedEffect(currentEntry.value) {
                     if(currentEntry.value != null
-                        && window.location.pathname.contains(currentRoute).not()
+                        && window.location.pathname != currentRoute
                     ) {
-                        if(currentEntry.value?.destination?.route != navController.graph.startDestinationRoute) {
-                            window.location.pathname = currentRoute
-                        }
+                        window.location.pathname = currentRoute
                     }
                 }
 

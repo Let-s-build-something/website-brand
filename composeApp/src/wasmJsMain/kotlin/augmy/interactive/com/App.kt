@@ -1,6 +1,7 @@
 package augmy.interactive.com
 
 import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
@@ -10,6 +11,7 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import augmy.interactive.com.base.BaseScreen
 import augmy.interactive.com.base.LocalDeviceType
@@ -58,7 +60,10 @@ fun App(
                 LocalSnackbarHost provides snackbarHostState,
                 LocalDeviceType provides windowSizeClass.widthSizeClass
             ) {
-                BaseScreen(viewModel = viewModel) {
+                BaseScreen(
+                    modifier = Modifier.fillMaxSize(),
+                    viewModel = viewModel
+                ) {
                     ModalScreenContent {
                         NavigationHost(
                             navController = navController,

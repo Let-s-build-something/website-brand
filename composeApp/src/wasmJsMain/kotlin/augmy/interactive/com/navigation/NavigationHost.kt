@@ -11,7 +11,7 @@ import augmy.interactive.com.ui.LandingScreen
 import augmy.interactive.com.ui.about.AboutBusinessScreen
 import augmy.interactive.com.ui.about.AboutResearchScreen
 import augmy.interactive.com.ui.about.AboutScreen
-import augmy.interactive.com.ui.about.ContactsScreen
+import augmy.interactive.com.ui.ContactsScreen
 
 val DEFAULT_START_DESTINATION = NavigationNode.Landing.route
 

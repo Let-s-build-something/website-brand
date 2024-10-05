@@ -38,10 +38,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.draw.shadow
-import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.unit.dp
+import androidx.navigation.compose.currentBackStackEntryAsState
 import augmy.interactive.com.base.LocalDeviceType
 import augmy.interactive.com.base.LocalNavController
 import augmy.interactive.com.base.MaxModalWidthDp
@@ -126,27 +126,19 @@ fun HorizontalToolbar(
                         Row(horizontalArrangement = Arrangement.spacedBy(6.dp)) {
                             ToolbarAction(
                                 text = stringResource(Res.string.toolbar_action_about),
-                                onTap = {
-                                    navController?.navigate(NavigationNode.PublicAbout.route)
-                                }
+                                route = NavigationNode.PublicAbout.route
                             )
                             ToolbarAction(
                                 text = stringResource(Res.string.toolbar_action_about_research),
-                                onTap = {
-                                    navController?.navigate(NavigationNode.ResearchAbout.route)
-                                }
+                                route = NavigationNode.ResearchAbout.route
                             )
                             ToolbarAction(
                                 text = stringResource(Res.string.toolbar_action_about_business),
-                                onTap = {
-                                    navController?.navigate(NavigationNode.BusinessAbout.route)
-                                }
+                                route = NavigationNode.BusinessAbout.route
                             )
                             ToolbarAction(
                                 text = stringResource(Res.string.toolbar_action_contacts),
-                                onTap = {
-                                    navController?.navigate(NavigationNode.Contacts.route)
-                                }
+                                route = NavigationNode.Contacts.route
                             )
                         }
 
@@ -199,9 +191,11 @@ fun HorizontalToolbar(
 @Composable
 private fun ToolbarAction(
     modifier: Modifier = Modifier,
-    text: String,
-    onTap: (Offset) -> Unit
+    route: String,
+    text: String
 ) {
+    val navController = LocalNavController.current
+    val currentEntry = navController?.currentBackStackEntryAsState()
     val isPressed = remember { mutableStateOf(false) }
     val isHovered = remember { mutableStateOf(false) }
 
@@ -210,6 +204,7 @@ private fun ToolbarAction(
         if (isPressed.value) 0.85f else 1f,
         label = "scalingClickableAnimation"
     )
+    val isSelected = currentEntry?.value?.destination?.route == route
 
     LaunchedEffect(text) {
         interactionSource.interactions.collectLatest {
@@ -231,11 +226,13 @@ private fun ToolbarAction(
                         tryAwaitRelease()
                         isPressed.value = false
                     },
-                    onTap = onTap
+                    onTap = {
+                        if(isSelected.not()) navController?.navigate(route)
+                    }
                 )
             }
             .then(
-                if(isHovered.value) {
+                if(isHovered.value || isSelected) {
                     Modifier.background(
                         color = LocalTheme.current.colors.brandMain,
                         shape = LocalTheme.current.shapes.rectangularActionShape
@@ -245,7 +242,7 @@ private fun ToolbarAction(
             .padding(vertical = 4.dp, horizontal = 8.dp),
         text = text,
         style = LocalTheme.current.styles.title.copy(
-            color = if(isHovered.value) {
+            color = if(isHovered.value || isSelected) {
                 LocalTheme.current.colors.tetrial
             } else LocalTheme.current.colors.secondary
         )
