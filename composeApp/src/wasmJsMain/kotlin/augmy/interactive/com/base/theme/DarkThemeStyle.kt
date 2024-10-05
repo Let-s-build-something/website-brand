@@ -12,7 +12,7 @@ class DarkThemeStyles: DefaultThemeStyles() {
         @Composable
         get() = TextStyle(
             color = LocalTheme.current.colors.primary,
-            fontSize = 28.sp,
+            fontSize = 42.sp,
             fontFamily = FontFamily(fontQuicksandMedium)
         )
 
@@ -20,7 +20,7 @@ class DarkThemeStyles: DefaultThemeStyles() {
         @Composable
         get() = TextStyle(
             color = LocalTheme.current.colors.primary,
-            fontSize = 22.sp,
+            fontSize = 32.sp,
             fontFamily = FontFamily(fontQuicksandMedium)
         )
 
@@ -28,7 +28,7 @@ class DarkThemeStyles: DefaultThemeStyles() {
         @Composable
         get() = TextStyle(
             color = LocalTheme.current.colors.secondary,
-            fontSize = 16.sp,
+            fontSize = 18.sp,
             fontFamily = FontFamily(fontQuicksandMedium)
         )
 
@@ -36,7 +36,7 @@ class DarkThemeStyles: DefaultThemeStyles() {
         @Composable
         get() = TextStyle(
             color = LocalTheme.current.colors.primary,
-            fontSize = 16.sp,
+            fontSize = 24.sp,
             fontFamily = FontFamily(fontQuicksandRegular)
         )
 
@@ -44,7 +44,7 @@ class DarkThemeStyles: DefaultThemeStyles() {
         @Composable
         get() = TextStyle(
             color = LocalTheme.current.colors.secondary,
-            fontSize = 12.sp,
+            fontSize = 20.sp,
             fontFamily = FontFamily(fontQuicksandRegular)
         )
 }

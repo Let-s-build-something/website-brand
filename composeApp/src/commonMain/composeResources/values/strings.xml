@@ -1,6 +1,20 @@
 <resources>
   <string name="app_name">Augmy Interactive</string>
 
+  <string name="copyright">© %1$d Augmy Interactive</string>
+
+  <string name="landing_block_0_heading">Express yourself without missing a beat</string>
+  <string name="landing_block_0_content">Be closer to people you want to be close to. Because that is something everyone deserves. Make yourself more understood by expressive messages that are not just messages, they are your emotional state.</string>
+
+  <string name="landing_block_1_heading">Make your communication easier</string>
+  <string name="landing_block_1_content">Our goal is to make communication (accurately) implicit again. You no longer need to ponder over which emoji expresses your message, we got you covered.</string>
+
+  <string name="toolbar_action_about">About</string>
+  <string name="toolbar_action_about_research">Research</string>
+  <string name="toolbar_action_about_business">Business</string>
+  <string name="toolbar_action_contacts">Contacts</string>
+
   <string name="accessibility_light_mode">Light mode</string>
   <string name="accessibility_dark_mode">Dark mode</string>
+  <string name="accessibility_menu">Open side menu</string>
 </resources>

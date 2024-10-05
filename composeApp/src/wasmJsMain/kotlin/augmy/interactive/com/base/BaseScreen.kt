@@ -1,30 +1,49 @@
 package augmy.interactive.com.base
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
-import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.widthIn
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.text.selection.SelectionContainer
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.FabPosition
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.Text
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.layout.onGloballyPositioned
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import augmy.interactive.com.shared.SharedViewModel
-import augmy.interactive.com.ui.components.HorizontalAppBar
+import augmy.interactive.com.ui.components.HorizontalToolbar
 import augmy.interactive.shared.ui.base.BaseSnackbarHost
+import augmy.interactive.shared.ui.theme.LocalTheme
+import kotlinx.datetime.Clock
+import kotlinx.datetime.TimeZone
+import kotlinx.datetime.toLocalDateTime
+import org.jetbrains.compose.resources.stringResource
+import website_brand.composeapp.generated.resources.Res
+import website_brand.composeapp.generated.resources.copyright
 
 /**
  * Most basic all-in-one implementation of a screen with action bar, without bottom bar
@@ -74,7 +93,7 @@ fun BaseScreen(
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     if(appBarVisible) {
-                        HorizontalAppBar(viewModel = viewModel)
+                        HorizontalToolbar(viewModel = viewModel)
                     }
                     content(this)
                 }
@@ -96,17 +115,49 @@ fun ModalScreenContent(
 ) {
     Column(
         modifier = modifier
-            .widthIn(max = MaxModalWidthDp.dp)
-            .fillMaxHeight()
-            .padding(
-                top = 24.dp,
-                start = 16.dp,
-                end = 16.dp
-            ),
-        verticalArrangement = verticalArrangement,
-        horizontalAlignment = horizontalAlignment,
-        content = content
-    )
+            .verticalScroll(rememberScrollState())
+            .fillMaxSize(),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        val density = LocalDensity.current
+        val contentSize = remember {
+            mutableStateOf(Size(0f, 0f))
+        }
+
+        Column(
+            modifier = Modifier
+                .widthIn(max = MaxModalWidthDp.dp)
+                .onGloballyPositioned {
+                    contentSize.value = with(density) {
+                        Size(it.size.width.toDp().value, it.size.height.toDp().value)
+                    }
+                },
+            verticalArrangement = verticalArrangement,
+            horizontalAlignment = horizontalAlignment
+        ) {
+            CompositionLocalProvider(LocalContentSizeDp provides contentSize.value) {
+                content()
+            }
+        }
+        SelectionContainer {
+            Text(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .shadow(4.dp)
+                    .background(LocalTheme.current.colors.toolbarColor)
+                    .padding(16.dp),
+                text = stringResource(
+                    Res.string.copyright,
+                    Clock.System.now().toLocalDateTime(
+                        TimeZone.currentSystemDefault()
+                    ).year
+                ),
+                style = LocalTheme.current.styles.category.copy(
+                    textAlign = TextAlign.Center
+                )
+            )
+        }
+    }
 }
 
 /** Maximum width of a modal element - this can include a screen in case the device is a desktop */
@@ -114,6 +165,9 @@ const val MaxModalWidthDp = 1300
 
 /** Callable onbackpressed function */
 val LocalOnBackPress = staticCompositionLocalOf<(() -> Unit)?> { null }
+
+/** size in DP of the available content for screens */
+val LocalContentSizeDp = staticCompositionLocalOf { Size(0f, 0f) }
 
 /** Indication of whether the scope below is within a screen */
 val LocalHeyIamScreen = staticCompositionLocalOf { false }

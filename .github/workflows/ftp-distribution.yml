@@ -27,19 +27,20 @@ jobs:
         run: ./gradlew wasmJsBrowserDistribution
 
       - name: List Files
-        run: ls -R ${{ github.workspace }}/composeApp/build/dist/wasmJs/productionExecutable
+        run:
+          cd ${{ github.workspace }}/composeApp/build/dist/wasmJs/productionExecutable
+          ls -R
 
       - name: Upload files to FTP
         run: |
           # Define the base directory
           base_dir="${{ github.workspace }}/composeApp/build/dist/wasmJs/productionExecutable"
 
-          # Find all files in the directory and upload them individually
-          find "$base_dir" -type f | while read -r file; do
-            # Extract the relative path of the file for FTP structure
-            relative_path=$(realpath --relative-to="$base_dir" "$file")
-
-            # Upload file to the corresponding location on the FTP server
-            curl -T "$file" "ftp://${{ secrets.FTP_SERVER_DOMAIN }}/www/$relative_path" --user "${{ secrets.FTP_USERNAME }}:${{ secrets.FTP_PASSWORD }}"
+          # Upload all files and folders recursively
+          find "$base_dir" -type f | while read file; do
+            # Remove the base folder path to get the relative path for FTP
+            RELATIVE_PATH="${file#$base_dir}"
+            # Upload the file to FTP, ensuring the necessary directories are created
+            curl --ftp-create-dirs -T "$file" "ftp://${{ secrets.FTP_SERVER_DOMAIN }}/www/$RELATIVE_PATH" --user "${{ secrets.FTP_USERNAME }}:${{ secrets.FTP_PASSWORD }}"
           done
         shell: bash

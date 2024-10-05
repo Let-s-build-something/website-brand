@@ -40,4 +40,15 @@ sealed class NavigationNode {
     data object Contacts: NavigationNode() {
         override val route: String = "/contacts"
     }
+
+
+    companion object {
+        val allDestinations = listOf(
+            Landing.route,
+            BusinessAbout.route,
+            ResearchAbout.route,
+            PublicAbout.route,
+            Contacts.route
+        )
+    }
 }

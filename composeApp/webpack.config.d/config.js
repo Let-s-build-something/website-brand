@@ -20,5 +20,13 @@ const path = require('path');  // Ensure path module is imported
                 { from: /^\/skiko\.wasm$/, to: '/skiko.wasm' } // Adjust the name if necessary
             ]
         },
+         // CORS Configuration
+         headers: {
+             'Access-Control-Allow-Origin': '*',  // Allow all origins; adjust if needed for security
+             'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',  // Allowed HTTP methods
+             'Access-Control-Allow-Headers': 'Content-Type, Authorization',  // Allowed headers
+         },
+         // Enable the option to handle CORS preflight requests
+         allowedHosts: 'all',  // Allow all hosts (useful for development)
     };
 })(config);

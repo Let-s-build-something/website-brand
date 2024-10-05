@@ -1,6 +1,7 @@
 package augmy.interactive.shared.ui.theme
 
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.CheckboxColors
 import androidx.compose.material3.CheckboxDefaults
 import androidx.compose.material3.FilterChipDefaults
@@ -19,6 +20,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import augmy.interactive.com.theme.BaseColors
 import augmy.interactive.com.theme.ThemeIcons
+import augmy.interactive.com.theme.ThemeShapes
 import augmy.interactive.shared.ui.theme.DefaultValues.defaultBaseColors
 import augmy.interactive.shared.ui.theme.DefaultValues.defaultThemeIcons
 import augmy.interactive.shared.ui.theme.DefaultValues.defaultThemeShapes
@@ -59,10 +61,9 @@ private object DefaultValues {
             get() = 0.dp
         override val iconSizeMedium: Dp
             get() = 0.dp
-        override val betweenItemsSpace: Dp
-            get() = 0.dp
-        override val iconSizeLarge: Dp
-            get() = 0.dp
+        override val betweenItemsSpace: Dp = 0.dp
+        override val iconSizeLarge: Dp = 0.dp
+        override val roundShape: Shape = RoundedCornerShape(24.dp)
     }
 
     val defaultThemeStyle = object: ThemeStyle {

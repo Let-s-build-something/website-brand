@@ -5,7 +5,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import augmy.interactive.shared.ui.theme.ThemeShapes
+import augmy.interactive.com.theme.ThemeShapes
 
 /** Styles specific to main app theme [LocalTheme.current] */
 class AppThemeShapes: ThemeShapes {
@@ -17,5 +17,6 @@ class AppThemeShapes: ThemeShapes {
     override val circularActionShape: Shape = CircleShape
     override val rectangularActionShape: Shape = RoundedCornerShape(10.dp)
     override val componentShape: Shape = RoundedCornerShape(componentCornerRadius)
+    override val roundShape: Shape = RoundedCornerShape(28.dp)
     override val chipShape: Shape = CircleShape
 }

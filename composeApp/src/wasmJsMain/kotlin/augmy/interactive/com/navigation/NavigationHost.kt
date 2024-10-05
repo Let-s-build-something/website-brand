@@ -6,6 +6,7 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import augmy.interactive.com.navigation.NavigationNode.Companion.allDestinations
 import augmy.interactive.com.ui.LandingScreen
 import augmy.interactive.com.ui.about.AboutBusinessScreen
 import augmy.interactive.com.ui.about.AboutResearchScreen
@@ -24,7 +25,9 @@ fun NavigationHost(
     NavHost(
         modifier = modifier.fillMaxSize(),
         navController = navController,
-        startDestination = startDestination ?: DEFAULT_START_DESTINATION
+        startDestination = startDestination.takeIf {
+            allDestinations.contains(it)
+        } ?: DEFAULT_START_DESTINATION
     ) {
         composable(NavigationNode.Landing.route) {
             LandingScreen()

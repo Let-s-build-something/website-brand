@@ -1,4 +1,4 @@
-package augmy.interactive.shared.ui.theme
+package augmy.interactive.com.theme
 
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.unit.Dp
@@ -32,4 +32,7 @@ interface ThemeShapes {
 
     /** shape of a chip component */
     val chipShape: Shape
+
+    /** child rounded component under other component */
+    val roundShape: Shape
 }
