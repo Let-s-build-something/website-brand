@@ -8,6 +8,8 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.sizeIn
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
@@ -35,18 +37,109 @@ import website_brand.composeapp.generated.resources.landing_block_1_content
 import website_brand.composeapp.generated.resources.landing_block_1_heading
 
 /** home/landing screen which is initially shown on the application */
-@OptIn(ExperimentalResourceApi::class)
 @Composable
 fun LandingScreen() {
     val verticalPadding = (LocalContentSizeDp.current.height / 8).dp
     val horizontalPadding = (LocalContentSizeDp.current.width / 20).dp
 
-    Column(verticalArrangement = Arrangement.spacedBy(verticalPadding)) {
-        Spacer(Modifier)
-        ConditionalParent(
+    if(LocalDeviceType.current == WindowWidthSizeClass.Compact) {
+        CompactLayout(verticalPadding = verticalPadding)
+    }else {
+        LargeLayout(
             verticalPadding = verticalPadding,
             horizontalPadding = horizontalPadding
+        )
+    }
+}
+
+@OptIn(ExperimentalResourceApi::class)
+@Composable
+private fun CompactLayout(verticalPadding: Dp) {
+    Column(modifier = Modifier.padding(horizontal = 12.dp)) {
+
+        Spacer(Modifier.height(verticalPadding))
+
+        // first block
+        Box(
+            Modifier
+                .fillMaxWidth()
+                .background(
+                    LocalTheme.current.colors.tetrial,
+                    LocalTheme.current.shapes.roundShape
+                )
+                .padding(verticalPadding / 7)
         ) {
+            AsyncImageThumbnail(
+                modifier = Modifier
+                    .clip(LocalTheme.current.shapes.componentShape),
+                thumbnail = Asset.Image.NaturePalette.placeholder,
+                url = Asset.Image.NaturePalette.url
+            )
+        }
+        Column(
+            modifier = Modifier.fillMaxWidth(),
+            verticalArrangement = Arrangement.spacedBy(4.dp)
+        ) {
+            SelectableText(
+                text = stringResource(Res.string.landing_block_0_heading),
+                style = LocalTheme.current.styles.heading
+            )
+            SelectableText(
+                text = stringResource(Res.string.landing_block_0_content),
+                style = LocalTheme.current.styles.regular
+            )
+        }
+
+        Spacer(Modifier.height(verticalPadding))
+
+        // second block
+        val composition by rememberLottieComposition {
+            LottieCompositionSpec.JsonString(Res.readBytes("files/emoji_thinking.json").decodeToString())
+        }
+
+        Image(
+            modifier = Modifier
+                .sizeIn(maxHeight = 300.dp, maxWidth = 300.dp)
+                .fillMaxWidth()
+                .aspectRatio(1f, matchHeightConstraintsFirst = true)
+                .background(
+                    LocalTheme.current.colors.brandMain,
+                    LocalTheme.current.shapes.componentShape
+                ),
+            painter = rememberLottiePainter(
+                composition = composition,
+                iterations = 100
+            ),
+            contentDescription = null
+        )
+
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(12.dp),
+            verticalArrangement = Arrangement.spacedBy(4.dp)
+        ) {
+            SelectableText(
+                text = stringResource(Res.string.landing_block_1_heading),
+                style = LocalTheme.current.styles.heading
+            )
+            SelectableText(
+                text = stringResource(Res.string.landing_block_1_content),
+                style = LocalTheme.current.styles.regular
+            )
+        }
+    }
+}
+
+@OptIn(ExperimentalResourceApi::class)
+@Composable
+private fun LargeLayout(
+    horizontalPadding: Dp,
+    verticalPadding: Dp
+) {
+    Column(verticalArrangement = Arrangement.spacedBy(verticalPadding)) {
+        Spacer(Modifier)
+        Row(horizontalArrangement = Arrangement.spacedBy(horizontalPadding)) {
             Column(
                 modifier = Modifier
                     .weight(1f)
@@ -79,10 +172,7 @@ fun LandingScreen() {
                 )
             }
         }
-        ConditionalParent(
-            verticalPadding = verticalPadding,
-            horizontalPadding = horizontalPadding
-        ) {
+        Row(horizontalArrangement = Arrangement.spacedBy(horizontalPadding)) {
             val composition by rememberLottieComposition {
                 LottieCompositionSpec.JsonString(Res.readBytes("files/emoji_thinking.json").decodeToString())
             }
@@ -120,25 +210,4 @@ fun LandingScreen() {
         }
         Spacer(Modifier)
     }
-}
-
-@Composable
-private fun ConditionalParent(
-    horizontalPadding: Dp,
-    verticalPadding: Dp,
-    content: @Composable () -> Unit
-) {
-    if(LocalDeviceType.current == WindowWidthSizeClass.Compact) {
-        Column(
-            verticalArrangement = Arrangement.spacedBy(verticalPadding),
-            content = {
-                content()
-            }
-        )
-    }else Row(
-        horizontalArrangement = Arrangement.spacedBy(horizontalPadding),
-        content = {
-            content()
-        }
-    )
 }

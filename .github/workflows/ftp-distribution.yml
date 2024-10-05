@@ -34,11 +34,9 @@ jobs:
       - name: Upload files to FTP
         run: |
           # Define the base directory
-          base_dir="${{ github.workspace }}/composeApp/build/dist/wasmJs/productionExecutable"
-
           # Upload all files and folders recursively
-          find $base_dir -type f | while read file; do
-            RELATIVE_PATH="${file#$base_dir}"
+          find "${{ github.workspace }}/composeApp/build/dist/wasmJs/productionExecutable" -type f | while read file; do
+            RELATIVE_PATH="${file#${{ github.workspace }}/composeApp/build/dist/wasmJs/productionExecutable}"
             curl --ftp-create-dirs -T "$file" "ftp://${{ secrets.FTP_SERVER_DOMAIN }}/www/$RELATIVE_PATH" --user "${{ secrets.FTP_USERNAME }}:${{ secrets.FTP_PASSWORD }}"
           done
         shell: bash
