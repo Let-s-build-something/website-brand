@@ -16,11 +16,17 @@ import org.koin.core.context.startKoin
 
 // paranoid check
 private var isAppInitialized = false
-private var navigatedInitially = false
+
+// Define an interface for your global state
+external interface GlobalAppState {
+    var kotlinApp: Boolean?
+}
 
 @OptIn(ExperimentalComposeUiApi::class)
 fun main() {
     if(isAppInitialized.not()) {
+        (window as? GlobalAppState)?.kotlinApp = true
+
         startKoin {
             modules(commonModule)
         }

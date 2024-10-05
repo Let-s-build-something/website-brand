@@ -6,8 +6,88 @@
     <title>Augmy Interactive</title>
     <link rel="icon" href="TBA">
     <link type="text/css" rel="stylesheet" href="styles.css">
-    <script type="application/javascript" src="composeApp.js"></script>
+
+    <style>
+        /* Splash screen styling */
+        #splash {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: #121212;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            font-size: 24px;
+            color: #81A263;
+            flex-direction: column;
+        }
+
+        /* Initially hide the app content */
+        #app {
+            display: none;
+        }
+    </style>
 </head>
 <body>
+
+<div id="splash">
+    <p>Loading Augmy Interactive...</p>
+    <div class="dots">
+        <span class="dot">.</span>
+        <span class="dot">.</span>
+        <span class="dot">.</span>
+    </div>
+</div>
+
+<div id="app">
+
+</div>
+
+<script>
+    function onWasmAppReady() {
+        const splash = document.getElementById('splash');
+        const app = document.getElementById('app');
+
+        splash.style.display = 'none'; // Hide splash screen
+        app.style.display = 'block'; // Show app
+        console.log("WASM app is ready!");
+    }
+
+    function waitForWasmAppReady() {
+        if (typeof window['kotlinApp'] !== 'undefined') {
+            onWasmAppReady();
+        } else {
+            setTimeout(waitForWasmAppReady, 100);
+        }
+    }
+
+    // Fallback message if loading takes too long
+    setTimeout(() => {
+        if (document.getElementById('app').style.display === 'none') {
+            document.getElementById('splash').innerHTML = '<p>Failed to load the app. Please refresh the page.</p>';
+        }
+    }, 15000);
+
+    function loadComposeApp() {
+        const script = document.createElement('script');
+        script.src = 'composeApp.js';  // Ensure this path is correct
+        script.type = 'application/javascript';
+
+        script.onload = function() {
+            waitForWasmAppReady();
+        };
+
+        script.onerror = function() {
+            document.getElementById('splash').innerHTML = '<p>Error loading the app. Please try again.</p>';
+        };
+
+        document.body.appendChild(script);
+    }
+
+    document.addEventListener('DOMContentLoaded', loadComposeApp);
+</script>
 </body>
 </html>
