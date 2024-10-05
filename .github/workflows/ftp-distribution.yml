@@ -29,7 +29,7 @@ jobs:
 
       - name: Upload files to FTP using PowerShell
         run: |
-          $baseDir = "C:\Users\runneradmin\path\to\composeApp\build\dist\wasmJs\productionExecutable"  # Adjust this path
+          $baseDir = "${{ github.workspace }}\composeApp\build\dist\wasmJs\productionExecutable"  # Adjust this path
           $ftpServer = "${{ secrets.FTP_SERVER_DOMAIN }}"
           $ftpUsername = "${{ secrets.FTP_USERNAME }}"
           $ftpPassword = "${{ secrets.FTP_PASSWORD }}"
