@@ -1,18 +1,22 @@
 package augmy.interactive.com
 
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.window.ComposeViewport
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import augmy.interactive.com.base.LocalOnBackPress
 import augmy.interactive.com.injection.commonModule
+import augmy.interactive.com.navigation.DEFAULT_START_DESTINATION
 import kotlinx.browser.document
 import kotlinx.browser.window
+import kotlinx.coroutines.delay
 import org.koin.core.context.startKoin
 
 // paranoid check
 private var isAppInitialized = false
+private var navigatedInitially = false
 
 @OptIn(ExperimentalComposeUiApi::class)
 fun main() {
@@ -37,7 +41,7 @@ fun main() {
                 ) {
                     App(
                         navController = navController,
-                        startDestination = window.location.pathname
+                        //startDestination = window.location.pathname
                     )
                 }
 
@@ -51,14 +55,13 @@ fun main() {
                 }*/
 
                 //https://developer.mozilla.org/en-US/docs/Web/API/Location
-                /*LaunchedEffect(window.location.pathname) {
+                LaunchedEffect(window.location.pathname) {
+                    delay(500)
                     // navigate to correct route only if arguments are required, otherwise startDestination is sufficient
-                    if(window.location.pathname != DEFAULT_START_DESTINATION
-                        && currentEntry.value?.arguments?.isEmpty() == false
-                    ) {
+                    if(window.location.pathname != DEFAULT_START_DESTINATION) {
                         navController.navigate(route = window.location.pathname)
                     }
-                }*/
+                }
             }
         }catch (e: Exception) {
             e.printStackTrace()

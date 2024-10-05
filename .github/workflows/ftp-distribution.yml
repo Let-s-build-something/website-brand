@@ -31,21 +31,16 @@ jobs:
           cd "${{ github.workspace }}/composeApp/build/dist/wasmJs/productionExecutable"
           ls -R
 
-      - name: Upload files to FTP
+      - name: Upload files to FTP using lftp
         run: |
-          # Define the base directory
+          sudo apt-get update && sudo apt-get install -y lftp
+
+          # Define variables
           base_dir="${{ github.workspace }}/composeApp/build/dist/wasmJs/productionExecutable"
+          ftp_url="ftp://${{ secrets.FTP_USERNAME }}:${{ secrets.FTP_PASSWORD }}@${{ secrets.FTP_SERVER_DOMAIN }}/www"
 
-          # Find all files in the directory and upload them
-          find "$base_dir" -type f | while read -r file; do
-            # Get the relative path of the file for FTP upload using realpath
-            relative_path=$(realpath --relative-to="$base_dir" "$file")
-
-            # Debugging: Print the relative path for troubleshooting
-            echo "Uploading file: $file"
-            echo "Relative path: $relative_path"
-
-            # Upload the file to the FTP server, creating directories as needed
-            curl --ftp-create-dirs -T "$file" "ftp://${{ secrets.FTP_SERVER_DOMAIN }}/www/$relative_path" --user "${{ secrets.FTP_USERNAME }}:${{ secrets.FTP_PASSWORD }}"
-          done
+          # Upload files recursively using lftp
+          lftp -c "
+            open $ftp_url;
+            mirror --reverse --continue --verbose --delete --parallel=5 $base_dir /www"
         shell: bash
