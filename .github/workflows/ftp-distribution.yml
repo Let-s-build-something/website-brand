@@ -29,22 +29,22 @@ jobs:
 
       - name: Upload files to FTP using PowerShell
         run: |
-          $baseDir = "${{ github.workspace }}\composeApp\build\dist\wasmJs\productionExecutable"  # Adjust this path
+          $baseDir = "${{ github.workspace }}\composeApp\build\dist\wasmJs\productionExecutable"
           $ftpServer = "${{ secrets.FTP_SERVER_DOMAIN }}"
           $ftpUsername = "${{ secrets.FTP_USERNAME }}"
           $ftpPassword = "${{ secrets.FTP_PASSWORD }}"
-
+          
           # Get all files recursively in the base directory
           Get-ChildItem -Path $baseDir -Recurse -File | ForEach-Object {
               # Create the relative path for FTP
               $relativePath = $_.FullName.Substring($baseDir.Length).Replace("\", "/")  # Convert backslashes to slashes
               $ftpUrl = "ftp://$ftpServer/www$relativePath"
-
-              # Create the target directory on the FTP server
-              $createDirCmd = "curl --ftp-create-dirs -u ${ftpUsername}:${ftpPassword} ${ftpUrl}"
+          
+              # Create the target directory on the FTP server without logging output
+              $createDirCmd = "curl --ftp-create-dirs -s -u ${ftpUsername}:${ftpPassword} ${ftpUrl}"
               Invoke-Expression $createDirCmd
-
-              # Upload the file to FTP
-              $uploadCmd = "curl -T `"$($_.FullName)`" -u ${ftpUsername}:${ftpPassword} ${ftpUrl}"
+          
+              # Upload the file to FTP without logging output
+              $uploadCmd = "curl -T `"$($_.FullName)`" -s -u ${ftpUsername}:${ftpPassword} ${ftpUrl}"
               Invoke-Expression $uploadCmd
           }
