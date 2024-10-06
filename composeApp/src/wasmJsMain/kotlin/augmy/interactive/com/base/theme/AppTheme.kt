@@ -2,11 +2,11 @@ package augmy.interactive.com.base.theme
 
 import androidx.compose.runtime.Composable
 import augmy.interactive.com.theme.BaseColors
+import augmy.interactive.com.theme.ThemeIcons
 import augmy.interactive.shared.ui.theme.BaseTheme
 import augmy.interactive.shared.ui.theme.LocalThemeColors
 import augmy.interactive.shared.ui.theme.LocalThemeIcons
 import augmy.interactive.shared.ui.theme.LocalThemeStyles
-import augmy.interactive.com.theme.ThemeIcons
 import augmy.interactive.shared.ui.theme.ThemeStyle
 
 /** Main theme with current colors and styles */

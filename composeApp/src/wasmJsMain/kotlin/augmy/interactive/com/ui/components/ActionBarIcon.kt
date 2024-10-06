@@ -11,8 +11,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.Dashboard
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -25,7 +23,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import augmy.interactive.shared.ui.theme.LocalTheme
 import coil3.compose.AsyncImage
-import org.jetbrains.compose.ui.tooling.preview.Preview
 
 /**
  * Basic icon with text, which is mainly designed for action bar, but could be used practically anywhere.
@@ -100,13 +97,4 @@ fun ActionBarIcon(
             )
         }
     }
-}
-
-@Preview
-@Composable
-private fun Preview() {
-    ActionBarIcon(
-        text = "test action",
-        imageVector = Icons.Outlined.Dashboard
-    )
 }
