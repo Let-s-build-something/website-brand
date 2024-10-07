@@ -37,8 +37,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import augmy.interactive.com.shared.SharedViewModel
 import augmy.interactive.com.ui.components.HorizontalToolbar
-import augmy.interactive.shared.ui.base.BaseSnackbarHost
-import augmy.interactive.shared.ui.theme.LocalTheme
+import augmy.interactive.com.theme.LocalTheme
 import kotlinx.datetime.Clock
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime

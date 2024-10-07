@@ -4,7 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.sp
-import augmy.interactive.shared.ui.theme.LocalTheme
+import augmy.interactive.com.theme.LocalTheme
 
 /** Styles specific to main app theme in dark theme */
 class DarkThemeStyles: DefaultThemeStyles() {

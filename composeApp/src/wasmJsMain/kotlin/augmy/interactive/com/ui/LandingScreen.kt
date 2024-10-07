@@ -25,7 +25,7 @@ import augmy.interactive.com.base.LocalDeviceType
 import augmy.interactive.com.data.Asset
 import augmy.interactive.com.ui.components.AsyncImageThumbnail
 import augmy.interactive.com.ui.components.SelectableText
-import augmy.interactive.shared.ui.theme.LocalTheme
+import augmy.interactive.com.theme.LocalTheme
 import io.github.alexzhirkevich.compottie.LottieCompositionSpec
 import io.github.alexzhirkevich.compottie.rememberLottieComposition
 import io.github.alexzhirkevich.compottie.rememberLottiePainter

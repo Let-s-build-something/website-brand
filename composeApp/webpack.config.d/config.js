@@ -1,7 +1,28 @@
-const path = require('path');  // Ensure path module is imported
+const path = require('path');
+const TerserPlugin = require('terser-webpack-plugin');
 
 ;(function(config) {
-    config.mode = 'development';
+    config.mode = 'production';  // Set production mode for optimization
+
+    // Webpack production optimizations
+    config.optimization = {
+        minimize: true,  // Enable code minification
+        minimizer: [
+            new TerserPlugin({
+                terserOptions: {
+                    mangle: true,  // Shorten variable and function names
+                    compress: true,  // Compress the code
+                    format: {
+                        comments: false,  // Remove all comments
+                    },
+                },
+                extractComments: false,  // Avoid creating separate comment files
+            }),
+        ],
+        // Enable tree-shaking (removes unused code)
+        usedExports: true,
+        sideEffects: false,
+    };
 
     // Modify devServer settings for Single Page Application
     config.devServer = {
@@ -20,13 +41,13 @@ const path = require('path');  // Ensure path module is imported
                 { from: /^\/skiko\.wasm$/, to: '/skiko.wasm' } // Adjust the name if necessary
             ]
         },
-         // CORS Configuration
-         headers: {
-             'Access-Control-Allow-Origin': '*',  // Allow all origins; adjust if needed for security
-             'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',  // Allowed HTTP methods
-             'Access-Control-Allow-Headers': 'Content-Type, Authorization',  // Allowed headers
-         },
-         // Enable the option to handle CORS preflight requests
-         allowedHosts: 'all',  // Allow all hosts (useful for development)
+        // CORS Configuration
+        headers: {
+            'Access-Control-Allow-Origin': '*',  // Allow all origins; adjust if needed for security
+            'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',  // Allowed HTTP methods
+            'Access-Control-Allow-Headers': 'Content-Type, Authorization',  // Allowed headers
+        },
+        // Enable the option to handle CORS preflight requests
+        allowedHosts: 'all',  // Allow all hosts (useful for development)
     };
 })(config);

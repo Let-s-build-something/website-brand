@@ -52,7 +52,7 @@ import augmy.interactive.com.base.MaxModalWidthDp
 import augmy.interactive.com.navigation.NavigationNode
 import augmy.interactive.com.shared.SharedViewModel
 import augmy.interactive.com.shared.ThemeChoice
-import augmy.interactive.shared.ui.theme.LocalTheme
+import augmy.interactive.com.theme.LocalTheme
 import io.github.alexzhirkevich.compottie.LottieCompositionSpec
 import io.github.alexzhirkevich.compottie.rememberLottieComposition
 import io.github.alexzhirkevich.compottie.rememberLottiePainter

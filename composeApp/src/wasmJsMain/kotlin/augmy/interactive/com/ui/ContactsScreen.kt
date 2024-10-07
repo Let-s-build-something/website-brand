@@ -29,7 +29,7 @@ import augmy.interactive.com.base.LocalDeviceType
 import augmy.interactive.com.data.Asset
 import augmy.interactive.com.ui.components.AsyncImageThumbnail
 import augmy.interactive.com.ui.components.SelectableText
-import augmy.interactive.shared.ui.theme.LocalTheme
+import augmy.interactive.com.theme.LocalTheme
 import kotlinx.browser.window
 import org.jetbrains.compose.resources.stringResource
 import website_brand.composeapp.generated.resources.Res

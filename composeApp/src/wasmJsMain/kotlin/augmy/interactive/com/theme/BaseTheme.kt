@@ -1,4 +1,4 @@
-package augmy.interactive.shared.ui.theme
+package augmy.interactive.com.theme
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -18,13 +18,10 @@ import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import augmy.interactive.com.theme.BaseColors
-import augmy.interactive.com.theme.ThemeIcons
-import augmy.interactive.com.theme.ThemeShapes
-import augmy.interactive.shared.ui.theme.DefaultValues.defaultBaseColors
-import augmy.interactive.shared.ui.theme.DefaultValues.defaultThemeIcons
-import augmy.interactive.shared.ui.theme.DefaultValues.defaultThemeShapes
-import augmy.interactive.shared.ui.theme.DefaultValues.defaultThemeStyle
+import augmy.interactive.com.theme.DefaultValues.defaultBaseColors
+import augmy.interactive.com.theme.DefaultValues.defaultThemeIcons
+import augmy.interactive.com.theme.DefaultValues.defaultThemeShapes
+import augmy.interactive.com.theme.DefaultValues.defaultThemeStyle
 
 interface BaseTheme {
 

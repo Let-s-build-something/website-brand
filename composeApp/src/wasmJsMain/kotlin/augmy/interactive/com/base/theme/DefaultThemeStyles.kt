@@ -15,9 +15,9 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import augmy.interactive.shared.ui.theme.LocalTheme
-import augmy.interactive.shared.ui.theme.SharedColors
-import augmy.interactive.shared.ui.theme.ThemeStyle
+import augmy.interactive.com.theme.LocalTheme
+import augmy.interactive.com.theme.SharedColors
+import augmy.interactive.com.theme.ThemeStyle
 import org.jetbrains.compose.resources.Font
 import website_brand.composeapp.generated.resources.Res
 import website_brand.composeapp.generated.resources.quicksand_medium

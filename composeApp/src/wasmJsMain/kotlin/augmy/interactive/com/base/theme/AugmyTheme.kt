@@ -7,11 +7,11 @@ import androidx.compose.material3.Typography
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.graphics.Color
-import augmy.interactive.shared.ui.theme.LocalThemeColors
-import augmy.interactive.shared.ui.theme.LocalThemeIcons
-import augmy.interactive.shared.ui.theme.LocalThemeShapes
-import augmy.interactive.shared.ui.theme.LocalThemeStyles
-import augmy.interactive.shared.ui.theme.SharedColors
+import augmy.interactive.com.theme.LocalThemeColors
+import augmy.interactive.com.theme.LocalThemeIcons
+import augmy.interactive.com.theme.LocalThemeShapes
+import augmy.interactive.com.theme.LocalThemeStyles
+import augmy.interactive.com.theme.SharedColors
 
 /** Theme with dynamic resources */
 @Composable

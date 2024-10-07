@@ -4,7 +4,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.russhwolf.settings.Settings
 import com.russhwolf.settings.set
-import data.io.app.SettingsKeys
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -14,21 +13,13 @@ import org.koin.mp.KoinPlatform
 open class SharedViewModel: ViewModel() {
 
     /** Singleton data manager to keep session-only data alive */
-    protected val dataManager: SharedDataManager = KoinPlatform.getKoin().get()
+    private val dataManager: SharedDataManager = KoinPlatform.getKoin().get()
 
     /** persistent settings saved locally to a device */
-    protected val settings = KoinPlatform.getKoin().get<Settings>()
+    private val settings = KoinPlatform.getKoin().get<Settings>()
 
     /** Current configuration specific to this app */
     val localSettings = dataManager.localSettings.asStateFlow()
-
-    /** whether toolbar is currently expanded */
-    val isToolbarExpanded = dataManager.isToolbarExpanded
-
-    /** Changes the state of the toolbar */
-    fun changeToolbarState(expand: Boolean) {
-        dataManager.isToolbarExpanded.value = expand
-    }
 
     /** Sets the theme of the app */
     fun updateTheme(isDarkTheme: Boolean) {

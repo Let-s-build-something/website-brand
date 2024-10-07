@@ -22,8 +22,8 @@ import augmy.interactive.com.base.theme.AugmyTheme
 import augmy.interactive.com.navigation.NavigationHost
 import augmy.interactive.com.shared.SharedViewModel
 import augmy.interactive.com.shared.ThemeChoice
-import augmy.interactive.shared.ui.base.BaseSnackbarHost
-import augmy.interactive.shared.ui.theme.LocalTheme
+import augmy.interactive.com.base.BaseSnackbarHost
+import augmy.interactive.com.theme.LocalTheme
 import org.koin.compose.viewmodel.koinViewModel
 
 @OptIn(ExperimentalMaterial3WindowSizeClassApi::class)

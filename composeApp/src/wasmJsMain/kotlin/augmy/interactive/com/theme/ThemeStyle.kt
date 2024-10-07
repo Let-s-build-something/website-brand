@@ -1,4 +1,4 @@
-package augmy.interactive.shared.ui.theme
+package augmy.interactive.com.theme
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.material3.CheckboxColors

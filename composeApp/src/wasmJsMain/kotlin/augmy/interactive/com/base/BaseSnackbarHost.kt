@@ -1,4 +1,4 @@
-package augmy.interactive.shared.ui.base
+package augmy.interactive.com.base
 
 import androidx.compose.material3.Snackbar
 import androidx.compose.material3.SnackbarDuration
@@ -8,8 +8,8 @@ import androidx.compose.material3.SnackbarVisuals
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import augmy.interactive.shared.ui.theme.LocalTheme
-import augmy.interactive.shared.ui.theme.SharedColors
+import augmy.interactive.com.theme.LocalTheme
+import augmy.interactive.com.theme.SharedColors
 
 /**
  * Themed snackbar host with custom snackbar and possibility to display in error version

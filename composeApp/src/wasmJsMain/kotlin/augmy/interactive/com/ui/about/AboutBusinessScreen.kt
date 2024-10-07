@@ -19,7 +19,7 @@ import augmy.interactive.com.base.LocalDeviceType
 import augmy.interactive.com.data.Asset
 import augmy.interactive.com.ui.components.AsyncImageThumbnail
 import augmy.interactive.com.ui.components.SelectableText
-import augmy.interactive.shared.ui.theme.LocalTheme
+import augmy.interactive.com.theme.LocalTheme
 import org.jetbrains.compose.resources.stringResource
 import website_brand.composeapp.generated.resources.Res
 import website_brand.composeapp.generated.resources.about_business_content
