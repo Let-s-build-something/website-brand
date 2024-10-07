@@ -23,13 +23,13 @@ import androidx.compose.ui.unit.dp
 import augmy.interactive.com.base.LocalContentSizeDp
 import augmy.interactive.com.base.LocalDeviceType
 import augmy.interactive.com.data.Asset
+import augmy.interactive.com.theme.LocalTheme
 import augmy.interactive.com.ui.components.AsyncImageThumbnail
 import augmy.interactive.com.ui.components.SelectableText
-import augmy.interactive.com.theme.LocalTheme
 import io.github.alexzhirkevich.compottie.LottieCompositionSpec
+import io.github.alexzhirkevich.compottie.Url
 import io.github.alexzhirkevich.compottie.rememberLottieComposition
 import io.github.alexzhirkevich.compottie.rememberLottiePainter
-import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.stringResource
 import website_brand.composeapp.generated.resources.Res
 import website_brand.composeapp.generated.resources.landing_block_0_content
@@ -55,7 +55,6 @@ fun LandingScreen() {
     }
 }
 
-@OptIn(ExperimentalResourceApi::class)
 @Composable
 private fun CompactLayout(verticalPadding: Dp) {
     Column(modifier = Modifier.padding(horizontal = 12.dp)) {
@@ -98,7 +97,7 @@ private fun CompactLayout(verticalPadding: Dp) {
 
         // second block
         val composition by rememberLottieComposition {
-            LottieCompositionSpec.JsonString(Res.readBytes("files/emoji_thinking.json").decodeToString())
+            LottieCompositionSpec.Url("https://lottie.host/a87d8352-bc1b-4e58-842e-e5996a23f68e/jVlzK4mG3F.json")
         }
 
         Image(
@@ -112,7 +111,7 @@ private fun CompactLayout(verticalPadding: Dp) {
                 ),
             painter = rememberLottiePainter(
                 composition = composition,
-                iterations = 100
+                iterations = Int.MAX_VALUE
             ),
             contentDescription = null
         )
@@ -135,7 +134,6 @@ private fun CompactLayout(verticalPadding: Dp) {
     }
 }
 
-@OptIn(ExperimentalResourceApi::class)
 @Composable
 private fun LargeLayout(
     horizontalPadding: Dp,
@@ -179,7 +177,7 @@ private fun LargeLayout(
         }
         Row(horizontalArrangement = Arrangement.spacedBy(horizontalPadding)) {
             val composition by rememberLottieComposition {
-                LottieCompositionSpec.JsonString(Res.readBytes("files/emoji_thinking.json").decodeToString())
+                LottieCompositionSpec.Url("https://lottie.host/a87d8352-bc1b-4e58-842e-e5996a23f68e/jVlzK4mG3F.json")
             }
 
             Image(
@@ -192,7 +190,7 @@ private fun LargeLayout(
                     ),
                 painter = rememberLottiePainter(
                     composition = composition,
-                    iterations = 100
+                    iterations = Int.MAX_VALUE
                 ),
                 contentDescription = null
             )

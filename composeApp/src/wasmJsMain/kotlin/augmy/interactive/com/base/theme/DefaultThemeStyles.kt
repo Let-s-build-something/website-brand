@@ -23,15 +23,11 @@ import website_brand.composeapp.generated.resources.Res
 import website_brand.composeapp.generated.resources.quicksand_medium
 import website_brand.composeapp.generated.resources.quicksand_regular
 import website_brand.composeapp.generated.resources.quicksand_semi_bold
-import website_brand.composeapp.generated.resources.quicksand_variable
 
 /** Styles specific to main app theme */
 open class DefaultThemeStyles: ThemeStyle {
 
     companion object {
-        protected val fontQuicksandVariable
-            @Composable get() = Font(Res.font.quicksand_variable)
-
         protected val fontQuicksandRegular
             @Composable get() = Font(Res.font.quicksand_regular)
 

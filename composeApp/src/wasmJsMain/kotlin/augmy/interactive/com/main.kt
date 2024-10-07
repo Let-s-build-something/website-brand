@@ -22,8 +22,25 @@ external interface GlobalAppState {
     var kotlinApp: Boolean?
 }
 
+fun polyfillRandomUUID() {
+    js("""
+        if (typeof crypto !== 'undefined' && typeof crypto.randomUUID !== 'function') {
+            crypto.randomUUID = function() {
+                return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+                    const r = Math.random() * 16 | 0;
+                    const v = c === 'x' ? r : (r & 0x3 | 0x8);
+                    return v.toString(16);
+                });
+            };
+        }
+    """)
+}
+
+
 @OptIn(ExperimentalComposeUiApi::class)
 fun main() {
+    polyfillRandomUUID()
+
     if(isAppInitialized.not()) {
         (window as? GlobalAppState)?.kotlinApp = true
 

@@ -1,7 +1,7 @@
 package augmy.interactive.com.data
 
 /** base URL for the brand storage */
-private const val BASE_URL = "https://augmyinteractive.com/storage/"
+private const val BASE_URL = "https://augmy.org/storage/"
 
 sealed class Asset {
 

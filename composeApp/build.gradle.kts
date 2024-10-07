@@ -37,7 +37,7 @@ kotlin {
 
             implementation(compose.components.resources)
             implementation(compose.materialIconsExtended)
-            implementation(libs.compottie.resources)
+            implementation(libs.compottie.network)
             implementation(libs.navigation.compose)
             implementation(libs.material3.window.size)
             implementation(libs.koin.compose.view.model)

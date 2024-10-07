@@ -2,7 +2,7 @@ name: Distribute Web to FTP
 
 on:
   push:
-    branches: ["release"]
+    branches: [ "release" ]
 
 jobs:
   build:
@@ -26,6 +26,24 @@ jobs:
       # Run WasmJsBrowserDistribution script to generate web assembly files
       - name: Run WasmJsBrowserDistribution
         run: .\gradlew wasmJsBrowserDistribution
+
+          # Remove existing .wasm files from FTP
+      - name: Remove .wasm files from FTP
+        run: |
+          $ftpServer = "${{ secrets.FTP_SERVER_DOMAIN }}"
+          $ftpUsername = "${{ secrets.FTP_USERNAME }}"
+          $ftpPassword = "${{ secrets.FTP_PASSWORD }}"
+          
+          # List .wasm files
+          $listFilesCmd = "curl -s -u ${ftpUsername}:${ftpPassword} ftp://$ftpServer/www/ --list-only"
+          $wasmFiles = Invoke-Expression $listFilesCmd | Select-String -Pattern '\.wasm$'
+          
+          # Loop through the list and delete each .wasm file
+          foreach ($file in $wasmFiles) {
+              $fileName = $file.ToString().Trim()
+              $deleteCmd = "curl -u ${ftpUsername}:${ftpPassword} ftp://$ftpServer/www/$fileName --request DELETE"
+              Invoke-Expression $deleteCmd
+          }
 
       - name: Upload files to FTP using PowerShell
         run: |

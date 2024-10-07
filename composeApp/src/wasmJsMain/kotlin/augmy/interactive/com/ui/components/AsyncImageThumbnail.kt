@@ -5,6 +5,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.ContentScale
 import coil3.PlatformContext
 import coil3.compose.AsyncImage
 import coil3.request.ImageRequest
@@ -14,6 +15,7 @@ import coil3.request.crossfade
 @Composable
 fun AsyncImageThumbnail(
     modifier: Modifier = Modifier,
+    contentScale: ContentScale = ContentScale.FillWidth,
     thumbnail: String,
     url: String
 ) {
@@ -47,6 +49,7 @@ fun AsyncImageThumbnail(
     AsyncImage(
         modifier = modifier.animateContentSize(),
         model = if(displayOriginal.value) originalRequest else thumbnailRequest,
-        contentDescription = null
+        contentDescription = null,
+        contentScale = contentScale
     )
 }

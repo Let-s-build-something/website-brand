@@ -14,6 +14,7 @@ import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -40,6 +41,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.ColorFilter
@@ -54,10 +56,10 @@ import augmy.interactive.com.shared.SharedViewModel
 import augmy.interactive.com.shared.ThemeChoice
 import augmy.interactive.com.theme.LocalTheme
 import io.github.alexzhirkevich.compottie.LottieCompositionSpec
+import io.github.alexzhirkevich.compottie.Url
 import io.github.alexzhirkevich.compottie.rememberLottieComposition
 import io.github.alexzhirkevich.compottie.rememberLottiePainter
 import kotlinx.coroutines.flow.collectLatest
-import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.stringResource
 import website_brand.composeapp.generated.resources.Res
 import website_brand.composeapp.generated.resources.accessibility_dark_mode
@@ -72,7 +74,6 @@ import website_brand.composeapp.generated.resources.toolbar_action_contacts
 /**
  * Custom app bar with options of customization
  */
-@OptIn(ExperimentalResourceApi::class)
 @Composable
 fun HorizontalToolbar(
     modifier: Modifier = Modifier,
@@ -81,7 +82,7 @@ fun HorizontalToolbar(
     val navController = LocalNavController.current
 
     val composition by rememberLottieComposition {
-        LottieCompositionSpec.JsonString(Res.readBytes("files/arrow_right.json").decodeToString())
+        LottieCompositionSpec.Url("https://lottie.host/6b25a4ce-cbf9-4144-97d8-93dd35435424/8VyJlAMYUV.json")
     }
 
     val isMenuExpanded = rememberSaveable {
@@ -101,16 +102,21 @@ fun HorizontalToolbar(
                 .fillMaxWidth(),
         ) {
             Row(
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier
+                    .height(IntrinsicSize.Min)
+                    .fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Image(
-                        modifier = Modifier.height(24.dp),
+                        modifier = Modifier
+                            .size(48.dp)
+                            .scale(1.5f)
+                            .rotate(270f),
                         painter = rememberLottiePainter(
                             composition = composition,
-                            iterations = 100
+                            iterations = Int.MAX_VALUE
                         ),
                         colorFilter = ColorFilter.tint(LocalTheme.current.colors.secondary),
                         contentDescription = null
