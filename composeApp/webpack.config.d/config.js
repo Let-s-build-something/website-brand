@@ -1,29 +1,21 @@
 const path = require('path');
-const TerserPlugin = require('terser-webpack-plugin');
+const TerserPlugin = require("terser-webpack-plugin");
+
+config.optimization = config.optimization || {};
+config.optimization.minimize = true;
+config.optimization.minimizer = [
+    new TerserPlugin({
+        terserOptions: {
+            mangle: true,    // Note: By default, mangle is set to true.
+            compress: true, // Disable the transformations that reduce the code size.
+            output: {
+                beautify: false,
+            },
+        },
+    }),
+];
 
 ;(function(config) {
-    config.mode = 'production';  // Set production mode for optimization
-
-    // Webpack production optimizations
-    config.optimization = {
-        minimize: true,  // Enable code minification
-        minimizer: [
-            new TerserPlugin({
-                terserOptions: {
-                    mangle: true,  // Shorten variable and function names
-                    compress: true,  // Compress the code
-                    format: {
-                        comments: false,  // Remove all comments
-                    },
-                },
-                extractComments: false,  // Avoid creating separate comment files
-            }),
-        ],
-        // Enable tree-shaking (removes unused code)
-        usedExports: true,
-        sideEffects: false,
-    };
-
     // Modify devServer settings for Single Page Application
     config.devServer = {
         ...config.devServer,  // Keep existing config options (if any)
