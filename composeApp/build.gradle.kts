@@ -66,27 +66,3 @@ rootProject.plugins.withType(org.jetbrains.kotlin.gradle.targets.js.yarn.YarnPlu
 kotlin.sourceSets.all {
     languageSettings.optIn("kotlin.experimental.ExperimentalObjCName")
 }
-
-tasks.register<Exec>("optimizeWasm") {
-    group = "build"
-    description = "Optimize the generated WASM file using Binaryen"
-
-    // Ensure this task runs after the WASM compilation task
-    dependsOn("wasmJsBrowserProductionWebpack")
-
-    // Define the paths for the original and optimized WASM files
-    val wasmFile = file("$buildDir/dist/wasmJs/productionExecutable/composeApp.wasm")
-    val optimizedWasmFile = file("$buildDir/dist/wasmJs/productionExecutable/composeApp.optimized.wasm")
-
-    // Specify the command and arguments for Binaryen's wasm-opt
-    commandLine("wasm-opt", wasmFile.absolutePath, "-o", optimizedWasmFile.absolutePath, "--O3")
-
-    doLast {
-        // Optionally delete the original WASM file if needed
-        // wasmFile.delete()
-        println("Optimized WASM file created at: ${optimizedWasmFile.absolutePath}")
-    }
-}
-
-// Make sure to run the optimization task after building
-tasks.getByName("wasmJsBrowserDevelopmentRun").finalizedBy("optimizeWasm")

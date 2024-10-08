@@ -1,3 +1,33 @@
+@font-face {
+    font-family: 'QuicksandMedium';
+    src: url('composeApp/src/commonMain/composeResources/font/quicksand_medium.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Hide experimenting text on screens smaller than 768px */
+@media (max-width: 768px) {
+    .experimenting-text {
+        display: none;
+    }
+}
+
+#splash {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    font-family: 'QuicksandMedium', sans-serif;
+    text-align: center;
+}
+
 html, body {
     width: 100%;
     height: 100%;
@@ -7,7 +37,7 @@ html, body {
 }
 
 .spinner {
-    border: 4px solid #81A263;
+    border: 4px solid #365E32;
     border-top: 4px solid transparent;
     border-radius: 50%;
     width: 40px;
@@ -15,7 +45,19 @@ html, body {
     animation: spin 1s linear infinite;
 }
 
-@keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
+.loading-text {
+    font-weight: bold;
+    color: #365E32;
+    max-width: 60%;
+    margin-top: 10px;
+}
+
+.middle-text {
+    color: #81A263;
+    max-width: 60%;
+}
+
+.experimenting-text {
+    max-width: 60%;
+    color: #365E32;
 }
