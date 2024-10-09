@@ -27,22 +27,22 @@ jobs:
       - name: Run WasmJsBrowserDistribution
         run: .\gradlew wasmJsBrowserDistribution
 
-          # Remove existing .wasm files from FTP
-      - name: Remove .wasm files from FTP
+      # Rename random named .wasm to random.wasm, so that we can later preload it in index.html
+      - name: Rename Random String WASM File
         run: |
-          $ftpServer = "${{ secrets.FTP_SERVER_DOMAIN }}"
-          $ftpUsername = "${{ secrets.FTP_USERNAME }}"
-          $ftpPassword = "${{ secrets.FTP_PASSWORD }}"
+          $baseDir = "${{ github.workspace }}\composeApp\build\dist\wasmJs\productionExecutable"
           
-          # List .wasm files
-          $listFilesCmd = "curl -s -u ${ftpUsername}:${ftpPassword} ftp://$ftpServer/www/ --list-only"
-          $wasmFiles = Invoke-Expression $listFilesCmd | Select-String -Pattern '\.wasm$'
+          # Get all .wasm files in the directory
+          $wasmFiles = Get-ChildItem -Path $baseDir -Filter "*.wasm"
           
-          # Loop through the list and delete each .wasm file
-          foreach ($file in $wasmFiles) {
-              $fileName = $file.ToString().Trim()
-              $deleteCmd = "curl -u ${ftpUsername}:${ftpPassword} ftp://$ftpServer/www/$fileName --request DELETE"
-              Invoke-Expression $deleteCmd
+          foreach ($wasmFile in $wasmFiles) {
+              # Check if the file is not composeApp.wasm
+              if ($wasmFile.Name -ne "composeApp.wasm") {
+                  # Rename the file to random.wasm
+                  $newFilePath = Join-Path $wasmFile.Directory.FullName "random.wasm"
+                  Rename-Item -Path $wasmFile.FullName -NewName $newFilePath
+                  break
+              }
           }
 
       - name: Upload files to FTP using PowerShell
