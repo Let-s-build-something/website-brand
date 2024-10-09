@@ -4,11 +4,12 @@
         <!-- Basic Metadata -->
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Augmy Interactive - Immersive Digital Experiences</title>
+        <title>Augmy Interactive - Meaningful communication anywhere</title>
         <meta name="description" content="Our goal is to make communication (authentically) implicit again. You no longer need to ponder over which emoji expresses your emotions the best, you will be simply understood.">
         <meta name="keywords" content="mobile application, online communication, psychology, ">
         <meta name="author" content="Augmy Interactive">
 
+        <!-- Preload WASM files -->
         <link rel="preload" href="composeApp.wasm" as="fetch" type="application/wasm" crossorigin="anonymous">
         <link rel="preload" href="random.wasm" as="fetch" type="application/wasm" crossorigin="anonymous">
 
@@ -88,19 +89,15 @@
     </head>
     <body>
         <div id="splash">
+            <div class="image-container">
+                <img src="https://augmy.org/storage/img/i1_sign_in.webp" class="thumbnail-image" alt="Image">
+            </div>
             <div class="spinner"></div>
-            <p class="loading-text">Loading Augmy Interactive...</p>
+            <p class="middle-text">Loading Augmy Interactive...</p>
             <p class="middle-text">Our goal is to make communication (authentically) implicit again. You no longer need to ponder over which emoji expresses your emotions the best, you will be simply understood.</p>
-            <p class="experimenting-text">
-                We are currently experimenting with
-                <a href="https://kotlinlang.org/docs/multiplatform.html" class="experimenting-text">Kotlin Multiplatform</a>,
-                due to which the loading time is initially unusually longer, we apologize.
-            </p>
         </div>
 
-        <div id="app">
-
-        </div>
+        <div id="app"></div>
 
         <script>
             function onWasmAppReady() {

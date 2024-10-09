@@ -35,12 +35,18 @@ sealed class NavigationNode {
         override val route: String = "/contacts"
     }
 
+    /** Screen  for outlining the project's roadmap */
+    data object Roadmap: NavigationNode() {
+        override val route: String = "/roadmap"
+    }
+
     companion object {
         val allDestinations = listOf(
             Landing.route,
             BusinessAbout.route,
             ResearchAbout.route,
             PublicAbout.route,
+            Roadmap.route,
             Contacts.route
         )
     }

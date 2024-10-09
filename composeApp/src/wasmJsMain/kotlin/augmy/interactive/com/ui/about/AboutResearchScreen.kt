@@ -64,7 +64,7 @@ private fun CompactLayout(
                 modifier = Modifier
                     .fillMaxWidth()
                     .clip(LocalTheme.current.shapes.componentShape),
-                thumbnail = Asset.Image.Experiment.placeholder,
+                thumbnail = Asset.Image.Experiment.thumbnail,
                 url = Asset.Image.Experiment.url
             )
         }
@@ -117,7 +117,7 @@ private fun LargeLayout(
                 modifier = Modifier
                     .fillMaxWidth()
                     .clip(LocalTheme.current.shapes.componentShape),
-                thumbnail = Asset.Image.Experiment.placeholder,
+                thumbnail = Asset.Image.Experiment.thumbnail,
                 url = Asset.Image.Experiment.url
             )
         }

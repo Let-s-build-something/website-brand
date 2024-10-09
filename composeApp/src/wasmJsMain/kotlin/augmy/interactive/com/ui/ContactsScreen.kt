@@ -98,7 +98,7 @@ private fun CompactLayout(
                 modifier = Modifier
                     .fillMaxWidth()
                     .clip(LocalTheme.current.shapes.componentShape),
-                thumbnail = Asset.Image.Cooperation.placeholder,
+                thumbnail = Asset.Image.Cooperation.thumbnail,
                 url = Asset.Image.Cooperation.url
             )
         }
@@ -248,7 +248,7 @@ private fun LargeLayout(
                 modifier = Modifier
                     .fillMaxWidth()
                     .clip(LocalTheme.current.shapes.componentShape),
-                thumbnail = Asset.Image.Cooperation.placeholder,
+                thumbnail = Asset.Image.Cooperation.thumbnail,
                 url = Asset.Image.Cooperation.url
             )
         }

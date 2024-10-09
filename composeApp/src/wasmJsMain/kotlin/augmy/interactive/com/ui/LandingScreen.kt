@@ -16,8 +16,10 @@ import androidx.compose.foundation.layout.sizeIn
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import augmy.interactive.com.base.LocalContentSizeDp
@@ -36,6 +38,8 @@ import website_brand.composeapp.generated.resources.landing_block_0_content
 import website_brand.composeapp.generated.resources.landing_block_0_heading
 import website_brand.composeapp.generated.resources.landing_block_1_content
 import website_brand.composeapp.generated.resources.landing_block_1_heading
+import website_brand.composeapp.generated.resources.landing_header_content
+import website_brand.composeapp.generated.resources.landing_header_heading
 
 /** home/landing screen which is initially shown on the application */
 @Composable
@@ -43,14 +47,28 @@ fun LandingScreen() {
     val verticalPadding = (LocalContentSizeDp.current.height / 8).dp
     val horizontalPadding = (LocalContentSizeDp.current.width / 20).dp
 
-    Crossfade(LocalDeviceType.current == WindowWidthSizeClass.Compact) { isCompact ->
-        if(isCompact) {
-            CompactLayout(verticalPadding = verticalPadding)
-        }else {
-            LargeLayout(
-                verticalPadding = verticalPadding,
-                horizontalPadding = horizontalPadding
-            )
+    Column {
+        SelectableText(
+            modifier = Modifier
+                .padding(top = verticalPadding)
+                .fillMaxWidth(),
+            text = stringResource(Res.string.landing_header_heading),
+            style = LocalTheme.current.styles.heading.copy(textAlign = TextAlign.Center)
+        )
+        SelectableText(
+            modifier = Modifier.fillMaxWidth(),
+            text = stringResource(Res.string.landing_header_content),
+            style = LocalTheme.current.styles.regular.copy(textAlign = TextAlign.Center)
+        )
+        Crossfade(LocalDeviceType.current == WindowWidthSizeClass.Compact) { isCompact ->
+            if(isCompact) {
+                CompactLayout(verticalPadding = verticalPadding)
+            }else {
+                LargeLayout(
+                    verticalPadding = verticalPadding,
+                    horizontalPadding = horizontalPadding
+                )
+            }
         }
     }
 }
@@ -75,8 +93,7 @@ private fun CompactLayout(verticalPadding: Dp) {
                 modifier = Modifier
                     .fillMaxWidth()
                     .clip(LocalTheme.current.shapes.componentShape),
-                thumbnail = Asset.Image.NaturePalette.placeholder,
-                url = Asset.Image.NaturePalette.url
+                asset = Asset.Image.NaturePalette
             )
         }
         Column(
@@ -102,6 +119,7 @@ private fun CompactLayout(verticalPadding: Dp) {
 
         Image(
             modifier = Modifier
+                .align(Alignment.CenterHorizontally)
                 .sizeIn(maxHeight = 300.dp, maxWidth = 300.dp)
                 .fillMaxWidth()
                 .aspectRatio(1f, matchHeightConstraintsFirst = true)
@@ -170,8 +188,7 @@ private fun LargeLayout(
                     modifier = Modifier
                         .fillMaxWidth()
                         .clip(LocalTheme.current.shapes.componentShape),
-                    thumbnail = Asset.Image.NaturePalette.placeholder,
-                    url = Asset.Image.NaturePalette.url
+                    asset = Asset.Image.NaturePalette
                 )
             }
         }

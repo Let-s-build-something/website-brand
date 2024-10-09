@@ -3,11 +3,14 @@
 
   <string name="website_footer">© %1$d Augmy Interactive, built with Compose Multiplatform</string>
 
+  <string name="landing_header_heading">Implicit, expressive, embedded</string>
+  <string name="landing_header_content">That's the new era of communication online.</string>
+
   <string name="landing_block_0_heading">Express yourself without missing a beat</string>
   <string name="landing_block_0_content">Be closer to people you want to be close to. Because that is something everyone deserves. Make yourself more understood by expressive messages that are not just messages, they are your emotional state.</string>
 
   <string name="landing_block_1_heading">Make your communication easier</string>
-  <string name="landing_block_1_content">Our goal is to make communication (accurately) implicit again. You no longer need to ponder over which emoji expresses your emotions the best, we got you covered.</string>
+  <string name="landing_block_1_content">Our goal is to make communication (authentically) implicit again. You no longer need to ponder over which emoji expresses your emotions the best, you will be simply understood.</string>
 
   <string name="toolbar_action_about">About</string>
   <string name="toolbar_action_about_research">Research</string>

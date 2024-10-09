@@ -6,6 +6,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
+import augmy.interactive.com.data.Asset
 import coil3.PlatformContext
 import coil3.compose.AsyncImage
 import coil3.request.ImageRequest
@@ -51,5 +52,19 @@ fun AsyncImageThumbnail(
         model = if(displayOriginal.value) originalRequest else thumbnailRequest,
         contentDescription = null,
         contentScale = contentScale
+    )
+}
+
+@Composable
+fun AsyncImageThumbnail(
+    modifier: Modifier = Modifier,
+    contentScale: ContentScale = ContentScale.FillWidth,
+    asset: Asset.Image
+) {
+    AsyncImageThumbnail(
+        modifier = modifier,
+        contentScale = contentScale,
+        thumbnail = asset.thumbnail,
+        url = asset.url
     )
 }

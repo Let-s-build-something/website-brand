@@ -9,6 +9,7 @@ import androidx.navigation.compose.composable
 import augmy.interactive.com.navigation.NavigationNode.Companion.allDestinations
 import augmy.interactive.com.ui.ContactsScreen
 import augmy.interactive.com.ui.LandingScreen
+import augmy.interactive.com.ui.RoadmapScreen
 import augmy.interactive.com.ui.about.AboutBusinessScreen
 import augmy.interactive.com.ui.about.AboutResearchScreen
 import augmy.interactive.com.ui.about.AboutScreen
@@ -43,6 +44,9 @@ fun NavigationHost(
         }
         composable(NavigationNode.Contacts.route) {
             ContactsScreen()
+        }
+        composable(NavigationNode.Contacts.route) {
+            RoadmapScreen()
         }
     }
 }

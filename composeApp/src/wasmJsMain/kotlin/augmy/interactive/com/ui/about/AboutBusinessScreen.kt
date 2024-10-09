@@ -64,7 +64,7 @@ private fun CompactLayout(
                 modifier = Modifier
                     .fillMaxWidth()
                     .clip(LocalTheme.current.shapes.componentShape),
-                thumbnail = Asset.Image.EarHelp.placeholder,
+                thumbnail = Asset.Image.EarHelp.thumbnail,
                 url = Asset.Image.EarHelp.url
             )
         }
@@ -117,7 +117,7 @@ private fun LargeLayout(
                 modifier = Modifier
                     .fillMaxWidth()
                     .clip(LocalTheme.current.shapes.componentShape),
-                thumbnail = Asset.Image.EarHelp.placeholder,
+                thumbnail = Asset.Image.EarHelp.thumbnail,
                 url = Asset.Image.EarHelp.url
             )
         }
