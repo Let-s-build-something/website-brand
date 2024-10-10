@@ -45,7 +45,7 @@ fun NavigationHost(
         composable(NavigationNode.Contacts.route) {
             ContactsScreen()
         }
-        composable(NavigationNode.Contacts.route) {
+        composable(NavigationNode.Roadmap.route) {
             RoadmapScreen()
         }
     }

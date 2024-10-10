@@ -6,8 +6,8 @@ config.optimization.minimize = true;
 config.optimization.minimizer = [
     new TerserPlugin({
         terserOptions: {
-            mangle: true,    // Note: By default, mangle is set to true.
-            compress: true, // Disable the transformations that reduce the code size.
+            mangle: true,
+            compress: true,
             output: {
                 beautify: false,
             },
@@ -18,28 +18,37 @@ config.optimization.minimizer = [
 ;(function(config) {
     // Modify devServer settings for Single Page Application
     config.devServer = {
-        ...config.devServer,  // Keep existing config options (if any)
-        port: 9000,  // Set the port (or change this to whatever port you prefer)
+        ...config.devServer,
+        port: 9000,
         static: [
             // Serve the directory containing your index.html
             path.resolve(__dirname, 'C:\\Users\\jacob\\AndroidStudioProjects\\website-brand\\composeApp\\src\\wasmJsMain\\resources'),
-            // Add the directory where your .wasm file is located
+            // Add the directory where your .wasm and .wasm.br files are located
             path.resolve(__dirname, 'C:\\Users\\jacob\\AndroidStudioProjects\\website-brand\\build\\js\\packages\\composeApp\\kotlin')
         ],
         historyApiFallback: {
             index: '/index.html',  // Serve index.html for all undefined routes
             rewrites: [
                 // Ensure requests for .wasm files do not fallback to index.html
-                { from: /^\/skiko\.wasm$/, to: '/skiko.wasm' } // Adjust the name if necessary
+                { from: /^\/skiko\.wasm$/, to: '/skiko.wasm' },
+                { from: /^\/composeApp\.wasm\.br$/, to: '/composeApp.wasm.br' } // Ensure the .wasm.br is served
             ]
         },
         // CORS Configuration
         headers: {
-            'Access-Control-Allow-Origin': '*',  // Allow all origins; adjust if needed for security
-            'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',  // Allowed HTTP methods
-            'Access-Control-Allow-Headers': 'Content-Type, Authorization',  // Allowed headers
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
+            'Access-Control-Allow-Headers': 'Content-Type, Authorization',
         },
         // Enable the option to handle CORS preflight requests
-        allowedHosts: 'all',  // Allow all hosts (useful for development)
+        allowedHosts: 'all',
+        // Set the appropriate Content-Encoding and Content-Type for Brotli-compressed WASM
+        onBeforeSetupMiddleware(devServer) {
+            devServer.app.get('*.wasm.br', (req, res, next) => {
+                res.setHeader('Content-Encoding', 'br');
+                res.setHeader('Content-Type', 'application/wasm');
+                next();
+            });
+        },
     };
 })(config);

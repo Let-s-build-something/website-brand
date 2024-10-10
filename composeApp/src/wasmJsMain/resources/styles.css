@@ -1,8 +1,9 @@
 @font-face {
-    font-family: 'QuicksandMedium';
-    src: url('composeApp/src/commonMain/composeResources/font/quicksand_medium.ttf') format('truetype');
-    font-weight: normal;
+    font-family: 'Quicksand Medium';
+    src: url('./composeResources/website_brand.composeapp.generated.resources/font/quicksand_medium.ttf') format('truetype');
+    font-weight: 500;
     font-style: normal;
+    font-display: swap;
 }
 
 @keyframes spin {
@@ -38,6 +39,7 @@ html, body {
     height: 100%;
     margin: 0;
     padding: 0;
+    font-family: 'QuicksandMedium', sans-serif;
     overflow: hidden;
 }
 
@@ -53,6 +55,7 @@ html, body {
 .middle-text {
     color: #81A263;
     max-width: 60%;
+    font-family: 'QuicksandMedium', sans-serif;
 }
 
 /* Image container 1:1 with rounded corners and background */
