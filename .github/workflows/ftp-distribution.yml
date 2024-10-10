@@ -6,12 +6,14 @@ on:
 
 jobs:
   build:
-    runs-on: windows-latest
+    runs-on: ubuntu-latest  # Use Ubuntu instead of Windows
 
     steps:
+      # Step 1: Checkout Code
       - name: Checkout Code
         uses: actions/checkout@v4
 
+      # Step 2: Set up JDK 17
       - name: Set up JDK 17
         uses: actions/setup-java@v4
         with:
@@ -19,62 +21,57 @@ jobs:
           distribution: 'temurin'
           cache: gradle
 
-      # Prepare access to everything
+      # Step 3: Prepare access to everything
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
 
-      # Run WasmJsBrowserDistribution script to generate web assembly files
+      # Step 4: Run WasmJsBrowserDistribution script to generate web assembly files
       - name: Run WasmJsBrowserDistribution
-        run: .\gradlew wasmJsBrowserDistribution
+        run: ./gradlew wasmJsBrowserDistribution
 
-      - name: Remove .wasm files from FTP
-        run: |
-          $ftpServer = "${{ secrets.FTP_SERVER_DOMAIN }}"
-          $ftpUsername = "${{ secrets.FTP_USERNAME }}"
-          $ftpPassword = "${{ secrets.FTP_PASSWORD }}"
-          
-          # List .wasm files
-          $listFilesCmd = "curl -s -u ${ftpUsername}:${ftpPassword} ftp://$ftpServer/www/ --list-only"
-          $wasmFiles = Invoke-Expression $listFilesCmd | Select-String -Pattern '\.wasm$'
-          
-          # Loop through the list and delete each .wasm file
-          foreach ($file in $wasmFiles) {
-              $fileName = $file.ToString().Trim()
-              $deleteCmd = "curl -u ${ftpUsername}:${ftpPassword} ftp://$ftpServer/www/$fileName --request DELETE"
-              Invoke-Expression $deleteCmd
-          }
-
-      # Step 5: Install Brotli CLI on Windows runner
+      # Step 5: Install Brotli on Ubuntu runner
       - name: Install Brotli
-        run: choco install brotli
+        run: sudo apt-get update && sudo apt-get install -y brotli
 
       # Step 6: Compress .wasm files with Brotli
       - name: Compress .wasm files with Brotli
         run: |
-          $wasmDir = "${{ github.workspace }}\composeApp\build\dist\wasmJs\productionExecutable"
-          Get-ChildItem -Path $wasmDir -Recurse -Filter "*.wasm" | ForEach-Object {
-              $filePath = $_.FullName
-              brotli $filePath --output $filePath.br
-          }
+          wasm_dir="${{ github.workspace }}/composeApp/build/dist/wasmJs/productionExecutable"
+          find "$wasm_dir" -type f -name "*.wasm" -exec brotli -Z {} \;
 
-      - name: Upload files to FTP using PowerShell
+      # Step 7: Remove .wasm files from FTP (optional cleanup)
+      - name: Remove .wasm files from FTP
         run: |
-          $baseDir = "${{ github.workspace }}\composeApp\build\dist\wasmJs\productionExecutable"
-          $ftpServer = "${{ secrets.FTP_SERVER_DOMAIN }}"
-          $ftpUsername = "${{ secrets.FTP_USERNAME }}"
-          $ftpPassword = "${{ secrets.FTP_PASSWORD }}"
+          ftp_server="${{ secrets.FTP_SERVER_DOMAIN }}"
+          ftp_username="${{ secrets.FTP_USERNAME }}"
+          ftp_password="${{ secrets.FTP_PASSWORD }}"
           
-          # Get all files recursively in the base directory
-          Get-ChildItem -Path $baseDir -Recurse -File | ForEach-Object {
-              # Create the relative path for FTP
-              $relativePath = $_.FullName.Substring($baseDir.Length).Replace("\", "/")  # Convert backslashes to slashes
-              $ftpUrl = "ftp://$ftpServer/www$relativePath"
+          # List .wasm files on FTP
+          wasm_files=$(curl -s -u "${ftp_username}:${ftp_password}" "ftp://$ftp_server/www/" --list-only | grep '\.wasm$')
           
-              # Create the target directory on the FTP server without logging output
-              $createDirCmd = "curl --ftp-create-dirs -s -u ${ftpUsername}:${ftpPassword} ${ftpUrl}"
-              Invoke-Expression $createDirCmd
-          
-              # Upload the file to FTP without logging output
-              $uploadCmd = "curl -T `"$($_.FullName)`" -s -u ${ftpUsername}:${ftpPassword} ${ftpUrl}"
-              Invoke-Expression $uploadCmd
-          }
+          # Delete each .wasm file
+          for file in $wasm_files; do
+              curl -u "${ftp_username}:${ftp_password}" "ftp://$ftp_server/www/$file" --request DELETE
+          done
+
+      # Step 8: Upload Brotli-compressed files to FTP
+      - name: Upload files to FTP using cURL
+        run: |
+          base_dir="${{ github.workspace }}/composeApp/build/dist/wasmJs/productionExecutable"
+          ftp_server="${{ secrets.FTP_SERVER_DOMAIN }}"
+          ftp_username="${{ secrets.FTP_USERNAME }}"
+          ftp_password="${{ secrets.FTP_PASSWORD }}"
+
+          # Change to the base directory
+          cd "$base_dir"
+
+          # List files recursively and upload each one
+          for file in $(ls -R1); do
+            if [[ -f "$file" ]]; then
+              relative_path="$file"
+              ftp_url="ftp://$ftp_server/www/$relative_path"
+
+              # Create directories and upload the file
+              curl --ftp-create-dirs -T "$file" -u "${ftp_username}:${ftp_password}" "$ftp_url"
+            fi
+          done
