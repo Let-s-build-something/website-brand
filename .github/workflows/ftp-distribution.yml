@@ -39,20 +39,25 @@ jobs:
           wasm_dir="${{ github.workspace }}/composeApp/build/dist/wasmJs/productionExecutable"
           find "$wasm_dir" -type f -name "*.wasm" -exec brotli -Z {} \;
 
-      # Step 7: Remove .wasm files from FTP (optional cleanup)
-      - name: Remove .wasm files from FTP
+      # Step 7: Remove .wasm.br files from FTP
+      - name: Remove .wasm.br files from FTP
         run: |
           ftp_server="${{ secrets.FTP_SERVER_DOMAIN }}"
           ftp_username="${{ secrets.FTP_USERNAME }}"
           ftp_password="${{ secrets.FTP_PASSWORD }}"
           
-          # List .wasm files on FTP
-          wasm_files=$(curl -s -u "${ftp_username}:${ftp_password}" "ftp://$ftp_server/www/" --list-only | grep '\.wasm$')
-          
-          # Delete each .wasm file
-          for file in $wasm_files; do
-              curl -u "${ftp_username}:${ftp_password}" "ftp://$ftp_server/www/$file" --request DELETE
-          done
+          # List .wasm.br files on FTP
+          wasm_br_files=$(curl -s -u "${ftp_username}:${ftp_password}" "ftp://$ftp_server/www/" --list-only | grep '\.wasm\.br$')
+
+          if [ -z "$wasm_br_files" ]; then
+              echo "No .wasm.br files found on FTP server."
+          else
+              # Delete each .wasm.br file
+              for file in $wasm_br_files; do
+                  echo "Deleting $file..."
+                  curl -u "${ftp_username}:${ftp_password}" "ftp://$ftp_server/www/$file" --request DELETE
+              done
+          fi
 
       # Step 8: Upload Brotli-compressed files to FTP
       - name: Upload files to FTP using cURL
