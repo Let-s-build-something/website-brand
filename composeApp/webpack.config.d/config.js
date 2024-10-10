@@ -49,6 +49,12 @@ config.optimization.minimizer = [
                 res.setHeader('Content-Type', 'application/wasm');
                 next();
             });
+
+            // Optional: Set up the same for .wasm files
+            devServer.app.get('*.wasm', (req, res, next) => {
+                res.setHeader('Content-Type', 'application/wasm');
+                next();
+            });
         },
     };
 })(config);

@@ -49,6 +49,7 @@ html, body {
     border-radius: 50%;
     width: 40px;
     height: 40px;
+    aspect-ratio: 1 / 1;
     animation: spin 1s linear infinite;
 }
 
@@ -65,7 +66,7 @@ html, body {
     align-items: center;
     padding: 16px;
     margin-bottom:20px;
-    width: 100%;
+    aspect-ratio: 1 / 1;
     max-width: 430px;
     height: auto;
     background-color: #81A263; /* Customize background color */

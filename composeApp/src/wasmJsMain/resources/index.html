@@ -1,92 +1,87 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <!-- Basic Metadata -->
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Augmy Interactive - Meaningful communication anywhere</title>
-        <meta name="description" content="Our goal is to make communication (authentically) implicit again. You no longer need to ponder over which emoji expresses your emotions the best, you will be simply understood.">
-        <meta name="keywords" content="mobile application, online communication, psychology, ">
-        <meta name="author" content="Augmy Interactive">
+<head>
+    <!-- Basic Metadata -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Augmy Interactive - Meaningful communication anywhere</title>
+    <meta name="description" content="Our goal is to make communication (authentically) implicit again. You no longer need to ponder over which emoji expresses your emotions the best, you will be simply understood.">
+    <meta name="keywords" content="mobile application, online communication, psychology, ">
+    <meta name="author" content="Augmy Interactive">
 
-        <!-- Preload WASM files -->
-        <!--<link rel="preload" href="composeApp.wasm" as="fetch" type="application/wasm" crossorigin="anonymous">-->
+    <!-- Preload WASM files -->
+    <!--<link rel="preload" href="composeApp.wasm" as="fetch" type="application/wasm" crossorigin="anonymous">-->
 
-        <!-- Canonical URL (SEO Best Practice for duplicate content) -->
-        <link rel="canonical" href="https://www.augmy.org">
+    <!-- Canonical URL (SEO Best Practice for duplicate content) -->
+    <link rel="canonical" href="https://www.augmy.org">
 
-        <!-- Robots Meta Tag -->
-        <meta name="robots" content="index, follow"> <!-- Allows indexing and following links -->
+    <!-- Robots Meta Tag -->
+    <meta name="robots" content="index, follow"> <!-- Allows indexing and following links -->
 
-        <!-- Open Graph Metadata (for social media) -->
-        <meta property="og:title" content="Augmy Interactive - Immersive Digital Experiences">
-        <meta property="og:description" content="Discover innovative AR and VR solutions by Augmy Interactive.">
-        <meta property="og:url" content="https://www.augmy.org">
-        <meta property="og:image" content="https://www.augmy.org/images/og-image.jpg"> <!-- URL to an image to display when the page is shared -->
-        <meta property="og:type" content="website">
-        <meta property="og:locale" content="en_US">
+    <!-- Open Graph Metadata (for social media) -->
+    <meta property="og:title" content="Augmy Interactive - Immersive Digital Experiences">
+    <meta property="og:description" content="Discover innovative AR and VR solutions by Augmy Interactive.">
+    <meta property="og:url" content="https://www.augmy.org">
+    <meta property="og:image" content="https://www.augmy.org/images/og-image.jpg"> <!-- URL to an image to display when the page is shared -->
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="en_US">
 
-        <!-- Twitter Card Metadata -->
-        <meta name="twitter:card" content="summary_large_image">
-        <meta name="twitter:title" content="Augmy Interactive">
-        <meta name="twitter:description" content="Send your emotions, not just messages">
-        <meta name="twitter:image" content="https://www.augmy.org/images/twitter-card.jpg">
-        <meta name="twitter:site" content="@AugmyInteractiv">
+    <!-- Twitter Card Metadata -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Augmy Interactive">
+    <meta name="twitter:description" content="Send your emotions, not just messages">
+    <meta name="twitter:image" content="https://www.augmy.org/images/twitter-card.jpg">
+    <meta name="twitter:site" content="@AugmyInteractiv">
 
-        <!-- Favicon -->
-        <link rel="icon" href="https://www.augmy.org/favicon.ico">
-        <link rel="preload" href="styles.css" as="style">
-        <link rel="preload" href="./composeResources/website_brand.composeapp.generated.resources/font/quicksand_medium.ttf" as="fetch" type="font/ttf" crossorigin/>
-        <!--<link rel="preload" href="composeApp.wasm" as="fetch" type="application/wasm" crossorigin="anonymous">-->
+    <!-- Favicon -->
+    <link rel="icon" href="https://www.augmy.org/favicon.ico">
+    <link type="text/css" rel="stylesheet" href="styles.css">
+    <link rel="preload" href="./composeResources/website_brand.composeapp.generated.resources/font/quicksand_medium.ttf" as="fetch" type="font/ttf" crossorigin/>
+    <!--<link rel="preload" href="composeApp.wasm" as="fetch" type="application/wasm" crossorigin="anonymous">-->
 
-        <!-- Additional Metadata for SEO (structured data) -->
-        <script type="application/ld+json">
-          {
-              "@context": "https://schema.org",
-              "@type": "Organization",
-              "name": "Augmy Interactive",
-              "url": "https://www.augmy.org",
-              "logo": "https://www.augmy.com/images/logo.png",
-              "sameAs": [
-                  "https://www.facebook.com/augmyinteractive",
-                  "https://www.twitter.com/AugmyInteractiv",
-                  "https://www.instagram.com/augmy_interactive",
-                  "https://www.linkedin.com/company/augmy-interactive"
-              ],
-              "contactPoint": {
+    <!-- Additional Metadata for SEO (structured data) -->
+    <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "Organization",
+            "name": "Augmy Interactive",
+            "url": "https://www.augmy.org",
+            "logo": "https://www.augmy.com/images/logo.png",
+            "sameAs": [
+                "https://www.facebook.com/augmyinteractive",
+                "https://www.twitter.com/AugmyInteractiv",
+                "https://www.instagram.com/augmy_interactive",
+                "https://www.linkedin.com/company/augmy-interactive"
+            ],
+            "contactPoint": {}
+        }
+    </script>
 
-              }
-          }
-      </script>
+    <style>
+        /* Splash screen styling */
+        #splash {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: #121212;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            font-size: 24px;
+            color: #81A263;
+            flex-direction: column;
+        }
 
-        <!-- Load CSS (for performance optimization, consider async loading if needed) -->
-        <link type="text/css" rel="stylesheet" href="styles.css">
-
-        <style>
-            /* Splash screen styling */
-            #splash {
-                position: fixed;
-                top: 0;
-                left: 0;
-                width: 100vw;
-                height: 100vh;
-                background-color: #121212;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                z-index: 9999;
-                font-size: 24px;
-                color: #81A263;
-                flex-direction: column;
-            }
-
-            /* Initially hide the app content */
-            #app {
-                background-color: #121212;
-                display: none;
-            }
-        </style>
-    </head>
+        /* Initially hide the app content */
+        #app {
+            background-color: #121212;
+            display: none;
+        }
+    </style>
+</head>
     <body>
         <div id="splash">
             <div class="image-container">
@@ -100,46 +95,10 @@
 
         <div id="app"></div>
 
-        <script>
-            function onWasmAppReady() {
-                const splash = document.getElementById('splash');
-                const app = document.getElementById('app');
+        <script type="module" src="wasm-loader.js"></script> <!-- Include the loader script -->
 
-                splash.style.display = 'none'; // Hide splash screen
-                app.style.display = 'block'; // Show app
-                console.log("WASM app is ready!");
-            }
-
-            function waitForWasmAppReady() {
-                if (typeof window['kotlinApp'] !== 'undefined') {
-                    onWasmAppReady();
-                } else {
-                    setTimeout(waitForWasmAppReady, 100);
-                }
-            }
-
-            // Fallback message if loading takes too long
-            setTimeout(() => {
-                if (document.getElementById('app').style.display === 'none') {
-                    document.getElementById('splash').innerHTML = '<p>Failed to load the app. Please refresh the page.</p>';
-                }
-            }, 15000);
-
-            function loadComposeApp() {
-                const script = document.createElement('script');
-                script.src = 'composeApp.js';  // Ensure this path is correct
-                script.type = 'application/javascript';
-
-                script.onload = function() {
-                    waitForWasmAppReady();
-                };
-
-                script.onerror = function() {
-                    document.getElementById('splash').innerHTML = '<p>Error loading the app. Please try again.</p>';
-                };
-
-                document.body.appendChild(script);
-            }
+        <script type="module">
+            import { loadComposeApp } from './wasm-loader.js';  // Adjust path if needed
 
             document.addEventListener('DOMContentLoaded', loadComposeApp);
         </script>
