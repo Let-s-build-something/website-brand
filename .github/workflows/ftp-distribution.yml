@@ -44,6 +44,19 @@ jobs:
               Invoke-Expression $deleteCmd
           }
 
+      # Step 5: Install Brotli CLI on Windows runner
+      - name: Install Brotli
+        run: choco install brotli
+
+      # Step 6: Compress .wasm files with Brotli
+      - name: Compress .wasm files with Brotli
+        run: |
+          $wasmDir = "${{ github.workspace }}\composeApp\build\dist\wasmJs\productionExecutable"
+          Get-ChildItem -Path $wasmDir -Recurse -Filter "*.wasm" | ForEach-Object {
+              $filePath = $_.FullName
+              brotli $filePath --output $filePath.br
+          }
+
       - name: Upload files to FTP using PowerShell
         run: |
           $baseDir = "${{ github.workspace }}\composeApp\build\dist\wasmJs\productionExecutable"
