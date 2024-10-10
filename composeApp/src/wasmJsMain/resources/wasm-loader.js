@@ -1,7 +1,8 @@
 // wasm-loader.js
-import * as brotliPromise from 'https://cdn.jsdelivr.net/npm/brotli-wasm@1.1.0/brotli.js';
+import * as brotliPromise from 'https://cdn.skypack.dev/brotli-wasm'; // Correct import
 
-export async function initializeBrotli() {
+// Wait for the Brotli module to load
+async function initializeBrotli() {
     const brotli = await brotliPromise; // Import is async in browsers due to wasm requirements!
     return brotli;
 }
@@ -23,10 +24,9 @@ export function waitForWasmAppReady() {
 }
 
 export async function loadCompressedWasm() {
-    // Initialize Brotli
-    const brotli = await initializeBrotli();
+    const brotli = await initializeBrotli(); // Initialize Brotli
 
-    // Function to load and decompress the Brotli-compressed WebAssembly file
+    // Load and decompress the Brotli-compressed WebAssembly file
     return fetch('/composeApp.wasm.br')
         .then(response => {
             if (!response.ok) {
@@ -41,6 +41,7 @@ export async function loadCompressedWasm() {
             const blob = new Blob([decompressedData], { type: 'application/wasm' });
             const url = URL.createObjectURL(blob);
 
+            // Create a new script element for the WASM module
             const script = document.createElement('script');
             script.src = url; // Use the Blob URL for the WASM
             script.type = 'application/javascript';
