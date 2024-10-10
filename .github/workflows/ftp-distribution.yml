@@ -35,24 +35,24 @@ jobs:
           wasm_dir="${{ github.workspace }}/composeApp/build/dist/wasmJs/productionExecutable"
           find "$wasm_dir" -type f -name "*.wasm" -exec gzip -k {} \;
 
-      # Step 6: Remove .wasm.gz files from FTP
-      - name: Remove .wasm.gz files from FTP
+      # Step 6: Upload files to FTP, excluding .wasm files but including .wasm.br files
+      - name: Upload files to FTP using cURL
         run: |
+          base_dir="${{ github.workspace }}/composeApp/build/dist/wasmJs/productionExecutable"
           ftp_server="${{ secrets.FTP_SERVER_DOMAIN }}"
           ftp_username="${{ secrets.FTP_USERNAME }}"
           ftp_password="${{ secrets.FTP_PASSWORD }}"
-          
-          # List .wasm.gz files on FTP
-          wasm_gz_files=$(curl -s -u "${ftp_username}:${ftp_password}" "ftp://$ftp_server/www/" --list-only | grep '\.wasm\.gz$')
-          
-          if [ -z "$wasm_gz_files" ]; then
-              echo "No .wasm.gz files found on FTP server."
-          else
-              # Delete each .wasm.gz file
-              echo "$wasm_gz_files" | while read -r file; do
-                  if [ -n "$file" ]; then
-                      echo "Deleting $file..."
-                      curl -u "${ftp_username}:${ftp_password}" -Q "DELE /www/$file" "ftp://$ftp_server/"
-                  fi
-              done
-          fi
+
+          # Change to the base directory
+          cd "$base_dir"
+
+          # List files recursively and upload each one except .wasm files
+          for file in $(find . -type f ! -name "*.wasm"); do
+            if [[ -f "$file" ]]; then
+              relative_path="$file"
+              ftp_url="ftp://$ftp_server/www/$relative_path"
+
+              # Create directories and upload the file
+              curl --ftp-create-dirs -T "$file" -u "${ftp_username}:${ftp_password}" "$ftp_url"
+            fi
+          done
