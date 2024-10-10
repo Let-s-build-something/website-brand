@@ -29,37 +29,33 @@ jobs:
       - name: Run WasmJsBrowserDistribution
         run: ./gradlew wasmJsBrowserDistribution
 
-      # Step 5: Install Brotli on Ubuntu runner
-      - name: Install Brotli
-        run: sudo apt-get update && sudo apt-get install -y brotli
-
-      # Step 6: Compress .wasm files with Brotli
-      - name: Compress .wasm files with Brotli
+      # Step 5: Compress .wasm files with gzip
+      - name: Compress .wasm files with gzip
         run: |
           wasm_dir="${{ github.workspace }}/composeApp/build/dist/wasmJs/productionExecutable"
-          find "$wasm_dir" -type f -name "*.wasm" -exec brotli -Z {} \;
+          find "$wasm_dir" -type f -name "*.wasm" -exec gzip -k {} \;
 
-      # Step 7: Remove .wasm.br files from FTP
-      - name: Remove .wasm.br files from FTP
+      # Step 6: Remove .wasm.gz files from FTP
+      - name: Remove .wasm.gz files from FTP
         run: |
           ftp_server="${{ secrets.FTP_SERVER_DOMAIN }}"
           ftp_username="${{ secrets.FTP_USERNAME }}"
           ftp_password="${{ secrets.FTP_PASSWORD }}"
-          
-          # List .wasm.br files on FTP
-          wasm_br_files=$(curl -s -u "${ftp_username}:${ftp_password}" "ftp://$ftp_server/www/" --list-only | grep '\.wasm\.br$')
 
-          if [ -z "$wasm_br_files" ]; then
-              echo "No .wasm.br files found on FTP server."
+          # List .wasm.gz files on FTP
+          wasm_gz_files=$(curl -s -u "${ftp_username}:${ftp_password}" "ftp://$ftp_server/www/" --list-only | grep '\.wasm\.gz$')
+
+          if [ -z "$wasm_gz_files" ]; then
+              echo "No .wasm.gz files found on FTP server."
           else
-              # Delete each .wasm.br file
-              for file in $wasm_br_files; do
+              # Delete each .wasm.gz file
+              for file in $wasm_gz_files; do
                   echo "Deleting $file..."
                   curl -u "${ftp_username}:${ftp_password}" "ftp://$ftp_server/www/$file" --request DELETE
               done
           fi
 
-      # Step 8: Upload files to FTP, excluding .wasm files but including .wasm.br files
+      # Step 7: Upload files to FTP, excluding .wasm files but including .wasm.br files
       - name: Upload files to FTP using cURL
         run: |
           base_dir="${{ github.workspace }}/composeApp/build/dist/wasmJs/productionExecutable"
