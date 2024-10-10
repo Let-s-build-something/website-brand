@@ -41,26 +41,6 @@ jobs:
           ftp_server="${{ secrets.FTP_SERVER_DOMAIN }}"
           ftp_username="${{ secrets.FTP_USERNAME }}"
           ftp_password="${{ secrets.FTP_PASSWORD }}"
-
-          # List .wasm.gz files on FTP
-          wasm_gz_files=$(curl -s -u "${ftp_username}:${ftp_password}" "ftp://$ftp_server/www/" --list-only | grep '\.wasm\.gz$')
-
-          if [ -z "$wasm_gz_files" ]; then
-              echo "No .wasm.gz files found on FTP server."
-          else
-              # Delete each .wasm.gz file
-              for file in $wasm_gz_files; do
-                  echo "Deleting $file..."
-                  curl -u "${ftp_username}:${ftp_password}" "ftp://$ftp_server/www/$file" --request DELETE
-              done
-          fi
-
-      # Step 7: Remove .wasm.gz files from FTP
-      - name: Remove .wasm.gz files from FTP
-        run: |
-          ftp_server="${{ secrets.FTP_SERVER_DOMAIN }}"
-          ftp_username="${{ secrets.FTP_USERNAME }}"
-          ftp_password="${{ secrets.FTP_PASSWORD }}"
           
           # List .wasm.gz files on FTP
           wasm_gz_files=$(curl -s -u "${ftp_username}:${ftp_password}" "ftp://$ftp_server/www/" --list-only | grep '\.wasm\.gz$')
