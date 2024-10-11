@@ -10,9 +10,9 @@
     <meta name="author" content="Augmy Interactive">
 
     <!-- Preload WASM files -->
-    <link rel="preload" href="composeApp.wasm.gz" as="fetch" crossorigin>
-    <!--<link rel="preload" href="8433c6b69bfa201b0895.wasm" as="fetch" crossorigin/>-->
-    <link rel="preload" href="2eaba8643e2ccdf352b4.wasm.gz" as="fetch" crossorigin/>
+    <link rel="preload" href="composeApp.wasm.br" as="fetch" crossorigin>
+    <!--<link rel="preload" href="8433c6b69bfa201b0895.wasm.br" as="fetch" crossorigin/>-->
+    <link rel="preload" href="2eaba8643e2ccdf352b4.wasm.br" as="fetch" crossorigin/>
 
     <!-- Canonical URL (SEO Best Practice for duplicate content) -->
     <link rel="canonical" href="https://www.augmy.org">
@@ -98,41 +98,7 @@
         <div id="app"></div>
 
         <script >
-            function onWasmAppReady() {
-                const splash = document.getElementById('splash');
-                const app = document.getElementById('app');
-                splash.style.display = 'none'; // Hide splash screen
-                app.style.display = 'block'; // Show app
-                console.log("WASM app is ready!");
-            }
-
-            function waitForWasmAppReady() {
-                if (typeof window['kotlinApp'] !== 'undefined') {
-                    onWasmAppReady();
-                } else {
-                    setTimeout(waitForWasmAppReady, 100);
-                }
-            }
-
-            // Fallback message if loading takes too long
-            setTimeout(() => {
-                if (document.getElementById('app').style.display === 'none') {
-                    document.getElementById('splash').innerHTML = '<p>Failed to load the app. Please refresh the page.</p>';
-                }
-            }, 15000);
-
-            function loadComposeApp() {
-                const script = document.createElement('script');
-                script.src = 'composeApp.js';  // Ensure this path is correct
-                script.type = 'application/javascript';
-                script.onload = function() {
-                    waitForWasmAppReady();
-                };
-                script.onerror = function() {
-                    document.getElementById('splash').innerHTML = '<p>Error loading the app. Please try again.</p>';
-                };
-                document.body.appendChild(script);
-            }
+            import { loadComposeApp } from './preloader.js';
 
             document.addEventListener('DOMContentLoaded', loadComposeApp);
         </script>

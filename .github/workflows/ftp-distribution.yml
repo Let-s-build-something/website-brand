@@ -29,13 +29,17 @@ jobs:
       - name: Run WasmJsBrowserDistribution
         run: ./gradlew wasmJsBrowserDistribution
 
-      # Step 5: Compress .wasm files with gzip
-      - name: Compress .wasm files with gzip
+      # Step 5: Install Brotli on Ubuntu runner
+      - name: Install Brotli
+        run: sudo apt-get update && sudo apt-get install -y brotli
+
+      # Step 6: Compress .wasm files with Brotli
+      - name: Compress .wasm files with Brotli
         run: |
           wasm_dir="${{ github.workspace }}/composeApp/build/dist/wasmJs/productionExecutable"
-          find "$wasm_dir" -type f -name "*.wasm" -exec gzip -k {} \;
+          find "$wasm_dir" -type f -name "*.wasm" -exec brotli -Z {} \;
 
-      # Step 6: Upload files to FTP, excluding .wasm files but including .wasm.br files
+      # Step 7: Upload files to FTP, excluding .wasm files but including .wasm.br files
       - name: Upload files to FTP using cURL
         run: |
           base_dir="${{ github.workspace }}/composeApp/build/dist/wasmJs/productionExecutable"
