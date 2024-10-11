@@ -1,11 +1,12 @@
 async function decompressBrotli(response) {
     const compressedData = await response.arrayBuffer();
 
-    // Use fflate's Brotli decompression function
-    const decompressedData = fflate.decompress(new Uint8Array(compressedData), { format: 'brotli' });
+    // Use fflate's Brotli decompression function (fflate automatically detects Brotli format)
+    const decompressedData = fflate.decompress(new Uint8Array(compressedData));
 
     return decompressedData.buffer; // Return the ArrayBuffer for WebAssembly instantiation
 }
+
 
 async function loadWasmFile(wasmUrl) {
     try {
