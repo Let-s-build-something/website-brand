@@ -32,30 +32,35 @@ async function loadWasmFile(wasmUrl) {
 export async function loadComposeApp() {
     try {
         // Fetch and decompress both WASM files
-        const wasm1 = loadWasmFile('composeApp.wasm.br');
-        const wasm2 = loadWasmFile('2eaba8643e2ccdf352b4.wasm.br');
+        const decompressedWasm1 = await loadWasmFile('composeApp.wasm.br');
+        const decompressedWasm2 = await loadWasmFile('2eaba8643e2ccdf352b4.wasm.br');
 
-        // Wait for both WASM files to be ready
-            const [decompressedWasm1, decompressedWasm2] = await Promise.all([wasm1, wasm2]);
+        // Create Blob URLs for the decompressed WASM files
+        const blob1 = new Blob([decompressedWasm1], { type: 'application/octet-stream' });
+        const blob2 = new Blob([decompressedWasm2], { type: 'application/octet-stream' });
 
-            // Create blobs for the decompressed WASM files
-            const blob1 = new Blob([decompressedWasm1], { type: 'application/wasm' });
-            const blob2 = new Blob([decompressedWasm2], { type: 'application/wasm' });
+        // Create downloadable links for the blobs
+        const url1 = URL.createObjectURL(blob1);
+        const url2 = URL.createObjectURL(blob2);
 
-            // Create URLs for the blobs
-            const url1 = URL.createObjectURL(blob1);
-            const url2 = URL.createObjectURL(blob2);
+        // Create links to download the files
+        const link1 = document.createElement('wasm');
+        link1.href = url1;
+        link1.download = 'composeApp.wasm'; // Name of the downloaded file
 
-            // Append download links for the WASM files to the document
-            appendDownloadLink(url1, 'composeApp.wasm');
-            appendDownloadLink(url2, '2eaba8643e2ccdf352b4.wasm');
+        const link2 = document.createElement('wasm2');
+        link2.href = url2;
+        link2.download = '2eaba8643e2ccdf352b4.wasm'; // Name of the downloaded file
 
-            // Invoke the app readiness check
-            waitForWasmAppReady();
-        } catch (error) {
-            console.error("Error loading WASM files:", error);
-            document.getElementById('splash').innerHTML = '<p>Error loading the app. Please try again.</p>';
-        }
+        // Append the links to the document (optional, depending on your use case)
+        document.body.appendChild(link1);
+        document.body.appendChild(link2);
+
+        console.log("WASM files downloaded successfully!");
+    } catch (error) {
+        console.error("Error loading the app:", error);
+        document.getElementById('splash').innerHTML = '<p>Error loading the app. Please try again.</p>';
+    }
 }
 
 // WASM app ready check
