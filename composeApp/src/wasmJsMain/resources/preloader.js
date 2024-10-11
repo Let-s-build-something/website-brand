@@ -1,29 +1,16 @@
+// Import BrotliDecode function from decode.min.js
+import { BrotliDecode } from './decode.min.js';
+
+// Decompress function
 async function decompressBrotli(response) {
+    // Read the compressed data as an ArrayBuffer
     const compressedData = await response.arrayBuffer();
-    const uint8Data = new Uint8Array(compressedData);
 
-    try {
-        // Try the asynchronous Brotli decompression function
-        return await new Promise((resolve, reject) => {
-            fflate.brotliDecompress(uint8Data, (err, decompressedData) => {
-                if (err) {
-                    return reject(err);  // Handle any errors during decompression
-                }
-                resolve(decompressedData.buffer);  // Return the ArrayBuffer for WebAssembly instantiation
-            });
-        });
-    } catch (error) {
-        console.warn('Async decompression failed, trying synchronous decompression:', error);
+    // Decompress the data using BrotliDecode
+    const decompressedData = BrotliDecode(new Uint8Array(compressedData));
 
-        try {
-            // Fall back to the synchronous Brotli decompression function
-            const decompressedData = fflate.brotliDecompressSync(uint8Data);
-            return decompressedData.buffer;  // Return the ArrayBuffer for WebAssembly instantiation
-        } catch (syncError) {
-            console.error('Synchronous decompression also failed:', syncError);
-            throw new Error('Both async and sync Brotli decompression failed');  // Propagate the error
-        }
-    }
+    // Return the decompressed data as an ArrayBuffer
+    return decompressedData.buffer;
 }
 
 async function loadWasmFile(wasmUrl) {
@@ -32,7 +19,8 @@ async function loadWasmFile(wasmUrl) {
         if (!response.ok) {
             throw new Error(`Failed to load ${wasmUrl}`);
         }
-        
+
+        // Use the decompressBrotli function to decompress the WASM file
         const decompressedWasm = await decompressBrotli(response);
         return WebAssembly.instantiate(decompressedWasm);
     } catch (error) {
@@ -46,7 +34,7 @@ export async function loadComposeApp() {
         // Fetch and decompress both WASM files
         const wasm1 = loadWasmFile('composeApp.wasm.br');
         const wasm2 = loadWasmFile('2eaba8643e2ccdf352b4.wasm.br');
-        
+
         // Wait for both WASM files to be ready
         const [result1, result2] = await Promise.all([wasm1, wasm2]);
 
