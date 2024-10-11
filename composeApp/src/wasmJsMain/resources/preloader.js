@@ -1,15 +1,10 @@
 async function decompressBrotli(response) {
-    // Check if the browser supports the CompressionStream API for Brotli
-    if ('CompressionStream' in window) {
-        const decompressedStream = response.body
-            .pipeThrough(new DecompressionStream('br')); // 'br' stands for Brotli compression
-        
-        const decompressedResponse = new Response(decompressedStream);
-        return await decompressedResponse.arrayBuffer();
-    } else {
-        // Fallback: If Brotli decompression is not supported
-        throw new Error("Brotli decompression is not supported in this browser.");
-    }
+    const compressedData = await response.arrayBuffer();
+
+    // Use fflate's Brotli decompression function
+    const decompressedData = fflate.decompress(new Uint8Array(compressedData), { format: 'brotli' });
+
+    return decompressedData.buffer; // Return the ArrayBuffer for WebAssembly instantiation
 }
 
 async function loadWasmFile(wasmUrl) {
