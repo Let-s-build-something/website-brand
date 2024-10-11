@@ -36,17 +36,26 @@ export async function loadComposeApp() {
         const wasm2 = loadWasmFile('2eaba8643e2ccdf352b4.wasm.br');
 
         // Wait for both WASM files to be ready
-        const [result1, result2] = await Promise.all([wasm1, wasm2]);
+            const [decompressedWasm1, decompressedWasm2] = await Promise.all([wasm1, wasm2]);
 
-        // Store the results (exported instances) in window for later use
-        window.composeAppWasm = result1.instance;
-        window.secondWasmModule = result2.instance;
+            // Create blobs for the decompressed WASM files
+            const blob1 = new Blob([decompressedWasm1], { type: 'application/wasm' });
+            const blob2 = new Blob([decompressedWasm2], { type: 'application/wasm' });
 
-        // Invoke the app readiness check
-        waitForWasmAppReady();
-    } catch (error) {
-        document.getElementById('splash').innerHTML = '<p>Error loading the app. Please try again.</p>';
-    }
+            // Create URLs for the blobs
+            const url1 = URL.createObjectURL(blob1);
+            const url2 = URL.createObjectURL(blob2);
+
+            // Append download links for the WASM files to the document
+            appendDownloadLink(url1, 'composeApp.wasm');
+            appendDownloadLink(url2, '2eaba8643e2ccdf352b4.wasm');
+
+            // Invoke the app readiness check
+            waitForWasmAppReady();
+        } catch (error) {
+            console.error("Error loading WASM files:", error);
+            document.getElementById('splash').innerHTML = '<p>Error loading the app. Please try again.</p>';
+        }
 }
 
 // WASM app ready check
