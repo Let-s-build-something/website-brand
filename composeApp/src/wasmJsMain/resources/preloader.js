@@ -22,7 +22,7 @@ async function loadWasmFile(wasmUrl) {
 
         // Use the decompressBrotli function to decompress the WASM file
         const decompressedWasm = await decompressBrotli(response);
-        return WebAssembly.instantiate(decompressedWasm);
+        return decompressedWasm;
     } catch (error) {
         console.error("Error loading WASM file:", error);
         throw error;
