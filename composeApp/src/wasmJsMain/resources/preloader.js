@@ -1,12 +1,30 @@
 async function decompressBrotli(response) {
     const compressedData = await response.arrayBuffer();
+    const uint8Data = new Uint8Array(compressedData);
 
-    // Use fflate's Brotli decompression function (fflate automatically detects Brotli format)
-    const decompressedData = fflate.decompress(new Uint8Array(compressedData));
+    try {
+        // Try the asynchronous Brotli decompression function
+        return await new Promise((resolve, reject) => {
+            fflate.brotliDecompress(uint8Data, (err, decompressedData) => {
+                if (err) {
+                    return reject(err);  // Handle any errors during decompression
+                }
+                resolve(decompressedData.buffer);  // Return the ArrayBuffer for WebAssembly instantiation
+            });
+        });
+    } catch (error) {
+        console.warn('Async decompression failed, trying synchronous decompression:', error);
 
-    return decompressedData.buffer; // Return the ArrayBuffer for WebAssembly instantiation
+        try {
+            // Fall back to the synchronous Brotli decompression function
+            const decompressedData = fflate.brotliDecompressSync(uint8Data);
+            return decompressedData.buffer;  // Return the ArrayBuffer for WebAssembly instantiation
+        } catch (syncError) {
+            console.error('Synchronous decompression also failed:', syncError);
+            throw new Error('Both async and sync Brotli decompression failed');  // Propagate the error
+        }
+    }
 }
-
 
 async function loadWasmFile(wasmUrl) {
     try {
