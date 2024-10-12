@@ -61,7 +61,7 @@
 
     <style>
         /* Splash screen styling */
-        #splash {
+        #loader-container {
             position: fixed;
             top: 0;
             left: 0;
@@ -98,9 +98,9 @@
         <div id="app"></div>
 
         <script type="module">
-            import { loadComposeApp } from './preloader.js';
+            import { loadIndex } from './preloader.js';
 
-            document.addEventListener('DOMContentLoaded', loadComposeApp);
+            document.addEventListener('DOMContentLoaded', loadIndex);
         </script>
     </body>
 </html>

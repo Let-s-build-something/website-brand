@@ -49,33 +49,30 @@ export async function loadComposeApp() {
         console.log("WASM files downloaded successfully!");
     } catch (error) {
         console.error("Error loading the app:", error);
-        document.getElementById('splash').innerHTML = '<p>Error loading the app. Please try again.</p>';
+        document.getElementById('loader-container').innerHTML = '<p>Error loading the app. Please try again.</p>';
     }
 }
 
-// WASM app ready check
-function onWasmAppReady() {
-    const splash = document.getElementById('splash');
-    const app = document.getElementById('app');
-    splash.style.display = 'none'; // Hide splash screen
-    app.style.display = 'block'; // Show app
-    console.log("WASM app is ready!");
-}
+export async function loadIndex() {
+    const script = document.createElement('script');
+    script.src = 'composeApp.js';  // Ensure this path is correct
+    script.type = 'application/javascript';
 
-function waitForWasmAppReady() {
-    if (typeof window['composeAppWasm'] !== 'undefined') {
-        onWasmAppReady();
-    } else {
-        setTimeout(waitForWasmAppReady, 100);
-    }
-}
+    await loadComposeApp()
 
-// Run the decompression function and expose it globally
-window.loadComposeApp = loadComposeApp;
+    script.onerror = function() {
+        document.getElementById('loader-container').innerHTML = '<p>Error loading the app. Please try again.</p>';
+    };
+
+    document.body.appendChild(script);
+}
 
 // Fallback message if loading takes too long
 setTimeout(() => {
     if (document.getElementById('app').style.display === 'none') {
-        document.getElementById('splash').innerHTML = '<p>Failed to load the app. Please refresh the page.</p>';
+        document.getElementById('loader-container').innerHTML = '<p>Failed to load the app. Please refresh the page.</p>';
     }
 }, 15000);
+
+// Run the decompression function and expose it globally
+window.loadComposeApp = loadComposeApp;
