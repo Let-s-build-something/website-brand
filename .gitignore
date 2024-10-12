@@ -20,3 +20,4 @@ captures
 composeApp/src/wasmJsMain/resources/2eaba8643e2ccdf352b4.wasm.br
 composeApp/src/wasmJsMain/resources/composeApp.wasm.br
 composeApp/src/wasmJsMain/resources/decode.min.js
+composeApp/composeApp.js

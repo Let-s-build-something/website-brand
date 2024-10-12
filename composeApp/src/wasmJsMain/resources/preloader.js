@@ -39,15 +39,18 @@ async function loadComposeApp() {
         const blob1 = new Blob([decompressedWasm1], { type: 'application/wasm' });
         const blob2 = new Blob([decompressedWasm2], { type: 'application/wasm' });
 
+        const blobFile1 = new File([blob1], "composeApp.wasm")
+        const blobFile2 = new File([blob2], "2eaba8643e2ccdf352b4.wasm")
+
         // Create downloadable links for the blobs
-        const url1 = URL.createObjectURL(blob1);
-        const url2 = URL.createObjectURL(blob2);
+        const url1 = URL.createObjectURL(blobFile1);
+        const url2 = URL.createObjectURL(blobFile2);
 
         console.log("WASM blob 1:", url1);
         console.log("WASM blob 2:", url2);
 
         window.wasmComposeBlobUrl = url1;
-        window.wasmMagicBlobUrl = url1;
+        window.wasmMagicBlobUrl = url2;
 
         console.log("WASM files downloaded successfully!");
     } catch (error) {
@@ -57,7 +60,7 @@ async function loadComposeApp() {
 }
 
 export async function loadIndex() {
-    await loadComposeApp()
+    //await loadComposeApp()
 
     const script = document.createElement('script');
     script.src = 'composeApp.js';  // Ensure this path is correct

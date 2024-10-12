@@ -34,18 +34,18 @@ jobs:
         run: sudo apt-get update && sudo apt-get install -y brotli
 
       # Step 6: Compress .wasm files with Brotli
-      - name: Compress .wasm files with Brotli
-        run: |
-          wasm_dir="${{ github.workspace }}/composeApp/build/dist/wasmJs/productionExecutable"
-          find "$wasm_dir" -type f -name "*.wasm" -exec brotli -Z {} \;
-
-      - name: Replace instantiate function and update URLs
-        run: |
-          # Replace '"./composeApp.wasm"' with 'window.wasmComposeBlobUrl'
-          sed -i 's|"./composeApp.wasm"|window.wasmComposeBlobUrl|g' ${{ github.workspace }}/composeApp/build/dist/wasmJs/productionExecutable/composeApp.js
-          
-          # Replace '"2eaba8643e2ccdf352b4.wasm"' with 'window.wasmMagicBlobUrl'
-          sed -i 's|"2eaba8643e2ccdf352b4.wasm"|window.wasmMagicBlobUrl;console.log("a.b:", a.p);console.log("blob:", window.wasmMagicBlobUrl);|g' ${{ github.workspace }}/composeApp/build/dist/wasmJs/productionExecutable/composeApp.js
+      #- name: Compress .wasm files with Brotli
+      #  run: |
+      #    wasm_dir="${{ github.workspace }}/composeApp/build/dist/wasmJs/productionExecutable"
+      #    find "$wasm_dir" -type f -name "*.wasm" -exec brotli -Z {} \;
+#
+      #- name: Replace instantiate function and update URLs
+      #  run: |
+      #    # Replace '"./composeApp.wasm"' with 'window.wasmComposeBlobUrl'
+      #    sed -i 's|"./composeApp.wasm"|window.wasmComposeBlobUrl|g' ${{ github.workspace }}/composeApp/build/dist/wasmJs/productionExecutable/composeApp.js
+      #
+      #    # Replace '"2eaba8643e2ccdf352b4.wasm"' with 'window.wasmMagicBlobUrl'
+      #    sed -i 's|"2eaba8643e2ccdf352b4.wasm"|window.wasmMagicBlobUrl;console.log("a.b:", a.p);console.log("blob:", window.wasmMagicBlobUrl);|g' ${{ github.workspace }}/composeApp/build/dist/wasmJs/productionExecutable/composeApp.js
 
       # Step 7: Upload files to FTP, excluding .wasm files but including .wasm.br files
       - name: Upload files to FTP using cURL
@@ -58,7 +58,6 @@ jobs:
           # Change to the base directory
           cd "$base_dir"
 
-          # List files recursively and upload each one except .wasm files
           for file in $(find . -type f ! -name "*.wasm"); do
             if [[ -f "$file" ]]; then
               relative_path="$file"
