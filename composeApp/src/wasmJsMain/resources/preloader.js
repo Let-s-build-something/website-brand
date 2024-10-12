@@ -29,7 +29,7 @@ async function loadWasmFile(wasmUrl) {
     }
 }
 
-export async function loadComposeApp() {
+async function loadComposeApp() {
     try {
         // Fetch and decompress both WASM files
         const decompressedWasm1 = await loadWasmFile('composeApp.wasm.br');
@@ -43,6 +43,9 @@ export async function loadComposeApp() {
         const url1 = URL.createObjectURL(blob1);
         const url2 = URL.createObjectURL(blob2);
 
+        console.log("WASM blob 1:", url1);
+        console.log("WASM blob 2:", url2);
+
         window.wasmComposeBlobUrl = url1;
         window.wasmMagicBlobUrl = url1;
 
@@ -54,11 +57,11 @@ export async function loadComposeApp() {
 }
 
 export async function loadIndex() {
+    await loadComposeApp()
+
     const script = document.createElement('script');
     script.src = 'composeApp.js';  // Ensure this path is correct
     script.type = 'application/javascript';
-
-    await loadComposeApp()
 
     script.onerror = function() {
         document.getElementById('loader-container').innerHTML = '<p>Error loading the app. Please try again.</p>';
@@ -73,6 +76,3 @@ setTimeout(() => {
         document.getElementById('loader-container').innerHTML = '<p>Failed to load the app. Please refresh the page.</p>';
     }
 }, 15000);
-
-// Run the decompression function and expose it globally
-window.loadComposeApp = loadComposeApp;
