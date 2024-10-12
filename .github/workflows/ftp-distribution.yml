@@ -44,11 +44,11 @@ jobs:
           # Replace the async function definition
           sed -i 's|async function instantiate(imports={.*}|async function instantiate(imports={}, runInitializer=!0) { await windows.loadComposeApp();|' ${{ github.workspace }}/composeApp/build/dist/wasmJs/productionExecutable/composeApp.js
           
-          # Replace "composeApp.wasm" with "window.wasmComposeBlobUrl"
-          sed -i 's|composeApp.wasm|window.wasmComposeBlobUrl|g' ${{ github.workspace }}/composeApp/build/dist/wasmJs/productionExecutable/composeApp.js
-
-          # Replace "2eaba8643e2ccdf352b4.wasm" with "window.wasmMagicBlobUrl"
-          sed -i 's|2eaba8643e2ccdf352b4.wasm|window.wasmMagicBlobUrl|g' ${{ github.workspace }}/composeApp/build/dist/wasmJs/productionExecutable/composeApp.js
+          # Replace '"./composeApp.wasm"' with 'window.wasmComposeBlobUrl'
+          sed -i 's|"./composeApp.wasm"|window.wasmComposeBlobUrl|g' ${{ github.workspace }}/composeApp/build/dist/wasmJs/productionExecutable/composeApp.js
+          
+          # Replace '"2eaba8643e2ccdf352b4.wasm"' with 'window.wasmMagicBlobUrl'
+          sed -i 's|"2eaba8643e2ccdf352b4.wasm"|window.wasmMagicBlobUrl|g' ${{ github.workspace }}/composeApp/build/dist/wasmJs/productionExecutable/composeApp.js
 
       # Step 7: Upload files to FTP, excluding .wasm files but including .wasm.br files
       - name: Upload files to FTP using cURL
