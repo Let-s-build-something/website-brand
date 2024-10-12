@@ -36,25 +36,15 @@ export async function loadComposeApp() {
         const decompressedWasm2 = await loadWasmFile('2eaba8643e2ccdf352b4.wasm.br');
 
         // Create Blob URLs for the decompressed WASM files
-        const blob1 = new Blob([decompressedWasm1], { type: 'application/octet-stream' });
-        const blob2 = new Blob([decompressedWasm2], { type: 'application/octet-stream' });
+        const blob1 = new Blob([decompressedWasm1], { type: 'application/wasm' });
+        const blob2 = new Blob([decompressedWasm2], { type: 'application/wasm' });
 
         // Create downloadable links for the blobs
         const url1 = URL.createObjectURL(blob1);
         const url2 = URL.createObjectURL(blob2);
 
-        // Create links to download the files
-        const link1 = document.createElement('wasm');
-        link1.href = url1;
-        link1.download = 'composeApp.wasm'; // Name of the downloaded file
-
-        const link2 = document.createElement('wasm2');
-        link2.href = url2;
-        link2.download = '2eaba8643e2ccdf352b4.wasm'; // Name of the downloaded file
-
-        // Append the links to the document (optional, depending on your use case)
-        document.body.appendChild(link1);
-        document.body.appendChild(link2);
+        window.wasmComposeBlobUrl = url1;
+        window.wasmMagicBlobUrl = url1;
 
         console.log("WASM files downloaded successfully!");
     } catch (error) {
@@ -79,6 +69,9 @@ function waitForWasmAppReady() {
         setTimeout(waitForWasmAppReady, 100);
     }
 }
+
+// Run the decompression function and expose it globally
+window.loadComposeApp = loadComposeApp;
 
 // Fallback message if loading takes too long
 setTimeout(() => {

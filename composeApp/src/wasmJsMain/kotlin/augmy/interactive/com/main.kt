@@ -18,10 +18,6 @@ import org.koin.core.context.startKoin
 private var isAppInitialized = false
 
 // Define an interface for your global state
-external interface GlobalAppState {
-    var kotlinApp: Boolean?
-}
-
 fun polyfillRandomUUID() {
     js("""
         if (typeof crypto !== 'undefined' && typeof crypto.randomUUID !== 'function') {
@@ -42,7 +38,7 @@ fun main() {
     polyfillRandomUUID()
 
     if(isAppInitialized.not()) {
-        (window as? GlobalAppState)?.kotlinApp = true
+        document.getElementById("loader-container")?.remove()
 
         startKoin {
             modules(commonModule)
