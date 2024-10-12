@@ -45,7 +45,7 @@ jobs:
           sed -i 's|"./composeApp.wasm"|window.wasmComposeBlobUrl|g' ${{ github.workspace }}/composeApp/build/dist/wasmJs/productionExecutable/composeApp.js
           
           # Replace '"2eaba8643e2ccdf352b4.wasm"' with 'window.wasmMagicBlobUrl'
-          sed -i 's|"2eaba8643e2ccdf352b4.wasm"|window.wasmMagicBlobUrl|g' ${{ github.workspace }}/composeApp/build/dist/wasmJs/productionExecutable/composeApp.js
+          sed -i 's|"2eaba8643e2ccdf352b4.wasm"|window.wasmMagicBlobUrl;console.log("a.b:", a.p);console.log("blob:", window.wasmMagicBlobUrl);|g' ${{ github.workspace }}/composeApp/build/dist/wasmJs/productionExecutable/composeApp.js
 
       # Step 7: Upload files to FTP, excluding .wasm files but including .wasm.br files
       - name: Upload files to FTP using cURL
