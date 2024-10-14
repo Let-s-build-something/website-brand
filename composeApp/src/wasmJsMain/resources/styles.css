@@ -78,6 +78,7 @@ html, body {
 .thumbnail-image {
     width: 100%;
     max-height:430px;
+    min-height: 100px;
     border-radius: 16px;
     object-fit: cover;
 }

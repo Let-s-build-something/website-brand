@@ -38,7 +38,7 @@ fun main() {
     polyfillRandomUUID()
 
     if(isAppInitialized.not()) {
-        document.getElementById("loader-container")?.remove()
+        document.getElementById("loader-container")!!.remove()
 
         startKoin {
             modules(commonModule)
