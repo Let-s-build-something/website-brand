@@ -34,11 +34,11 @@ jobs:
         run: sudo apt-get update && sudo apt-get install -y brotli
 
       # Step 6: Compress .wasm files with Brotli
-      #- name: Compress .wasm files with Brotli
-      #  run: |
-      #    wasm_dir="${{ github.workspace }}/composeApp/build/dist/wasmJs/productionExecutable"
-      #    find "$wasm_dir" -type f -name "*.wasm" -exec brotli -Z {} \;
-#
+      - name: Compress .wasm files with Brotli
+        run: |
+          wasm_dir="${{ github.workspace }}/composeApp/build/dist/wasmJs/productionExecutable"
+          find "$wasm_dir" -type f -name "*.wasm" -exec brotli -Z {} \;
+
       #- name: Replace instantiate function and update URLs
       #  run: |
       #    # Replace '"./composeApp.wasm"' with 'window.wasmComposeBlobUrl'
@@ -58,7 +58,7 @@ jobs:
           # Change to the base directory
           cd "$base_dir"
 
-          for file in $(find . -type f); do
+          for file in $(find . -type f ! -name "*.wasm"); do
             if [[ -f "$file" ]]; then
               relative_path="$file"
               ftp_url="ftp://$ftp_server/www/$relative_path"
