@@ -15,6 +15,7 @@ import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.Shape
+import androidx.compose.ui.text.TextLinkStyles
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -113,6 +114,8 @@ private object DefaultValues {
         override val regular: TextStyle
             @Composable
             get() = TextStyle.Default
+        override val link: TextLinkStyles
+            @Composable get() = TextLinkStyles()
     }
 
     val defaultThemeIcons = object: ThemeIcons {

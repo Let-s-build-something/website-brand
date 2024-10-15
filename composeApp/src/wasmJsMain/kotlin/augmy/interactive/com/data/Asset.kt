@@ -24,5 +24,16 @@ sealed class Asset {
         data object CustomDesign: Image("5802c63e-45fc-4687-8c72-d52066ef45e8.jpg")
         data object DesignConstruction: Image("90c610ff-e2e1-48e5-82c9-3c9440b765c3.jpg")
         data object Experiment: Image("95b14a4e-5182-4375-b78f-d0f6fd504926.jpg")
+
+        data object HeiderSimmelPreview: Image("heider-simmel-preview.jpg")
+    }
+
+    sealed class Logo(name: String): Asset() {
+        final override val appendix: String = "logo/"
+        override val url = BASE_URL + appendix + name
+
+        data object Twitter: Logo("twitter-logo.svg")
+        data object Instagram: Logo("instagram-logo.svg")
+        data object LinkedIn: Logo("linkedin-logo.svg")
     }
 }

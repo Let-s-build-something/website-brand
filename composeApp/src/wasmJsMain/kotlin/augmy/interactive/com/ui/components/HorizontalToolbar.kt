@@ -3,7 +3,6 @@ package augmy.interactive.com.ui.components
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.Crossfade
 import androidx.compose.animation.core.animateFloatAsState
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.detectTapGestures
@@ -35,16 +34,13 @@ import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.draw.shadow
-import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.currentBackStackEntryAsState
@@ -55,10 +51,6 @@ import augmy.interactive.com.navigation.NavigationNode
 import augmy.interactive.com.shared.SharedViewModel
 import augmy.interactive.com.shared.ThemeChoice
 import augmy.interactive.com.theme.LocalTheme
-import io.github.alexzhirkevich.compottie.LottieCompositionSpec
-import io.github.alexzhirkevich.compottie.Url
-import io.github.alexzhirkevich.compottie.rememberLottieComposition
-import io.github.alexzhirkevich.compottie.rememberLottiePainter
 import kotlinx.coroutines.flow.collectLatest
 import org.jetbrains.compose.resources.stringResource
 import website_brand.composeapp.generated.resources.Res
@@ -80,10 +72,6 @@ fun HorizontalToolbar(
     viewModel: SharedViewModel
 ) {
     val navController = LocalNavController.current
-
-    val composition by rememberLottieComposition {
-        LottieCompositionSpec.Url("https://lottie.host/6b25a4ce-cbf9-4144-97d8-93dd35435424/8VyJlAMYUV.json")
-    }
 
     val isMenuExpanded = rememberSaveable {
         mutableStateOf(false)
@@ -109,18 +97,7 @@ fun HorizontalToolbar(
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 Row(verticalAlignment = Alignment.CenterVertically) {
-                    Image(
-                        modifier = Modifier
-                            .size(48.dp)
-                            .scale(1.5f)
-                            .rotate(270f),
-                        painter = rememberLottiePainter(
-                            composition = composition,
-                            iterations = Int.MAX_VALUE
-                        ),
-                        colorFilter = ColorFilter.tint(LocalTheme.current.colors.secondary),
-                        contentDescription = null
-                    )
+                    //TODO logo here
                     Text(
                         modifier = Modifier
                             .clickable {

@@ -1,14 +1,17 @@
 package augmy.interactive.com.base
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.selection.SelectionContainer
@@ -33,16 +36,27 @@ import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
+import augmy.interactive.com.data.Asset
 import augmy.interactive.com.shared.SharedViewModel
-import augmy.interactive.com.ui.components.HorizontalToolbar
 import augmy.interactive.com.theme.LocalTheme
+import augmy.interactive.com.ui.components.AsyncSvgImage
+import augmy.interactive.com.ui.components.HorizontalToolbar
+import kotlinx.browser.window
 import kotlinx.datetime.Clock
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
+import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.stringResource
 import website_brand.composeapp.generated.resources.Res
+import website_brand.composeapp.generated.resources.contacts_instagram
+import website_brand.composeapp.generated.resources.contacts_instagram_tag
+import website_brand.composeapp.generated.resources.contacts_linkedin
+import website_brand.composeapp.generated.resources.contacts_linkedin_tag
+import website_brand.composeapp.generated.resources.contacts_twitter
+import website_brand.composeapp.generated.resources.contacts_twitter_tag
 import website_brand.composeapp.generated.resources.website_footer
 
 /**
@@ -140,25 +154,89 @@ fun ModalScreenContent(
             horizontalAlignment = horizontalAlignment,
             content = content
         )
+        FooterContent()
+    }
+}
+
+@Composable
+private fun FooterContent(modifier: Modifier = Modifier) {
+    Row(
+        modifier = modifier
+            .padding(top = 16.dp)
+            .fillMaxWidth()
+            .shadow(4.dp)
+            .background(LocalTheme.current.colors.toolbarColor)
+            .padding(16.dp),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.Center
+    ) {
         SelectionContainer {
-            Text(
+            Row(
                 modifier = Modifier
-                    .padding(top = 16.dp)
-                    .fillMaxWidth()
-                    .shadow(4.dp)
-                    .background(LocalTheme.current.colors.toolbarColor)
-                    .padding(16.dp),
-                text = stringResource(
-                    Res.string.website_footer,
-                    Clock.System.now().toLocalDateTime(
-                        TimeZone.currentSystemDefault()
-                    ).year
-                ),
-                style = LocalTheme.current.styles.category.copy(
-                    textAlign = TextAlign.Center
+                    .widthIn(max = MaxModalWidthDp.dp)
+                    .fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                Text(
+                    text = stringResource(
+                        Res.string.website_footer,
+                        Clock.System.now().toLocalDateTime(
+                            TimeZone.currentSystemDefault()
+                        ).year
+                    ),
+                    style = LocalTheme.current.styles.category.copy(
+                        textAlign = TextAlign.Center
+                    )
                 )
-            )
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    SocialLogo(
+                        size = 28.dp,
+                        tag = Res.string.contacts_twitter_tag,
+                        link = Res.string.contacts_twitter,
+                        asset = Asset.Logo.Twitter
+                    )
+                    SocialLogo(
+                        tag = Res.string.contacts_instagram_tag,
+                        link = Res.string.contacts_instagram,
+                        asset = Asset.Logo.Instagram
+                    )
+                    SocialLogo(
+                        tag = Res.string.contacts_linkedin_tag,
+                        link = Res.string.contacts_linkedin,
+                        asset = Asset.Logo.LinkedIn
+                    )
+                }
+            }
         }
+    }
+}
+
+@Composable
+private fun SocialLogo(
+    modifier: Modifier = Modifier,
+    tag: StringResource,
+    link: StringResource,
+    asset: Asset,
+    size: Dp = 32.dp
+) {
+    val isDesktop = LocalDeviceType.current == WindowWidthSizeClass.Expanded
+    val url = stringResource(link)
+
+    AsyncSvgImage(
+        modifier = modifier
+            .clickable {
+                window.open(url)
+            }
+            .padding(start = 10.dp, end = 4.dp)
+            .size(size),
+        asset = asset
+    )
+    if(isDesktop) {
+        Text(
+            text = stringResource(tag),
+            style = LocalTheme.current.styles.category
+        )
     }
 }
 

@@ -3,7 +3,6 @@ package augmy.interactive.com.injection
 import augmy.interactive.com.shared.SharedDataManager
 import augmy.interactive.com.shared.SharedViewModel
 import coil3.annotation.ExperimentalCoilApi
-import coil3.network.CacheStrategy
 import coil3.network.NetworkFetcher
 import coil3.network.ktor3.asNetworkClient
 import com.russhwolf.settings.Settings
@@ -20,8 +19,7 @@ internal val commonModule = module {
 
     single {
         NetworkFetcher.Factory(
-            networkClient = { get<HttpClient>().asNetworkClient() },
-            cacheStrategy = { CacheStrategy() },
+            networkClient = { get<HttpClient>().asNetworkClient() }
         )
     }
 }

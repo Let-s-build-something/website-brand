@@ -52,6 +52,7 @@ kotlin {
             implementation(libs.settings.no.arg)
             implementation(libs.kotlinx.datetime)
             implementation(libs.coil.compose)
+            implementation(libs.coil.svg)
             implementation(libs.coil.network.ktor)
         }
     }

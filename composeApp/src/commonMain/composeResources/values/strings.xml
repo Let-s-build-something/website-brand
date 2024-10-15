@@ -1,15 +1,15 @@
 <resources>
   <string name="app_name">Augmy Interactive</string>
 
-  <string name="website_footer">© %1$d Augmy Interactive, built with Compose Multiplatform</string>
+  <string name="website_footer">© %1$d Augmy Interactive</string>
 
-  <string name="landing_header_heading">Implicit, expressive, embedded</string>
+  <string name="landing_header_heading">Implicit, expressive, and embedded</string>
   <string name="landing_header_content">That's the new era of communication online.</string>
 
   <string name="landing_block_0_heading">Express yourself without missing a beat</string>
   <string name="landing_block_0_content">Be closer to people you want to be close to. Because that is something everyone deserves. Make yourself more understood by expressive messages that are not just messages, they are your emotional state.</string>
 
-  <string name="landing_block_1_heading">Make your communication easier</string>
+  <string name="landing_block_1_heading">Communicate naturally and with ease</string>
   <string name="landing_block_1_content">Our goal is to make communication (authentically) implicit again. You no longer need to ponder over which emoji expresses your emotions the best, you will be simply understood.</string>
 
   <string name="toolbar_action_about">About</string>
@@ -21,10 +21,50 @@
   <string name="contacts_workplace_value">Prague, Czechia</string>
   <string name="contacts_email">Email</string>
   <string name="contacts_email_value">info@augmy.org</string>
+  <string name="contacts_twitter">https://www.twitter.com/AugmyInteractiv</string>
+  <string name="contacts_instagram">https://www.instagram.com/augmy_interactive</string>
+  <string name="contacts_linkedin">https://www.linkedin.com/company/augmy-interactive</string>
+  <string name="contacts_twitter_tag">@AugmyInteractiv</string>
+  <string name="contacts_instagram_tag">@augmy_interactive</string>
+  <string name="contacts_linkedin_tag">@augmy-interactive</string>
 
-  <string name="about_content">Content here</string>
-  <string name="about_research_content">Content here</string>
-  <string name="about_business_content">Content here</string>
+  <string name="about_content">Are you interest in what we do? Let us explain.</string>
+  <string name="about_header_summary">Summary</string>
+  <string name="about_content_summary">We are incredibly social beings, we like to communicate and interact with others, no matter the reason. Nowadays, this seems to happen online, particularly via instant messaging apps, forums like Reddit, or comment sections. Communicating online is relatively easy and efficient, yet it doesn't seem to be us communicating, but the online versions of us - it's the GIFs, Stickers, avatars, letters, sentences, and emojis. It may also be pretty exhausting and problematic that we decide every single thing about the interactions and how we are represented online. We should be understood, without the hustle of finding the ways to communicate it.</string>
+  <string name="about_header_introduction">Why is this important? (Introduction)</string>
+  <string name="about_content_introduction_0">Nearly every fourth person uses WhatsApp alone. Communication online is more relevant than ever, and we are getting in line with that. From online therapy, governmental inquiries, messaging companies via live chats, finding new friends, having dates on applications, maintaining relationships, chatting with colleagues, finding the right coffee shop, and deciding on the best vacuum cleaner, and a phone case that will protect our "precious", among others. It's just part of our society at this point, we have integrated technology into our lives, and it's a fact.</string>
+  <string name="about_content_introduction_1">We, as humans are the most social species out there. This is indicated by both the brain structure and also by simply observing what we do throughout our days. Most of the activities we do are social. If we work, we work to be given money by other people and to affect other people. In the meantime, we talk about money and what we do with money with our colleagues, who seem to be in a similar position. We then spend the money either to appeal to other people (to make a picture of it and put it up online, or to have a shinier car than our neighbor) or to have a good time together with our family or friends. Paying other people in the process, who provide us the services and objects we want.</string>
+  <string name="about_content_introduction_2">Communication isn't just verbal though! In fact, the starting point is nonverbal. The very first way we make sure we're safe and thus understand the world around us when we are little is through our caregiver's vocal and facial expressions. There is an underlying undertone to every expression we have, and there is a good reason for that. Importantly, we don't even think about it most of the time.</string>
+  <string name="about_content_introduction_3">We want to be understood and accepted as we are. Texting someone on a dating app for a week just for them to be disappointed by how different we are is the last thing you'd like to happen to you. We also want to be affectionate to people we care about. That physical interaction with your partner you miss. The hug that your mom likely deserves. The tickle your siblings deserve. The typical you your friends are so used to meeting and making fun of.</string>
+  <string name="about_header_problem">The uh-oh moment (Problem statement)</string>
+  <string name="about_content_problem">So we communicate online. Efficient, fast, and easy to use, it has a history we can search through, and we can even manage how others see us. Amazing stuff. Now that isn't for free, we are losing some of that underlying tone here.
+  \n    One of such big red flags is online dating. Chat with someone you're romantically interested in for two weeks and you're very likely to be a little surprised when you see them. "It is the same person as on all those social profiles, they seem to dress the same, but there's something different about them". Such experience is not uncommon. One of the reasons why, is because we have different "social profiles" (images of the other) in our minds. Now if it is someone you want to like, they want you to like (so they send the right emojis, the right messages, etc.), then you are also likely to form such an image. If you see happy, perfect images online from the person, more likely than not, this is how you imagine them to be most of the time. Another reason is, the text being sent to us doesn't have much sauce.
+  \n    Well, no problem, we just add it afterward, ourselves, based on our mood, based on how we think they perceive us or how we want them to perceive us.
+  \n    So you like editing or removing messages, taking your time editing them, to perfect. Swiping through pages and pages of emojis, while you still circle between the most common 3-5 ones - those are the ones everyone understands, it's a safe bet. Swiping through terabytes of GIFs and Stickers, looking for the funniest, the most expressive ones. Oh! Expressive you said? Expressive of who? Certainly not the sender, I don't think the waving Forrest Gump is the same as your grandma looking for an interaction with you (or the thousands of puppies and kitties she sends now and then). All aforementioned is explicit, meaning we have to think about every single thing we do within the interaction. Now if you compare it to the mentioned ways communication isn't just verbal, the nonverbal is predominantly implicit - not chosen to happen by choice, it just happens to be. Now this seems like a serious problem.</string>
+  <string name="about_header_solution">Time for a change (Solution)</string>
+  <string name="about_content_solution_0">In our opinion, the lack of implicitness and expression can be solved by adding more raw unedited information that expresses you to the interactions. However, we acknowledge there are both privacy issues and the undesirability of such a solution. Thus, another requirement of the solution is that it shouldn't expose and undercut you, instead, it should add a new value and stay at the level you are - abstract. When you read this text, it is abstract. It invokes something in you, you imagine it, analyze it, and viola a meaning! Similar to emojis, and capital letters, any other object can express sound, smell, movement, or color. A great example of this is Heider-Simmel animation.</string>
+  <string name="about_content_solution_1">\n    We all know it's just a bunch of simple objects, recorded just as simply. Yet there is a story behind all of the otherwise random movements.
+  \n    What we strive to do and how to solve this is thus threefold: implicit, expressive, and embedded. This goes hand in hand with user-centered design. We don't want people to be overwhelmed by the amount of information, we don't want to go against the choices users usually have, nor do we want people to have to explain themselves all the time. "What did you mean by this emoji?", "Why didn't you use emoji here and there?"</string>
+  <string name="about_content_solution_video_url">https://www.youtube.com/watch?v=VTNmLt7QX8E</string>
+  <string name="about_header_demo">Try it out</string>
+  <string name="about_content_demo">We are still working hard on this, but expect soon to try out the new ways of communication online right here, at any time!</string>
+  <string name="about_header_join_us">How can you participate?</string>
+  <string name="about_content_join_us_0">We are in search of people interested in enriching communication the same way we do! We are particularly looking for people interested in (cyber)psychology, linguistics, machine learning, and developing with Kotlin or Rust. You can contact us directly at info@augmy.org.</string>
+  <string name="about_content_join_us_1">Perhaps you have an amazing new idea we should look into and experiment with. In that case, please, feel free to contact us at info@augmy.org.</string>
+  <string name="about_content_join_us_2">We are also researching the effects of the additional cues and contexts. You can sign up for research here [coming soon!].</string>
+  <string name="about_content_join_us_3">Financial support is always welcomed. While in an ideal world, we could just do the work without having to pay anything, many of the things we do require financing. If this project is something you want to be done, please, consider supporting us here [coming soon!].</string>
+  <string name="about_content_join_us_4">Share. Even a single additional person knowing about our vision and our work means a lot to us. So, anyone, who you think would like to communicate meaningfully is someone who may appreciate you sharing this project with them.</string>
+  <string name="about_header_roadmap">Roadmap</string>
+  <string name="about_content_roadmap">You can see what's currently ahead of us</string>
+  <string name="about_content_roadmap_here">here</string>
+
+  <string name="about_business_content">We are actively looking for organizations and teams interested in working with us and helping us achieve the goals we set to achieve. Notably psychological supervision both for development and research.
+    \nIf you're open to working with us, please, contact us at brand@augmy.org.</string>
+
+
+  <string name="about_research_content">TBA - what this document is about</string>
+  <string name="about_research_introduction_heading">Introduction</string>
+  <string name="about_research_introduction_content"></string>
 
 
   <string name="accessibility_light_mode">Light mode</string>

@@ -8,6 +8,8 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.text.selection.SelectionContainer
+import androidx.compose.material3.Text
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -17,9 +19,10 @@ import androidx.compose.ui.unit.dp
 import augmy.interactive.com.base.LocalContentSizeDp
 import augmy.interactive.com.base.LocalDeviceType
 import augmy.interactive.com.data.Asset
-import augmy.interactive.com.ui.components.AsyncImageThumbnail
-import augmy.interactive.com.ui.components.SelectableText
 import augmy.interactive.com.theme.LocalTheme
+import augmy.interactive.com.ui.components.AsyncImageThumbnail
+import augmy.interactive.com.ui.components.buildAnnotatedLinkString
+import kotlinx.browser.window
 import org.jetbrains.compose.resources.stringResource
 import website_brand.composeapp.generated.resources.Res
 import website_brand.composeapp.generated.resources.about_business_content
@@ -31,14 +34,16 @@ fun AboutBusinessScreen() {
     val verticalPadding = (LocalContentSizeDp.current.height / 8).dp
     val horizontalPadding = (LocalContentSizeDp.current.width / 20).dp
 
-    Crossfade(LocalDeviceType.current == WindowWidthSizeClass.Compact) { isCompact ->
-        if(isCompact) {
-            CompactLayout(verticalPadding = verticalPadding)
-        }else {
-            LargeLayout(
-                verticalPadding = verticalPadding,
-                horizontalPadding = horizontalPadding
-            )
+    SelectionContainer {
+        Crossfade(LocalDeviceType.current == WindowWidthSizeClass.Compact) { isCompact ->
+            if(isCompact) {
+                CompactLayout(verticalPadding = verticalPadding)
+            }else {
+                LargeLayout(
+                    verticalPadding = verticalPadding,
+                    horizontalPadding = horizontalPadding
+                )
+            }
         }
     }
 }
@@ -70,13 +75,18 @@ private fun CompactLayout(
         }
 
         Column(Modifier.fillMaxWidth()) {
-            SelectableText(
+            Text(
                 text = stringResource(Res.string.toolbar_action_about_business),
                 style = LocalTheme.current.styles.heading
             )
-            SelectableText(
+            Text(
                 modifier = Modifier.padding(top = 32.dp),
-                text = stringResource(Res.string.about_business_content),
+                text = buildAnnotatedLinkString(
+                    stringResource(Res.string.about_business_content),
+                    onLinkClicked = { link ->
+                        window.open(link)
+                    }
+                ),
                 style = LocalTheme.current.styles.regular
             )
         }
@@ -93,13 +103,18 @@ private fun LargeLayout(
         horizontalArrangement = Arrangement.spacedBy(horizontalPadding)
     ) {
         Column(Modifier.weight(1f)) {
-            SelectableText(
+            Text(
                 text = stringResource(Res.string.toolbar_action_about_business),
                 style = LocalTheme.current.styles.heading
             )
-            SelectableText(
+            Text(
                 modifier = Modifier.padding(top = 32.dp),
-                text = stringResource(Res.string.about_business_content),
+                text = buildAnnotatedLinkString(
+                    stringResource(Res.string.about_business_content),
+                    onLinkClicked = { link ->
+                        window.open(link)
+                    }
+                ),
                 style = LocalTheme.current.styles.regular
             )
         }

@@ -10,8 +10,11 @@ import androidx.compose.material3.TextFieldColors
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.TextLinkStyles
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.style.TextDecoration.Companion.Underline
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -123,6 +126,22 @@ open class DefaultThemeStyles: ThemeStyle {
             enabled = true,
             selected = false
         )
+
+    override val link: TextLinkStyles
+        @Composable
+        get() {
+            val style = SpanStyle(
+                color = LocalTheme.current.colors.brandMain,
+                textDecoration = Underline,
+                fontFamily = FontFamily(fontQuicksandMedium)
+            )
+            return TextLinkStyles(
+                style = style,
+                focusedStyle = style,
+                hoveredStyle = style,
+                pressedStyle = style
+            )
+        }
 
     override val chipColorsDefault: SelectableChipColors
         @Composable get() = FilterChipDefaults.filterChipColors(

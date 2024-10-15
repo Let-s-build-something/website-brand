@@ -6,8 +6,11 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.text.selection.SelectionContainer
+import androidx.compose.material3.Text
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -17,12 +20,13 @@ import androidx.compose.ui.unit.dp
 import augmy.interactive.com.base.LocalContentSizeDp
 import augmy.interactive.com.base.LocalDeviceType
 import augmy.interactive.com.data.Asset
-import augmy.interactive.com.ui.components.AsyncImageThumbnail
-import augmy.interactive.com.ui.components.SelectableText
 import augmy.interactive.com.theme.LocalTheme
+import augmy.interactive.com.ui.components.AsyncImageThumbnail
 import org.jetbrains.compose.resources.stringResource
 import website_brand.composeapp.generated.resources.Res
 import website_brand.composeapp.generated.resources.about_research_content
+import website_brand.composeapp.generated.resources.about_research_introduction_content
+import website_brand.composeapp.generated.resources.about_research_introduction_heading
 import website_brand.composeapp.generated.resources.toolbar_action_about_research
 
 /** home/landing screen which is initially shown on the application */
@@ -31,14 +35,16 @@ fun AboutResearchScreen() {
     val verticalPadding = (LocalContentSizeDp.current.height / 8).dp
     val horizontalPadding = (LocalContentSizeDp.current.width / 20).dp
 
-    Crossfade(LocalDeviceType.current == WindowWidthSizeClass.Compact) { isCompact ->
-        if(isCompact) {
-            CompactLayout(verticalPadding = verticalPadding)
-        }else {
-            LargeLayout(
-                verticalPadding = verticalPadding,
-                horizontalPadding = horizontalPadding
-            )
+    SelectionContainer {
+        Crossfade(LocalDeviceType.current == WindowWidthSizeClass.Compact) { isCompact ->
+            if(isCompact) {
+                CompactLayout(verticalPadding = verticalPadding)
+            }else {
+                LargeLayout(
+                    verticalPadding = verticalPadding,
+                    horizontalPadding = horizontalPadding
+                )
+            }
         }
     }
 }
@@ -64,22 +70,23 @@ private fun CompactLayout(
                 modifier = Modifier
                     .fillMaxWidth()
                     .clip(LocalTheme.current.shapes.componentShape),
-                thumbnail = Asset.Image.Experiment.thumbnail,
-                url = Asset.Image.Experiment.url
+                asset = Asset.Image.Experiment
             )
         }
 
         Column(Modifier.fillMaxWidth()) {
-            SelectableText(
+            Text(
                 text = stringResource(Res.string.toolbar_action_about_research),
                 style = LocalTheme.current.styles.heading
             )
-            SelectableText(
-                modifier = Modifier.padding(top = 32.dp),
+            Text(
+                modifier = Modifier.padding(top = 32.dp, start = 12.dp),
                 text = stringResource(Res.string.about_research_content),
                 style = LocalTheme.current.styles.regular
             )
         }
+
+        VerticalContent()
     }
 }
 
@@ -88,38 +95,61 @@ private fun LargeLayout(
     horizontalPadding: Dp,
     verticalPadding: Dp
 ) {
-    Row(
-        modifier = Modifier.padding(top = 24.dp),
-        horizontalArrangement = Arrangement.spacedBy(horizontalPadding)
+    Column(
+        modifier = Modifier.padding(top = 24.dp, start = 12.dp, end = 12.dp),
+        verticalArrangement = Arrangement.spacedBy(verticalPadding)
     ) {
-        Column(Modifier.weight(1f)) {
-            SelectableText(
-                text = stringResource(Res.string.toolbar_action_about_research),
-                style = LocalTheme.current.styles.heading
-            )
-            SelectableText(
-                modifier = Modifier.padding(top = 32.dp),
-                text = stringResource(Res.string.about_research_content),
-                style = LocalTheme.current.styles.regular
-            )
-        }
-        Box(
-            Modifier
-                .weight(1f)
-                .padding(top = 32.dp)
-                .background(
-                    LocalTheme.current.colors.brandMainDark,
-                    LocalTheme.current.shapes.roundShape
-                )
-                .padding(verticalPadding / 7)
+        Row(
+            modifier = Modifier.padding(top = 24.dp),
+            horizontalArrangement = Arrangement.spacedBy(horizontalPadding)
         ) {
-            AsyncImageThumbnail(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .clip(LocalTheme.current.shapes.componentShape),
-                thumbnail = Asset.Image.Experiment.thumbnail,
-                url = Asset.Image.Experiment.url
-            )
+            Column(Modifier.weight(1f)) {
+                Text(
+                    text = stringResource(Res.string.toolbar_action_about_research),
+                    style = LocalTheme.current.styles.heading
+                )
+                Text(
+                    modifier = Modifier.padding(top = 32.dp, start = 12.dp),
+                    text = stringResource(Res.string.about_research_content),
+                    style = LocalTheme.current.styles.regular
+                )
+            }
+            Box(
+                Modifier
+                    .weight(1f)
+                    .padding(top = 32.dp)
+                    .background(
+                        LocalTheme.current.colors.brandMainDark,
+                        LocalTheme.current.shapes.roundShape
+                    )
+                    .padding(verticalPadding / 7)
+            ) {
+                AsyncImageThumbnail(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .clip(LocalTheme.current.shapes.componentShape),
+                    asset = Asset.Image.Experiment
+                )
+            }
         }
+
+        VerticalContent(fraction = .75f)
     }
+}
+
+@Composable
+private fun VerticalContent(fraction: Float = 1f) {
+    Column(Modifier.fillMaxWidth(fraction)) {
+        Text(
+            text = stringResource(Res.string.about_research_introduction_heading),
+            style = LocalTheme.current.styles.heading
+        )
+        Text(
+            modifier = Modifier.padding(top = 32.dp, start = 12.dp),
+            text = stringResource(Res.string.about_research_introduction_content),
+            style = LocalTheme.current.styles.regular
+        )
+    }
+
+    Spacer(Modifier)
 }

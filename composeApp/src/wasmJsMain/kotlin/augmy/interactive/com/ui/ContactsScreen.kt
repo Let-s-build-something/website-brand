@@ -9,28 +9,26 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.AlternateEmail
 import androidx.compose.material.icons.outlined.LocationCity
 import androidx.compose.material3.Icon
+import androidx.compose.material3.Text
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.AnnotatedString
-import androidx.compose.ui.text.LinkAnnotation
-import androidx.compose.ui.text.buildAnnotatedString
-import androidx.compose.ui.text.withLink
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import augmy.interactive.com.base.LocalContentSizeDp
 import augmy.interactive.com.base.LocalDeviceType
 import augmy.interactive.com.data.Asset
-import augmy.interactive.com.ui.components.AsyncImageThumbnail
-import augmy.interactive.com.ui.components.SelectableText
 import augmy.interactive.com.theme.LocalTheme
-import kotlinx.browser.window
+import augmy.interactive.com.ui.components.AsyncImageThumbnail
+import augmy.interactive.com.ui.components.buildAnnotatedLinkString
 import org.jetbrains.compose.resources.stringResource
 import website_brand.composeapp.generated.resources.Res
 import website_brand.composeapp.generated.resources.contacts_email
@@ -45,32 +43,24 @@ fun ContactsScreen() {
     val verticalPadding = (LocalContentSizeDp.current.height / 8).dp
     val horizontalPadding = (LocalContentSizeDp.current.width / 20).dp
 
-    val email = stringResource(Res.string.contacts_email_value)
-    val emailValue = buildAnnotatedString {
-        withLink(
-            link = LinkAnnotation.Clickable(
-                tag = "EMAIL",
-                linkInteractionListener = {
-                    window.open("mailto:$email", "_self")
-                },
-            ),
-        ) {
-            append(email.plus(" "))
-        }
-    }
+    val emailValue = buildAnnotatedLinkString(
+        stringResource(Res.string.contacts_email_value)
+    )
 
-    Crossfade(LocalDeviceType.current == WindowWidthSizeClass.Compact) { isCompact ->
-        if(isCompact) {
-            CompactLayout(
-                emailValue = emailValue,
-                verticalPadding = verticalPadding
-            )
-        }else {
-            LargeLayout(
-                emailValue = emailValue,
-                verticalPadding = verticalPadding,
-                horizontalPadding = horizontalPadding
-            )
+    SelectionContainer {
+        Crossfade(LocalDeviceType.current == WindowWidthSizeClass.Compact) { isCompact ->
+            if(isCompact) {
+                CompactLayout(
+                    emailValue = emailValue,
+                    verticalPadding = verticalPadding
+                )
+            }else {
+                LargeLayout(
+                    emailValue = emailValue,
+                    verticalPadding = verticalPadding,
+                    horizontalPadding = horizontalPadding
+                )
+            }
         }
     }
 }
@@ -104,7 +94,7 @@ private fun CompactLayout(
         }
 
         Column(Modifier.fillMaxWidth()) {
-            SelectableText(
+            Text(
                 text = stringResource(Res.string.toolbar_action_contacts),
                 style = LocalTheme.current.styles.heading
             )
@@ -125,12 +115,12 @@ private fun CompactLayout(
                         contentDescription = null,
                         tint = LocalTheme.current.colors.secondary
                     )
-                    SelectableText(
+                    Text(
                         text = stringResource(Res.string.contacts_workplace),
                         style = LocalTheme.current.styles.regular
                     )
                 }
-                SelectableText(
+                Text(
                     text = stringResource(Res.string.contacts_workplace_value),
                     style = LocalTheme.current.styles.title
                 )
@@ -151,12 +141,12 @@ private fun CompactLayout(
                         contentDescription = null,
                         tint = LocalTheme.current.colors.secondary
                     )
-                    SelectableText(
+                    Text(
                         text = stringResource(Res.string.contacts_email),
                         style = LocalTheme.current.styles.regular
                     )
                 }
-                SelectableText(
+                Text(
                     text = emailValue,
                     style = LocalTheme.current.styles.title
                 )
@@ -176,7 +166,7 @@ private fun LargeLayout(
         horizontalArrangement = Arrangement.spacedBy(horizontalPadding)
     ) {
         Column(Modifier.weight(1f)) {
-            SelectableText(
+            Text(
                 text = stringResource(Res.string.toolbar_action_contacts),
                 style = LocalTheme.current.styles.heading
             )
@@ -197,12 +187,12 @@ private fun LargeLayout(
                         contentDescription = null,
                         tint = LocalTheme.current.colors.secondary
                     )
-                    SelectableText(
+                    Text(
                         text = stringResource(Res.string.contacts_workplace),
                         style = LocalTheme.current.styles.regular
                     )
                 }
-                SelectableText(
+                Text(
                     text = stringResource(Res.string.contacts_workplace_value),
                     style = LocalTheme.current.styles.title
                 )
@@ -223,12 +213,12 @@ private fun LargeLayout(
                         contentDescription = null,
                         tint = LocalTheme.current.colors.secondary
                     )
-                    SelectableText(
+                    Text(
                         text = stringResource(Res.string.contacts_email),
                         style = LocalTheme.current.styles.regular
                     )
                 }
-                SelectableText(
+                Text(
                     text = emailValue,
                     style = LocalTheme.current.styles.title
                 )
