@@ -84,34 +84,27 @@
     </style>
 </head>
     <body>
+        <!--<dotlottie-player src="https://lottie.host/cb47031e-dc67-4366-9921-6d1fdb3ca398/FblXP0xkN8.json" background="transparent" speed="1" style="width: 300px; height: 300px" direction="-1" playMode="normal" loop controls autoplay></dotlottie-player>-->
+
         <div id="loader-container">
-            <div class="image-container">
-                <img id="preview-image" src="https://augmy.org/storage/img/thumbnails/tn_i1_sign_in.webp" class="thumbnail-image" alt="Image">
-                <!--<img src="https://augmy.org/storage/img/thumbnails/tn_i1_sign_in.webp" class="thumbnail-image" alt="Image">-->
-            </div>
-            <div class="spinner"></div>
+            <canvas id="canvas" height="150px" width="150px"></canvas>
             <p class="middle-text">Loading Augmy Interactive...</p>
-            <p class="middle-text">Our goal is to make communication (authentically) implicit again. You no longer need to ponder over which emoji expresses your emotions the best, you will be simply understood.</p>
+            <p class="bottom-text">Our goal is to make communication (authentically) implicit again. You no longer need to ponder over which emoji expresses your emotions the best, you will be simply understood.</p>
         </div>
 
         <div id="app"></div>
 
         <script type="module">
+            import { DotLottie } from "https://cdn.jsdelivr.net/npm/@lottiefiles/dotlottie-web/+esm";
+
             function loadSplashImage() {
-                const previewImage = document.getElementById('preview-image');
-                const fullResImage = new Image(); // Create a new image element
-
-                // Set the full-resolution image src
-                fullResImage.src = 'https://augmy.org/storage/img/i1_sign_in.webp';
-
-                // Wait for the full-resolution image to load
-                fullResImage.onload = function() {
-                    // Once loaded, replace the preview image's src with the full-resolution image
-                    previewImage.src = fullResImage.src;
-
-                    // Remove blur and spinner
-                    previewImage.classList.add('image-loaded');
-                };
+                new DotLottie({
+                    autoplay: true,
+                    loop: true,
+                    direction: -1,
+                    canvas: document.getElementById("canvas"),
+                    src: "https://lottie.host/cb47031e-dc67-4366-9921-6d1fdb3ca398/FblXP0xkN8.json",
+                });
             }
 
             async function checkIfSplash() {
@@ -123,7 +116,7 @@
                     splashContainer.style.display = 'none'
                 }else {
                     loadSplashImage()
-                    splashContainer.style.display = 'block'
+                    splashContainer.style.display = 'flex'
                 }
             }
 

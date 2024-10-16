@@ -15,6 +15,8 @@ object LightAppColors: BaseColors {
 
     override val tetrial: Color = Colors.Flax
 
+    override val quartial: Color = Colors.AtomicTangerine
+
     override val backgroundLight: Color = Color.White
 
     override val backgroundDark: Color = Colors.AzureWeb

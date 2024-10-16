@@ -14,6 +14,7 @@ object DarkAppColors: BaseColors {
     override val brandMainDark: Color = Colors.HunterGreen
 
     override val tetrial: Color = Colors.Flax
+    override val quartial: Color = Colors.AtomicTangerine
 
     override val backgroundLight: Color = Colors.Night
 

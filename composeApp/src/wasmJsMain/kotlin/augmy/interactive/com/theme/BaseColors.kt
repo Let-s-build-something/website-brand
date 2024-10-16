@@ -13,6 +13,9 @@ interface BaseColors {
     /** contrasting color to the brand color */
     val tetrial: Color
 
+    /** contrasting color to the brand and tetrial color */
+    val quartial: Color
+
     /** Contrast to background color, used for darker text */
     val primary: Color
 

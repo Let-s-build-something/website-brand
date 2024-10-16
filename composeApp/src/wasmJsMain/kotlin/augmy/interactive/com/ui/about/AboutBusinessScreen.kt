@@ -56,31 +56,31 @@ private fun CompactLayout(
         modifier = Modifier.padding(top = 24.dp, start = 12.dp, end = 12.dp),
         verticalArrangement = Arrangement.spacedBy(verticalPadding)
     ) {
-        Box(
-            Modifier
-                .padding(top = verticalPadding)
-                .background(
-                    LocalTheme.current.colors.brandMain,
-                    LocalTheme.current.shapes.roundShape
-                )
-                .padding(verticalPadding / 7)
+        Column(
+            Modifier.fillMaxWidth(),
+            verticalArrangement = Arrangement.spacedBy(12.dp)
         ) {
-            AsyncImageThumbnail(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .clip(LocalTheme.current.shapes.componentShape),
-                thumbnail = Asset.Image.EarHelp.thumbnail,
-                url = Asset.Image.EarHelp.url
-            )
-        }
-
-        Column(Modifier.fillMaxWidth()) {
             Text(
                 text = stringResource(Res.string.toolbar_action_about_business),
                 style = LocalTheme.current.styles.heading
             )
+            Box(
+                Modifier
+                    .background(
+                        LocalTheme.current.colors.brandMain,
+                        LocalTheme.current.shapes.roundShape
+                    )
+                    .padding(verticalPadding / 7)
+            ) {
+                AsyncImageThumbnail(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .clip(LocalTheme.current.shapes.componentShape),
+                    asset = Asset.Image.EarHelp
+                )
+            }
             Text(
-                modifier = Modifier.padding(top = 32.dp),
+                modifier = Modifier.padding(top = 32.dp, start = 12.dp),
                 text = buildAnnotatedLinkString(
                     stringResource(Res.string.about_business_content),
                     onLinkClicked = { link ->

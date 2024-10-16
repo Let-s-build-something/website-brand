@@ -75,29 +75,29 @@ private fun CompactLayout(
         modifier = Modifier.padding(top = 24.dp, start = 12.dp, end = 12.dp),
         verticalArrangement = Arrangement.spacedBy(verticalPadding)
     ) {
-        Box(
-            Modifier
-                .padding(top = verticalPadding)
-                .background(
-                    LocalTheme.current.colors.brandMainDark,
-                    LocalTheme.current.shapes.roundShape
-                )
-                .padding(verticalPadding / 7)
+        Column(
+            Modifier.fillMaxWidth(),
+            verticalArrangement = Arrangement.spacedBy(12.dp)
         ) {
-            AsyncImageThumbnail(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .clip(LocalTheme.current.shapes.componentShape),
-                thumbnail = Asset.Image.Cooperation.thumbnail,
-                url = Asset.Image.Cooperation.url
-            )
-        }
-
-        Column(Modifier.fillMaxWidth()) {
             Text(
                 text = stringResource(Res.string.toolbar_action_contacts),
                 style = LocalTheme.current.styles.heading
             )
+            Box(
+                Modifier
+                    .background(
+                        LocalTheme.current.colors.brandMainDark,
+                        LocalTheme.current.shapes.roundShape
+                    )
+                    .padding(verticalPadding / 7)
+            ) {
+                AsyncImageThumbnail(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .clip(LocalTheme.current.shapes.componentShape),
+                    asset = Asset.Image.Cooperation
+                )
+            }
 
             Row(
                 modifier = Modifier.fillMaxWidth().padding(top = 32.dp),

@@ -71,28 +71,29 @@ private fun CompactLayout(
         modifier = Modifier.padding(top = 24.dp, start = 12.dp, end = 12.dp),
         verticalArrangement = Arrangement.spacedBy(verticalPadding)
     ) {
-        Box(
-            Modifier
-                .padding(top = verticalPadding)
-                .background(
-                    LocalTheme.current.colors.brandMainDark,
-                    LocalTheme.current.shapes.roundShape
-                )
-                .padding(verticalPadding / 7)
+        Column(
+            Modifier.fillMaxWidth(),
+            verticalArrangement = Arrangement.spacedBy(12.dp)
         ) {
-            AsyncImageThumbnail(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .clip(LocalTheme.current.shapes.componentShape),
-                asset = Asset.Image.Experiment
-            )
-        }
-
-        Column(Modifier.fillMaxWidth()) {
             Text(
                 text = stringResource(Res.string.toolbar_action_about_research),
                 style = LocalTheme.current.styles.heading
             )
+            Box(
+                Modifier
+                    .background(
+                        LocalTheme.current.colors.brandMain,
+                        LocalTheme.current.shapes.roundShape
+                    )
+                    .padding(verticalPadding / 7)
+            ) {
+                AsyncImageThumbnail(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .clip(LocalTheme.current.shapes.componentShape),
+                    asset = Asset.Image.Experiment
+                )
+            }
             Text(
                 modifier = Modifier.padding(top = 32.dp, start = 12.dp),
                 text = stringResource(Res.string.about_research_content),

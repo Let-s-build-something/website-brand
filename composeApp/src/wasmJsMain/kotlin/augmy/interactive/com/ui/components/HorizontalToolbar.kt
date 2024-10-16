@@ -146,7 +146,11 @@ fun HorizontalToolbar(
                     modifier = Modifier.padding(horizontal = 8.dp),
                     verticalArrangement = Arrangement.spacedBy(6.dp)
                 ) {
-                    ToolbarActions()
+                    ToolbarActions(
+                        onCollapse = {
+                            isMenuExpanded.value = false
+                        }
+                    )
                     ThemeSwitch(
                         modifier = Modifier.align(Alignment.End),
                         viewModel = viewModel
@@ -198,20 +202,24 @@ private fun ThemeSwitch(
 }
 
 @Composable
-private fun ToolbarActions() {
+private fun ToolbarActions(onCollapse: () -> Unit = {}) {
     ToolbarAction(
+        onCollapse = onCollapse,
         text = stringResource(Res.string.toolbar_action_about),
         route = NavigationNode.PublicAbout.route
     )
     ToolbarAction(
+        onCollapse = onCollapse,
         text = stringResource(Res.string.toolbar_action_about_research),
         route = NavigationNode.ResearchAbout.route
     )
     ToolbarAction(
+        onCollapse = onCollapse,
         text = stringResource(Res.string.toolbar_action_about_business),
         route = NavigationNode.BusinessAbout.route
     )
     ToolbarAction(
+        onCollapse = onCollapse,
         text = stringResource(Res.string.toolbar_action_contacts),
         route = NavigationNode.Contacts.route
     )
@@ -221,7 +229,8 @@ private fun ToolbarActions() {
 private fun ToolbarAction(
     modifier: Modifier = Modifier,
     route: String,
-    text: String
+    text: String,
+    onCollapse: () -> Unit
 ) {
     val navController = LocalNavController.current
     val currentEntry = navController?.currentBackStackEntryAsState()
@@ -256,6 +265,7 @@ private fun ToolbarAction(
                         isPressed.value = false
                     },
                     onTap = {
+                        onCollapse()
                         if(isSelected.not()) navController?.navigate(route)
                     }
                 )
