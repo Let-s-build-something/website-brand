@@ -166,7 +166,7 @@ private fun CompactLayout(verticalPadding: Dp) {
 
         // second block
         val composition by rememberLottieComposition {
-            LottieCompositionSpec.Url("https://lottie.host/a87d8352-bc1b-4e58-842e-e5996a23f68e/jVlzK4mG3F.json")
+            LottieCompositionSpec.Url("https://lottie.host/6dc94a1e-3c98-4f74-a4b3-387c187fc377/iHZAJetUK8.lottie")
         }
 
         Image(
@@ -181,7 +181,8 @@ private fun CompactLayout(verticalPadding: Dp) {
                 ),
             painter = rememberLottiePainter(
                 composition = composition,
-                iterations = Int.MAX_VALUE
+                iterations = Int.MAX_VALUE,
+                speed = .75f
             ),
             contentDescription = null
         )
@@ -205,7 +206,7 @@ private fun CompactLayout(verticalPadding: Dp) {
         Spacer(Modifier.height(verticalPadding))
 
         val composition2 by rememberLottieComposition {
-            LottieCompositionSpec.Url("https://lottie.host/08ae708d-3b98-458d-8525-78333068e92a/J0GLxv9fuD.json")
+            LottieCompositionSpec.Url("https://lottie.host/49fb6653-3dbc-4925-b221-520ee02bd7af/j5WC6v0PFm.lottie")
         }
 
         Image(
@@ -219,7 +220,8 @@ private fun CompactLayout(verticalPadding: Dp) {
                 ),
             painter = rememberLottiePainter(
                 composition = composition2,
-                iterations = Int.MAX_VALUE
+                iterations = Int.MAX_VALUE,
+                speed = .75f
             ),
             contentDescription = null
         )
@@ -283,7 +285,7 @@ private fun LargeLayout(
         }
         Row(horizontalArrangement = Arrangement.spacedBy(horizontalPadding)) {
             val composition by rememberLottieComposition {
-                LottieCompositionSpec.Url("https://lottie.host/a87d8352-bc1b-4e58-842e-e5996a23f68e/jVlzK4mG3F.json")
+                LottieCompositionSpec.Url("https://lottie.host/6dc94a1e-3c98-4f74-a4b3-387c187fc377/iHZAJetUK8.lottie")
             }
 
             Image(
@@ -296,7 +298,8 @@ private fun LargeLayout(
                     ),
                 painter = rememberLottiePainter(
                     composition = composition,
-                    iterations = Int.MAX_VALUE
+                    iterations = Int.MAX_VALUE,
+                    speed = .75f
                 ),
                 contentDescription = null
             )
@@ -336,7 +339,7 @@ private fun LargeLayout(
             }
 
             val composition by rememberLottieComposition {
-                LottieCompositionSpec.Url("https://lottie.host/08ae708d-3b98-458d-8525-78333068e92a/J0GLxv9fuD.json")
+                LottieCompositionSpec.Url("https://lottie.host/49fb6653-3dbc-4925-b221-520ee02bd7af/j5WC6v0PFm.lottie")
             }
 
             Image(
@@ -349,7 +352,8 @@ private fun LargeLayout(
                     ),
                 painter = rememberLottiePainter(
                     composition = composition,
-                    iterations = Int.MAX_VALUE
+                    iterations = Int.MAX_VALUE,
+                    speed = .75f
                 ),
                 contentDescription = null
             )

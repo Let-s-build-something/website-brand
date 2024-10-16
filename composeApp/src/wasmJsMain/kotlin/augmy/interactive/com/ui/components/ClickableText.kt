@@ -58,11 +58,11 @@ fun buildAnnotatedLinkString(
     }
 
     var appendableText = ""
-    var linkIteration = false
+    var tagIteration = false
 
     annotatedText.forEach { c ->
-        // may be a beginning of a tag, let's clear backstack to simply conditions
-        if(!linkIteration && c == '<') {
+        // may be a beginning of a tag, let's clear backstack to simplify conditions
+        if(!tagIteration && c == '<') {
             append(appendableText)
             appendableText = ""
         }
@@ -72,11 +72,11 @@ fun buildAnnotatedLinkString(
             // append text before the link
             append(appendableText.removeSuffix("<a href=\""))
             appendableText = ""
-            linkIteration = true
+            tagIteration = true
         }
 
         // end of link tag, all we have at this point is very likely LINK">CONTENT<a/
-        if(linkIteration && c == '>' && appendableText.last() == '/') {
+        if(tagIteration && c == '>' && appendableText.last() == '/') {
             appendableText.let { localAppendedText ->
                 withLink(
                     link = LinkAnnotation.Clickable(
@@ -101,7 +101,7 @@ fun buildAnnotatedLinkString(
                 }
             }
             appendableText = ""
-            linkIteration = false
+            tagIteration = false
         }else {
             appendableText += c
         }

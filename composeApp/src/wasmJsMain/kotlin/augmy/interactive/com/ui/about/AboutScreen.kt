@@ -290,32 +290,32 @@ private fun VerticalContent(fraction: Float = 1f) {
                 style = LocalTheme.current.styles.regular
             )
         }
-
-        Column(Modifier.fillMaxWidth(fraction)) {
-            Text(
-                text = stringResource(Res.string.about_header_roadmap),
-                style = LocalTheme.current.styles.heading
-            )
-            Text(
-                modifier = Modifier.padding(top = 32.dp, start = 12.dp),
-                text = buildAnnotatedString {
-                    append(stringResource(Res.string.about_content_roadmap))
-                    withLink(
-                        link = LinkAnnotation.Clickable(
-                            tag = "ACTION",
-                            styles = LocalTheme.current.styles.link,
-                            linkInteractionListener = {
-                                navController?.navigate(NavigationNode.Roadmap.route)
-                            },
-                        ),
-                    ) {
-                        append(" " + stringResource(Res.string.about_content_roadmap_here))
-                    }
-                    append(".")
-                },
-                style = LocalTheme.current.styles.regular
-            )
-        }
+    }
+    
+    Column(Modifier.fillMaxWidth(fraction)) {
+        Text(
+            text = stringResource(Res.string.about_header_roadmap),
+            style = LocalTheme.current.styles.heading
+        )
+        Text(
+            modifier = Modifier.padding(top = 32.dp, start = 12.dp),
+            text = buildAnnotatedString {
+                append(stringResource(Res.string.about_content_roadmap))
+                withLink(
+                    link = LinkAnnotation.Clickable(
+                        tag = "ACTION",
+                        styles = LocalTheme.current.styles.link,
+                        linkInteractionListener = {
+                            navController?.navigate(NavigationNode.Roadmap.route)
+                        },
+                    ),
+                ) {
+                    append(" " + stringResource(Res.string.about_content_roadmap_here))
+                }
+                append(".")
+            },
+            style = LocalTheme.current.styles.regular
+        )
     }
 
     Spacer(Modifier)
