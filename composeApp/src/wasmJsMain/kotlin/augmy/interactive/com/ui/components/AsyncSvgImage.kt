@@ -12,7 +12,8 @@ import coil3.svg.SvgDecoder
 @Composable
 fun AsyncSvgImage(
     modifier: Modifier = Modifier,
-    asset: Asset
+    asset: Asset,
+    contentDescription: String? = null
 ) {
     AsyncImage(
         modifier = modifier,
@@ -21,6 +22,6 @@ fun AsyncSvgImage(
             .crossfade(true)
             .decoderFactory(SvgDecoder.Factory())
             .build(),
-        contentDescription = null
+        contentDescription = contentDescription
     )
 }

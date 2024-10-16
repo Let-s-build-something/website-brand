@@ -2,12 +2,12 @@ package augmy.interactive.com.ui.about
 
 import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -31,8 +31,8 @@ import augmy.interactive.com.navigation.NavigationNode
 import augmy.interactive.com.theme.LocalTheme
 import augmy.interactive.com.ui.components.AsyncImageThumbnail
 import augmy.interactive.com.ui.components.BulletText
+import augmy.interactive.com.ui.components.YoutubeVideoThumbnail
 import augmy.interactive.com.ui.components.buildAnnotatedLinkString
-import kotlinx.browser.window
 import org.jetbrains.compose.resources.stringResource
 import website_brand.composeapp.generated.resources.Res
 import website_brand.composeapp.generated.resources.about_content
@@ -51,7 +51,6 @@ import website_brand.composeapp.generated.resources.about_content_roadmap
 import website_brand.composeapp.generated.resources.about_content_roadmap_here
 import website_brand.composeapp.generated.resources.about_content_solution_0
 import website_brand.composeapp.generated.resources.about_content_solution_1
-import website_brand.composeapp.generated.resources.about_content_solution_video_url
 import website_brand.composeapp.generated.resources.about_content_summary
 import website_brand.composeapp.generated.resources.about_header_demo
 import website_brand.composeapp.generated.resources.about_header_introduction
@@ -61,6 +60,8 @@ import website_brand.composeapp.generated.resources.about_header_roadmap
 import website_brand.composeapp.generated.resources.about_header_solution
 import website_brand.composeapp.generated.resources.about_header_summary
 import website_brand.composeapp.generated.resources.toolbar_action_about
+import website_brand.composeapp.generated.resources.video_heider_simmel_title
+import website_brand.composeapp.generated.resources.video_heider_simmel_url
 
 /** Screen with general information about the project for wide public */
 @Composable
@@ -240,17 +241,15 @@ private fun VerticalContent(fraction: Float = 1f) {
             style = LocalTheme.current.styles.regular
         )
 
-        val link = stringResource(Res.string.about_content_solution_video_url)
-        AsyncImageThumbnail(
+        YoutubeVideoThumbnail(
             modifier = Modifier
                 .fillMaxWidth(fraction)
+                .aspectRatio(1.33f)
                 .align(Alignment.CenterHorizontally)
-                .padding(vertical = 32.dp, horizontal = 12.dp)
-                .clickable {
-                    window.open(link)
-                },
-            url = Asset.Image.HeiderSimmelPreview.url,
-            thumbnail = Asset.Image.HeiderSimmelPreview.url,
+                .padding(vertical = 32.dp, horizontal = 12.dp),
+            title = stringResource(Res.string.video_heider_simmel_title),
+            link = stringResource(Res.string.video_heider_simmel_url),
+            asset = Asset.Image.HeiderSimmelPreview
         )
         Text(
             modifier = Modifier.padding(start = 12.dp),

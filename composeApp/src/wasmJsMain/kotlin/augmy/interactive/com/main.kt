@@ -8,37 +8,18 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import augmy.interactive.com.base.LocalOnBackPress
 import augmy.interactive.com.injection.commonModule
-import augmy.interactive.com.navigation.DEFAULT_START_DESTINATION
 import kotlinx.browser.document
 import kotlinx.browser.window
-import kotlinx.coroutines.delay
 import org.koin.core.context.startKoin
 
 // paranoid check
 private var isAppInitialized = false
 
-// Define an interface for your global state
-fun polyfillRandomUUID() {
-    js("""
-        if (typeof crypto !== 'undefined' && typeof crypto.randomUUID !== 'function') {
-            crypto.randomUUID = function() {
-                return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
-                    const r = Math.random() * 16 | 0;
-                    const v = c === 'x' ? r : (r & 0x3 | 0x8);
-                    return v.toString(16);
-                });
-            };
-        }
-    """)
-}
-
 
 @OptIn(ExperimentalComposeUiApi::class)
 fun main() {
-    polyfillRandomUUID()
-
     if(isAppInitialized.not()) {
-        document.getElementById("loader-container")!!.remove()
+        document.getElementById("loader-container")?.remove()
 
         startKoin {
             modules(commonModule)
@@ -51,7 +32,7 @@ fun main() {
             ComposeViewport(body) {
                 val navController = rememberNavController()
                 val currentEntry = navController.currentBackStackEntryAsState()
-                //val currentRoute = currentEntry.value?.destination?.route ?: window.location.pathname
+                val currentRoute = currentEntry.value?.destination?.route ?: window.location.pathname
 
                 CompositionLocalProvider(
                     LocalOnBackPress provides {
@@ -60,25 +41,23 @@ fun main() {
                 ) {
                     App(
                         navController = navController,
-                        //startDestination = window.location.pathname
+                        startDestination = window.location.pathname
                     )
                 }
 
-
-                /*LaunchedEffect(currentEntry.value) {
-                    if(currentEntry.value != null
-                        && window.location.pathname != currentRoute
-                    ) {
-                        window.location.pathname = currentRoute
+                LaunchedEffect(currentRoute) {
+                    if(window.location.pathname != currentRoute) {
+                        window.history.pushState(null, "", currentRoute)
                     }
-                }*/
+                }
 
-                //https://developer.mozilla.org/en-US/docs/Web/API/Location
-                LaunchedEffect(window.location.pathname) {
-                    delay(500)
-                    // navigate to correct route only if arguments are required, otherwise startDestination is sufficient
-                    if(window.location.pathname != DEFAULT_START_DESTINATION) {
-                        navController.navigate(route = window.location.pathname)
+                window.onpopstate = {
+                    // if pop back fails, user goes forward
+                    if(!navController.popBackStack(
+                        route = window.location.pathname,
+                        inclusive = false
+                    )) {
+                        navController.navigate(window.location.pathname)
                     }
                 }
             }

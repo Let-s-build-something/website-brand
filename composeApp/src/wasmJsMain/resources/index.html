@@ -74,6 +74,7 @@
             font-size: 24px;
             color: #81A263;
             flex-direction: column;
+            display: none
         }
 
         /* Initially hide the app content */
@@ -96,13 +97,7 @@
         <div id="app"></div>
 
         <script type="module">
-            import { loadIndex } from './preloader.js';
-
-            document.addEventListener('DOMContentLoaded', loadIndex);
-        </script>
-
-        <script>
-            document.addEventListener('DOMContentLoaded', function () {
+            function loadSplashImage() {
                 const previewImage = document.getElementById('preview-image');
                 const fullResImage = new Image(); // Create a new image element
 
@@ -117,7 +112,26 @@
                     // Remove blur and spinner
                     previewImage.classList.add('image-loaded');
                 };
-            });
+            }
+
+            async function checkIfSplash() {
+                const splashContainer = document.getElementById('loader-container');
+
+                // check whether .wasm files are already cached
+                const response = await fetch('composeApp.wasm', { method: 'HEAD' });
+                if (response.ok) {
+                    splashContainer.style.display = 'none'
+                }else {
+                    loadSplashImage()
+                    splashContainer.style.display = 'block'
+                }
+            }
+
+            checkIfSplash()
+
+            import { loadIndex } from './preloader.js';
+
+            document.addEventListener('DOMContentLoaded', loadIndex);
         </script>
     </body>
 </html>

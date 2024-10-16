@@ -32,8 +32,9 @@ sealed class Asset {
         final override val appendix: String = "logo/"
         override val url = BASE_URL + appendix + name
 
-        data object Twitter: Logo("twitter-logo.svg")
-        data object Instagram: Logo("instagram-logo.svg")
-        data object LinkedIn: Logo("linkedin-logo.svg")
+        data object Twitter: Logo("twitter.svg")
+        data object Instagram: Logo("instagram.svg")
+        data object LinkedIn: Logo("linkedin.svg")
+        data object Youtube: Logo("youtube.svg")
     }
 }
