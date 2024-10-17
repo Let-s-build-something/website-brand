@@ -12,7 +12,7 @@ import kotlinx.browser.window
 private val emailRegex = """[a-zA-Z0-9+._%-+]{1,256}@[a-zA-Z0-9][a-zA-Z0-9-]{0,64}(\.[a-zA-Z0-9][a-zA-Z0-9-]{0,25})+""".toRegex()
 
 /** URL pattern, no HTTP or HTTPS needed */
-private val urlRegex = """(?<=^|\s)[^\s@]+\.\S+(?=${'$'}|\s)""".toRegex()
+private val urlRegex = """(?<=^|\s)[^\s@]+\.[^\s@]*[a-zA-Z][^\s@]*(?=${'$'}|\s)""".toRegex()
 
 /** URL pattern, no HTTP or HTTPS needed */
 private val phoneNumberRegex = """\+?\d{1,4}?[\s-]?\(?(\d{1,4})\)?[\s-]?\d{1,4}[\s-]?\d{1,4}[\s-]?\d{1,9}""".toRegex()

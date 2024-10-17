@@ -25,6 +25,7 @@ import augmy.interactive.com.data.Asset
 import augmy.interactive.com.theme.LocalTheme
 import augmy.interactive.com.ui.components.AsyncImageThumbnail
 import augmy.interactive.com.ui.components.YoutubeVideoThumbnail
+import augmy.interactive.com.ui.components.buildAnnotatedLinkString
 import org.jetbrains.compose.resources.stringResource
 import website_brand.composeapp.generated.resources.Res
 import website_brand.composeapp.generated.resources.about_research_bibliography_content
@@ -225,7 +226,10 @@ private fun VerticalContent(fraction: Float = 1f) {
         )
         Text(
             modifier = Modifier.padding(top = 32.dp, start = 12.dp),
-            text = stringResource(Res.string.about_research_bibliography_content),
+            text = buildAnnotatedLinkString(
+                text = stringResource(Res.string.about_research_bibliography_content),
+                matchPhone = false
+            ),
             style = LocalTheme.current.styles.regular
         )
     }
