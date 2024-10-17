@@ -16,7 +16,7 @@ kotlin {
     wasmJs {
         @OptIn(ExperimentalKotlinGradlePluginApi::class)
         compilerOptions {
-            freeCompilerArgs.addAll("-Xopt-in=kotlin.RequiresOptIn", "-Xjsr305=strict")
+            freeCompilerArgs.addAll("-opt-in=kotlin.RequiresOptIn", "-Xjsr305=strict")
         }
 
         moduleName = "composeApp"

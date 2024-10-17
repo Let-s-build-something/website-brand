@@ -1,5 +1,6 @@
 package augmy.interactive.com.base
 
+import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.detectTapGestures
@@ -136,14 +137,17 @@ fun BaseScreen(
 @Composable
 fun ModalScreenContent(
     modifier: Modifier = Modifier,
+    scrollState: ScrollState? = rememberScrollState(),
     verticalArrangement: Arrangement.Vertical = Arrangement.spacedBy(8.dp),
     horizontalAlignment: Alignment.Horizontal = Alignment.Start,
     content: @Composable ColumnScope.() -> Unit
 ) {
     Column(
         modifier = modifier
-            .verticalScroll(rememberScrollState())
-            .fillMaxSize(),
+            .fillMaxSize()
+            .then(
+                if(scrollState != null) Modifier.verticalScroll(scrollState) else Modifier
+            ),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Column(

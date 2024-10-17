@@ -1,5 +1,8 @@
+@file:OptIn(ExperimentalResourceApi::class)
+
 package augmy.interactive.com.shared
 
+import androidx.compose.foundation.ScrollState
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.russhwolf.settings.Settings
@@ -7,6 +10,7 @@ import com.russhwolf.settings.set
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.koin.mp.KoinPlatform
 
 /** Viewmodel with shared behavior and injections for general purposes */
@@ -21,12 +25,15 @@ open class SharedViewModel: ViewModel() {
     /** Current configuration specific to this app */
     val localSettings = dataManager.localSettings.asStateFlow()
 
+    /** Shared scrollState for all pages */
+    val sharedScrollState = ScrollState(0)
+
     /** Sets the theme of the app */
     fun updateTheme(isDarkTheme: Boolean) {
         viewModelScope.launch {
             val theme = if(isDarkTheme) ThemeChoice.DARK else ThemeChoice.LIGHT
             dataManager.localSettings.update {
-                it?.copy(theme = theme)
+                LocalSettings(theme = theme)
             }
             settings[SettingsKeys.KEY_THEME] = theme.name
         }

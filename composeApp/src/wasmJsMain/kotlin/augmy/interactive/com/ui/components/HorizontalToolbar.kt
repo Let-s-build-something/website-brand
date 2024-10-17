@@ -3,6 +3,8 @@ package augmy.interactive.com.ui.components
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.Crossfade
 import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.tween
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.detectTapGestures
@@ -12,6 +14,7 @@ import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
@@ -19,29 +22,34 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.requiredSizeIn
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.MenuOpen
 import androidx.compose.material.icons.outlined.Close
-import androidx.compose.material.icons.outlined.DarkMode
-import androidx.compose.material.icons.outlined.LightMode
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
-import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
+import androidx.compose.material3.ripple
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.currentBackStackEntryAsState
 import augmy.interactive.com.base.LocalDeviceType
@@ -51,6 +59,10 @@ import augmy.interactive.com.navigation.NavigationNode
 import augmy.interactive.com.shared.SharedViewModel
 import augmy.interactive.com.shared.ThemeChoice
 import augmy.interactive.com.theme.LocalTheme
+import io.github.alexzhirkevich.compottie.LottieCompositionSpec
+import io.github.alexzhirkevich.compottie.Url
+import io.github.alexzhirkevich.compottie.rememberLottieComposition
+import io.github.alexzhirkevich.compottie.rememberLottiePainter
 import kotlinx.coroutines.flow.collectLatest
 import org.jetbrains.compose.resources.stringResource
 import website_brand.composeapp.generated.resources.Res
@@ -113,6 +125,7 @@ fun HorizontalToolbar(
                 ) { isDesktop ->
                     if(isDesktop) {
                         Row(
+                            modifier = Modifier.height(IntrinsicSize.Min),
                             verticalAlignment = Alignment.CenterVertically
                         ) {
                             Row(horizontalArrangement = Arrangement.spacedBy(6.dp)) {
@@ -143,7 +156,9 @@ fun HorizontalToolbar(
             }
             AnimatedVisibility(isMenuExpanded.value) {
                 Column(
-                    modifier = Modifier.padding(horizontal = 8.dp),
+                    modifier = Modifier
+                        .padding(horizontal = 8.dp)
+                        .height(IntrinsicSize.Min),
                     verticalArrangement = Arrangement.spacedBy(6.dp)
                 ) {
                     ToolbarActions(
@@ -168,37 +183,46 @@ private fun ThemeSwitch(
 ) {
     val localSettings = viewModel.localSettings.collectAsState()
 
-    Row(
-        modifier = modifier,
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        Icon(
-            modifier = Modifier.size(24.dp),
-            imageVector = Icons.Outlined.LightMode,
-            contentDescription = stringResource(Res.string.accessibility_light_mode),
-            tint = LocalTheme.current.colors.secondary
-        )
-        Switch(
-            modifier = Modifier.padding(horizontal = 6.dp),
-            checked = when(localSettings.value?.theme) {
-                ThemeChoice.DARK -> true
-                ThemeChoice.LIGHT -> false
-                else -> isSystemInDarkTheme()
-            },
-            colors = LocalTheme.current.styles.switchColorsDefault.copy(
-                checkedTrackColor = LocalTheme.current.colors.toolbarColor
-            ),
-            onCheckedChange = { isChecked ->
-                viewModel.updateTheme(isChecked)
-            }
-        )
-        Icon(
-            modifier = Modifier.size(24.dp),
-            imageVector = Icons.Outlined.DarkMode,
-            contentDescription = stringResource(Res.string.accessibility_dark_mode),
-            tint = LocalTheme.current.colors.secondary
-        )
+    val composition by rememberLottieComposition {
+        LottieCompositionSpec.Url("https://lottie.host/433c02b0-6f94-48a8-b75f-4befb06c96ef/LAAQ4kUAUq.lottie")
     }
+
+    val isDarkTheme = when(localSettings.value?.theme) {
+        ThemeChoice.DARK -> true
+        ThemeChoice.LIGHT -> false
+        else -> isSystemInDarkTheme()
+    }
+
+    val progress = animateFloatAsState(
+        targetValue = if(isDarkTheme) .5f else 0f,
+        label = "progressThemeAnimation",
+        animationSpec = tween(durationMillis = 750)
+    )
+
+    Image(
+        modifier = modifier
+            .clip(CircleShape)
+            .requiredSizeIn(maxHeight = 50.dp, maxWidth = 50.dp)
+            .scale(2f)
+            .clickable(
+                interactionSource = MutableInteractionSource(),
+                indication = ripple(bounded = true),
+                onClick = {
+                    viewModel.updateTheme(isDarkTheme.not())
+                }
+            ),
+        painter = rememberLottiePainter(
+            composition = composition,
+            progress = {
+                progress.value
+            }
+        ),
+        contentDescription = stringResource(if(isDarkTheme) {
+            Res.string.accessibility_dark_mode
+        }else Res.string.accessibility_light_mode),
+        colorFilter = ColorFilter.tint(color = LocalTheme.current.colors.secondary),
+        contentScale = ContentScale.FillBounds
+    )
 }
 
 @Composable
@@ -234,17 +258,44 @@ private fun ToolbarAction(
 ) {
     val navController = LocalNavController.current
     val currentEntry = navController?.currentBackStackEntryAsState()
+    val isSelected = currentEntry?.value?.destination?.route == route
+
+    IndicatedAction(
+        modifier = modifier,
+        isSelected = isSelected,
+        onPress = {
+            onCollapse()
+            if(isSelected.not()) navController?.navigate(route)
+        },
+        content = { m ->
+            Text(
+                modifier = m,
+                text = text,
+                style = LocalTheme.current.styles.title.copy(
+                    color = LocalTheme.current.colors.secondary
+                )
+            )
+        }
+    )
+}
+
+@Composable
+fun IndicatedAction(
+    modifier: Modifier = Modifier,
+    isSelected: Boolean = false,
+    onPress: () -> Unit,
+    content: @Composable BoxScope.(Modifier) -> Unit
+) {
     val isPressed = remember { mutableStateOf(false) }
     val isHovered = remember { mutableStateOf(false) }
 
     val interactionSource = remember { MutableInteractionSource() }
     val scale = animateFloatAsState(
-        if (isPressed.value) 0.85f else 1f,
-        label = "scalingClickableAnimation"
+        if (isPressed.value || isSelected || isHovered.value) 1f else 0f,
+        label = "indicatedActionAnimation"
     )
-    val isSelected = currentEntry?.value?.destination?.route == route
 
-    LaunchedEffect(text) {
+    LaunchedEffect(onPress) {
         interactionSource.interactions.collectLatest {
             when(it) {
                 is HoverInteraction.Enter -> isHovered.value = true
@@ -253,37 +304,39 @@ private fun ToolbarAction(
         }
     }
 
-    Text(
-        modifier = modifier
-            .scale(scale.value)
-            .hoverable(interactionSource)
-            .pointerInput(text) {
-                detectTapGestures(
-                    onPress = {
-                        isPressed.value = true
-                        tryAwaitRelease()
-                        isPressed.value = false
-                    },
-                    onTap = {
-                        onCollapse()
-                        if(isSelected.not()) navController?.navigate(route)
-                    }
-                )
-            }
-            .then(
-                if(isHovered.value || isSelected) {
-                    Modifier.background(
-                        color = LocalTheme.current.colors.brandMain,
-                        shape = LocalTheme.current.shapes.rectangularActionShape
-                    )
-                }else Modifier
+    Box(modifier.width(IntrinsicSize.Min)) {
+        AnimatedVisibility(isSelected) {
+            HorizontalDivider(
+                color = LocalTheme.current.colors.brandMain,
+                thickness = 2.dp,
+                modifier = Modifier
+                    .align(Alignment.TopCenter)
+                    .fillMaxWidth(scale.value)
+                    .clip(LocalTheme.current.shapes.rectangularActionShape)
             )
-            .padding(vertical = 4.dp, horizontal = 8.dp),
-        text = text,
-        style = LocalTheme.current.styles.title.copy(
-            color = if(isHovered.value || isSelected) {
-                LocalTheme.current.colors.tetrial
-            } else LocalTheme.current.colors.secondary
+        }
+        content(
+            Modifier
+                .hoverable(interactionSource)
+                .pointerInput(onPress) {
+                    detectTapGestures(
+                        onPress = {
+                            isPressed.value = true
+                            tryAwaitRelease()
+                            onPress()
+                            isPressed.value = false
+                        }
+                    )
+                }
+                .padding(vertical = 4.dp, horizontal = 8.dp)
         )
-    )
+        HorizontalDivider(
+            color = LocalTheme.current.colors.brandMain,
+            thickness = 2.dp,
+            modifier = Modifier
+                .align(Alignment.BottomCenter)
+                .fillMaxWidth(scale.value)
+                .clip(LocalTheme.current.shapes.rectangularActionShape)
+        )
+    }
 }

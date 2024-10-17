@@ -14,6 +14,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import augmy.interactive.com.base.BaseScreen
+import augmy.interactive.com.base.BaseSnackbarHost
 import augmy.interactive.com.base.LocalDeviceType
 import augmy.interactive.com.base.LocalNavController
 import augmy.interactive.com.base.LocalSnackbarHost
@@ -22,7 +23,6 @@ import augmy.interactive.com.base.theme.AugmyTheme
 import augmy.interactive.com.navigation.NavigationHost
 import augmy.interactive.com.shared.SharedViewModel
 import augmy.interactive.com.shared.ThemeChoice
-import augmy.interactive.com.base.BaseSnackbarHost
 import augmy.interactive.com.theme.LocalTheme
 import org.koin.compose.viewmodel.koinViewModel
 
@@ -64,10 +64,11 @@ fun App(
                     modifier = Modifier.fillMaxSize(),
                     viewModel = viewModel
                 ) {
-                    ModalScreenContent {
+                    ModalScreenContent(scrollState = viewModel.sharedScrollState) {
                         NavigationHost(
                             navController = navController,
-                            startDestination = startDestination
+                            startDestination = startDestination,
+                            viewModel = viewModel
                         )
                     }
                 }

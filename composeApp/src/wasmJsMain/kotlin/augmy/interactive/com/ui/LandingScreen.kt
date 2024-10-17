@@ -1,8 +1,12 @@
 package augmy.interactive.com.ui
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.gestures.animateScrollBy
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -13,28 +17,45 @@ import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.sizeIn
 import androidx.compose.foundation.layout.widthIn
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.text.selection.SelectionContainer
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.Download
+import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
+import androidx.compose.material3.ripple
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import augmy.interactive.com.base.LocalContentSizeDp
 import augmy.interactive.com.base.LocalDeviceType
+import augmy.interactive.com.base.LocalSnackbarHost
 import augmy.interactive.com.data.Asset
+import augmy.interactive.com.data.PlatformDistribution
+import augmy.interactive.com.shared.SharedViewModel
 import augmy.interactive.com.theme.LocalTheme
 import augmy.interactive.com.ui.components.AsyncImageThumbnail
+import augmy.interactive.com.ui.components.IndicatedAction
 import io.github.alexzhirkevich.compottie.LottieCompositionSpec
 import io.github.alexzhirkevich.compottie.Url
 import io.github.alexzhirkevich.compottie.rememberLottieComposition
 import io.github.alexzhirkevich.compottie.rememberLottiePainter
+import kotlinx.browser.window
+import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.stringResource
 import website_brand.composeapp.generated.resources.Res
 import website_brand.composeapp.generated.resources.landing_block_0_content
@@ -43,6 +64,8 @@ import website_brand.composeapp.generated.resources.landing_block_1_content
 import website_brand.composeapp.generated.resources.landing_block_1_heading
 import website_brand.composeapp.generated.resources.landing_block_2_content
 import website_brand.composeapp.generated.resources.landing_block_2_heading
+import website_brand.composeapp.generated.resources.landing_download_button
+import website_brand.composeapp.generated.resources.landing_download_not_distributed
 import website_brand.composeapp.generated.resources.landing_footer_content
 import website_brand.composeapp.generated.resources.landing_footer_heading
 import website_brand.composeapp.generated.resources.landing_header_content
@@ -50,7 +73,7 @@ import website_brand.composeapp.generated.resources.landing_header_heading
 
 /** home/landing screen which is initially shown on the application */
 @Composable
-fun LandingScreen() {
+fun LandingScreen(viewModel: SharedViewModel) {
     val verticalPadding = (LocalContentSizeDp.current.height / 8).dp
     val horizontalPadding = (LocalContentSizeDp.current.width / 20).dp
 
@@ -87,7 +110,112 @@ fun LandingScreen() {
             FooterBlock(verticalPadding)
 
             Spacer(Modifier.height(verticalPadding))
+
+            DownloadBlock(viewModel)
+
+            Spacer(Modifier.height(verticalPadding))
         }
+    }
+}
+
+@Composable
+private fun ColumnScope.DownloadBlock(viewModel: SharedViewModel) {
+    val isExpanded = rememberSaveable {
+        mutableStateOf(false)
+    }
+    val scrollCoroutine = rememberCoroutineScope()
+
+    IndicatedAction(
+        modifier = Modifier.align(Alignment.Start),
+        content = { modifier ->
+            Text(
+                modifier = modifier,
+                text = stringResource(Res.string.landing_download_button),
+                style = LocalTheme.current.styles.heading
+            )
+        },
+        onPress = {
+            isExpanded.value = !isExpanded.value
+            if(isExpanded.value) {
+                scrollCoroutine.launch {
+                    viewModel.sharedScrollState.animateScrollBy(500f)
+                }
+            }
+        },
+        isSelected = isExpanded.value
+    )
+
+    AnimatedVisibility(
+        modifier = Modifier.padding(top = 24.dp),
+        visible = isExpanded.value
+    ) {
+        Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
+            PlatformDistribution.entries.forEach { platform ->
+                HorizontalDivider(
+                    modifier = Modifier.padding(start = 12.dp),
+                    color = LocalTheme.current.colors.secondary
+                )
+                PlatformDownload(
+                    icon = platform.imageVector,
+                    text = platform.label,
+                    url = platform.url
+                )
+            }
+        }
+    }
+}
+
+@Composable
+private fun PlatformDownload(
+    icon: ImageVector,
+    text: String,
+    url: String
+) {
+    val snackbarHost = LocalSnackbarHost.current
+    val notDistributedMessage = stringResource(Res.string.landing_download_not_distributed)
+    val coroutine = rememberCoroutineScope()
+
+    Row(
+        modifier = Modifier.fillMaxWidth(),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.SpaceBetween
+    ) {
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
+            Icon(
+                modifier = Modifier.size(32.dp),
+                imageVector = icon,
+                contentDescription = null,
+                tint = LocalTheme.current.colors.primary
+            )
+            Text(
+                text = text,
+                style = LocalTheme.current.styles.regular
+            )
+        }
+        Icon(
+            modifier = Modifier
+                .size(32.dp)
+                .clickable(
+                    interactionSource = MutableInteractionSource(),
+                    indication = ripple(bounded = true),
+                    onClick = {
+                        if(url.isBlank()) {
+                            coroutine.launch {
+                                snackbarHost?.showSnackbar(
+                                    message = notDistributedMessage
+                                )
+                            }
+                        }else window.open(url, "_self")
+                    }
+                )
+                .clip(CircleShape),
+            imageVector = Icons.Outlined.Download,
+            contentDescription = null,
+            tint = LocalTheme.current.colors.primary
+        )
     }
 }
 
