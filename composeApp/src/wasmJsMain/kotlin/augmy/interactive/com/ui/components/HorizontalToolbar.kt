@@ -7,14 +7,10 @@ import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.gestures.detectTapGestures
-import androidx.compose.foundation.hoverable
-import androidx.compose.foundation.interaction.HoverInteraction
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
@@ -30,17 +26,14 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.MenuOpen
 import androidx.compose.material.icons.outlined.Close
-import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.material3.ripple
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -48,7 +41,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.ColorFilter
-import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.currentBackStackEntryAsState
@@ -63,7 +55,6 @@ import io.github.alexzhirkevich.compottie.LottieCompositionSpec
 import io.github.alexzhirkevich.compottie.Url
 import io.github.alexzhirkevich.compottie.rememberLottieComposition
 import io.github.alexzhirkevich.compottie.rememberLottiePainter
-import kotlinx.coroutines.flow.collectLatest
 import org.jetbrains.compose.resources.stringResource
 import website_brand.composeapp.generated.resources.Res
 import website_brand.composeapp.generated.resources.accessibility_dark_mode
@@ -277,66 +268,4 @@ private fun ToolbarAction(
             )
         }
     )
-}
-
-@Composable
-fun IndicatedAction(
-    modifier: Modifier = Modifier,
-    isSelected: Boolean = false,
-    onPress: () -> Unit,
-    content: @Composable BoxScope.(Modifier) -> Unit
-) {
-    val isPressed = remember { mutableStateOf(false) }
-    val isHovered = remember { mutableStateOf(false) }
-
-    val interactionSource = remember { MutableInteractionSource() }
-    val scale = animateFloatAsState(
-        if (isPressed.value || isSelected || isHovered.value) 1f else 0f,
-        label = "indicatedActionAnimation"
-    )
-
-    LaunchedEffect(onPress) {
-        interactionSource.interactions.collectLatest {
-            when(it) {
-                is HoverInteraction.Enter -> isHovered.value = true
-                is HoverInteraction.Exit -> isHovered.value = false
-            }
-        }
-    }
-
-    Box(modifier.width(IntrinsicSize.Min)) {
-        AnimatedVisibility(isSelected) {
-            HorizontalDivider(
-                color = LocalTheme.current.colors.brandMain,
-                thickness = 2.dp,
-                modifier = Modifier
-                    .align(Alignment.TopCenter)
-                    .fillMaxWidth(scale.value)
-                    .clip(LocalTheme.current.shapes.rectangularActionShape)
-            )
-        }
-        content(
-            Modifier
-                .hoverable(interactionSource)
-                .pointerInput(onPress) {
-                    detectTapGestures(
-                        onPress = {
-                            isPressed.value = true
-                            tryAwaitRelease()
-                            onPress()
-                            isPressed.value = false
-                        }
-                    )
-                }
-                .padding(vertical = 4.dp, horizontal = 8.dp)
-        )
-        HorizontalDivider(
-            color = LocalTheme.current.colors.brandMain,
-            thickness = 2.dp,
-            modifier = Modifier
-                .align(Alignment.BottomCenter)
-                .fillMaxWidth(scale.value)
-                .clip(LocalTheme.current.shapes.rectangularActionShape)
-        )
-    }
 }

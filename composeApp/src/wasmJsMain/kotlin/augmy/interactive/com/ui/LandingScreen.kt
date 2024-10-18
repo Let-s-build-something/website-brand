@@ -2,10 +2,13 @@ package augmy.interactive.com.ui
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.Crossfade
+import androidx.compose.animation.animateColorAsState
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.animateScrollBy
+import androidx.compose.foundation.hoverable
+import androidx.compose.foundation.interaction.HoverInteraction
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -30,8 +33,10 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.ripple
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
@@ -55,6 +60,7 @@ import io.github.alexzhirkevich.compottie.Url
 import io.github.alexzhirkevich.compottie.rememberLottieComposition
 import io.github.alexzhirkevich.compottie.rememberLottiePainter
 import kotlinx.browser.window
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.stringResource
 import website_brand.composeapp.generated.resources.Res
@@ -145,20 +151,38 @@ private fun ColumnScope.DownloadBlock(viewModel: SharedViewModel) {
         isSelected = isExpanded.value
     )
 
-    AnimatedVisibility(
-        modifier = Modifier.padding(top = 24.dp),
-        visible = isExpanded.value
-    ) {
-        Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
-            PlatformDistribution.entries.forEach { platform ->
+    AnimatedVisibility(visible = isExpanded.value) {
+        Column(
+            modifier = Modifier.padding(top = 24.dp),
+            verticalArrangement = Arrangement.spacedBy(12.dp)
+        ) {
+            val hoveredIndex = remember {
+                mutableStateOf(-2)
+            }
+
+            PlatformDistribution.entries.forEachIndexed { index, platform ->
+                val dividerColor by animateColorAsState(
+                    if(index in hoveredIndex.value..hoveredIndex.value + 1) {
+                        LocalTheme.current.colors.brandMain
+                    }else LocalTheme.current.colors.secondary,
+                    label = "animDividerColor$index"
+                )
+
                 HorizontalDivider(
                     modifier = Modifier.padding(start = 12.dp),
-                    color = LocalTheme.current.colors.secondary
+                    color = dividerColor
                 )
                 PlatformDownload(
                     icon = platform.imageVector,
                     text = platform.label,
-                    url = platform.url
+                    url = platform.url,
+                    onHovered = { isHovering ->
+                        if(isHovering) {
+                            hoveredIndex.value = index
+                        }else if(index == hoveredIndex.value) {
+                            hoveredIndex.value = -2
+                        }
+                    }
                 )
             }
         }
@@ -169,11 +193,22 @@ private fun ColumnScope.DownloadBlock(viewModel: SharedViewModel) {
 private fun PlatformDownload(
     icon: ImageVector,
     text: String,
-    url: String
+    url: String,
+    onHovered: (Boolean) -> Unit
 ) {
     val snackbarHost = LocalSnackbarHost.current
     val notDistributedMessage = stringResource(Res.string.landing_download_not_distributed)
     val coroutine = rememberCoroutineScope()
+    val interactionSource = remember { MutableInteractionSource() }
+
+    LaunchedEffect(onHovered) {
+        interactionSource.interactions.collectLatest {
+            when(it) {
+                is HoverInteraction.Enter -> onHovered(true)
+                is HoverInteraction.Exit -> onHovered(false)
+            }
+        }
+    }
 
     Row(
         modifier = Modifier.fillMaxWidth(),
@@ -198,6 +233,7 @@ private fun PlatformDownload(
         Icon(
             modifier = Modifier
                 .size(32.dp)
+                .hoverable(interactionSource)
                 .clickable(
                     interactionSource = MutableInteractionSource(),
                     indication = ripple(bounded = true),
@@ -208,7 +244,7 @@ private fun PlatformDownload(
                                     message = notDistributedMessage
                                 )
                             }
-                        }else window.open(url, "_self")
+                        }else window.open(url)
                     }
                 )
                 .clip(CircleShape),
