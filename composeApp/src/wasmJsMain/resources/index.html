@@ -11,8 +11,6 @@ Sometimes, expressing yourself can be challenging, and there are moments when yo
     <meta name="author" content="Augmy Interactive">
 
     <!-- Preload WASM files -->
-    <link rel="preload" href="composeApp.wasm" as="fetch" crossorigin>
-    <!--<link rel="preload" href="8433c6b69bfa201b0895.wasm.br" as="fetch" crossorigin/>-->
     <link rel="preload" href="2eaba8643e2ccdf352b4.wasm" as="fetch" crossorigin/>
 
     <!-- Canonical URL (SEO Best Practice for duplicate content) -->
@@ -112,7 +110,7 @@ Sometimes, expressing yourself can be challenging, and there are moments when yo
                 const splashContainer = document.getElementById('loader-container');
 
                 // check whether .wasm files are already cached
-                const response = await fetch('composeApp.wasm', { method: 'HEAD' });
+                const response = await fetch('2eaba8643e2ccdf352b4.wasm', { method: 'HEAD' });
                 if (response.ok) {
                     splashContainer.style.display = 'none'
                 }else {
