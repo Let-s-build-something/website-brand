@@ -39,19 +39,8 @@ jobs:
           wasm_dir="${{ github.workspace }}/composeApp/build/dist/wasmJs/productionExecutable"
           find "$wasm_dir" -type f -name "*.wasm" -exec brotli -Z {} \;
 
-      # Step 7: Delete all .wasm.br files on FTP before uploading new ones
-      - name: Delete .wasm.br files from FTP
-        run: |
-          ftp_server="${{ secrets.FTP_SERVER_DOMAIN }}"
-          ftp_username="${{ secrets.FTP_USERNAME }}"
-          ftp_password="${{ secrets.FTP_PASSWORD }}"
 
-          # Use cURL to delete all .wasm.br files from the /www directory
-          curl --user "${ftp_username}:${ftp_password}" --list-only "ftp://$ftp_server/www/" | grep ".wasm.br" | while read -r file; do
-            curl --user "${ftp_username}:${ftp_password}" -Q "-DELE www/$file" "ftp://$ftp_server/www/$file"
-          done
-
-      # Step 8: Upload files to FTP, excluding .wasm files but including .wasm.br files
+      # Step 7: Upload files to FTP, excluding .wasm files but including .wasm.br files
       - name: Upload files to FTP using cURL
         run: |
           base_dir="${{ github.workspace }}/composeApp/build/dist/wasmJs/productionExecutable"
