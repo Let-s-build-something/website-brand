@@ -39,15 +39,19 @@ jobs:
           wasm_dir="${{ github.workspace }}/composeApp/build/dist/wasmJs/productionExecutable"
           find "$wasm_dir" -type f -name "*.wasm" -exec brotli -Z {} \;
 
-      #- name: Replace instantiate function and update URLs
-      #  run: |
-      #    # Replace '"./composeApp.wasm"' with 'window.wasmComposeBlobUrl'
-      #    sed -i 's|"./composeApp.wasm"|window.wasmComposeBlobUrl|g' ${{ github.workspace }}/composeApp/build/dist/wasmJs/productionExecutable/composeApp.js
-      #
-      #    # Replace '"2eaba8643e2ccdf352b4.wasm"' with 'window.wasmMagicBlobUrl'
-      #    sed -i 's|"2eaba8643e2ccdf352b4.wasm"|window.wasmMagicBlobUrl;console.log("a.b:", a.p);console.log("blob:", window.wasmMagicBlobUrl);|g' ${{ github.workspace }}/composeApp/build/dist/wasmJs/productionExecutable/composeApp.js
+      # Step 7: Delete all .wasm.br files on FTP before uploading new ones
+      - name: Delete .wasm.br files from FTP
+        run: |
+          ftp_server="${{ secrets.FTP_SERVER_DOMAIN }}"
+          ftp_username="${{ secrets.FTP_USERNAME }}"
+          ftp_password="${{ secrets.FTP_PASSWORD }}"
 
-      # Step 7: Upload files to FTP, excluding .wasm files but including .wasm.br files
+          # Use cURL to delete all .wasm.br files from the /www directory
+          curl --user "${ftp_username}:${ftp_password}" --list-only "ftp://$ftp_server/www/" | grep ".wasm.br" | while read -r file; do
+            curl --user "${ftp_username}:${ftp_password}" -Q "-DELE www/$file" "ftp://$ftp_server/www/$file"
+          done
+
+      # Step 8: Upload files to FTP, excluding .wasm files but including .wasm.br files
       - name: Upload files to FTP using cURL
         run: |
           base_dir="${{ github.workspace }}/composeApp/build/dist/wasmJs/productionExecutable"
