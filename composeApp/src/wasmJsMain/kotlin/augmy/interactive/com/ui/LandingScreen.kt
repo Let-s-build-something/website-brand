@@ -4,6 +4,7 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.Crossfade
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.animateScrollBy
@@ -23,6 +24,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.sizeIn
 import androidx.compose.foundation.layout.widthIn
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.material.icons.Icons
@@ -49,9 +51,9 @@ import androidx.compose.ui.unit.dp
 import augmy.interactive.com.base.LocalContentSizeDp
 import augmy.interactive.com.base.LocalDeviceType
 import augmy.interactive.com.base.LocalSnackbarHost
+import augmy.interactive.com.base.ModalScreenContent
 import augmy.interactive.com.data.Asset
 import augmy.interactive.com.data.PlatformDistribution
-import augmy.interactive.com.shared.SharedViewModel
 import augmy.interactive.com.theme.LocalTheme
 import augmy.interactive.com.ui.components.AsyncImageThumbnail
 import augmy.interactive.com.ui.components.IndicatedAction
@@ -79,53 +81,57 @@ import website_brand.composeapp.generated.resources.landing_header_heading
 
 /** home/landing screen which is initially shown on the application */
 @Composable
-fun LandingScreen(viewModel: SharedViewModel) {
+fun LandingScreen() {
     val verticalPadding = (LocalContentSizeDp.current.height / 8).dp
     val horizontalPadding = (LocalContentSizeDp.current.width / 20).dp
 
-    SelectionContainer {
-        Column(Modifier.padding(horizontal = 12.dp)) {
-            Text(
-                modifier = Modifier
-                    .padding(top = verticalPadding)
-                    .fillMaxWidth(),
-                text = stringResource(Res.string.landing_header_heading),
-                style = LocalTheme.current.styles.heading.copy(textAlign = TextAlign.Center)
-            )
-            Text(
-                modifier = Modifier.fillMaxWidth(),
-                text = stringResource(Res.string.landing_header_content),
-                style = LocalTheme.current.styles.regular.copy(textAlign = TextAlign.Center)
-            )
+    val scrollState = rememberScrollState()
 
-            Spacer(Modifier.height(verticalPadding * 2))
+    ModalScreenContent(scrollState = scrollState) {
+        SelectionContainer {
+            Column(Modifier.padding(horizontal = 12.dp)) {
+                Text(
+                    modifier = Modifier
+                        .padding(top = verticalPadding)
+                        .fillMaxWidth(),
+                    text = stringResource(Res.string.landing_header_heading),
+                    style = LocalTheme.current.styles.heading.copy(textAlign = TextAlign.Center)
+                )
+                Text(
+                    modifier = Modifier.fillMaxWidth(),
+                    text = stringResource(Res.string.landing_header_content),
+                    style = LocalTheme.current.styles.regular.copy(textAlign = TextAlign.Center)
+                )
 
-            Crossfade(LocalDeviceType.current == WindowWidthSizeClass.Compact) { isCompact ->
-                if(isCompact) {
-                    CompactLayout(verticalPadding = verticalPadding)
-                }else {
-                    LargeLayout(
-                        verticalPadding = verticalPadding,
-                        horizontalPadding = horizontalPadding
-                    )
+                Spacer(Modifier.height(verticalPadding * 2))
+
+                Crossfade(LocalDeviceType.current == WindowWidthSizeClass.Compact) { isCompact ->
+                    if(isCompact) {
+                        CompactLayout(verticalPadding = verticalPadding)
+                    }else {
+                        LargeLayout(
+                            verticalPadding = verticalPadding,
+                            horizontalPadding = horizontalPadding
+                        )
+                    }
                 }
+
+                Spacer(Modifier.height(verticalPadding))
+
+                FooterBlock(verticalPadding)
+
+                Spacer(Modifier.height(verticalPadding))
+
+                DownloadBlock(scrollState)
+
+                Spacer(Modifier.height(verticalPadding))
             }
-
-            Spacer(Modifier.height(verticalPadding))
-
-            FooterBlock(verticalPadding)
-
-            Spacer(Modifier.height(verticalPadding))
-
-            DownloadBlock(viewModel)
-
-            Spacer(Modifier.height(verticalPadding))
         }
     }
 }
 
 @Composable
-private fun ColumnScope.DownloadBlock(viewModel: SharedViewModel) {
+private fun ColumnScope.DownloadBlock(scrollState: ScrollState) {
     val isExpanded = rememberSaveable {
         mutableStateOf(false)
     }
@@ -144,7 +150,7 @@ private fun ColumnScope.DownloadBlock(viewModel: SharedViewModel) {
             isExpanded.value = !isExpanded.value
             if(isExpanded.value) {
                 scrollCoroutine.launch {
-                    viewModel.sharedScrollState.animateScrollBy(500f)
+                    scrollState.animateScrollBy(500f)
                 }
             }
         },

@@ -18,7 +18,6 @@ import augmy.interactive.com.base.BaseSnackbarHost
 import augmy.interactive.com.base.LocalDeviceType
 import augmy.interactive.com.base.LocalNavController
 import augmy.interactive.com.base.LocalSnackbarHost
-import augmy.interactive.com.base.ModalScreenContent
 import augmy.interactive.com.base.theme.AugmyTheme
 import augmy.interactive.com.navigation.NavigationHost
 import augmy.interactive.com.shared.SharedViewModel
@@ -64,13 +63,10 @@ fun App(
                     modifier = Modifier.fillMaxSize(),
                     viewModel = viewModel
                 ) {
-                    ModalScreenContent(scrollState = viewModel.sharedScrollState) {
-                        NavigationHost(
-                            navController = navController,
-                            startDestination = startDestination,
-                            viewModel = viewModel
-                        )
-                    }
+                    NavigationHost(
+                        navController = navController,
+                        startDestination = startDestination
+                    )
                 }
             }
         }

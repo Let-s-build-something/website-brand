@@ -19,7 +19,6 @@ private val phoneNumberRegex = """\+?\d{1,4}?[\s-]?\(?(\d{1,4})\)?[\s-]?\d{1,4}[
 
 /**
  * Clickable text supporting <a href> HTML tags and can also match email, URL addresses, and phone numbers if needed
- * @param linkStyles styles applied to the found link
  * @param matchEmail whether an email should be considered a link
  * @param matchPhone whether a phone number should be considered a link
  * @param matchUrl whether an url should be considered a link
@@ -28,14 +27,39 @@ private val phoneNumberRegex = """\+?\d{1,4}?[\s-]?\(?(\d{1,4})\)?[\s-]?\d{1,4}[
 @Composable
 fun buildAnnotatedLinkString(
     text: String,
-    linkStyles: TextLinkStyles = LocalTheme.current.styles.link,
     matchEmail: Boolean = true,
     matchPhone: Boolean = true,
     matchUrl: Boolean = true,
     onLinkClicked: (link: String) -> Unit = {
         window.open(it)
     }
-)= buildAnnotatedString {
+) = buildAnnotatedLinkString(
+    text = text,
+    linkStyles = LocalTheme.current.styles.link,
+    matchEmail = matchEmail,
+    matchPhone = matchPhone,
+    matchUrl = matchUrl,
+    onLinkClicked = onLinkClicked
+)
+
+/**
+ * Clickable text supporting <a href> HTML tags and can also match email, URL addresses, and phone numbers if needed
+ * @param linkStyles styles applied to the found link
+ * @param matchEmail whether an email should be considered a link
+ * @param matchPhone whether a phone number should be considered a link
+ * @param matchUrl whether an url should be considered a link
+ * @param onLinkClicked called whenever a link was clicked, propagating the link including prefix for phone number and email
+ */
+fun buildAnnotatedLinkString(
+    text: String,
+    linkStyles: TextLinkStyles,
+    matchEmail: Boolean = true,
+    matchPhone: Boolean = true,
+    matchUrl: Boolean = true,
+    onLinkClicked: (link: String) -> Unit = {
+        window.open(it)
+    }
+) = buildAnnotatedString {
     // first, we replace all matches with according href link
     val annotatedText = text.run {
         var replaced = this

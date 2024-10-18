@@ -7,7 +7,6 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import augmy.interactive.com.navigation.NavigationNode.Companion.allDestinations
-import augmy.interactive.com.shared.SharedViewModel
 import augmy.interactive.com.ui.ContactsScreen
 import augmy.interactive.com.ui.LandingScreen
 import augmy.interactive.com.ui.RoadmapScreen
@@ -21,7 +20,6 @@ val DEFAULT_START_DESTINATION = NavigationNode.Landing.route
 @Composable
 fun NavigationHost(
     modifier: Modifier = Modifier,
-    viewModel: SharedViewModel,
     navController: NavHostController,
     startDestination: String? = null
 ) {
@@ -33,7 +31,7 @@ fun NavigationHost(
         } ?: DEFAULT_START_DESTINATION
     ) {
         composable(NavigationNode.Landing.route) {
-            LandingScreen(viewModel)
+            LandingScreen()
         }
         composable(NavigationNode.BusinessAbout.route) {
             AboutBusinessScreen()

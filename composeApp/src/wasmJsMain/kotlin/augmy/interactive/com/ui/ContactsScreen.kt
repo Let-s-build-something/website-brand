@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.AlternateEmail
@@ -25,6 +26,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import augmy.interactive.com.base.LocalContentSizeDp
 import augmy.interactive.com.base.LocalDeviceType
+import augmy.interactive.com.base.ModalScreenContent
 import augmy.interactive.com.data.Asset
 import augmy.interactive.com.theme.LocalTheme
 import augmy.interactive.com.ui.components.AsyncImageThumbnail
@@ -47,19 +49,21 @@ fun ContactsScreen() {
         stringResource(Res.string.contacts_email_value)
     )
 
-    SelectionContainer {
-        Crossfade(LocalDeviceType.current == WindowWidthSizeClass.Compact) { isCompact ->
-            if(isCompact) {
-                CompactLayout(
-                    emailValue = emailValue,
-                    verticalPadding = verticalPadding
-                )
-            }else {
-                LargeLayout(
-                    emailValue = emailValue,
-                    verticalPadding = verticalPadding,
-                    horizontalPadding = horizontalPadding
-                )
+    ModalScreenContent(scrollState = rememberScrollState()) {
+        SelectionContainer {
+            Crossfade(LocalDeviceType.current == WindowWidthSizeClass.Compact) { isCompact ->
+                if(isCompact) {
+                    CompactLayout(
+                        emailValue = emailValue,
+                        verticalPadding = verticalPadding
+                    )
+                }else {
+                    LargeLayout(
+                        emailValue = emailValue,
+                        verticalPadding = verticalPadding,
+                        horizontalPadding = horizontalPadding
+                    )
+                }
             }
         }
     }

@@ -121,9 +121,34 @@
     \n11. Buschek, D., Hassib, M., &amp; Alt, F. (2018). Personal Mobile Messaging in Context. ACM Transactions on Computer-Human Interaction, 25(4), 1–33. https://doi.org/10.1145/3201404
   </string>
 
+  <string name="roadmap_heading">Roadmap</string>
+  <string name="roadmap_last_update">Last updated 10/18/2024</string>
+  <string name="roadmap_description">The estimated timeline for this project. Note, please, that anything on this page is subject to change at this stage of development.</string>
+  <string name="roadmap_expand_button">Details</string>
+
+  <string name="roadmap_0_title">Social networking support, 1Q 2025</string>
+  <string name="roadmap_0_description">This includes users having the ability to personalize their networks within the application and modify it at any time.</string>
+  <string name="roadmap_1_title">Chatting support, 2Q 2025</string>
+  <string name="roadmap_1_description">Ability to chat with anyone within the user's network, both in real-time and asynchronously.</string>
+  <string name="roadmap_2_title">First experimental functionality 3Q 2025</string>
+  <string name="roadmap_2_description">The first experimental functionality is developed and implemented into chatting. The functionality aims to improve expressiveness, and implicity via additional communication cues within interactions and is part of a planned bundle of functionalities we will gradually add.</string>
+  <string name="roadmap_3_title">First research, 4Q 2025</string>
+  <string name="roadmap_3_description">The first functionality(ies) will be compared to a control group. The research will be conducted to find nuances from its implementation and use. The article will be published in any relevant journal.</string>
+  <string name="roadmap_4_title">An initial version of the research interface, 4Q 2025 - 1Q 2026</string>
+  <string name="roadmap_4_description">A custom interface allowing for automatic collection and sampling of research, embedded into our product suite. While not widely advertised for researchers, the internal use of the research interface can begin.</string>
+  <string name="roadmap_5_title">SDK public release, 1Q 2026 onwards</string>
+  <string name="roadmap_5_description">Bundles that are implementable to any existing popular application are being released publicly. Any existing or new application can use our existing logic and improve the quality of communication. The range of functionalities implemented is increasing. The more impactful functionalities are being prioritized and gradually integrated into our application and the SDK bundles.</string>
+  <string name="roadmap_6_title">An initial version of Interpreter</string>
+  <string name="roadmap_6_description">Even with a minimal user base, our works on Interpreter can be put into practice and directed towards solutions developed within our application, SDK bundles, and research interface.</string>
+  <string name="roadmap_7_title">Full functionality support, Q4 2026</string>
+  <string name="roadmap_7_description">Our application supports functionality most common to popular instant messaging applications. This provides us with the ability to directly compare the effects of the additional functionalities and modifications we applied so far in contrast to traditional forms of communication.</string>
+  <string name="roadmap_8_title">A production version, Q1 2027</string>
+  <string name="roadmap_8_description">Our application is ready to be widely published and used by any user who wants to improve the quality of their communication online.</string>
+
 
   <string name="accessibility_light_mode">Light mode</string>
   <string name="accessibility_dark_mode">Dark mode</string>
   <string name="accessibility_menu">Open side menu</string>
   <string name="accessibility_play_video">Play video</string>
+  <string name="accessibility_button_expand">Expand</string>
 </resources>

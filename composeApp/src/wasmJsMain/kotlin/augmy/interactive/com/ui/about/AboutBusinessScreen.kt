@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.material3.Text
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
@@ -18,6 +19,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import augmy.interactive.com.base.LocalContentSizeDp
 import augmy.interactive.com.base.LocalDeviceType
+import augmy.interactive.com.base.ModalScreenContent
 import augmy.interactive.com.data.Asset
 import augmy.interactive.com.theme.LocalTheme
 import augmy.interactive.com.ui.components.AsyncImageThumbnail
@@ -34,22 +36,24 @@ fun AboutBusinessScreen() {
     val verticalPadding = (LocalContentSizeDp.current.height / 8).dp
     val horizontalPadding = (LocalContentSizeDp.current.width / 20).dp
 
-    SelectionContainer {
-        Crossfade(LocalDeviceType.current == WindowWidthSizeClass.Compact) { isCompact ->
-            if(isCompact) {
-                CompactLayout(verticalPadding = verticalPadding)
-            }else {
-                LargeLayout(
-                    verticalPadding = verticalPadding,
-                    horizontalPadding = horizontalPadding
-                )
+    ModalScreenContent(scrollState = rememberScrollState()) {
+        SelectionContainer {
+            Crossfade(LocalDeviceType.current == WindowWidthSizeClass.Compact) { isCompact ->
+                if(isCompact) {
+                    compactLayout(verticalPadding = verticalPadding)
+                }else {
+                    largeLayout(
+                        verticalPadding = verticalPadding,
+                        horizontalPadding = horizontalPadding
+                    )
+                }
             }
         }
     }
 }
 
 @Composable
-private fun CompactLayout(
+private fun compactLayout(
     verticalPadding: Dp
 ) {
     Column(
@@ -94,7 +98,7 @@ private fun CompactLayout(
 }
 
 @Composable
-private fun LargeLayout(
+private fun largeLayout(
     horizontalPadding: Dp,
     verticalPadding: Dp
 ) {

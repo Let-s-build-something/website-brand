@@ -140,6 +140,7 @@ fun ModalScreenContent(
     scrollState: ScrollState? = rememberScrollState(),
     verticalArrangement: Arrangement.Vertical = Arrangement.spacedBy(8.dp),
     horizontalAlignment: Alignment.Horizontal = Alignment.Start,
+    footer: @Composable ColumnScope.() -> Unit = { FooterScreenContent() },
     content: @Composable ColumnScope.() -> Unit
 ) {
     Column(
@@ -158,12 +159,12 @@ fun ModalScreenContent(
             horizontalAlignment = horizontalAlignment,
             content = content
         )
-        FooterContent()
+        footer()
     }
 }
 
 @Composable
-private fun FooterContent(modifier: Modifier = Modifier) {
+fun FooterScreenContent(modifier: Modifier = Modifier) {
     Row(
         modifier = modifier
             .padding(top = 16.dp)
