@@ -95,7 +95,10 @@ fun HorizontalToolbar(
             Row(
                 modifier = Modifier
                     .height(IntrinsicSize.Min)
-                    .fillMaxWidth(),
+                    .fillMaxWidth()
+                    .then(if(LocalDeviceType.current == WindowWidthSizeClass.Compact) {
+                        Modifier.padding(8.dp)
+                    }else Modifier),
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
@@ -148,9 +151,11 @@ fun HorizontalToolbar(
             AnimatedVisibility(isMenuExpanded.value) {
                 Column(
                     modifier = Modifier
+                        .fillMaxWidth()
                         .padding(horizontal = 8.dp)
                         .height(IntrinsicSize.Min),
-                    verticalArrangement = Arrangement.spacedBy(6.dp)
+                    verticalArrangement = Arrangement.spacedBy(6.dp),
+                    horizontalAlignment = Alignment.End
                 ) {
                     ToolbarActions(
                         onCollapse = {

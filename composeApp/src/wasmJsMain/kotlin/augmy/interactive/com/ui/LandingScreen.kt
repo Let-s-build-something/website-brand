@@ -87,9 +87,12 @@ fun LandingScreen() {
 
     val scrollState = rememberScrollState()
 
-    ModalScreenContent(scrollState = scrollState) {
+    ModalScreenContent(
+        Modifier.padding(horizontal = 12.dp),
+        scrollState = scrollState
+    ) {
         SelectionContainer {
-            Column(Modifier.padding(horizontal = 12.dp)) {
+            Column {
                 Text(
                     modifier = Modifier
                         .padding(top = verticalPadding)
@@ -121,12 +124,11 @@ fun LandingScreen() {
                 FooterBlock(verticalPadding)
 
                 Spacer(Modifier.height(verticalPadding))
-
-                DownloadBlock(scrollState)
-
-                Spacer(Modifier.height(verticalPadding))
             }
         }
+        DownloadBlock(scrollState)
+
+        Spacer(Modifier.height(verticalPadding))
     }
 }
 

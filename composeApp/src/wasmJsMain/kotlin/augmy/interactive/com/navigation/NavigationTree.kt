@@ -40,6 +40,11 @@ sealed class NavigationNode {
         override val route: String = "/roadmap"
     }
 
+    /** Screen  for users to remove themselves from the database */
+    data object DeleteMe: NavigationNode() {
+        override val route: String = "/delete-me"
+    }
+
     companion object {
         val allDestinations = listOf(
             Landing.route,
@@ -47,6 +52,7 @@ sealed class NavigationNode {
             ResearchAbout.route,
             PublicAbout.route,
             Roadmap.route,
+            DeleteMe.route,
             Contacts.route
         )
     }

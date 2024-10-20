@@ -123,7 +123,7 @@
 
   <string name="roadmap_heading">Roadmap</string>
   <string name="roadmap_last_update">Last updated 10/18/2024</string>
-  <string name="roadmap_description">The estimated timeline for this project. Note, please, that anything on this page is subject to change at this stage of development.</string>
+  <string name="roadmap_description">The estimated timeline for this project. Note that anything on this page is subject to change considering the current stage of the development.</string>
   <string name="roadmap_expand_button">Details</string>
 
   <string name="roadmap_0_title">Social networking support, 1Q 2025</string>
@@ -145,6 +145,24 @@
   <string name="roadmap_8_title">A production version, Q1 2027</string>
   <string name="roadmap_8_description">Our application is ready to be widely published and used by any user who wants to improve the quality of their communication online.</string>
 
+  <string name="delete_me_heading">Data deletion</string>
+  <string name="delete_me_description">Are you looking to delete data associated with you? This is the right place. You can either request for a full deletion or just a partial.
+    \nFor example, you may want to delete only messages associated with you, your social circle associations, or research data connected to you.
+    \nHowever, please note that we delete based on the type of data rather than specific pieces of data. For example, all your messages may be deleted, not just one message.</string>
+
+  <string name="delete_me_user_uid_label">User UID</string>
+  <string name="delete_me_user_id_hint">NABWwZun4QPIxYInouchx0dVB8g1</string>
+  <string name="delete_me_contents_label">What would you like us to delete?</string>
+  <string name="delete_me_contents_hint">All of the cookies</string>
+  <string name="delete_me_reason_short_0">It's difficult to understand messages</string>
+  <string name="delete_me_reason_short_1">I spend too much time here</string>
+  <string name="delete_me_reason_short_2">I don't understand how to use Augmy</string>
+  <string name="delete_me_reason_short_3">I use a different account now</string>
+  <string name="delete_me_reason_short_4">I prefer regular messaging apps</string>
+  <string name="delete_me_reason_short_5">Other</string>
+  <string name="delete_me_reason_long_label">Please, explain further if possible</string>
+  <string name="delete_me_reason_long_hint">You offer too many cookies but I'm on a diet...</string>
+  <string name="delete_me_button_send">Send as an email</string>
 
   <string name="accessibility_light_mode">Light mode</string>
   <string name="accessibility_dark_mode">Dark mode</string>

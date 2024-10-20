@@ -32,12 +32,11 @@ fun IndicatedAction(
     onPress: () -> Unit,
     content: @Composable BoxScope.(Modifier) -> Unit
 ) {
-    val isPressed = remember { mutableStateOf(false) }
     val isHovered = remember { mutableStateOf(false) }
 
     val interactionSource = remember { MutableInteractionSource() }
     val scale = animateFloatAsState(
-        if (isPressed.value || isSelected || isHovered.value) 1f else 0f,
+        if (isSelected || isHovered.value) 1f else 0f,
         label = "indicatedActionAnimation"
     )
 
@@ -66,11 +65,8 @@ fun IndicatedAction(
                 .hoverable(interactionSource)
                 .pointerInput(onPress) {
                     detectTapGestures(
-                        onPress = {
-                            isPressed.value = true
-                            tryAwaitRelease()
+                        onTap = {
                             onPress()
-                            isPressed.value = false
                         }
                     )
                 }
