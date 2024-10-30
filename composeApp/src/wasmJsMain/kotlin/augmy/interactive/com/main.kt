@@ -54,9 +54,9 @@ fun main() {
                 window.onpopstate = {
                     // if pop back fails, user goes forward
                     if(!navController.popBackStack(
-                        route = window.location.pathname,
-                        inclusive = false
-                    )) {
+                            route = window.location.pathname,
+                            inclusive = false
+                        )) {
                         navController.navigate(window.location.pathname)
                     }
                 }

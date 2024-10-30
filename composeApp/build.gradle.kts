@@ -14,7 +14,6 @@ plugins {
 kotlin {
     @OptIn(ExperimentalWasmDsl::class)
     wasmJs {
-        @OptIn(ExperimentalKotlinGradlePluginApi::class)
         compilerOptions {
             freeCompilerArgs.addAll("-opt-in=kotlin.RequiresOptIn", "-Xjsr305=strict")
         }

@@ -20,10 +20,6 @@ config.optimization.minimizer = [
     config.devServer = {
         ...config.devServer,
         port: 9000,
-        static: [
-            path.resolve(__dirname, 'C:\\Users\\jacob\\AndroidStudioProjects\\website-brand\\composeApp\\src\\wasmJsMain\\resources'),
-            path.resolve(__dirname, 'C:\\Users\\jacob\\AndroidStudioProjects\\website-brand\\build\\js\\packages\\composeApp\\kotlin')
-        ],
         historyApiFallback: {
             index: '/index.html',
             rewrites: [

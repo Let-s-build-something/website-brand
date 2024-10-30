@@ -6,7 +6,7 @@ export async function loadIndex() {
     script.type = 'application/javascript';
 
     script.onerror = function() {
-        document.getElementById('loader-container').innerHTML = '<p>Error loading the app. Please try again.</p>';
+        document.getElementById('loader-container').innerHTML = '<p>Error loading the app. Safari browser is unfortunately not support yet.</p>';
     };
 
     document.body.appendChild(script);

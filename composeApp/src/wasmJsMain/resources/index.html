@@ -73,7 +73,7 @@ Sometimes, expressing yourself can be challenging, and there are moments when yo
             font-size: 24px;
             color: #81A263;
             flex-direction: column;
-            display: none
+            display: flex
         }
 
         /* Initially hide the app content */
@@ -83,12 +83,8 @@ Sometimes, expressing yourself can be challenging, and there are moments when yo
     </style>
 </head>
     <body>
-        <!--<dotlottie-player src="https://lottie.host/cb47031e-dc67-4366-9921-6d1fdb3ca398/FblXP0xkN8.json" background="transparent" speed="1" style="width: 300px; height: 300px" direction="-1" playMode="normal" loop controls autoplay></dotlottie-player>-->
-
         <div id="loader-container">
             <canvas id="canvas" height="150px" width="150px"></canvas>
-            <p class="middle-text">Loading Augmy Interactive...</p>
-            <p class="bottom-text">Our goal is to make communication authentically implicit again. You won’t have to ponder which emoji best expresses your emotions; you’ll simply be understood.</p>
         </div>
 
         <div id="app"></div>
@@ -106,17 +102,8 @@ Sometimes, expressing yourself can be challenging, and there are moments when yo
                 });
             }
 
-            async function checkIfSplash() {
-                const splashContainer = document.getElementById('loader-container');
-
-                // check whether .wasm files are already cached
-                const response = await fetch('2eaba8643e2ccdf352b4.wasm', { method: 'HEAD' });
-                if (response.ok) {
-                    splashContainer.style.display = 'none'
-                }else {
-                    loadSplashImage()
-                    splashContainer.style.display = 'flex'
-                }
+            function checkIfSplash() {
+                loadSplashImage()
             }
 
             checkIfSplash()
@@ -124,6 +111,16 @@ Sometimes, expressing yourself can be challenging, and there are moments when yo
             import { loadIndex } from './preloader.js';
 
             document.addEventListener('DOMContentLoaded', loadIndex);
+        </script>
+
+        <script type="application/javascript" >
+            const unhandledError = (event, error) => {
+                if (error instanceof WebAssembly.CompileError) {
+                    document.getElementById('loader-container').innerHTML = '<p>Error loading the app. Safari browser is unfortunately not support yet.</p>';
+                }
+            }
+            document.addEventListener("error", (event) => unhandledError(event, event.error));
+            document.addEventListener("unhandledrejection", (event) => unhandledError(event, event.reason));
         </script>
     </body>
 </html>
