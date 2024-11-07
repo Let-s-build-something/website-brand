@@ -19,7 +19,7 @@
   <string name="landing_footer_content">If you want to understand someone better — or help them understand you — we’re here to help, whether it’s your partner, friends, or even your grandma who struggles with emojis.</string>
 
   <string name="landing_download_button">Download</string>
-  <string name="landing_download_not_distributed">We haven't distributed for this platform publicly, yet, sorry.</string>
+  <string name="landing_download_not_distributed">You can't register to open beta quite yet. Follow us on social media sites and we'll make sure you know about it, once it's ready.</string>
 
 
   <string name="toolbar_action_about">About</string>
@@ -65,6 +65,7 @@
   <string name="about_content_join_us_2">We are also researching the effects of the additional cues and contexts. You can sign up for research here [coming soon!].</string>
   <string name="about_content_join_us_3">Financial support is always welcomed. While in an ideal world, we could just do the work without having to pay anything, many of the things we do require financing. If this project is something you want to be done, please, consider supporting us here [coming soon!].</string>
   <string name="about_content_join_us_4">Share. Even a single additional person knowing about our vision and our work means a lot to us. So, anyone, who you think would like to communicate meaningfully is someone who may appreciate you sharing this project with them.</string>
+  <string name="about_content_join_us_share">Follow and share</string>
   <string name="about_header_roadmap">Roadmap</string>
   <string name="about_content_roadmap">You can see what's currently ahead of us</string>
   <string name="about_content_roadmap_here">here</string>
