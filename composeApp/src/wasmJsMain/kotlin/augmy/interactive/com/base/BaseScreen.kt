@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
@@ -217,8 +218,9 @@ fun FooterScreenContent(modifier: Modifier = Modifier) {
     }
 }
 
+/** Logo with a tag of social media site */
 @Composable
-private fun SocialLogo(
+fun RowScope.SocialLogo(
     modifier: Modifier = Modifier,
     tag: StringResource,
     link: StringResource,
@@ -239,11 +241,15 @@ private fun SocialLogo(
     )
     if(isDesktop) {
         Text(
+            modifier = Modifier.clickable {
+                window.open(url)
+            },
             text = stringResource(tag),
             style = LocalTheme.current.styles.category
         )
     }
 }
+
 
 /** Maximum width of a modal element - this can include a screen in case the device is a desktop */
 const val MaxModalWidthDp = 1300

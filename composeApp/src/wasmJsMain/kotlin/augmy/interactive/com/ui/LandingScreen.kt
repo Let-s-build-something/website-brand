@@ -29,6 +29,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Download
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
@@ -50,18 +51,17 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import augmy.interactive.com.base.LocalContentSizeDp
 import augmy.interactive.com.base.LocalDeviceType
-import augmy.interactive.com.base.LocalSnackbarHost
 import augmy.interactive.com.base.ModalScreenContent
 import augmy.interactive.com.data.Asset
 import augmy.interactive.com.data.PlatformDistribution
 import augmy.interactive.com.theme.LocalTheme
 import augmy.interactive.com.ui.components.AsyncImageThumbnail
 import augmy.interactive.com.ui.components.IndicatedAction
+import augmy.interactive.com.ui.components.SocialMediaBottomSheet
 import io.github.alexzhirkevich.compottie.LottieCompositionSpec
 import io.github.alexzhirkevich.compottie.Url
 import io.github.alexzhirkevich.compottie.rememberLottieComposition
 import io.github.alexzhirkevich.compottie.rememberLottiePainter
-import kotlinx.browser.window
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.stringResource
@@ -197,6 +197,7 @@ private fun ColumnScope.DownloadBlock(scrollState: ScrollState) {
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun PlatformDownload(
     icon: ImageVector,
@@ -204,10 +205,10 @@ private fun PlatformDownload(
     url: String,
     onHovered: (Boolean) -> Unit
 ) {
-    val snackbarHost = LocalSnackbarHost.current
-    val notDistributedMessage = stringResource(Res.string.landing_download_not_distributed)
-    val coroutine = rememberCoroutineScope()
     val interactionSource = remember { MutableInteractionSource() }
+    val showSocialModal = rememberSaveable {
+        mutableStateOf(false)
+    }
 
     LaunchedEffect(onHovered) {
         interactionSource.interactions.collectLatest {
@@ -216,6 +217,15 @@ private fun PlatformDownload(
                 is HoverInteraction.Exit -> onHovered(false)
             }
         }
+    }
+
+    if(showSocialModal.value) {
+        SocialMediaBottomSheet(
+            text = stringResource(Res.string.landing_download_not_distributed),
+            onDismissRequest = {
+                showSocialModal.value = false
+            }
+        )
     }
 
     Row(
@@ -246,13 +256,8 @@ private fun PlatformDownload(
                     interactionSource = MutableInteractionSource(),
                     indication = ripple(bounded = true),
                     onClick = {
-                        if(url.isBlank()) {
-                            coroutine.launch {
-                                snackbarHost?.showSnackbar(
-                                    message = notDistributedMessage
-                                )
-                            }
-                        }else window.open(url)
+                        //window.open(url)
+                        showSocialModal.value = true
                     }
                 )
                 .clip(CircleShape),
