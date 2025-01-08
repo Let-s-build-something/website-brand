@@ -1,10 +1,8 @@
 package augmy.interactive.com.ui
 
-import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.Crossfade
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.animateScrollBy
@@ -21,14 +19,10 @@ import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.sizeIn
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.text.selection.SelectionContainer
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.Download
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
@@ -37,7 +31,6 @@ import androidx.compose.material3.ripple
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -78,7 +71,8 @@ import website_brand.composeapp.generated.resources.landing_block_2_content
 import website_brand.composeapp.generated.resources.landing_block_2_heading
 import website_brand.composeapp.generated.resources.landing_block_3_content
 import website_brand.composeapp.generated.resources.landing_block_3_heading
-import website_brand.composeapp.generated.resources.landing_download_button
+import website_brand.composeapp.generated.resources.landing_download_content
+import website_brand.composeapp.generated.resources.landing_download_heading
 import website_brand.composeapp.generated.resources.landing_download_not_distributed
 import website_brand.composeapp.generated.resources.landing_footer_action
 import website_brand.composeapp.generated.resources.landing_footer_content
@@ -96,9 +90,6 @@ fun LandingScreen() {
 
     val coroutineScope = rememberCoroutineScope()
     val scrollState = rememberScrollState()
-    val isDownloadExpanded = rememberSaveable {
-        mutableStateOf(false)
-    }
 
     ModalScreenContent(
         modifier = Modifier.padding(horizontal = 12.dp),
@@ -123,7 +114,6 @@ fun LandingScreen() {
                         text = stringResource(Res.string.landing_header_content),
                         linkTextWithin = stringResource(Res.string.landing_header_content_link),
                         onLinkClicked = {
-                            isDownloadExpanded.value = true
                             coroutineScope.launch {
                                 scrollState.animateScrollBy(2500f)
                             }
@@ -152,10 +142,7 @@ fun LandingScreen() {
                 Spacer(Modifier.height(verticalPadding))
             }
         }
-        DownloadBlock(
-            scrollState = scrollState,
-            isExpanded = isDownloadExpanded
-        )
+        DownloadBlock()
 
         Spacer(Modifier.height(verticalPadding))
 
@@ -194,53 +181,40 @@ fun LandingScreen() {
 }
 
 @Composable
-private fun ColumnScope.DownloadBlock(
-    scrollState: ScrollState,
-    isExpanded: MutableState<Boolean>
-) {
+private fun ColumnScope.DownloadBlock() {
     val scrollCoroutine = rememberCoroutineScope()
 
-    IndicatedAction(
-        modifier = Modifier.align(Alignment.Start),
-        content = { modifier ->
-            Text(
-                modifier = modifier,
-                text = stringResource(Res.string.landing_download_button),
-                style = LocalTheme.current.styles.heading
-            )
-        },
-        onPress = {
-            isExpanded.value = !isExpanded.value
-            if(isExpanded.value) {
-                scrollCoroutine.launch {
-                    scrollState.animateScrollBy(500f)
-                }
-            }
-        },
-        isSelected = isExpanded.value
+    Text(
+        modifier = Modifier.fillMaxWidth(),
+        text = stringResource(Res.string.landing_download_heading),
+        style = LocalTheme.current.styles.heading.copy(textAlign = TextAlign.Center)
+    )
+    Text(
+        modifier = Modifier.fillMaxWidth(),
+        text = stringResource(Res.string.landing_download_content),
+        style = LocalTheme.current.styles.regular.copy(textAlign = TextAlign.Center)
     )
 
-    AnimatedVisibility(visible = isExpanded.value) {
-        Column(
-            modifier = Modifier.padding(top = 24.dp),
-            verticalArrangement = Arrangement.spacedBy(12.dp)
-        ) {
-            val hoveredIndex = remember {
-                mutableStateOf(-2)
-            }
+    Row (
+        modifier = Modifier.padding(top = 24.dp)
+    ) {
+        val hoveredIndex = remember {
+            mutableStateOf(-2)
+        }
 
-            PlatformDistribution.entries.forEachIndexed { index, platform ->
-                val dividerColor by animateColorAsState(
-                    if(index in hoveredIndex.value..hoveredIndex.value + 1) {
-                        LocalTheme.current.colors.brandMain
-                    }else LocalTheme.current.colors.secondary,
-                    label = "animDividerColor$index"
-                )
-
-                HorizontalDivider(
-                    modifier = Modifier.padding(start = 12.dp),
-                    color = dividerColor
-                )
+        PlatformDistribution.entries.forEachIndexed { index, platform ->
+            val dividerColor by animateColorAsState(
+                if(hoveredIndex.value == index) {
+                    LocalTheme.current.colors.brandMain
+                }else LocalTheme.current.colors.secondary,
+                label = "animDividerColor$index"
+            )
+            Column(
+                modifier = Modifier
+                    .weight(1f)
+                    .padding(8.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
                 PlatformDownload(
                     icon = platform.imageVector,
                     text = platform.label,
@@ -253,6 +227,7 @@ private fun ColumnScope.DownloadBlock(
                         }
                     }
                 )
+                HorizontalDivider(color = dividerColor)
             }
         }
     }
@@ -289,42 +264,32 @@ private fun PlatformDownload(
         )
     }
 
-    Row(
-        modifier = Modifier.fillMaxWidth(),
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.SpaceBetween
+    Column(
+        modifier = Modifier
+            .hoverable(interactionSource)
+            .clickable(
+                interactionSource = MutableInteractionSource(),
+                indication = ripple(bounded = true),
+                onClick = {
+                    //window.open(url)
+                    showSocialModal.value = true
+                }
+            ),
+        verticalArrangement = Arrangement.spacedBy(4.dp),
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(8.dp)
-        ) {
-            Icon(
-                modifier = Modifier.size(32.dp),
-                imageVector = icon,
-                contentDescription = null,
-                tint = LocalTheme.current.colors.primary
-            )
-            Text(
-                text = text,
-                style = LocalTheme.current.styles.regular
-            )
-        }
         Icon(
             modifier = Modifier
-                .size(32.dp)
-                .hoverable(interactionSource)
-                .clickable(
-                    interactionSource = MutableInteractionSource(),
-                    indication = ripple(bounded = true),
-                    onClick = {
-                        //window.open(url)
-                        showSocialModal.value = true
-                    }
-                )
-                .clip(CircleShape),
-            imageVector = Icons.Outlined.Download,
+                .widthIn(max = 50.dp)
+                .fillMaxWidth()
+                .aspectRatio(1f),
+            imageVector = icon,
             contentDescription = null,
             tint = LocalTheme.current.colors.primary
+        )
+        Text(
+            text = text,
+            style = LocalTheme.current.styles.regular
         )
     }
 }

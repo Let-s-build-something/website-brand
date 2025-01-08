@@ -9,10 +9,10 @@
 
   <string name="landing_header_content_link">app</string>
 
-  <string name="landing_block_0_heading">Express yourself without missing a beat</string>
+  <string name="landing_block_0_heading">Connect without missing a beat</string>
   <string name="landing_block_0_content">Be closer to people you want to be close to—even online, and with the ease you're used to. Send messages that convey how you mean it—not how you said it.</string>
 
-  <string name="landing_block_1_heading">Communicate instinctively and with ease</string>
+  <string name="landing_block_1_heading">Communicate instinctively</string>
   <string name="landing_block_1_content">Our goal is to make communication online expressive. You don't have to ponder which emoji best expresses your feelings anymore; be understood without overthinking.</string>
 
   <string name="landing_block_2_heading">Everyone wants to be understood, let’s start with you</string>
@@ -23,9 +23,11 @@
 
   <string name="landing_footer_heading">The problem statement</string>
   <string name="landing_footer_content">Messaging online as we know it is not enough—it lacks nuance in how we express ourselves, in the way we move, in the way we talk, and fails at synchronizing us with others. We often rely on oversimplified keywords and impersonal emojis or curate the impressions others may have of us, leaving the true expressions behind.
-    It's time for online messaging that truly conveys how we mean it—not just how we type it.</string>
+    It's time for online messaging that truly conveys how we mean it—not just what we type.</string>
   <string name="landing_footer_action">X—doubt</string>
 
+  <string name="landing_download_heading">Get our app now!</string>
+  <string name="landing_download_content">While our focus lies on making generally applicable solutions to improve the quality of communication online, we decided, that in order to understand all its positives and drawbacks, we should put it to test ourselves. That's why we've decided to launch our own messaging application: Augmy, usable by anyone.</string>
   <string name="landing_download_button">Download</string>
   <string name="landing_download_not_distributed">You can't register to open beta quite yet. Follow us on social media sites and we'll make sure you know once it's ready for you.</string>
 
