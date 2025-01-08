@@ -37,6 +37,7 @@ import androidx.compose.material3.ripple
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -51,13 +52,16 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import augmy.interactive.com.base.LocalContentSizeDp
 import augmy.interactive.com.base.LocalDeviceType
+import augmy.interactive.com.base.LocalNavController
 import augmy.interactive.com.base.ModalScreenContent
 import augmy.interactive.com.data.Asset
 import augmy.interactive.com.data.PlatformDistribution
+import augmy.interactive.com.navigation.NavigationNode
 import augmy.interactive.com.theme.LocalTheme
 import augmy.interactive.com.ui.components.AsyncImageThumbnail
 import augmy.interactive.com.ui.components.IndicatedAction
 import augmy.interactive.com.ui.components.SocialMediaBottomSheet
+import augmy.interactive.com.ui.components.buildAnnotatedLink
 import io.github.alexzhirkevich.compottie.LottieCompositionSpec
 import io.github.alexzhirkevich.compottie.Url
 import io.github.alexzhirkevich.compottie.rememberLottieComposition
@@ -72,37 +76,59 @@ import website_brand.composeapp.generated.resources.landing_block_1_content
 import website_brand.composeapp.generated.resources.landing_block_1_heading
 import website_brand.composeapp.generated.resources.landing_block_2_content
 import website_brand.composeapp.generated.resources.landing_block_2_heading
+import website_brand.composeapp.generated.resources.landing_block_3_content
+import website_brand.composeapp.generated.resources.landing_block_3_heading
 import website_brand.composeapp.generated.resources.landing_download_button
 import website_brand.composeapp.generated.resources.landing_download_not_distributed
+import website_brand.composeapp.generated.resources.landing_footer_action
 import website_brand.composeapp.generated.resources.landing_footer_content
 import website_brand.composeapp.generated.resources.landing_footer_heading
 import website_brand.composeapp.generated.resources.landing_header_content
+import website_brand.composeapp.generated.resources.landing_header_content_link
 import website_brand.composeapp.generated.resources.landing_header_heading
 
 /** home/landing screen which is initially shown on the application */
 @Composable
 fun LandingScreen() {
+    val navController = LocalNavController.current
     val verticalPadding = (LocalContentSizeDp.current.height / 8).dp
     val horizontalPadding = (LocalContentSizeDp.current.width / 20).dp
 
+    val coroutineScope = rememberCoroutineScope()
     val scrollState = rememberScrollState()
+    val isDownloadExpanded = rememberSaveable {
+        mutableStateOf(false)
+    }
 
     ModalScreenContent(
-        Modifier.padding(horizontal = 12.dp),
+        modifier = Modifier.padding(horizontal = 12.dp),
         scrollState = scrollState
     ) {
         SelectionContainer {
             Column {
                 Text(
                     modifier = Modifier
+                        .align(Alignment.CenterHorizontally)
                         .padding(top = verticalPadding)
-                        .fillMaxWidth(),
+                        .fillMaxWidth(.8f),
                     text = stringResource(Res.string.landing_header_heading),
                     style = LocalTheme.current.styles.heading.copy(textAlign = TextAlign.Center)
                 )
                 Text(
-                    modifier = Modifier.fillMaxWidth(),
-                    text = stringResource(Res.string.landing_header_content),
+                    modifier = Modifier
+                        .align(Alignment.CenterHorizontally)
+                        .padding(top = 2.dp)
+                        .fillMaxWidth(.8f),
+                    text = buildAnnotatedLink(
+                        text = stringResource(Res.string.landing_header_content),
+                        linkTextWithin = stringResource(Res.string.landing_header_content_link),
+                        onLinkClicked = {
+                            isDownloadExpanded.value = true
+                            coroutineScope.launch {
+                                scrollState.animateScrollBy(2500f)
+                            }
+                        }
+                    ),
                     style = LocalTheme.current.styles.regular.copy(textAlign = TextAlign.Center)
                 )
 
@@ -126,17 +152,52 @@ fun LandingScreen() {
                 Spacer(Modifier.height(verticalPadding))
             }
         }
-        DownloadBlock(scrollState)
+        DownloadBlock(
+            scrollState = scrollState,
+            isExpanded = isDownloadExpanded
+        )
+
+        Spacer(Modifier.height(verticalPadding))
+
+        Column(
+            modifier = Modifier
+                .align(Alignment.CenterHorizontally)
+                .fillMaxWidth(.8f)
+        ) {
+            Text(
+                modifier = Modifier.fillMaxWidth(),
+                text = stringResource(Res.string.landing_footer_heading),
+                style = LocalTheme.current.styles.heading.copy(textAlign = TextAlign.Center)
+            )
+            Text(
+                modifier = Modifier.fillMaxWidth(),
+                text = stringResource(Res.string.landing_footer_content),
+                style = LocalTheme.current.styles.regular.copy(textAlign = TextAlign.Center)
+            )
+            IndicatedAction(
+                modifier = Modifier.align(Alignment.End),
+                content = { modifier ->
+                    Text(
+                        modifier = modifier,
+                        text = stringResource(Res.string.landing_footer_action),
+                        style = LocalTheme.current.styles.regular
+                    )
+                },
+                onPress = {
+                    navController?.navigate(NavigationNode.PublicAbout.route)
+                }
+            )
+        }
 
         Spacer(Modifier.height(verticalPadding))
     }
 }
 
 @Composable
-private fun ColumnScope.DownloadBlock(scrollState: ScrollState) {
-    val isExpanded = rememberSaveable {
-        mutableStateOf(false)
-    }
+private fun ColumnScope.DownloadBlock(
+    scrollState: ScrollState,
+    isExpanded: MutableState<Boolean>
+) {
     val scrollCoroutine = rememberCoroutineScope()
 
     IndicatedAction(
@@ -274,7 +335,7 @@ private fun ColumnScope.FooterBlock(verticalPadding: Dp) {
         modifier = Modifier
             .padding(top = verticalPadding)
             .fillMaxWidth(),
-        text = stringResource(Res.string.landing_footer_heading),
+        text = stringResource(Res.string.landing_block_3_heading),
         style = LocalTheme.current.styles.heading.copy(textAlign = TextAlign.Center)
     )
     Text(
@@ -282,7 +343,7 @@ private fun ColumnScope.FooterBlock(verticalPadding: Dp) {
             .align(Alignment.CenterHorizontally)
             .widthIn(max = 700.dp)
             .fillMaxWidth(),
-        text = stringResource(Res.string.landing_footer_content),
+        text = stringResource(Res.string.landing_block_3_content),
         style = LocalTheme.current.styles.regular.copy(textAlign = TextAlign.Center)
     )
 

@@ -55,12 +55,15 @@ import io.github.alexzhirkevich.compottie.LottieCompositionSpec
 import io.github.alexzhirkevich.compottie.Url
 import io.github.alexzhirkevich.compottie.rememberLottieComposition
 import io.github.alexzhirkevich.compottie.rememberLottiePainter
+import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import website_brand.composeapp.generated.resources.Res
 import website_brand.composeapp.generated.resources.accessibility_dark_mode
 import website_brand.composeapp.generated.resources.accessibility_light_mode
+import website_brand.composeapp.generated.resources.accessibility_logo
 import website_brand.composeapp.generated.resources.accessibility_menu
 import website_brand.composeapp.generated.resources.app_name
+import website_brand.composeapp.generated.resources.logo
 import website_brand.composeapp.generated.resources.toolbar_action_about
 import website_brand.composeapp.generated.resources.toolbar_action_about_business
 import website_brand.composeapp.generated.resources.toolbar_action_about_research
@@ -103,7 +106,13 @@ fun HorizontalToolbar(
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 Row(verticalAlignment = Alignment.CenterVertically) {
-                    //TODO logo here
+                    Image(
+                        modifier = Modifier
+                            .size(48.dp)
+                            .padding(top = 6.dp, bottom = 6.dp, end = 6.dp),
+                        painter = painterResource(Res.drawable.logo),
+                        contentDescription = stringResource(Res.string.accessibility_logo)
+                    )
                     Text(
                         modifier = Modifier
                             .clickable {

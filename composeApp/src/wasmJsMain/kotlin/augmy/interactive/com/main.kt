@@ -41,7 +41,7 @@ fun main() {
                 ) {
                     App(
                         navController = navController,
-                        startDestination = window.location.pathname
+                        startDestination = currentRoute
                     )
                 }
 

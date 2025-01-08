@@ -29,6 +29,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.rotate
+import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import augmy.interactive.com.base.LocalContentSizeDp
@@ -175,6 +176,8 @@ private fun LargeLayout(
 
 @Composable
 private fun VerticalContent(fraction: Float = 1f) {
+    val progressIndex = 1
+
     listOf(
         Res.string.roadmap_0_title to Res.string.roadmap_0_description,
         Res.string.roadmap_1_title to Res.string.roadmap_1_description,
@@ -197,7 +200,9 @@ private fun VerticalContent(fraction: Float = 1f) {
         Column(modifier = Modifier.padding(start = 16.dp)) {
             Text(
                 text = stringResource(item.first),
-                style = LocalTheme.current.styles.subheading
+                style = LocalTheme.current.styles.subheading.copy(
+                    textDecoration = if(index < progressIndex) TextDecoration.LineThrough else null
+                )
             )
             Row(
                 modifier = Modifier

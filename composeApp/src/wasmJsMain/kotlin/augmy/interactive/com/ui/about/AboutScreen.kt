@@ -5,21 +5,24 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.LinkAnnotation
@@ -38,9 +41,8 @@ import augmy.interactive.com.ui.components.AsyncImageThumbnail
 import augmy.interactive.com.ui.components.BulletText
 import augmy.interactive.com.ui.components.IndicatedAction
 import augmy.interactive.com.ui.components.SocialMediaBottomSheet
-import augmy.interactive.com.ui.components.YoutubeVideoThumbnail
 import augmy.interactive.com.ui.components.buildAnnotatedLinkString
-import kotlinx.browser.window
+import coil3.compose.AsyncImage
 import org.jetbrains.compose.resources.stringResource
 import website_brand.composeapp.generated.resources.Res
 import website_brand.composeapp.generated.resources.about_content
@@ -68,11 +70,9 @@ import website_brand.composeapp.generated.resources.about_header_problem
 import website_brand.composeapp.generated.resources.about_header_roadmap
 import website_brand.composeapp.generated.resources.about_header_solution
 import website_brand.composeapp.generated.resources.about_header_summary
-import website_brand.composeapp.generated.resources.delete_me_button_send
+import website_brand.composeapp.generated.resources.accessibility_about_poster
 import website_brand.composeapp.generated.resources.landing_download_not_distributed
 import website_brand.composeapp.generated.resources.toolbar_action_about
-import website_brand.composeapp.generated.resources.video_heider_simmel_title
-import website_brand.composeapp.generated.resources.video_heider_simmel_url
 
 /** Screen with general information about the project for wide public */
 @Composable
@@ -275,17 +275,6 @@ private fun verticalContent(fraction: Float = 1f) {
                 text = stringResource(Res.string.about_content_solution_0),
                 style = LocalTheme.current.styles.regular
             )
-
-            YoutubeVideoThumbnail(
-                modifier = Modifier
-                    .fillMaxWidth(fraction)
-                    .aspectRatio(1.33f)
-                    .align(Alignment.CenterHorizontally)
-                    .padding(vertical = 32.dp, horizontal = 12.dp),
-                title = stringResource(Res.string.video_heider_simmel_title),
-                link = stringResource(Res.string.video_heider_simmel_url),
-                asset = Asset.Image.HeiderSimmelPreview
-            )
             Text(
                 modifier = Modifier.padding(start = 12.dp),
                 text = stringResource(Res.string.about_content_solution_1),
@@ -308,45 +297,81 @@ private fun verticalContent(fraction: Float = 1f) {
         }
     }
 
-    Column(Modifier.fillMaxWidth(fraction)) {
-        SelectionContainer {
-            Text(
-                text = stringResource(Res.string.about_header_join_us),
-                style = LocalTheme.current.styles.heading
+    val poster = remember {
+        listOf(
+            "https://augmy.org/storage/img/poster1.webp",
+            "https://augmy.org/storage/img/poster2.webp"
+        ).random()
+    }
+
+    Row(
+        modifier = Modifier.height(IntrinsicSize.Max),
+        horizontalArrangement = Arrangement.spacedBy(8.dp)
+    ) {
+        Column(Modifier.fillMaxWidth(fraction)) {
+            SelectionContainer {
+                Text(
+                    text = stringResource(Res.string.about_header_join_us),
+                    style = LocalTheme.current.styles.heading
+                )
+            }
+            Spacer(Modifier.height(32.dp))
+            listOf(
+                Res.string.about_content_join_us_0,
+                Res.string.about_content_join_us_1,
+                Res.string.about_content_join_us_2,
+                Res.string.about_content_join_us_3,
+                Res.string.about_content_join_us_4,
+            ).forEach {
+                SelectionContainer {
+                    BulletText(
+                        modifier = Modifier.padding(top = 8.dp, start = 12.dp),
+                        text = buildAnnotatedLinkString(stringResource(it)),
+                        style = LocalTheme.current.styles.regular
+                    )
+                }
+            }
+            IndicatedAction(
+                modifier = Modifier
+                    .padding(top = 16.dp)
+                    .fillMaxWidth(fraction),
+                content = { modifier ->
+                    Text(
+                        modifier = modifier.fillMaxWidth(),
+                        text = stringResource(Res.string.about_content_join_us_share),
+                        style = LocalTheme.current.styles.subheading
+                    )
+                },
+                onPress = {
+                    showSocialModal.value = true
+                }
             )
         }
-        Spacer(Modifier.height(32.dp))
-        listOf(
-            Res.string.about_content_join_us_0,
-            Res.string.about_content_join_us_1,
-            Res.string.about_content_join_us_2,
-            Res.string.about_content_join_us_3,
-            Res.string.about_content_join_us_4,
-        ).forEach {
-            SelectionContainer {
-                BulletText(
-                    modifier = Modifier.padding(top = 8.dp, start = 12.dp),
-                    text = buildAnnotatedLinkString(stringResource(it)),
-                    style = LocalTheme.current.styles.regular
-                )
-            }
+        if(LocalDeviceType.current == WindowWidthSizeClass.Expanded) {
+            AsyncImage(
+                modifier = Modifier
+                    .weight(1f)
+                    .fillMaxHeight(),
+                model = poster,
+                contentDescription = stringResource(Res.string.accessibility_about_poster)
+            )
         }
-        IndicatedAction(
+    }
+
+    if(LocalDeviceType.current != WindowWidthSizeClass.Expanded) {
+        AsyncImage(
             modifier = Modifier
-                .padding(top = 16.dp)
-                .fillMaxWidth(fraction),
-            content = { modifier ->
-                Text(
-                    modifier = modifier.fillMaxWidth(),
-                    text = stringResource(Res.string.about_content_join_us_share),
-                    style = LocalTheme.current.styles.subheading
-                )
-            },
-            onPress = {
-                showSocialModal.value = true
-            }
+                .padding(top = 32.dp)
+                .heightIn(max = 600.dp)
+                .fillMaxWidth()
+                .clip(RoundedCornerShape(8.dp))
+                .padding(8.dp),
+            model = poster,
+            contentDescription = stringResource(Res.string.accessibility_about_poster)
         )
     }
+
+
 
     SelectionContainer {
         Column(Modifier.fillMaxWidth(fraction)) {

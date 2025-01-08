@@ -132,3 +132,31 @@ fun buildAnnotatedLinkString(
     }
     append(appendableText)
 }
+
+/** Builds text with a single link represented by a text */
+@Composable
+fun buildAnnotatedLink(
+    text: String,
+    linkTextWithin: String,
+    onLinkClicked: (link: String) -> Unit
+) = buildAnnotatedString {
+    append(text.substring(
+        startIndex = 0,
+        endIndex = text.indexOf(linkTextWithin)
+    ))
+    withLink(
+        link = LinkAnnotation.Clickable(
+            tag = "ACTION",
+            styles = LocalTheme.current.styles.link,
+            linkInteractionListener = {
+                onLinkClicked(linkTextWithin)
+            },
+        ),
+    ) {
+        append(linkTextWithin)
+    }
+    append(text.substring(
+        startIndex = text.indexOf(linkTextWithin) + linkTextWithin.length,
+        endIndex = text.length
+    ))
+}

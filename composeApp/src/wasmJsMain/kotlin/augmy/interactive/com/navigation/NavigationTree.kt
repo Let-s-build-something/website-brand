@@ -35,12 +35,12 @@ sealed class NavigationNode {
         override val route: String = "/contacts"
     }
 
-    /** Screen  for outlining the project's roadmap */
+    /** Screen for outlining the project's roadmap */
     data object Roadmap: NavigationNode() {
         override val route: String = "/roadmap"
     }
 
-    /** Screen  for users to remove themselves from the database */
+    /** Screen for users to remove themselves from the database */
     data object DeleteMe: NavigationNode() {
         override val route: String = "/delete-me"
     }

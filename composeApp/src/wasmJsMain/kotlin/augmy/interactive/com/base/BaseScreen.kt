@@ -1,5 +1,6 @@
 package augmy.interactive.com.base
 
+import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -146,6 +147,7 @@ fun ModalScreenContent(
 ) {
     Column(
         modifier = modifier
+            .animateContentSize()
             .fillMaxSize()
             .then(
                 if(scrollState != null) Modifier.verticalScroll(scrollState) else Modifier
