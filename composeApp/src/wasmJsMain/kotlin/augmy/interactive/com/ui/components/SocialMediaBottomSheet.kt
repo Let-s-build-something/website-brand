@@ -1,6 +1,8 @@
 package augmy.interactive.com.ui.components
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.SheetState
@@ -9,11 +11,17 @@ import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import augmy.interactive.com.base.SocialLogo
+import augmy.interactive.com.base.theme.isDarkTheme
 import augmy.interactive.com.data.Asset
 import augmy.interactive.com.theme.LocalTheme
 import website_brand.composeapp.generated.resources.Res
+import website_brand.composeapp.generated.resources.contacts_bluesky
+import website_brand.composeapp.generated.resources.contacts_bluesky_tag
+import website_brand.composeapp.generated.resources.contacts_discord
+import website_brand.composeapp.generated.resources.contacts_discord_tag
 import website_brand.composeapp.generated.resources.contacts_instagram
 import website_brand.composeapp.generated.resources.contacts_instagram_tag
 import website_brand.composeapp.generated.resources.contacts_linkedin
@@ -41,14 +49,29 @@ fun SocialMediaBottomSheet(
             )
         }
         Row(
-            modifier = Modifier.padding(vertical = 12.dp),
-            verticalAlignment = Alignment.CenterVertically
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(vertical = 12.dp, horizontal = 8.dp),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(4.dp, alignment = Alignment.CenterHorizontally)
         ) {
+            SocialLogo(
+                tag = Res.string.contacts_discord_tag,
+                link = Res.string.contacts_discord,
+                asset = Asset.Logo.Discord,
+                tint = if(isDarkTheme) Color.White else Color.Black
+            )
             SocialLogo(
                 size = 28.dp,
                 tag = Res.string.contacts_twitter_tag,
                 link = Res.string.contacts_twitter,
-                asset = Asset.Logo.Twitter
+                asset = Asset.Logo.Twitter,
+                tint = if(isDarkTheme) Color.White else Color.Black
+            )
+            SocialLogo(
+                tag = Res.string.contacts_bluesky_tag,
+                link = Res.string.contacts_bluesky,
+                asset = Asset.Logo.Bluesky
             )
             SocialLogo(
                 tag = Res.string.contacts_instagram_tag,

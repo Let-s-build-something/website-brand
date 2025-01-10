@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
@@ -42,6 +41,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
+import augmy.interactive.com.base.theme.isDarkTheme
 import augmy.interactive.com.data.Asset
 import augmy.interactive.com.shared.SharedViewModel
 import augmy.interactive.com.theme.LocalTheme
@@ -54,6 +54,10 @@ import kotlinx.datetime.toLocalDateTime
 import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.stringResource
 import website_brand.composeapp.generated.resources.Res
+import website_brand.composeapp.generated.resources.contacts_bluesky
+import website_brand.composeapp.generated.resources.contacts_bluesky_tag
+import website_brand.composeapp.generated.resources.contacts_discord
+import website_brand.composeapp.generated.resources.contacts_discord_tag
 import website_brand.composeapp.generated.resources.contacts_instagram
 import website_brand.composeapp.generated.resources.contacts_instagram_tag
 import website_brand.composeapp.generated.resources.contacts_linkedin
@@ -197,12 +201,28 @@ fun FooterScreenContent(modifier: Modifier = Modifier) {
                         textAlign = TextAlign.Center
                     )
                 )
-                Row(verticalAlignment = Alignment.CenterVertically) {
+                Row(
+                    modifier = Modifier.padding(horizontal = 8.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(4.dp)
+                ) {
+                    SocialLogo(
+                        tag = Res.string.contacts_discord_tag,
+                        link = Res.string.contacts_discord,
+                        asset = Asset.Logo.Discord,
+                        tint = if(isDarkTheme) Color.White else Color.Black
+                    )
                     SocialLogo(
                         size = 28.dp,
                         tag = Res.string.contacts_twitter_tag,
                         link = Res.string.contacts_twitter,
-                        asset = Asset.Logo.Twitter
+                        asset = Asset.Logo.Twitter,
+                        tint = if(isDarkTheme) Color.White else Color.Black
+                    )
+                    SocialLogo(
+                        tag = Res.string.contacts_bluesky_tag,
+                        link = Res.string.contacts_bluesky,
+                        asset = Asset.Logo.Bluesky
                     )
                     SocialLogo(
                         tag = Res.string.contacts_instagram_tag,
@@ -222,14 +242,14 @@ fun FooterScreenContent(modifier: Modifier = Modifier) {
 
 /** Logo with a tag of social media site */
 @Composable
-fun RowScope.SocialLogo(
+fun SocialLogo(
     modifier: Modifier = Modifier,
     tag: StringResource,
     link: StringResource,
     asset: Asset,
-    size: Dp = 32.dp
+    size: Dp = 32.dp,
+    tint: Color? = null
 ) {
-    val isDesktop = LocalDeviceType.current == WindowWidthSizeClass.Expanded
     val url = stringResource(link)
 
     AsyncSvgImage(
@@ -239,17 +259,10 @@ fun RowScope.SocialLogo(
             }
             .padding(start = 10.dp, end = 4.dp)
             .size(size),
-        asset = asset
+        asset = asset,
+        tint = tint,
+        contentDescription = stringResource(tag)
     )
-    if(isDesktop) {
-        Text(
-            modifier = Modifier.clickable {
-                window.open(url)
-            },
-            text = stringResource(tag),
-            style = LocalTheme.current.styles.category
-        )
-    }
 }
 
 
