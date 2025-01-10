@@ -36,5 +36,10 @@ sealed class Asset {
         data object Instagram: Logo("instagram.svg")
         data object LinkedIn: Logo("linkedin.svg")
         data object Youtube: Logo("youtube.svg")
+        data object Bluesky: Logo("bluesky.svg")
+        data object Discord: Logo("discord.svg")
+        data object Kofi: Logo("bluesky.svg") {
+            override val url: String = "https://storage.ko-fi.com/cdn/brandasset/v2/kofi_symbol.png"
+        }
     }
 }

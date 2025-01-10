@@ -2,6 +2,8 @@ package augmy.interactive.com.ui.components
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
 import augmy.interactive.com.data.Asset
 import coil3.PlatformContext
 import coil3.compose.AsyncImage
@@ -13,6 +15,7 @@ import coil3.svg.SvgDecoder
 fun AsyncSvgImage(
     modifier: Modifier = Modifier,
     asset: Asset,
+    tint: Color? = null,
     contentDescription: String? = null
 ) {
     AsyncImage(
@@ -22,6 +25,7 @@ fun AsyncSvgImage(
             .crossfade(true)
             .decoderFactory(SvgDecoder.Factory())
             .build(),
-        contentDescription = contentDescription
+        contentDescription = contentDescription,
+        colorFilter = if(tint != null) ColorFilter.tint(tint) else null
     )
 }

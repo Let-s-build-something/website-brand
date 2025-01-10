@@ -40,13 +40,19 @@
   <string name="contacts_workplace">Workplace</string>
   <string name="contacts_workplace_value">Prague, Czechia</string>
   <string name="contacts_email">Email</string>
+  <string name="kofi_link_text">Support us</string>
   <string name="contacts_email_value">info@augmy.org</string>
   <string name="contacts_twitter">https://www.twitter.com/AugmyInteractiv</string>
   <string name="contacts_instagram">https://www.instagram.com/augmy_interactive</string>
   <string name="contacts_linkedin">https://www.linkedin.com/company/augmy-interactive</string>
+  <string name="contacts_bluesky">https://bsky.app/profile/augmyinteractive.bsky.social</string>
+  <string name="contacts_kofi">https://ko-fi.com/augmy</string>
+  <string name="contacts_discord">https://discord.gg/TFn8u9AE</string>
+  <string name="contacts_discord_tag">A discord server</string>
   <string name="contacts_twitter_tag">@AugmyInteractiv</string>
   <string name="contacts_instagram_tag">@augmy_interactive</string>
   <string name="contacts_linkedin_tag">@augmy-interactive</string>
+  <string name="contacts_bluesky_tag">@augmyinteractive.bsky.social</string>
 
   <string name="about_content">Are you interested in what we do?</string>
   <string name="about_header_summary">Summary</string>

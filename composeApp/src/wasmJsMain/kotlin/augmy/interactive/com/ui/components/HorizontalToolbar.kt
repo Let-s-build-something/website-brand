@@ -34,19 +34,24 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.currentBackStackEntryAsState
 import augmy.interactive.com.base.LocalDeviceType
 import augmy.interactive.com.base.LocalNavController
 import augmy.interactive.com.base.MaxModalWidthDp
+import augmy.interactive.com.base.theme.scalingClickable
+import augmy.interactive.com.data.Asset
 import augmy.interactive.com.navigation.NavigationNode
 import augmy.interactive.com.shared.SharedViewModel
 import augmy.interactive.com.shared.ThemeChoice
@@ -55,6 +60,9 @@ import io.github.alexzhirkevich.compottie.LottieCompositionSpec
 import io.github.alexzhirkevich.compottie.Url
 import io.github.alexzhirkevich.compottie.rememberLottieComposition
 import io.github.alexzhirkevich.compottie.rememberLottiePainter
+import kotlinx.browser.window
+import kotlinx.coroutines.launch
+import org.jetbrains.compose.resources.getString
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import website_brand.composeapp.generated.resources.Res
@@ -63,6 +71,8 @@ import website_brand.composeapp.generated.resources.accessibility_light_mode
 import website_brand.composeapp.generated.resources.accessibility_logo
 import website_brand.composeapp.generated.resources.accessibility_menu
 import website_brand.composeapp.generated.resources.app_name
+import website_brand.composeapp.generated.resources.contacts_kofi
+import website_brand.composeapp.generated.resources.kofi_link_text
 import website_brand.composeapp.generated.resources.logo
 import website_brand.composeapp.generated.resources.toolbar_action_about
 import website_brand.composeapp.generated.resources.toolbar_action_about_business
@@ -131,7 +141,10 @@ fun HorizontalToolbar(
                             modifier = Modifier.height(IntrinsicSize.Min),
                             verticalAlignment = Alignment.CenterVertically
                         ) {
-                            Row(horizontalArrangement = Arrangement.spacedBy(6.dp)) {
+                            Row(
+                                horizontalArrangement = Arrangement.spacedBy(6.dp),
+                                verticalAlignment = Alignment.CenterVertically
+                            ) {
                                 ToolbarActions()
                             }
 
@@ -232,6 +245,7 @@ private fun ThemeSwitch(
 
 @Composable
 private fun ToolbarActions(onCollapse: () -> Unit = {}) {
+    KofiAction()
     ToolbarAction(
         onCollapse = onCollapse,
         text = stringResource(Res.string.toolbar_action_about),
@@ -252,6 +266,42 @@ private fun ToolbarActions(onCollapse: () -> Unit = {}) {
         text = stringResource(Res.string.toolbar_action_contacts),
         route = NavigationNode.Contacts.route
     )
+}
+
+/** Action for navigation to Ko-fi donation service website */
+@Composable
+fun KofiAction() {
+    val density = LocalDensity.current
+    val scope = rememberCoroutineScope()
+
+    Row(
+        modifier = Modifier
+            .scalingClickable(scaleInto = .9f) {
+                scope.launch {
+                    window.open(getString(Res.string.contacts_kofi))
+                }
+            }
+            .background(
+                color = LocalTheme.current.colors.brandMainDark,
+                shape = LocalTheme.current.shapes.rectangularActionShape
+            )
+            .padding(vertical = 4.dp, horizontal = 8.dp),
+        horizontalArrangement = Arrangement.spacedBy(4.dp),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        AsyncSvgImage(
+            modifier = Modifier.size(
+                with(density) { LocalTheme.current.styles.regular.fontSize.toDp() + 4.dp }
+            ),
+            asset = Asset.Logo.Kofi
+        )
+        Text(
+            text = stringResource(Res.string.kofi_link_text),
+            style = LocalTheme.current.styles.regular.copy(
+                color = Color.White
+            )
+        )
+    }
 }
 
 @Composable
