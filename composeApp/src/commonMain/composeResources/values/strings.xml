@@ -9,24 +9,21 @@
 
   <string name="landing_header_content_link">app</string>
 
-  <string name="landing_messages_heading">Average chat</string>
-  <string name="landing_messages_text">Billions of people all over the world are being misunderstood and can't express themselves.
-    People do express themselves while messaging, but there are no natural ways of showing that.
-    Yet, the most pushed solution is to get rid of online communication completely.</string>
+  <string name="landing_messages_heading">Regular chat</string>
+  <string name="landing_messages_text">Billions of people all over the world are being misunderstood and can't express themselves.\n\nPeople do express themselves while messaging, but there are no natural ways of showing that.\n\nYet, the most pushed solution today is to stop chatting altogether.</string>
   <string name="landing_message_0">how are you?</string>
-  <string name="landing_message_1">I'm okay</string>
+  <string name="landing_message_1">I'm okay 🤷</string>
   <string name="landing_message_2">You sure? After yesterday...</string>
   <string name="landing_message_3">I'm okay</string>
   <string name="landing_message_4">Okay</string>
 
-  <string name="landing_messages_enhanced_heading">With Augmy</string>
-  <string name="landing_messages_enhanced_text">Give messages a character, be understood.
-  Less difficult than regular messaging, no need to use emojis.</string>
+  <string name="landing_messages_enhanced_heading">Powered by Augmy</string>
+  <string name="landing_messages_enhanced_text">People want to communicate naturally, not like essayist. The only thing missing is the means to do so.\n\nThat's what we're here for. Imagine being understood in how you said it, not just what you said.</string>
   <string name="landing_message_0_enhanced">how are you?</string>
-  <string name="landing_message_1_enhanced">I'm okay</string>
+  <string name="landing_message_1_enhanced">I'm okay 🤷</string>
   <string name="landing_message_2_enhanced">Dude I really didn't mean it, I'm sorry...</string>
   <string name="landing_message_3_enhanced">Oh, I thought you did it purposefully. It's alright</string>
-  <string name="landing_message_4_enhanced">cool cool cool</string>
+  <string name="landing_message_4_enhanced">cool cool cool 😄</string>
   <string name="landing_message_5_enhanced">beer tomorrow?</string>
   <string name="landing_message_6_enhanced">you bet</string>
 
