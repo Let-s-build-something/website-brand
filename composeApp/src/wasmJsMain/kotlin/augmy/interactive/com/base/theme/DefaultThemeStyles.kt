@@ -34,10 +34,10 @@ open class DefaultThemeStyles: ThemeStyle {
         protected val fontQuicksandRegular
             @Composable get() = Font(Res.font.quicksand_regular)
 
-        protected val fontQuicksandMedium
+        val fontQuicksandMedium
             @Composable get() = Font(Res.font.quicksand_medium)
 
-        protected val fontQuicksandSemiBold
+        val fontQuicksandSemiBold
             @Composable get() = Font(Res.font.quicksand_semi_bold)
     }
 

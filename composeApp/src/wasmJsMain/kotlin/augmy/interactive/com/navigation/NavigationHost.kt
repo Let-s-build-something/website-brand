@@ -9,7 +9,7 @@ import androidx.navigation.compose.composable
 import augmy.interactive.com.navigation.NavigationNode.Companion.allDestinations
 import augmy.interactive.com.ui.ContactsScreen
 import augmy.interactive.com.ui.DeleteMeScreen
-import augmy.interactive.com.ui.LandingScreen
+import augmy.interactive.com.ui.landing.LandingScreen
 import augmy.interactive.com.ui.RoadmapScreen
 import augmy.interactive.com.ui.about.AboutBusinessScreen
 import augmy.interactive.com.ui.about.AboutResearchScreen
