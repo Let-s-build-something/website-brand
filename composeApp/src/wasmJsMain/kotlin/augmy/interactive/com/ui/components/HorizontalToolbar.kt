@@ -293,7 +293,7 @@ fun KofiAction() {
             modifier = Modifier.size(
                 with(density) { LocalTheme.current.styles.regular.fontSize.toDp() + 4.dp }
             ),
-            asset = Asset.Logo.Kofi
+            model = Asset.Logo.Kofi.url
         )
         Text(
             text = stringResource(Res.string.kofi_link_text),

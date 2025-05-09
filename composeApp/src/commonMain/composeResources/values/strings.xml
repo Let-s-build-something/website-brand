@@ -3,11 +3,10 @@
 
   <string name="website_footer">© %1$d Augmy Interactive</string>
 
-  <string name="landing_header_heading">Natural, expressive, shaped by you, understood by others.</string>
-  <string name="landing_header_content">That's the new era of communication online.
-  Within our app, or integrated in any other communication software.</string>
+  <string name="landing_header_heading">Join the new era of communication</string>
+  <string name="landing_header_content">Talk online like you do in real life. Digital communication, reflective of the physical you, with agency in your hands.</string>
 
-  <string name="landing_header_content_link">app</string>
+  <string name="landing_social_circle_text">People around you aren't only followers, connections or friends.\nPrioritize who matters to you. Reconnect with people you've lost touch with.</string>
 
   <string name="landing_messages_heading">Regular chat</string>
   <string name="landing_messages_text">Billions of people all over the world are being misunderstood and can't express themselves.\n\nPeople do express themselves while messaging, but there are no natural ways of showing that.\n\nYet, the most pushed solution today is to stop chatting altogether.</string>
@@ -34,11 +33,13 @@
   <string name="landing_block_1_heading">Communicate instinctively</string>
   <string name="landing_block_1_content">Our goal is to make communication online expressive. You don't have to ponder which emoji best expresses your feelings anymore; be understood without overthinking.</string>
 
-  <string name="landing_block_2_heading">Everyone wants to be understood, let’s start with you</string>
+  <string name="landing_block_2_heading">Everyone wants to be understood</string>
   <string name="landing_block_2_content">Sometimes, expressing yourself can be challenging, and there are moments when you may simply lack the energy to explain. It's time to make your messages feel natural—both to you and others.</string>
 
   <string name="landing_block_3_heading">Communication matters</string>
   <string name="landing_block_3_content">If you want to understand someone better — or help them understand you — we’re here for that. Give it a shot, the people around you matter.</string>
+
+  <string name="landing_block_demo_heading">Peek into the future of social spaces</string>
 
   <string name="landing_footer_heading">The problem statement</string>
   <string name="landing_footer_content">Messaging online as we know it is not enough—it lacks nuance in how we express ourselves, in the way we move, in the way we talk, and fails at synchronizing us with others. We often rely on oversimplified keywords and impersonal emojis or curate the impressions others may have of us, leaving the true expressions behind.
@@ -50,6 +51,11 @@
   <string name="landing_download_button">Download</string>
   <string name="landing_download_not_distributed">You can't register to open beta quite yet. Follow us on social media sites and we'll make sure you know once it's ready for you.</string>
 
+  <string name="category_family">Family</string>
+  <string name="category_peers">Peers</string>
+  <string name="category_community">Community</string>
+  <string name="category_contacts">Contacts</string>
+  <string name="category_public">Public</string>
 
   <string name="toolbar_action_about_business">Business</string>
   <string name="toolbar_action_about_research">Research</string>

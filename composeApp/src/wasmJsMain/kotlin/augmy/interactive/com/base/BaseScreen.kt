@@ -259,7 +259,7 @@ fun SocialLogo(
             }
             .padding(start = 10.dp, end = 4.dp)
             .size(size),
-        asset = asset,
+        model = asset.url,
         tint = tint,
         contentDescription = stringResource(tag)
     )
