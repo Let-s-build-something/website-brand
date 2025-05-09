@@ -45,9 +45,10 @@ import augmy.interactive.com.ui.components.IndicatedAction
 import augmy.interactive.com.ui.components.buildAnnotatedLink
 import augmy.interactive.com.ui.landing.SimulatedMessage.Companion.beerAttention
 import augmy.interactive.com.ui.landing.SimulatedMessage.Companion.beerBackground
-import augmy.interactive.com.ui.landing.SimulatedMessage.Companion.chillQuickBackground
+import augmy.interactive.com.ui.landing.SimulatedMessage.Companion.coolCoolCoolBackground
 import augmy.interactive.com.ui.landing.SimulatedMessage.Companion.decisiveFastBackground
 import augmy.interactive.com.ui.landing.SimulatedMessage.Companion.howAreYouAttention
+import augmy.interactive.com.ui.landing.SimulatedMessage.Companion.imOkayAttention
 import augmy.interactive.com.ui.landing.SimulatedMessage.Companion.imOkayBackground
 import augmy.interactive.com.ui.landing.SimulatedMessage.Companion.imSorryAttention
 import augmy.interactive.com.ui.landing.SimulatedMessage.Companion.imSorryBackground
@@ -143,53 +144,52 @@ fun LandingScreen() {
                     }
                 }
 
-                Spacer(Modifier.height(verticalPadding))
-
-                FooterBlock(verticalPadding)
-
                 Spacer(Modifier.height(verticalPadding * 2))
-
                 MessagesSection(scrollState)
 
                 Spacer(Modifier.height(verticalPadding * 2))
-
-                DownloadBlock()
-
-                Spacer(Modifier.height(verticalPadding))
-
-                Column(
-                    modifier = Modifier
-                        .align(Alignment.CenterHorizontally)
-                        .fillMaxWidth(.8f)
-                ) {
-                    Text(
-                        modifier = Modifier.fillMaxWidth(),
-                        text = stringResource(Res.string.landing_footer_heading),
-                        style = LocalTheme.current.styles.heading.copy(textAlign = TextAlign.Center)
-                    )
-                    Text(
-                        modifier = Modifier.fillMaxWidth(),
-                        text = stringResource(Res.string.landing_footer_content),
-                        style = LocalTheme.current.styles.regular.copy(textAlign = TextAlign.Center)
-                    )
-                    IndicatedAction(
-                        modifier = Modifier.align(Alignment.End),
-                        content = { modifier ->
-                            Text(
-                                modifier = modifier,
-                                text = stringResource(Res.string.landing_footer_action),
-                                style = LocalTheme.current.styles.regular
-                            )
-                        },
-                        onPress = {
-                            navController?.navigate(NavigationNode.PublicAbout.route)
-                        }
-                    )
-                }
-
+                FooterBlock(verticalPadding)
                 Spacer(Modifier.height(verticalPadding))
             }
         }
+
+        DownloadBlock()
+
+        Spacer(Modifier.height(verticalPadding))
+
+        SelectionContainer {
+            Column(
+                modifier = Modifier
+                    .align(Alignment.CenterHorizontally)
+                    .fillMaxWidth(.8f)
+            ) {
+                Text(
+                    modifier = Modifier.fillMaxWidth(),
+                    text = stringResource(Res.string.landing_footer_heading),
+                    style = LocalTheme.current.styles.heading.copy(textAlign = TextAlign.Center)
+                )
+                Text(
+                    modifier = Modifier.fillMaxWidth(),
+                    text = stringResource(Res.string.landing_footer_content),
+                    style = LocalTheme.current.styles.regular.copy(textAlign = TextAlign.Center)
+                )
+                IndicatedAction(
+                    modifier = Modifier.align(Alignment.End),
+                    content = { modifier ->
+                        Text(
+                            modifier = modifier,
+                            text = stringResource(Res.string.landing_footer_action),
+                            style = LocalTheme.current.styles.regular
+                        )
+                    },
+                    onPress = {
+                        navController?.navigate(NavigationNode.PublicAbout.route)
+                    }
+                )
+            }
+        }
+
+        Spacer(Modifier.height(verticalPadding))
     }
 }
 
@@ -217,6 +217,7 @@ private fun MessagesSection(scrollState: ScrollState) {
             content = stringResource(Res.string.landing_message_1_enhanced),
             isCurrentUser = false,
             isIndecisive = true,
+            attention = imOkayAttention,
             background = imOkayBackground
         ),
         SimulatedMessage(
@@ -234,7 +235,7 @@ private fun MessagesSection(scrollState: ScrollState) {
         SimulatedMessage(
             content = stringResource(Res.string.landing_message_4_enhanced),
             isCurrentUser = true,
-            background = chillQuickBackground
+            background = coolCoolCoolBackground
         ),
         SimulatedMessage(
             content = stringResource(Res.string.landing_message_5_enhanced),
@@ -271,11 +272,10 @@ private fun MessagesSection(scrollState: ScrollState) {
                 ?: regularMessages.lastIndex)
 
             while(popIndex.value < lastIndex && isVisible.value) {
-                delay(500)
                 popIndex.value += 1
-                delay(if(isEnhanced.value) 3000 else 1000)
+                delay(if(isEnhanced.value) 3500 else 1500)
             }
-            if(!isEnhanced.value) {
+            if(!isEnhanced.value && isVisible.value) {
                 delay(2000)
                 isEnhanced.value = true
             }
@@ -354,14 +354,16 @@ private fun MessagesSection(scrollState: ScrollState) {
                 style = LocalTheme.current.styles.category
             )
 
-            Spacer(Modifier.weight(.2f))
+            Spacer(Modifier.weight(.125f))
 
             Crossfade(
                 modifier = Modifier
                     .then(
                         if(popIndex.value > -1) {
                             Modifier.background(
-                                color = LocalTheme.current.colors.backgroundDark,
+                                color = if(isEnhanced.value) {
+                                    LocalTheme.current.colors.brandMainDark.copy(alpha = attentionFraction.value)
+                                }else LocalTheme.current.colors.backgroundDark,
                                 shape = LocalTheme.current.shapes.componentShape
                             )
                         }else Modifier
@@ -380,6 +382,7 @@ private fun MessagesSection(scrollState: ScrollState) {
                                 )
                             }else Modifier
                         )
+                        .padding(horizontal = 4.dp)
                         .fillMaxWidth()
                         .widthIn(max = MAX_WIDTH_CHAT_DP.dp),
                     horizontalAlignment = Alignment.CenterHorizontally

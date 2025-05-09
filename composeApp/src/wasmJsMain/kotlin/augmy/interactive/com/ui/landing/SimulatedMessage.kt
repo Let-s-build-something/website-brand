@@ -12,13 +12,19 @@ data class SimulatedMessage(
     val isCurrentUser: Boolean,
     val background: KeyframesSpec<Float>? = null,
     val isIndecisive: Boolean = false,
-    // length of attention to valence, max 3000ms
+    // length of attention and its valence, max 3000ms
     val attention: List<Pair<Long, Float>> = listOf(1500L to .2f, 1500L to .2f)
 ) {
     companion object {
         val howAreYouAttention = listOf(
             500L to .3f,
             2500L to .2f
+        )
+        val imOkayAttention = listOf(
+            500L to .3f,
+            500L to .4f,
+            500L to .5f,
+            1500L to .7f
         )
         val imSorryAttention = listOf(
             500L to 1f,
@@ -27,18 +33,19 @@ data class SimulatedMessage(
             834L to .2f
         )
         val beerAttention = listOf(
-            500L to 0.5f,
-            2500L to 0.2f
+            800L to 0.4f,
+            2200L to 0.2f
         )
 
-        // TODO should reflect the overall "vibe", not the typing frequency as is - that can be simulated by liveTyping
-        val chillQuickBackground = keyframes {
+        val imOkayBackground = keyframes {
             durationMillis = 3500
-            1.08f at 350 using LinearEasing
-            1f at 700 using LinearEasing
-            1.10f at 1050 using LinearEasing
-            1f at 1400 using LinearEasing
-            1f at 3500 using LinearEasing
+            1.15f at 200 using FastOutSlowInEasing
+            1.1f at 300 using LinearOutSlowInEasing
+            1.03f at 350 using LinearOutSlowInEasing
+            1.08f at 500 using FastOutSlowInEasing
+            1.02f at 650 using LinearOutSlowInEasing
+            1.15f at 700 using FastOutSlowInEasing
+            1f at 800 using FastOutSlowInEasing
         }
 
         val imSorryBackground = keyframes {
@@ -55,6 +62,17 @@ data class SimulatedMessage(
             1f at 3500 using FastOutLinearInEasing
         }
 
+        val coolCoolCoolBackground = keyframes {
+            durationMillis = 3500
+            1.08f at 350 using LinearEasing
+            1f at 700 using LinearEasing
+            1.10f at 1050 using LinearEasing
+            1f at 1400 using LinearEasing
+            1.09f at 1750 using LinearEasing
+            1f at 2050 using LinearEasing
+            1f at 3500 using LinearEasing
+        }
+
         val indecisiveBackground = keyframes {
             durationMillis = 3500
             1.15f at 200 using FastOutSlowInEasing
@@ -65,19 +83,6 @@ data class SimulatedMessage(
             1.08f at 2700 using FastOutSlowInEasing
             1f at 3200 using LinearOutSlowInEasing
             1.07f at 3500 using FastOutSlowInEasing
-        }
-
-        val imOkayBackground = keyframes {
-            durationMillis = 3500
-            1.15f at 200 using FastOutSlowInEasing
-            1.15f at 2200 using LinearOutSlowInEasing
-            1.02f at 2700 using LinearOutSlowInEasing
-            1.08f at 2850 using FastOutSlowInEasing
-            1f at 2950 using LinearOutSlowInEasing
-            1.09f at 3100 using FastOutSlowInEasing
-            1f at 3250 using LinearOutSlowInEasing
-            1.1f at 3350 using FastOutSlowInEasing
-            1f at 3500 using LinearOutSlowInEasing
         }
 
         val beerBackground = keyframes {

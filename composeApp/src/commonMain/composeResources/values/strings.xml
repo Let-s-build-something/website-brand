@@ -38,7 +38,7 @@
   <string name="landing_block_2_content">Sometimes, expressing yourself can be challenging, and there are moments when you may simply lack the energy to explain. It's time to make your messages feel natural—both to you and others.</string>
 
   <string name="landing_block_3_heading">Communication matters</string>
-  <string name="landing_block_3_content">If you want to understand someone better — or help them understand you — we’re here for that, whether it’s your partner, a friend, or your grandma who struggles to understand why the crying emoji is also laughing.</string>
+  <string name="landing_block_3_content">If you want to understand someone better — or help them understand you — we’re here for that. Give it a shot, the people around you matter.</string>
 
   <string name="landing_footer_heading">The problem statement</string>
   <string name="landing_footer_content">Messaging online as we know it is not enough—it lacks nuance in how we express ourselves, in the way we move, in the way we talk, and fails at synchronizing us with others. We often rely on oversimplified keywords and impersonal emojis or curate the impressions others may have of us, leaving the true expressions behind.
@@ -51,9 +51,9 @@
   <string name="landing_download_not_distributed">You can't register to open beta quite yet. Follow us on social media sites and we'll make sure you know once it's ready for you.</string>
 
 
-  <string name="toolbar_action_about">About</string>
-  <string name="toolbar_action_about_research">Research</string>
   <string name="toolbar_action_about_business">Business</string>
+  <string name="toolbar_action_about_research">Research</string>
+  <string name="toolbar_action_about">About</string>
   <string name="toolbar_action_contacts">Contacts</string>
 
   <string name="contacts_workplace">Workplace</string>

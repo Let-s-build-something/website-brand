@@ -107,7 +107,7 @@ private fun MessageBubble(
 
     val cornerRadius = animatedScale.value
         .minus(1f)
-        .coerceIn(0.03f, .15f)
+        .coerceIn(0.01f, .15f)
         .div(.15f)
         .times(24f)
         .minus(24f)

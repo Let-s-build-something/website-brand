@@ -43,7 +43,6 @@ import androidx.compose.ui.draw.scale
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
@@ -249,8 +248,8 @@ private fun ToolbarActions(onCollapse: () -> Unit = {}) {
     KofiAction()
     ToolbarAction(
         onCollapse = onCollapse,
-        text = stringResource(Res.string.toolbar_action_about),
-        route = NavigationNode.PublicAbout.route
+        text = stringResource(Res.string.toolbar_action_about_business),
+        route = NavigationNode.BusinessAbout.route
     )
     ToolbarAction(
         onCollapse = onCollapse,
@@ -259,8 +258,8 @@ private fun ToolbarActions(onCollapse: () -> Unit = {}) {
     )
     ToolbarAction(
         onCollapse = onCollapse,
-        text = stringResource(Res.string.toolbar_action_about_business),
-        route = NavigationNode.BusinessAbout.route
+        text = stringResource(Res.string.toolbar_action_about),
+        route = NavigationNode.PublicAbout.route
     )
     ToolbarAction(
         onCollapse = onCollapse,

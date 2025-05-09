@@ -1,8 +1,10 @@
 package augmy.interactive.com.ui.landing
 
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Download
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -31,16 +33,20 @@ internal fun ColumnScope.DownloadBlock() {
         mutableStateOf(false)
     }
 
-    Text(
-        modifier = Modifier.fillMaxWidth(),
-        text = stringResource(Res.string.landing_download_heading),
-        style = LocalTheme.current.styles.heading.copy(textAlign = TextAlign.Center)
-    )
-    Text(
-        modifier = Modifier.fillMaxWidth(),
-        text = stringResource(Res.string.landing_download_content),
-        style = LocalTheme.current.styles.regular.copy(textAlign = TextAlign.Center)
-    )
+    SelectionContainer {
+        Column {
+            Text(
+                modifier = Modifier.fillMaxWidth(),
+                text = stringResource(Res.string.landing_download_heading),
+                style = LocalTheme.current.styles.heading.copy(textAlign = TextAlign.Center)
+            )
+            Text(
+                modifier = Modifier.fillMaxWidth(),
+                text = stringResource(Res.string.landing_download_content),
+                style = LocalTheme.current.styles.regular.copy(textAlign = TextAlign.Center)
+            )
+        }
+    }
 
     if(showSocialModal.value) {
         SocialMediaBottomSheet(
