@@ -126,7 +126,7 @@
   <string name="about_business_list_5_content">We help LLMs understand humanness better. Be it the sarcasm within a prompt, or the enrichment of information that can thereafter used for training, we can help.</string>
   <string name="about_business_footer">Let's get in touch via email or book an appointment.</string>
   <string name="about_business_footer_link_0">email</string>
-  <string name="about_business_footer_link_0_url">brand@augmy.org</string>
+  <string name="about_business_footer_link_0_url">mailto:brand@augmy.org</string>
   <string name="about_business_footer_link_1">book</string>
   <string name="about_business_footer_link_1_url">https://calendar.app.google/YK5wVD5Eq3n2BQ1L6</string>
 
