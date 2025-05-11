@@ -4,6 +4,7 @@ import androidx.compose.animation.Crossfade
 import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.spring
+import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -11,16 +12,17 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredSize
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -34,13 +36,19 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.luminance
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.layout.Layout
+import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.layout.onSizeChanged
+import androidx.compose.ui.layout.positionInWindow
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.zIndex
 import augmy.interactive.com.base.theme.Colors
+import augmy.interactive.com.base.theme.DefaultThemeStyles.Companion.fontQuicksandSemiBold
 import augmy.interactive.com.theme.LocalTheme
 import augmy.interactive.com.ui.components.AsyncSvgImage
 import augmy.interactive.com.ui.components.AutoResizeText
@@ -50,6 +58,7 @@ import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
 import org.koin.core.context.loadKoinModules
 import kotlin.math.PI
+import kotlin.math.absoluteValue
 import kotlin.math.cos
 import kotlin.math.sin
 
@@ -58,7 +67,7 @@ private const val CIRCLE_MAX_HEIGHT_DP = 500
 @Composable
 fun SocialCircle(
     modifier: Modifier,
-    isVisible: State<Boolean>,
+    scrollState: ScrollState
 ) {
     loadKoinModules(socialCircleModule)
     val model: SocialCircleModel = koinViewModel()
@@ -67,6 +76,9 @@ fun SocialCircle(
     val people = model.people.collectAsState(initial = listOf())
     val categories = model.categories.collectAsState()
 
+    val isVisible = remember {
+        mutableStateOf(false)
+    }
     var contentSize by rememberSaveable {
         mutableStateOf(0)
     }
@@ -79,7 +91,7 @@ fun SocialCircle(
     LaunchedEffect(isVisible.value) {
         // we extend from family and backwards
         while(isVisible.value) {
-            delay(500)
+            delay(1000)
             val newCategory = NetworkProximityCategory.entries.getOrNull(categories.value.size) // plus one category
             if (newCategory == null) extendingCircles.value = false
             else if (categories.value.size == 1) extendingCircles.value = true
@@ -96,7 +108,10 @@ fun SocialCircle(
     }
 
     Row(
-        modifier = modifier,
+        modifier = modifier.onGloballyPositioned {
+            isVisible.value = it.positionInWindow().y.toInt() in -it.size.height.absoluteValue..it.size.height.absoluteValue
+                    || it.positionInWindow().y.toInt() in 0..scrollState.viewportSize
+        },
         verticalAlignment = Alignment.CenterVertically
     ) {
         Box(
@@ -138,10 +153,10 @@ fun SocialCircle(
                     }
 
                     val radius = with(density) {
-                        (contentSize * shares / 2).dp.minus(layerPadding).toPx()
+                        (contentSize.toDp().value * shares / 2).dp.minus(layerPadding).toPx()
                     }
                     val minRadius = with(density) {
-                        (contentSize * previousShares / 2).dp.toPx()
+                        (contentSize.toDp().value * previousShares / 2).dp.toPx()
                     }
                     val mappings = getMappings(
                         radius = radius,
@@ -155,7 +170,7 @@ fun SocialCircle(
                     Layout(
                         modifier = Modifier
                             .background(
-                                color = category.color.copy(alpha = .6f),
+                                color = category.color.copy(alpha = .65f),
                                 shape = CircleShape
                             )
                             .clip(CircleShape)
@@ -176,7 +191,8 @@ fun SocialCircle(
                                         .animateContentSize()
                                         .zIndex(zIndex),
                                     data = data,
-                                    size = with(density) { circleSize.toDp() }
+                                    size = with(density) { circleSize.toDp() },
+                                    backgroundColor = category.color
                                 )
                             }
                         }
@@ -188,11 +204,11 @@ fun SocialCircle(
                         layout(constraints.maxWidth, constraints.minHeight) {
                             var placeableIndex = 0
                             val padding = with(density) { layerPadding.toPx() }
-                            val centerX = circleSize / 2 - padding / 2
-                            val centerY = circleSize / 2 - padding / 2
+                            val centerX = circleSize / 2
+                            val centerY = circleSize / 2
 
                             mappedItems.map { it.value }.forEachIndexed { indexLayer, items ->
-                                val radiusOverride = radius - (indexLayer * circleSize) - circleSize / 2
+                                val radiusOverride = radius - (indexLayer * circleSize) - circleSize / 2 + padding / 2
 
                                 val angleStep = (2 * PI) / items.size
                                 items.forEachIndexed { index, _ ->
@@ -256,8 +272,14 @@ data class NetworkItemIO(
 private fun NetworkItemCompact(
     modifier: Modifier = Modifier,
     size: Dp,
+    backgroundColor: Color,
     data: NetworkItemIO?
 ) {
+    val density = LocalDensity.current
+    val textSize = with(density) { (size / 6).toSp() }
+    val imageSize = size - with(density) { textSize.toDp() } - 4.dp
+    val textColor = if(backgroundColor.luminance() > .5f) Colors.Coffee else Colors.GrayLight
+
     Column(
         modifier = modifier
             .requiredSize(size)
@@ -266,24 +288,28 @@ private fun NetworkItemCompact(
     ) {
         UserProfileImage(
             modifier = Modifier
-                .aspectRatio(1f)
-                .weight(1f),
+                .background(
+                    color = textColor.copy(alpha = .65f),
+                    shape = CircleShape
+                )
+                .size(imageSize),
             media = data?.avatar,
             name = data?.displayName
         )
-        /*Text(
+        Text(
             modifier = Modifier
+                .wrapContentHeight()
                 .fillMaxWidth(.8f)
                 .align(Alignment.CenterHorizontally),
             text = data?.displayName ?: "",
             style = TextStyle(
                 fontFamily = FontFamily(fontQuicksandSemiBold),
-                fontSize = with(density) { (size / 6).toSp() },
+                fontSize = textSize,
                 textAlign = TextAlign.Center,
-                color = Color.White
+                color = textColor
             ),
             maxLines = 1
-        )*/
+        )
     }
 }
 
@@ -309,15 +335,18 @@ private fun UserProfileImage(
         val textColor = if(backgroundColor.luminance() > .5f) Colors.Coffee else Colors.GrayLight
 
         AutoResizeText(
-            modifier = Modifier.padding(vertical = 6.dp),
+            modifier = modifier,
             text = name?.split("""\s""".toRegex())?.let {
                 if(it.size > 1) {
                     it[0].take(1) + it[1].take(1)
                 }else it.firstOrNull()?.take(1) ?: ""
             } ?: "",
-            style = LocalTheme.current.styles.subheading.copy(color = textColor),
+            style = LocalTheme.current.styles.subheading.copy(
+                color = textColor,
+                textAlign = TextAlign.Center
+            ),
             fontSizeRange = FontSizeRange(
-                min = 6.sp,
+                min = 2.sp,
                 max = LocalTheme.current.styles.subheading.fontSize * 1.5f
             )
         )

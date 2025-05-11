@@ -3,13 +3,14 @@
 
   <string name="website_footer">© %1$d Augmy Interactive</string>
 
-  <string name="landing_header_heading">Join the new era of communication</string>
+  <string name="landing_header_heading">The new era of communication</string>
   <string name="landing_header_content">Talk online like you do in real life. Digital communication, reflective of the physical you, with agency in your hands.</string>
 
-  <string name="landing_social_circle_text">People around you aren't only followers, connections or friends.\nPrioritize who matters to you. Reconnect with people you've lost touch with.</string>
+  <string name="landing_social_circle_heading">People are not ones and zeros.</string>
+  <string name="landing_social_circle_text">Friend list? Followers? Does that really represent your social life? Friend or not friend? Forget about shallow meaningless labels. Now you can have your social space with depth in mind.</string>
 
   <string name="landing_messages_heading">Regular chat</string>
-  <string name="landing_messages_text">Billions of people all over the world are being misunderstood and can't express themselves.\n\nPeople do express themselves while messaging, but there are no natural ways of showing that.\n\nYet, the most pushed solution today is to stop chatting altogether.</string>
+  <string name="landing_messages_text">Billions of people all over the world are being misunderstood and can't express themselves.\n\nPeople want to express themselves while messaging but there was no natural ways of showing that.</string>
   <string name="landing_message_0">how are you?</string>
   <string name="landing_message_1">I'm okay 🤷</string>
   <string name="landing_message_2">You sure? After yesterday...</string>
@@ -17,7 +18,7 @@
   <string name="landing_message_4">Okay</string>
 
   <string name="landing_messages_enhanced_heading">Powered by Augmy</string>
-  <string name="landing_messages_enhanced_text">People want to communicate naturally, not like essayist. The only thing missing is the means to do so.\n\nThat's what we're here for. Imagine being understood in how you said it, not just what you said.</string>
+  <string name="landing_messages_enhanced_text">Imagine being understood in how you said it, not just what you said. We invent new ways for expressing what you feel beyond what you type.</string>
   <string name="landing_message_0_enhanced">how are you?</string>
   <string name="landing_message_1_enhanced">I'm okay 🤷</string>
   <string name="landing_message_2_enhanced">Dude I really didn't mean it, I'm sorry...</string>
@@ -27,14 +28,14 @@
   <string name="landing_message_6_enhanced">you bet</string>
 
 
-  <string name="landing_block_0_heading">Connect without missing a beat</string>
-  <string name="landing_block_0_content">Be closer to people you want to be close to—even online, and with the ease you're used to. Send messages that convey how you mean it—not how you said it.</string>
+  <string name="landing_block_0_heading">Rediscover the colors of communicatio</string>
+  <string name="landing_block_0_content">Longing to understand how your loved one abroad is feeling? Don't know how to say how you feel? Want to feel close? Augmy is made for that.</string>
 
-  <string name="landing_block_1_heading">Communicate instinctively</string>
-  <string name="landing_block_1_content">Our goal is to make communication online expressive. You don't have to ponder which emoji best expresses your feelings anymore; be understood without overthinking.</string>
+  <string name="landing_block_1_heading">Allow your digital body to speak up</string>
+  <string name="landing_block_1_content">Your digital nonverbal communication is as important as your physical. You don't have to ponder which emoji best expresses your feelings anymore; be understood without overthinking.</string>
 
-  <string name="landing_block_2_heading">Everyone wants to be understood</string>
-  <string name="landing_block_2_content">Sometimes, expressing yourself can be challenging, and there are moments when you may simply lack the energy to explain. It's time to make your messages feel natural—both to you and others.</string>
+  <string name="landing_block_2_heading">It wasn't made for you</string>
+  <string name="landing_block_2_content">Sometimes, expressing yourself can be challenging, and there are moments when you may simply lack the energy to explain. What you are using to chat with others wasn't meant for this. Augmy messenger is.</string>
 
   <string name="landing_block_3_heading">Communication matters</string>
   <string name="landing_block_3_content">If you want to understand someone better — or help them understand you — we’re here for that. Give it a shot, the people around you matter.</string>
@@ -46,9 +47,7 @@
     It's time for online messaging that truly conveys how we mean it—not just what we type.</string>
   <string name="landing_footer_action">X—doubt</string>
 
-  <string name="landing_download_heading">Get our app now!</string>
-  <string name="landing_download_content">While our focus lies on making generally applicable solutions to improve the quality of communication online, we decided, that in order to understand all its positives and drawbacks, we should put it to test ourselves. That's why we've decided to launch our own messaging application: Augmy, usable by anyone.</string>
-  <string name="landing_download_button">Download</string>
+  <string name="landing_download_button">Download now.</string>
   <string name="landing_download_not_distributed">You can't register to open beta quite yet. Follow us on social media sites and we'll make sure you know once it's ready for you.</string>
 
   <string name="category_family">Family</string>
@@ -79,21 +78,21 @@
   <string name="contacts_linkedin_tag">@augmy-interactive</string>
   <string name="contacts_bluesky_tag">@augmyinteractive.bsky.social</string>
 
-  <string name="about_content">Are you interested in what we do?</string>
+  <string name="about_content">Short story long, this is why we do what we do. Our motivation lies between these lines.</string>
   <string name="about_header_summary">Summary</string>
-  <string name="about_content_summary">We are incredibly social beings, we like to communicate and interact with others, no matter the reason. Nowadays, this seems to happen online, particularly via instant messaging apps, forums like Reddit, social media, or comment sections. Communicating online is relatively easy and efficient, yet it doesn't seem to be us communicating, but the online versions of us - it's the GIFs, stickers, avatars, emojis, phrases and words who represent us. Not to mention the attention one must put into finding the best way to express themselves. Finding the right combinations of emojis, imagining how it would be perceived, editing what doesn't fit etc.</string>
+  <string name="about_content_summary">We are incredibly social beings, we like to communicate and interact with others, no matter the reason. Nowadays, this happens online, particularly via instant messaging apps, forums like Reddit, social media, or comment sections. Communicating online is relatively easy and efficient, yet it doesn't seem to be us communicating, but the online versions of us - it's the GIFs, stickers, avatars, emojis, phrases and words who represent us. Not to mention the attention one must put into finding the best way to express themselves. Finding the right combinations of emojis, imagining how it would be perceived, editing what doesn't fit and so on.</string>
   <string name="about_header_introduction">Why is this important? (Introduction)</string>
-  <string name="about_content_introduction_0">Nearly every fourth person uses WhatsApp alone. Communication online is more relevant than ever, and we are getting in line with that. From online therapy, governmental inquiries, messaging companies via live chats, finding new friends, having dates on applications, maintaining relationships, chatting with colleagues, finding the right coffee shop, and deciding on the best vacuum cleaner, and a phone case that will protect our "precious", among others. It's just part of our society at this point, we have integrated technology into our lives, and it's a fact.</string>
+  <string name="about_content_introduction_0">Nearly every fourth person uses WhatsApp alone. Communication online is more relevant than ever, and we are getting in line with that. From online therapy, governmental inquiries, messaging companies via live chats, messaging the police, finding new friends, having to know our dates, maintaining relationships, chatting with colleagues, messaging our friends about our terrible day, applying for a job, to keeping in touch with our loved ones abroad. It's just part of our society at this point, we have integrated technology into our lives, and it's a fact.</string>
   <string name="about_content_introduction_1">We, as humans are the most social species out there. This is indicated by both the brain structure and also by simply observing what we do throughout our days. Most of the activities we do are social. If we work, we work to be given money by other people and to affect other people. In the meantime, we talk about money and what we do with money with our colleagues. We then spend the money either to appeal to other people (to make a picture of it and put it up online, or to have a shinier car than our neighbor) or to have a good time together with our family or friends. Paying other people in the process, who provide us the services and objects we want.</string>
-  <string name="about_content_introduction_2">Communication isn't just verbal and what we consciously choose, though. In fact, the starting point is nonverbal. The very first way we make sure we're safe and thus understand the world around us when we are little is through our parent's voice and face. There is an undertone to every expression we have, and for a good reason.</string>
+  <string name="about_content_introduction_2">Communication isn't just verbal and what we consciously choose. In fact, the starting point is nonverbal. The very first way we make sure we're safe and thus understand the world around us when we are little is through our parent's voice and face. There is an undertone to every expression we have, and for a good reason.</string>
   <string name="about_content_introduction_3">We want to be understood and accepted as we are. Texting with someone on a dating app for a week just to be disappointed by how different they are in real life is the last thing you'd like to happen to you. We also want to be affectionate to people we care about. That physical interaction with your partner you miss. The hug that your mom likely deserves. The tickle your siblings deserve. The typical you your friends are so used to meeting and joking around with.</string>
-  <string name="about_header_problem">The uh-oh moment (Problem statement)</string>
+  <string name="about_header_problem">The uh-oh moment</string>
   <string name="about_content_problem">So we communicate online. Efficient, fast, and easy to use, it has a history we can search through, and we can even manage how others see us. Amazing stuff. Now that isn't for free, we are losing some of that underlying tone here.
     \n    One big sign of the shortcomings is online dating. Chat with someone you're romantically interested in for two weeks and you're very likely to be a little surprised when you see them. "It is the same person as on all those social profiles, they seem to dress the same, but there's something different about them". Such experience is not uncommon. One of the reasons why, is because we have different images of the other in our minds, that we construct based on how we see the other. Now, if it is someone you want to like, and perhaps they want you to like them as well (so they send the right emojis, the right messages, photos,...), you are also more likely to form such an image. If you see only happy, well shot images of the person online, more likely than not, this is how you imagine them as well. Another reason is, that the text sent to us doesn't have enough sauce.
     \n    Well, that's not feasible in order to construct the images, so our brain just adds whatever seems most plausible, (often based on our mood) similarly to how AI looks for most plausible combination of words. The thing is, just as AI can hallucinate, so can we.
-    \n    So you like editing or removing messages, taking your time editing them, to perfect. Swiping through pages and pages of emojis, while you still circle between the most common 3-5 ones - since those are the "safe bet". Swiping through terabytes of GIFs and Stickers, looking for the funniest, the most expressive ones. But expressive of who? Probably not you, I don't think the waving Forrest Gump is the same as your grandma looking for an interaction with you, so she sent you a GIF of that (or the thousands of puppies and kitties she sends now and then). All aforementioned is explicit, meaning we have to think about every single thing we do within the interaction. Now if we compare it to the nuances we carry with our body movement, speech and facial expressions—they are not chosen, it just happens to be the way you express yourself.</string>
-  <string name="about_header_solution">Time for a change (Solution)</string>
-  <string name="about_content_solution_0">What we see as a possible way to overcome the current issues is to augment messages with expressions that would be otherwise missing in an abstract way. This doesn't mean an AI would be a middleman and tell you how your friend Steve waved at you. Instead, you are the judge of what a particular expression means. Perhaps Steve is at a meeting and can't fully focus on your messages—that is something you would recognize if you saw him, but not in a regular online chat. That's what Augmy integration combats—helping you understand Steve's expressions as they happen.</string>
+    \n    So you like editing or removing messages, taking your time editing them, to perfect. Swiping through pages and pages of emojis, while you still circle between the most common 3-5 ones - since those are the "safe bet". Swiping through terabytes of GIFs and Stickers, looking for the funniest, the most expressive ones. But expressive of who? Probably not you, or do you think the waving Forrest Gump is the same as your grandma looking for an interaction with you, so she sent you a GIF of that (or the thousands of puppies and kitties she sends now and then). All aforementioned is explicit, meaning we have to think about every single thing we do within the interaction. Now if we compare it to the nuances we carry with our body movement, speech and facial expressions—they are not chosen, it just happens to be the way you express yourself.</string>
+  <string name="about_header_solution">The change</string>
+  <string name="about_content_solution_0">What we see as a possible way to overcome the current issues is to augment messages with expressions that would be otherwise missing in an abstract way. This doesn't mean an AI would be a middleman and tell you how your friend Steve waved at you. Instead, you are the judge of what a particular expression means. Perhaps Steve is at a meeting and can't fully focus on your messages—that is something you would recognize if you saw him, but not in a regular online chat. That's what Augmy combats—helping you understand Steve's expressions as they happen.</string>
   <string name="about_content_solution_1">We also believe in user freedom—you are the one who expresses and recognizes what certain expressions mean. No third party can do that more accurately than you. Also, we don't believe the dynamic character of communication can be redesigned from the ground up. What improves communication will be used, and what doesn't work doesn't need to be there.</string>
   <string name="video_heider_simmel_url">https://www.youtube.com/watch?v=VTNmLt7QX8E</string>
   <string name="video_heider_simmel_title">Heider and Simmel (1944) animation</string>
@@ -110,8 +109,26 @@
   <string name="about_content_roadmap">You can see what's currently ahead of us</string>
   <string name="about_content_roadmap_here">here</string>
 
-  <string name="about_business_content">We are actively looking for organizations and teams interested in working with us and helping us achieve the goals we set to achieve. Notably psychological supervision both for development and research.
-    \nIf you're open to working with us, please, contact us at brand@augmy.org.</string>
+  <string name="about_business_heading">The future of communication, together.</string>
+  <string name="about_business_summary">We help your business to be step ahead in the new era of online communication. Our solutions go beyond offering tools to users and customers—we create and facilitate social environments where users enjoy being and can build their social networks with great accuracy.</string>
+  <string name="about_business_list_heading">The most common applications for our solutions:</string>
+  <string name="about_business_list_0">Prevention and detection of AI content and spam</string>
+  <string name="about_business_list_0_content">We create spaces for humans. Robots clearly stand out, so let's weed them out as needed.</string>
+  <string name="about_business_list_1">Supercharge of existing communication tools</string>
+  <string name="about_business_list_1_content">Be it a specific functionality your users are lacking to grow their relationships, or an algorithm that helps you build your product for them. We provide it.</string>
+  <string name="about_business_list_2">Customer support</string>
+  <string name="about_business_list_2_content">Meet customers where they are—let agents and yourself understand the customer better.</string>
+  <string name="about_business_list_3">Sentiment analysis—beyond text and emoji inference</string>
+  <string name="about_business_list_3_content">We don’t pretend to do magic out of simple texts. People don’t communicate only through text anymore, we are offering sentiment analysis with depth no competition can offer.</string>
+  <string name="about_business_list_4">Implementation of a chat for users in any app or website</string>
+  <string name="about_business_list_4_content">An easy and straightforward way to allow your users to understand each other and stay in touch. Use our full implementation of a chat to save yourself time in development.</string>
+  <string name="about_business_list_5">Data quality assurance</string>
+  <string name="about_business_list_5_content">We help LLMs understand humanness better. Be it the sarcasm within a prompt, or the enrichment of information that can thereafter used for training, we can help.</string>
+  <string name="about_business_footer">Let's get in touch via email or book an appointment.</string>
+  <string name="about_business_footer_link_0">email</string>
+  <string name="about_business_footer_link_0_url">brand@augmy.org</string>
+  <string name="about_business_footer_link_1">book</string>
+  <string name="about_business_footer_link_1_url">https://calendar.app.google/YK5wVD5Eq3n2BQ1L6</string>
 
   <string name="about_research_content">This page assumes that the audience possesses a foundational understanding of scientific concepts and is interested in the motivations and hypotheses underlying this project. Our goal is to inspire researchers by highlighting the potential outcomes of this initiative—not only for users communicating through the tools developed by our team but also for researchers leveraging these resources. We are dedicated to validating our proposed hypotheses and exploring innovative ways to enrich communication for both researchers and intervention developers.</string>
   <string name="about_research_introduction_heading">Introduction</string>

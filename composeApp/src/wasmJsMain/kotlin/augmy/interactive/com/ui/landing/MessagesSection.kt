@@ -4,6 +4,7 @@ import androidx.compose.animation.Crossfade
 import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.tween
+import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -18,13 +19,14 @@ import androidx.compose.material3.SwitchDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.onGloballyPositioned
+import androidx.compose.ui.layout.positionInWindow
 import androidx.compose.ui.unit.dp
 import augmy.interactive.com.theme.LocalTheme
 import augmy.interactive.com.ui.landing.SimulatedMessage.Companion.beerAttention
@@ -56,12 +58,13 @@ import website_brand.composeapp.generated.resources.landing_message_5_enhanced
 import website_brand.composeapp.generated.resources.landing_message_6_enhanced
 import website_brand.composeapp.generated.resources.landing_messages_enhanced_heading
 import website_brand.composeapp.generated.resources.landing_messages_heading
+import kotlin.math.absoluteValue
 
 private const val MAX_WIDTH_CHAT_DP = 360
 
 @Composable
 fun MessagesSection(
-    isVisible: State<Boolean>,
+    scrollState: ScrollState,
     horizontalContent: @Composable (isEnhanced: Boolean) -> Unit = {},
     verticalContent: @Composable (isEnhanced: Boolean) -> Unit = {}
 ) {
@@ -73,6 +76,9 @@ fun MessagesSection(
     }
     val popIndex = rememberSaveable {
         mutableStateOf(-1)
+    }
+    val isVisible = remember {
+        mutableStateOf(false)
     }
     val enhancedMessages = listOf(
         SimulatedMessage(
@@ -165,7 +171,13 @@ fun MessagesSection(
         }
     }
 
-    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+    Column(
+        modifier = Modifier.onGloballyPositioned {
+            isVisible.value = it.positionInWindow().y.toInt() in -it.size.height.absoluteValue..it.size.height.absoluteValue
+                    || it.positionInWindow().y.toInt() in 0..scrollState.viewportSize
+        },
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
         Row(
             modifier = Modifier.clickable(indication = null, interactionSource = null) {
                 popIndex.value = -1
