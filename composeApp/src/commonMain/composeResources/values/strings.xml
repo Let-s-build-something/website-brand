@@ -12,7 +12,7 @@
   <string name="landing_messages_heading">Regular chat</string>
   <string name="landing_messages_text">Billions of people all over the world are being misunderstood and can't express themselves.\n\nPeople want to express themselves while messaging but there was no natural ways of showing that.</string>
   <string name="landing_message_0">how are you?</string>
-  <string name="landing_message_1">I'm okay 🤷</string>
+  <string name="landing_message_1">I'm okay</string>
   <string name="landing_message_2">You sure? After yesterday...</string>
   <string name="landing_message_3">I'm okay</string>
   <string name="landing_message_4">Okay</string>
@@ -20,15 +20,15 @@
   <string name="landing_messages_enhanced_heading">Powered by Augmy</string>
   <string name="landing_messages_enhanced_text">Imagine being understood in how you said it, not just what you said. We invent new ways for expressing what you feel beyond what you type.</string>
   <string name="landing_message_0_enhanced">how are you?</string>
-  <string name="landing_message_1_enhanced">I'm okay 🤷</string>
+  <string name="landing_message_1_enhanced">I'm okay</string>
   <string name="landing_message_2_enhanced">Dude I really didn't mean it, I'm sorry...</string>
   <string name="landing_message_3_enhanced">Oh, I thought you did it purposefully. It's alright</string>
-  <string name="landing_message_4_enhanced">cool cool cool 😄</string>
+  <string name="landing_message_4_enhanced">cool cool cool</string>
   <string name="landing_message_5_enhanced">beer tomorrow?</string>
   <string name="landing_message_6_enhanced">you bet</string>
 
 
-  <string name="landing_block_0_heading">Rediscover the colors of communicatio</string>
+  <string name="landing_block_0_heading">Rediscover the colors of communication</string>
   <string name="landing_block_0_content">Longing to understand how your loved one abroad is feeling? Don't know how to say how you feel? Want to feel close? Augmy is made for that.</string>
 
   <string name="landing_block_1_heading">Allow your digital body to speak up</string>
@@ -144,9 +144,9 @@
   <string name="about_research_statement_goals_heading">This is not just a matter of adaptability. It is also a matter of design. Which is the reason for our movement—Augmy. Our goals for the design are as follows:</string>
   <string name="about_research_statement_goals_0">Anonymity</string>
   <string name="about_research_statement_goals_0_content">We believe that anonymity can be largely explained by the ambiguousness and lack of personal depth of expressions (e.g., differentiation of person(ality) from content, multimodal congruence). Thus, the goal is to bring subjective “character tone” to each expression or set of expressions. In practice, a person related to the sender can differentiate between “I’m okay” sent by the related sender and “I’m okay” from an unrelated sender.</string>
-  <string name="about_research_statement_goals_1">Intuitiveness, expression</string>
+  <string name="about_research_statement_goals_1">Intuitiveness: expression</string>
   <string name="about_research_statement_goals_1_content">In expression, the problem is that an individual communicates via a tool and sees it as such; everything has to be effortfully, explicitly defined and pre-processed into a condensed, rigid form. It is equivalent to having emotional facial paresis, where we can’t spontaneously react to, for example, a joke, but can move facial muscles voluntarily. Our devices are extensions of our bodies and should act as such in communication. Our digital representation of us is as complex and important as the physical representation. The goal, thus, is to make it intuitive to express one’s inner state and thoughts.</string>
-  <string name="about_research_statement_goals_2">Intuitiveness, comprehension</string>
+  <string name="about_research_statement_goals_2">Intuitiveness: comprehension</string>
   <string name="about_research_statement_goals_2_content">Our attention is selective, meaning that at different times, different things may interest us and be beneficial for understanding the context and message delivered to us. This works great in real life. In CMC, however, the majority is presented linearly and is designed as a book to be read. Thus, in CMC, it’s a synchronous message delivered asynchronously, which can be read at any time. In real life, it is an asynchronous message (different messages and cues at the same time) delivered synchronously. This can work for various, mostly formal settings. The problem is, we are beyond using CMC as an occasional tool. In many cases, CMC replaces real-life interactions and acts as the primary means of communication. Our goal is, then, to have a design that widens the communication channel asynchronicity in a way that people can benefit from having selective attention and increase (at the very least the feeling of) mode delivery synchronicity. All this while balancing cognitive and sensory load and maintaining ease of use.</string>
 
   <string name="about_research_introduction_heading">Introduction</string>

@@ -27,8 +27,7 @@ sealed class Asset {
         data object CustomDesign: Image("5802c63e-45fc-4687-8c72-d52066ef45e8.jpg")
         data object DesignConstruction: Image("90c610ff-e2e1-48e5-82c9-3c9440b765c3.jpg")
         data object Experiment: Image("95b14a4e-5182-4375-b78f-d0f6fd504926.jpg")
-
-        data object HeiderSimmelPreview: Image("heider-simmel-preview.jpg")
+        data object MiroResearchMap: Image("a896ef77-f9de-4e15-9e6f-4e47248498bb.png")
     }
 
     sealed class Logo(name: String): Asset() {

@@ -36,6 +36,7 @@ import augmy.interactive.com.ui.landing.SimulatedMessage.Companion.decisiveFastB
 import augmy.interactive.com.ui.landing.SimulatedMessage.Companion.howAreYouAttention
 import augmy.interactive.com.ui.landing.SimulatedMessage.Companion.imOkayAttention
 import augmy.interactive.com.ui.landing.SimulatedMessage.Companion.imOkayBackground
+import augmy.interactive.com.ui.landing.SimulatedMessage.Companion.imOkayTimings
 import augmy.interactive.com.ui.landing.SimulatedMessage.Companion.imSorryAttention
 import augmy.interactive.com.ui.landing.SimulatedMessage.Companion.imSorryBackground
 import augmy.interactive.com.ui.landing.SimulatedMessage.Companion.indecisiveBackground
@@ -89,9 +90,9 @@ fun MessagesSection(
         SimulatedMessage(
             content = stringResource(Res.string.landing_message_1_enhanced),
             isCurrentUser = false,
-            isIndecisive = true,
             attention = imOkayAttention,
-            background = imOkayBackground
+            background = imOkayBackground,
+            timings = imOkayTimings
         ),
         SimulatedMessage(
             content = stringResource(Res.string.landing_message_2_enhanced),
@@ -102,7 +103,6 @@ fun MessagesSection(
         SimulatedMessage(
             content = stringResource(Res.string.landing_message_3_enhanced),
             isCurrentUser = false,
-            isIndecisive = true,
             background = indecisiveBackground
         ),
         SimulatedMessage(

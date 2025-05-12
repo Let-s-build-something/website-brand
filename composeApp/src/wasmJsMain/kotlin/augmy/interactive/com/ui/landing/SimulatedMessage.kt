@@ -11,11 +11,21 @@ data class SimulatedMessage(
     val content: String,
     val isCurrentUser: Boolean,
     val background: KeyframesSpec<Float>? = null,
-    val isIndecisive: Boolean = false,
     // length of attention and its valence, max 3000ms
-    val attention: List<Pair<Long, Float>> = listOf(1500L to .2f, 1500L to .2f)
+    val attention: List<Pair<Long, Float>> = listOf(1500L to .2f, 1500L to .2f),
+    val timings: List<Long> = listOf()
 ) {
     companion object {
+        val imOkayTimings = listOf(
+            2200L,
+            80L,
+            50L,
+            40L,
+            40L,
+            30L,
+            40L,
+        )
+
         val howAreYouAttention = listOf(
             500L to .3f,
             2500L to .2f
@@ -39,13 +49,9 @@ data class SimulatedMessage(
 
         val imOkayBackground = keyframes {
             durationMillis = 3500
-            1.15f at 200 using FastOutSlowInEasing
-            1.1f at 300 using LinearOutSlowInEasing
-            1.03f at 350 using LinearOutSlowInEasing
-            1.08f at 500 using FastOutSlowInEasing
-            1.02f at 650 using LinearOutSlowInEasing
-            1.15f at 700 using FastOutSlowInEasing
-            1f at 800 using FastOutSlowInEasing
+            1.15f at 2200 using FastOutSlowInEasing
+            1.09f at 2320 using LinearOutSlowInEasing
+            1f at 2400 using FastOutSlowInEasing
         }
 
         val imSorryBackground = keyframes {

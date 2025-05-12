@@ -34,11 +34,13 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
 import augmy.interactive.com.data.Asset
 import augmy.interactive.com.theme.LocalTheme
 import augmy.interactive.com.ui.components.AsyncImageThumbnail
+import augmy.interactive.com.ui.components.simulation.buildTempoString
 import kotlinx.coroutines.delay
 import kotlin.math.absoluteValue
 
@@ -170,6 +172,15 @@ private fun MessageBubble(
                         shape = shape
                     )
             )
+            val content = buildTempoString(
+                key = message.hashCode(),
+                text = AnnotatedString(message.content),
+                timings = message.timings,
+                enabled = true,
+                style = LocalTheme.current.styles.category.copy(color = Color.White).toSpanStyle(),
+                onFinish = {}
+            )
+
             Text(
                 modifier = Modifier
                     .padding(
@@ -184,7 +195,7 @@ private fun MessageBubble(
                             )
                         }
                     },
-                text = message.content,
+                text = content,
                 style = LocalTheme.current.styles.category.copy(color = Color.White)
             )
         }

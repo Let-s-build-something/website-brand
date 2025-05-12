@@ -20,7 +20,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
-private const val VISIBILITY_DELAY = 2_000L
+private const val VISIBILITY_DELAY = 1_500L
 
 /** ScrollBar indicator for [ScrollState] */
 @Composable

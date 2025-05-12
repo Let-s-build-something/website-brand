@@ -19,6 +19,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import augmy.interactive.com.base.LocalContentSizeDp
@@ -192,6 +193,17 @@ private fun ColumnScope.VerticalContent(
         style = LocalTheme.current.styles.category
             .copy(color = LocalTheme.current.colors.primary)
     )
+
+    AsyncImageThumbnail(
+        modifier = Modifier
+            .padding(bottom = 12.dp)
+            .fillMaxWidth(fraction.coerceAtLeast(.85f))
+            .align(Alignment.CenterHorizontally)
+            .clip(LocalTheme.current.shapes.componentShape),
+        asset = Asset.Image.MiroResearchMap,
+        contentScale = ContentScale.FillWidth
+    )
+
     listOf(
         Res.string.about_research_statement_goals_0 to Res.string.about_research_statement_goals_0_content,
         Res.string.about_research_statement_goals_1 to Res.string.about_research_statement_goals_1_content,

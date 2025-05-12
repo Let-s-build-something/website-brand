@@ -155,9 +155,7 @@ fun GetInTouchText(modifier: Modifier = Modifier) {
                 }
             }
         ),
-        style = LocalTheme.current.styles.heading.copy(
-            fontSize = 18.sp
-        )
+        style = LocalTheme.current.styles.heading.copy(fontSize = 18.sp)
     )
 }
 
