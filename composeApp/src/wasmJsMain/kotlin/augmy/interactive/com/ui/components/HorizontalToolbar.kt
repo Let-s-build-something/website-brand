@@ -46,6 +46,7 @@ import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.zIndex
 import androidx.navigation.compose.currentBackStackEntryAsState
 import augmy.interactive.com.base.LocalDeviceType
 import augmy.interactive.com.base.LocalNavController
@@ -98,6 +99,7 @@ fun HorizontalToolbar(
             .shadow(elevation = 4.dp)
             .fillMaxWidth()
             .background(color = LocalTheme.current.colors.toolbarColor)
+            .zIndex(10f)
     ) {
         Column(
             modifier = Modifier
@@ -248,8 +250,8 @@ private fun ToolbarActions(onCollapse: () -> Unit = {}) {
     KofiAction()
     ToolbarAction(
         onCollapse = onCollapse,
-        text = stringResource(Res.string.toolbar_action_about),
-        route = NavigationNode.PublicAbout.route
+        text = stringResource(Res.string.toolbar_action_about_business),
+        route = NavigationNode.BusinessAbout.route
     )
     ToolbarAction(
         onCollapse = onCollapse,
@@ -258,8 +260,8 @@ private fun ToolbarActions(onCollapse: () -> Unit = {}) {
     )
     ToolbarAction(
         onCollapse = onCollapse,
-        text = stringResource(Res.string.toolbar_action_about_business),
-        route = NavigationNode.BusinessAbout.route
+        text = stringResource(Res.string.toolbar_action_about),
+        route = NavigationNode.PublicAbout.route
     )
     ToolbarAction(
         onCollapse = onCollapse,
@@ -293,7 +295,7 @@ fun KofiAction() {
             modifier = Modifier.size(
                 with(density) { LocalTheme.current.styles.regular.fontSize.toDp() + 4.dp }
             ),
-            asset = Asset.Logo.Kofi
+            model = Asset.Logo.Kofi.url
         )
         Text(
             text = stringResource(Res.string.kofi_link_text),

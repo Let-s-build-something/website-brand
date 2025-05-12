@@ -58,7 +58,7 @@ fun YoutubeVideoThumbnail(
                 .widthIn(min = 32.dp)
                 .fillMaxHeight(.1f)
                 .align(Alignment.Center),
-            asset = Asset.Logo.Youtube,
+            model = Asset.Logo.Youtube.url,
             contentDescription = stringResource(Res.string.accessibility_play_video)
         )
         AsyncImageThumbnail(
