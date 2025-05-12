@@ -44,7 +44,6 @@ fun buildTempoString(
         LaunchedEffect(Unit) {
             withContext(Dispatchers.Default) {
                 graphemes.value = text.chunked(1)
-                println("kostka_test, graphemes: ${graphemes.value}")
 
                 val fourthQuartile = timings[timings.size / 4]
                 val aboveMedianList = mutableSetOf<Int>()
@@ -106,8 +105,6 @@ fun buildTempoString(
                     while (currentPosition <= timings.size) {
                         val index = currentPosition + 1
                         val timing = timings.getOrNull(index) ?: 1L
-
-                        println("kostka_test, next index: $index")
 
                         // if the index is 0, there may be a copy paste section we should skip
                         currentPosition = if(timing == 0L) {

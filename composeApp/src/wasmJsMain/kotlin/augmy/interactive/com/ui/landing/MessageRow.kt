@@ -39,7 +39,7 @@ import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
 import augmy.interactive.com.data.Asset
 import augmy.interactive.com.theme.LocalTheme
-import augmy.interactive.com.ui.components.AsyncImageThumbnail
+import augmy.interactive.com.ui.components.AsyncSvgImage
 import augmy.interactive.com.ui.components.simulation.buildTempoString
 import kotlinx.coroutines.delay
 import kotlin.math.absoluteValue
@@ -138,7 +138,7 @@ private fun MessageBubble(
         horizontalArrangement = if(message.isCurrentUser) Arrangement.End else Arrangement.Start
     ) {
         if(!message.isCurrentUser) {
-            AsyncImageThumbnail(
+            AsyncSvgImage(
                 modifier = Modifier
                     .size(
                         with(density) {
@@ -146,8 +146,8 @@ private fun MessageBubble(
                         }
                     )
                     .clip(CircleShape),
-                asset = Asset.Image.IAmJustAFight,
-                contentScale = ContentScale.FillHeight
+                model = Asset.Image.IAmJustAFight.url,
+                contentScale = ContentScale.FillWidth
             )
         }
 

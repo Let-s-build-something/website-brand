@@ -51,10 +51,10 @@ fun AsyncImageThumbnail(
             }
         )
 
-    Box(modifier = modifier) {
+    Box(modifier = modifier.animateContentSize()) {
         if(loadOriginal.value) {
             AsyncImage(
-                modifier = modifier.animateContentSize(),
+                modifier = modifier,
                 model = originalRequest.build(),
                 onState = {
                     state.value = it
@@ -65,7 +65,7 @@ fun AsyncImageThumbnail(
         }
         if(!displayOriginal.value) {
             AsyncImage(
-                modifier = modifier.animateContentSize(),
+                modifier = modifier,
                 model = thumbnailRequest.build(),
                 onState = {
                     state.value = it

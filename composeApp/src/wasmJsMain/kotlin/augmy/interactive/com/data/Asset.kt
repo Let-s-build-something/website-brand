@@ -15,7 +15,7 @@ sealed class Asset {
         open val thumbnail = BASE_URL + appendix + "thumbnail/" + "tn_$name"
 
         data object NaturePalette: Image("7b270e82-4ceb-43dc-bbc1-b5d47ff1cfc0.jpg")
-            data object NoRobots: Image("e9ba4583-1760-4c57-96dc-20bf28ff8a2a.png")
+        data object NoRobots: Image("e9ba4583-1760-4c57-96dc-20bf28ff8a2a.png")
         data object SolutionIntegration: Image("bc1cedb8-e9b9-48c1-8555-e5f10d5b287a.png")
         data object ChatIntegration: Image("b91e606f-0689-4049-8742-b110e7c4129b.png")
         data object SentimentAnalysis: Image("69ab0efd-bbff-4bd7-a9fd-1f21b72b8404.png")

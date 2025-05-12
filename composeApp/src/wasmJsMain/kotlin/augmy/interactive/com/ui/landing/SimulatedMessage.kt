@@ -79,7 +79,17 @@ data class SimulatedMessage(
             1f at 3500 using LinearEasing
         }
 
-        val indecisiveBackground = keyframes {
+        val ohItsAlrightTimings = listOf(
+            30L,
+            1100L,
+            80L, 30L, 15L, 20L, 30L, 10L, 10L, 20L, 20L, 10L, 30L, 15L,
+            20L, 10L, 10L, 20L, 30L, 20L, 10L, 10L, 40L, 10L, 30L, 20L,
+            10L, 20L, 20L, 20L, 30L, 20L, 30L, 30L, 20L, 15L, 30L, 20L,
+            500L,
+            20L, 20L, 10L, 20L, 30L, 30L, 10L, 10L, 20L, 10L, 30L, 10L,
+        )
+
+        val ohItsAlrightBackground = keyframes {
             durationMillis = 3500
             1.15f at 200 using FastOutSlowInEasing
             1.15f at 800 using LinearOutSlowInEasing
@@ -103,6 +113,10 @@ data class SimulatedMessage(
             1f at 3500 using FastOutSlowInEasing
         }
 
+        // you bet
+        val youBetTimings = listOf(
+            40L, 10L, 20L, 10L, 40L, 30L, 40L
+        )
         val decisiveFastBackground = keyframes {
             durationMillis = 3500
             1.15f at 500 using LinearEasing

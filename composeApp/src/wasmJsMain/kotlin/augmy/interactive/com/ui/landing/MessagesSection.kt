@@ -39,7 +39,9 @@ import augmy.interactive.com.ui.landing.SimulatedMessage.Companion.imOkayBackgro
 import augmy.interactive.com.ui.landing.SimulatedMessage.Companion.imOkayTimings
 import augmy.interactive.com.ui.landing.SimulatedMessage.Companion.imSorryAttention
 import augmy.interactive.com.ui.landing.SimulatedMessage.Companion.imSorryBackground
-import augmy.interactive.com.ui.landing.SimulatedMessage.Companion.indecisiveBackground
+import augmy.interactive.com.ui.landing.SimulatedMessage.Companion.ohItsAlrightBackground
+import augmy.interactive.com.ui.landing.SimulatedMessage.Companion.ohItsAlrightTimings
+import augmy.interactive.com.ui.landing.SimulatedMessage.Companion.youBetTimings
 import kotlinx.coroutines.cancelChildren
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -103,7 +105,8 @@ fun MessagesSection(
         SimulatedMessage(
             content = stringResource(Res.string.landing_message_3_enhanced),
             isCurrentUser = false,
-            background = indecisiveBackground
+            background = ohItsAlrightBackground,
+            timings = ohItsAlrightTimings
         ),
         SimulatedMessage(
             content = stringResource(Res.string.landing_message_4_enhanced),
@@ -119,7 +122,8 @@ fun MessagesSection(
         SimulatedMessage(
             content = stringResource(Res.string.landing_message_6_enhanced),
             isCurrentUser = false,
-            background = decisiveFastBackground
+            background = decisiveFastBackground,
+            timings = youBetTimings
         )
     )
     val regularMessages = listOf(
