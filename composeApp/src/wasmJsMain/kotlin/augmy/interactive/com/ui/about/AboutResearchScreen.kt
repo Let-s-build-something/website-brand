@@ -1,15 +1,15 @@
 package augmy.interactive.com.ui.about
 
-import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.selection.SelectionContainer
@@ -19,6 +19,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import augmy.interactive.com.base.LocalContentSizeDp
@@ -27,25 +28,21 @@ import augmy.interactive.com.base.ModalScreenContent
 import augmy.interactive.com.data.Asset
 import augmy.interactive.com.theme.LocalTheme
 import augmy.interactive.com.ui.components.AsyncImageThumbnail
-import augmy.interactive.com.ui.components.YoutubeVideoThumbnail
-import augmy.interactive.com.ui.components.buildAnnotatedLinkString
 import org.jetbrains.compose.resources.stringResource
 import website_brand.composeapp.generated.resources.Res
-import website_brand.composeapp.generated.resources.about_research_bibliography_content
-import website_brand.composeapp.generated.resources.about_research_bibliography_heading
-import website_brand.composeapp.generated.resources.about_research_content
-import website_brand.composeapp.generated.resources.about_research_content_content_0
-import website_brand.composeapp.generated.resources.about_research_content_content_1
-import website_brand.composeapp.generated.resources.about_research_content_heading
-import website_brand.composeapp.generated.resources.about_research_introduction_content
-import website_brand.composeapp.generated.resources.about_research_introduction_heading
-import website_brand.composeapp.generated.resources.about_research_options_content
-import website_brand.composeapp.generated.resources.about_research_options_heading
-import website_brand.composeapp.generated.resources.about_research_prospects_content
-import website_brand.composeapp.generated.resources.about_research_prospects_heading
+import website_brand.composeapp.generated.resources.about_research_platform_heading
+import website_brand.composeapp.generated.resources.about_research_platform_preamble
+import website_brand.composeapp.generated.resources.about_research_statement_goals_0
+import website_brand.composeapp.generated.resources.about_research_statement_goals_0_content
+import website_brand.composeapp.generated.resources.about_research_statement_goals_1
+import website_brand.composeapp.generated.resources.about_research_statement_goals_1_content
+import website_brand.composeapp.generated.resources.about_research_statement_goals_2
+import website_brand.composeapp.generated.resources.about_research_statement_goals_2_content
+import website_brand.composeapp.generated.resources.about_research_statement_goals_heading
+import website_brand.composeapp.generated.resources.about_research_statement_heading
+import website_brand.composeapp.generated.resources.about_research_statement_preamble
+import website_brand.composeapp.generated.resources.about_research_summary
 import website_brand.composeapp.generated.resources.toolbar_action_about_research
-import website_brand.composeapp.generated.resources.video_heider_simmel_title
-import website_brand.composeapp.generated.resources.video_heider_simmel_url
 
 /** home/landing screen which is initially shown on the application */
 @Composable
@@ -56,10 +53,7 @@ fun AboutResearchScreen() {
     ModalScreenContent(scrollState = rememberScrollState()) {
         SelectionContainer {
             Crossfade(LocalDeviceType.current == WindowWidthSizeClass.Compact) { isCompact ->
-                Column(
-                    modifier = Modifier.padding(top = 24.dp, start = 12.dp, end = 12.dp),
-                    verticalArrangement = Arrangement.spacedBy(verticalPadding)
-                ) {
+                Column(modifier = Modifier.padding(top = 24.dp, start = 12.dp, end = 12.dp)) {
                     if(isCompact) {
                         CompactLayout(verticalPadding = verticalPadding)
                     }else {
@@ -75,9 +69,9 @@ fun AboutResearchScreen() {
 }
 
 @Composable
-private fun CompactLayout(verticalPadding: Dp) {
+private fun ColumnScope.CompactLayout(verticalPadding: Dp) {
     Column(
-        Modifier.fillMaxWidth(),
+        modifier = Modifier.fillMaxWidth(),
         verticalArrangement = Arrangement.spacedBy(12.dp)
     ) {
         Text(
@@ -101,16 +95,18 @@ private fun CompactLayout(verticalPadding: Dp) {
         }
         Text(
             modifier = Modifier.padding(top = 32.dp, start = 12.dp),
-            text = stringResource(Res.string.about_research_content),
+            text = stringResource(Res.string.about_research_summary),
             style = LocalTheme.current.styles.regular
         )
     }
 
-    VerticalContent()
+    Spacer(Modifier.height(verticalPadding))
+
+    VerticalContent(verticalPadding = verticalPadding)
 }
 
 @Composable
-private fun LargeLayout(
+private fun ColumnScope.LargeLayout(
     horizontalPadding: Dp,
     verticalPadding: Dp
 ) {
@@ -125,7 +121,7 @@ private fun LargeLayout(
             )
             Text(
                 modifier = Modifier.padding(top = 32.dp, start = 12.dp),
-                text = stringResource(Res.string.about_research_content),
+                text = stringResource(Res.string.about_research_summary),
                 style = LocalTheme.current.styles.regular
             )
         }
@@ -148,93 +144,97 @@ private fun LargeLayout(
         }
     }
 
-    VerticalContent(fraction = .75f)
+    Spacer(Modifier.height(verticalPadding))
+
+    VerticalContent(fraction = .75f, verticalPadding)
 }
 
 @Composable
-private fun VerticalContent(fraction: Float = 1f) {
-    Column(Modifier.fillMaxWidth(fraction)) {
+private fun ColumnScope.VerticalContent(
+    fraction: Float = 1f,
+    verticalPadding: Dp
+) {
+    Column(modifier = Modifier.fillMaxWidth(fraction)) {
         Text(
-            text = stringResource(Res.string.about_research_introduction_heading),
-            style = LocalTheme.current.styles.heading
+            text = stringResource(Res.string.about_research_platform_heading),
+            style = LocalTheme.current.styles.subheading
         )
         Text(
-            modifier = Modifier.padding(top = 32.dp, start = 12.dp),
-            text = stringResource(Res.string.about_research_introduction_content),
+            modifier = Modifier
+                .padding(top = 8.dp, start = 12.dp)
+                .fillMaxWidth(),
+            text = stringResource(Res.string.about_research_platform_preamble),
             style = LocalTheme.current.styles.regular
         )
     }
 
-    Column(Modifier.fillMaxWidth(fraction)) {
+    Column(
+        modifier = Modifier
+            .fillMaxWidth(fraction)
+            .padding(top = verticalPadding)
+    ) {
         Text(
-            text = stringResource(Res.string.about_research_content_heading),
-            style = LocalTheme.current.styles.heading
+            text = stringResource(Res.string.about_research_statement_heading),
+            style = LocalTheme.current.styles.subheading
         )
         Text(
-            modifier = Modifier.padding(top = 32.dp, start = 12.dp),
-            text = stringResource(Res.string.about_research_content_content_0),
+            modifier = Modifier
+                .padding(top = 8.dp, start = 12.dp)
+                .fillMaxWidth(),
+            text = stringResource(Res.string.about_research_statement_preamble),
             style = LocalTheme.current.styles.regular
         )
+    }
+    Text(
+        modifier = Modifier
+            .fillMaxWidth(fraction)
+            .padding(vertical = verticalPadding / 2),
+        text = stringResource(Res.string.about_research_statement_goals_heading),
+        style = LocalTheme.current.styles.category
+            .copy(color = LocalTheme.current.colors.primary)
+    )
 
-        YoutubeVideoThumbnail(
+    AsyncImageThumbnail(
+        modifier = Modifier
+            .padding(bottom = 12.dp)
+            .fillMaxWidth(fraction.coerceAtLeast(.85f))
+            .align(Alignment.CenterHorizontally)
+            .clip(LocalTheme.current.shapes.componentShape),
+        asset = Asset.Image.MiroResearchMap,
+        contentScale = ContentScale.FillWidth
+    )
+
+    listOf(
+        Res.string.about_research_statement_goals_0 to Res.string.about_research_statement_goals_0_content,
+        Res.string.about_research_statement_goals_1 to Res.string.about_research_statement_goals_1_content,
+        Res.string.about_research_statement_goals_2 to Res.string.about_research_statement_goals_2_content,
+    ).forEach { texts ->
+        Column(
             modifier = Modifier
                 .fillMaxWidth(fraction)
-                .aspectRatio(1.33f)
-                .align(Alignment.CenterHorizontally)
-                .padding(vertical = 32.dp, horizontal = 12.dp),
-            title = stringResource(Res.string.video_heider_simmel_title),
-            link = stringResource(Res.string.video_heider_simmel_url),
-            asset = Asset.Image.HeiderSimmelPreview
-        )
-        Text(
-            modifier = Modifier.padding(start = 12.dp),
-            text = stringResource(Res.string.about_research_content_content_1),
-            style = LocalTheme.current.styles.regular
-        )
-    }
-
-    Column(Modifier.fillMaxWidth(fraction)) {
-        Text(
-            text = stringResource(Res.string.about_research_prospects_heading),
-            style = LocalTheme.current.styles.heading
-        )
-        Text(
-            modifier = Modifier.padding(top = 32.dp, start = 12.dp),
-            text = stringResource(Res.string.about_research_prospects_content),
-            style = LocalTheme.current.styles.regular
-        )
-    }
-
-    Column(Modifier.fillMaxWidth(fraction)) {
-        Text(
-            text = stringResource(Res.string.about_research_options_heading),
-            style = LocalTheme.current.styles.heading
-        )
-        Text(
-            modifier = Modifier.padding(top = 32.dp, start = 12.dp),
-            text = stringResource(Res.string.about_research_options_content),
-            style = LocalTheme.current.styles.regular
-        )
-    }
-
-
-    Column(Modifier.fillMaxWidth(fraction)) {
-        Text(
-            text = stringResource(Res.string.about_research_bibliography_heading),
-            style = LocalTheme.current.styles.heading
-        )
-        // lazy load
-        AnimatedVisibility(true) {
+                .padding(
+                    start = 8.dp,
+                    bottom = verticalPadding / 2
+                )
+                .align(Alignment.End)
+        ) {
             Text(
-                modifier = Modifier.padding(top = 32.dp, start = 12.dp),
-                text = buildAnnotatedLinkString(
-                    text = stringResource(Res.string.about_research_bibliography_content),
-                    matchPhone = false
-                ),
+                text = stringResource(texts.first),
+                style = LocalTheme.current.styles.subheading
+            )
+            Text(
+                modifier = Modifier
+                    .padding(top = 8.dp, start = 12.dp)
+                    .fillMaxWidth(),
+                text = stringResource(texts.second),
                 style = LocalTheme.current.styles.regular
             )
         }
     }
 
-    Spacer(Modifier)
+    Spacer(Modifier.height(verticalPadding))
+
+    GetInTouchText(modifier = Modifier.align(Alignment.CenterHorizontally))
+
+    Spacer(Modifier.height(verticalPadding))
 }
