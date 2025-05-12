@@ -135,7 +135,7 @@ private fun compactLayout(verticalPadding: Dp) {
 }
 
 @Composable
-private fun GetInTouchText(modifier: Modifier = Modifier) {
+fun GetInTouchText(modifier: Modifier = Modifier) {
     val scope = rememberCoroutineScope()
 
     Text(
