@@ -46,6 +46,7 @@ import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.zIndex
 import androidx.navigation.compose.currentBackStackEntryAsState
 import augmy.interactive.com.base.LocalDeviceType
 import augmy.interactive.com.base.LocalNavController
@@ -98,6 +99,7 @@ fun HorizontalToolbar(
             .shadow(elevation = 4.dp)
             .fillMaxWidth()
             .background(color = LocalTheme.current.colors.toolbarColor)
+            .zIndex(10f)
     ) {
         Column(
             modifier = Modifier

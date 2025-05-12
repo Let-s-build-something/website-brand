@@ -6,6 +6,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Row
@@ -40,6 +41,7 @@ import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.zIndex
 import androidx.navigation.NavHostController
 import augmy.interactive.com.base.theme.isDarkTheme
 import augmy.interactive.com.data.Asset
@@ -47,6 +49,7 @@ import augmy.interactive.com.shared.SharedViewModel
 import augmy.interactive.com.theme.LocalTheme
 import augmy.interactive.com.ui.components.AsyncSvgImage
 import augmy.interactive.com.ui.components.HorizontalToolbar
+import augmy.interactive.com.ui.components.ScrollBarProgressIndicator
 import kotlinx.browser.window
 import kotlinx.datetime.Clock
 import kotlinx.datetime.TimeZone
@@ -149,24 +152,37 @@ fun ModalScreenContent(
     footer: @Composable ColumnScope.() -> Unit = { FooterScreenContent() },
     content: @Composable ColumnScope.() -> Unit
 ) {
-    Column(
-        modifier = modifier
-            .animateContentSize()
-            .fillMaxSize()
-            .then(
-                if(scrollState != null) Modifier.verticalScroll(scrollState) else Modifier
-            ),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
+    Box {
+        if(scrollState != null) {
+            ScrollBarProgressIndicator(
+                modifier = Modifier
+                    .align(Alignment.TopCenter)
+                    .fillMaxWidth()
+                    .zIndex(2f),
+                scrollState = scrollState
+            )
+        }
+
         Column(
-            modifier = Modifier
-                .widthIn(max = MaxModalWidthDp.dp)
-                .heightIn(min = LocalContentSizeDp.current.height.dp),
-            verticalArrangement = verticalArrangement,
-            horizontalAlignment = horizontalAlignment,
-            content = content
-        )
-        footer()
+            modifier = modifier
+                .animateContentSize()
+                .fillMaxSize()
+                .then(
+                    if(scrollState != null) Modifier.verticalScroll(scrollState) else Modifier
+                )
+                .align(Alignment.TopCenter),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Column(
+                modifier = Modifier
+                    .widthIn(max = MaxModalWidthDp.dp)
+                    .heightIn(min = LocalContentSizeDp.current.height.dp),
+                verticalArrangement = verticalArrangement,
+                horizontalAlignment = horizontalAlignment,
+                content = content
+            )
+            footer()
+        }
     }
 }
 
