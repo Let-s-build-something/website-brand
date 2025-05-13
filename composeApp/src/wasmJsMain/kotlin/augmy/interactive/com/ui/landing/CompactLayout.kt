@@ -51,9 +51,7 @@ internal fun CompactLayout(
     Column(modifier = Modifier.padding(horizontal = 12.dp)) {
         SocialCircle(
             scrollState = scrollState,
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 16.dp)
+            modifier = Modifier.fillMaxWidth()
         )
         SelectionContainer {
             Column(
