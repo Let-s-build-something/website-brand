@@ -48,7 +48,7 @@ sealed class NavigationNode {
     companion object {
         val allDestinations = listOf(
             Landing.route,
-            BusinessAbout.route,
+            "/business",//BusinessAbout.route,
             ResearchAbout.route,
             PublicAbout.route,
             Roadmap.route,
