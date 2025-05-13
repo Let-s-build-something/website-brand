@@ -9,11 +9,11 @@ import androidx.navigation.compose.composable
 import augmy.interactive.com.navigation.NavigationNode.Companion.allDestinations
 import augmy.interactive.com.ui.ContactsScreen
 import augmy.interactive.com.ui.DeleteMeScreen
-import augmy.interactive.com.ui.landing.LandingScreen
 import augmy.interactive.com.ui.RoadmapScreen
 import augmy.interactive.com.ui.about.AboutBusinessScreen
 import augmy.interactive.com.ui.about.AboutResearchScreen
 import augmy.interactive.com.ui.about.AboutScreen
+import augmy.interactive.com.ui.landing.LandingScreen
 
 val DEFAULT_START_DESTINATION = NavigationNode.Landing.route
 
@@ -24,6 +24,7 @@ fun NavigationHost(
     navController: NavHostController,
     startDestination: String? = null
 ) {
+    println("kostka_test, destination: $startDestination, contains: ${allDestinations.contains(startDestination)}, allDestinations: $allDestinations")
     NavHost(
         modifier = modifier.fillMaxSize(),
         navController = navController,

@@ -99,7 +99,7 @@ private fun CompactLayout(
                     modifier = Modifier
                         .fillMaxWidth()
                         .clip(LocalTheme.current.shapes.componentShape),
-                    asset = Asset.Image.Cooperation
+                    asset = Asset.Image.EarHelp
                 )
             }
 
@@ -242,8 +242,7 @@ private fun LargeLayout(
                 modifier = Modifier
                     .fillMaxWidth()
                     .clip(LocalTheme.current.shapes.componentShape),
-                thumbnail = Asset.Image.Cooperation.thumbnail,
-                url = Asset.Image.Cooperation.url
+                asset = Asset.Image.EarHelp
             )
         }
     }

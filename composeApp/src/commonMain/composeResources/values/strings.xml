@@ -3,7 +3,7 @@
 
   <string name="website_footer">© %1$d Augmy Interactive</string>
 
-  <string name="landing_header_heading">The new era of communication</string>
+  <string name="landing_header_heading">The New Era of Communication</string>
   <string name="landing_header_content">Talk online like you do in real life. Digital communication, reflective of the physical you, with agency in your hands.</string>
 
   <string name="landing_messages_heading">Regular chat</string>
@@ -108,7 +108,7 @@
   <string name="about_content_roadmap">You can see what's currently ahead of us</string>
   <string name="about_content_roadmap_here">here</string>
 
-  <string name="about_business_heading">The future of communication, together.</string>
+  <string name="about_business_heading">The Future of Communication, Together.</string>
   <string name="about_business_summary">We help your business be step ahead in the new era of online communication. Our solutions go beyond offering tools to users and customers—we create and facilitate social environments where users enjoy being and can build their social networks with great accuracy.</string>
   <string name="about_business_list_heading">Applied solutions:</string>
   <string name="about_business_list_0">Prevention and detection of AI content and spam</string>
