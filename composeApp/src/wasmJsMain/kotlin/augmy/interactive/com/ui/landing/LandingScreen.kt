@@ -86,7 +86,7 @@ fun LandingScreen() {
             }
 
             Spacer(Modifier.height(verticalPadding))
-            FooterBlock(verticalPadding)
+            FooterBlock()
             Spacer(Modifier.height(verticalPadding))
         }
 

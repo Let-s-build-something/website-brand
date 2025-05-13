@@ -21,6 +21,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -123,13 +124,9 @@ private fun compactLayout(verticalPadding: Dp) {
 
                 Content(verticalPadding, isMobile = true)
             }
-
+            GetInTouchText(modifier = Modifier.align(Alignment.CenterHorizontally))
 
             Spacer(Modifier.height(verticalPadding))
-
-            GetInTouchText()
-
-            Spacer(Modifier.height(verticalPadding * 2))
         }
     }
 }
@@ -209,11 +206,9 @@ private fun largeLayout(
 
         Content(verticalPadding, isMobile = false)
 
+        GetInTouchText(modifier = Modifier.align(Alignment.CenterHorizontally))
+
         Spacer(Modifier.height(verticalPadding))
-
-        GetInTouchText()
-
-        Spacer(Modifier.height(verticalPadding * 2))
     }
 }
 
@@ -232,7 +227,7 @@ private fun Content(
     )
 
     Column(
-        modifier = Modifier.padding(start = 16.dp, top = 8.dp),
+        modifier = Modifier.padding(start = 16.dp, end = 16.dp, top = 8.dp),
         verticalArrangement = Arrangement.spacedBy(verticalPadding)
     ) {
         listOf(
@@ -247,7 +242,7 @@ private fun Content(
                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
                     AsyncImageThumbnail(
                         modifier = Modifier
-                            .padding(top = 8.dp, start = 16.dp)
+                            .padding(top = 8.dp)
                             .size(240.dp)
                             .clip(LocalTheme.current.shapes.componentShape),
                         asset = data.third,
@@ -255,12 +250,12 @@ private fun Content(
                     )
                     Text(
                         text = stringResource(data.first),
-                        style = LocalTheme.current.styles.subheading
+                        style = LocalTheme.current.styles.subheading.copy(
+                            textAlign = TextAlign.Center
+                        )
                     )
                     Text(
-                        modifier = Modifier
-                            .padding(top = 8.dp, start = 12.dp)
-                            .fillMaxWidth(.75f),
+                        modifier = Modifier.padding(top = 8.dp),
                         text = stringResource(data.second),
                         style = LocalTheme.current.styles.regular
                     )
@@ -289,7 +284,7 @@ private fun Content(
                         Text(
                             modifier = Modifier
                                 .padding(top = 8.dp, start = 12.dp)
-                                .fillMaxWidth(),
+                                .fillMaxWidth(.75f),
                             text = stringResource(data.second),
                             style = LocalTheme.current.styles.regular
                         )
