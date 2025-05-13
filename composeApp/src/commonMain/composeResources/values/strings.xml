@@ -6,9 +6,6 @@
   <string name="landing_header_heading">The new era of communication</string>
   <string name="landing_header_content">Talk online like you do in real life. Digital communication, reflective of the physical you, with agency in your hands.</string>
 
-  <string name="landing_social_circle_heading">People are not ones and zeros.</string>
-  <string name="landing_social_circle_text">Friend list? Followers? Does that really represent your social life? Friend or not friend? Forget about shallow meaningless labels. Now you can have your social space with depth in mind.</string>
-
   <string name="landing_messages_heading">Regular chat</string>
   <string name="landing_messages_text">Billions of people all over the world are being misunderstood and can't express themselves.\n\nPeople want to express themselves while messaging but there was no natural ways of showing that.</string>
   <string name="landing_message_0">how are you?</string>
@@ -18,7 +15,7 @@
   <string name="landing_message_4">Okay</string>
 
   <string name="landing_messages_enhanced_heading">Powered by Augmy</string>
-  <string name="landing_messages_enhanced_text">Imagine being understood in how you said it, not just what you said. We invent new ways for expressing what you feel beyond what you type.</string>
+  <string name="landing_messages_enhanced_text">Imagine being understood in how you said it, not just what you said. We invent new ways for expressing what you feel beyond just what you type.</string>
   <string name="landing_message_0_enhanced">how are you?</string>
   <string name="landing_message_1_enhanced">I'm okay</string>
   <string name="landing_message_2_enhanced">Dude I really didn't mean it, I'm sorry...</string>
@@ -27,18 +24,20 @@
   <string name="landing_message_5_enhanced">beer tomorrow?</string>
   <string name="landing_message_6_enhanced">you bet</string>
 
+  <string name="landing_social_circle_heading">People Are Not Ones and Zeros</string>
+  <string name="landing_social_circle_text">Friend list? Followers? Do those really reflect your relationships? "Friend" or "not friend"? Forget about shallow, meaningless labels. Welcome to a social space built with depth in mind.</string>
 
-  <string name="landing_block_0_heading">Rediscover the colors of communication</string>
-  <string name="landing_block_0_content">Longing to understand how your loved one abroad is feeling? Don't know how to say how you feel? Want to feel close? Augmy is made for that.</string>
+  <string name="landing_block_0_heading">Rediscover the Colors of Communication</string>
+  <string name="landing_block_0_content">You miss their voice, but hear only text.\nYou feel so much, but can’t say the rest.\nA message sent—but something’s lost.\nThe warmth, the tone, the human cost.\n\nTo say "I’m here" without a word,\nTo show you’ve felt, to feel you're heard—\nThat’s what we made Augmy for.</string>
 
-  <string name="landing_block_1_heading">Allow your digital body to speak up</string>
+  <string name="landing_block_1_heading">Allow Your Digital Body to Speak up</string>
   <string name="landing_block_1_content">Your digital nonverbal communication is as important as your physical. You don't have to ponder which emoji best expresses your feelings anymore; be understood without overthinking.</string>
 
-  <string name="landing_block_2_heading">It wasn't made for you</string>
-  <string name="landing_block_2_content">Sometimes, expressing yourself can be challenging, and there are moments when you may simply lack the energy to explain. What you are using to chat with others wasn't meant for this. Augmy messenger is.</string>
+  <string name="landing_block_2_heading">It Wasn't Made for You</string>
+  <string name="landing_block_2_content">Sometimes, expressing yourself can be challenging, and there are moments when you may simply lack the energy to explain. The messaging tools you use weren’t designed for moments like these, but Augmy Messenger is.</string>
 
-  <string name="landing_block_3_heading">Communication matters</string>
-  <string name="landing_block_3_content">If you want to understand someone better — or help them understand you — we’re here for that. Give it a shot, the people around you matter.</string>
+  <string name="landing_block_3_heading">Communication Matters</string>
+  <string name="landing_block_3_content">If you want to understand someone more deeply — or help them truly understand you — we’re here for that. Because connection takes more than words. The people around you matter. Give it a try.</string>
 
   <string name="landing_block_demo_heading">Peek into the future of social spaces</string>
 
@@ -110,8 +109,8 @@
   <string name="about_content_roadmap_here">here</string>
 
   <string name="about_business_heading">The future of communication, together.</string>
-  <string name="about_business_summary">We help your business to be step ahead in the new era of online communication. Our solutions go beyond offering tools to users and customers—we create and facilitate social environments where users enjoy being and can build their social networks with great accuracy.</string>
-  <string name="about_business_list_heading">The most common applications for our solutions:</string>
+  <string name="about_business_summary">We help your business be step ahead in the new era of online communication. Our solutions go beyond offering tools to users and customers—we create and facilitate social environments where users enjoy being and can build their social networks with great accuracy.</string>
+  <string name="about_business_list_heading">Applied solutions:</string>
   <string name="about_business_list_0">Prevention and detection of AI content and spam</string>
   <string name="about_business_list_0_content">We create spaces for humans. Robots clearly stand out, so let's weed them out as needed.</string>
   <string name="about_business_list_1">Supercharge of existing communication tools</string>
@@ -124,7 +123,7 @@
   <string name="about_business_list_4_content">An easy and straightforward way to allow your users to understand each other and stay in touch. Use our full implementation of a chat to save yourself time in development.</string>
   <string name="about_business_list_5">Data quality assurance</string>
   <string name="about_business_list_5_content">We help LLMs understand humanness better. Be it the sarcasm within a prompt, or the enrichment of information that can thereafter used for training, we can help.</string>
-  <string name="about_business_footer">Let's get in touch via email or you can schedule a call.</string>
+  <string name="about_business_footer">Get in touch: email / schedule a call.</string>
   <string name="about_business_footer_link_0">email</string>
   <string name="about_business_footer_link_0_url">mailto:brand@augmy.org</string>
   <string name="about_business_footer_link_1">schedule a call</string>

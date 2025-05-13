@@ -164,7 +164,7 @@ fun ModalScreenContent(
         }
 
         Column(
-            modifier = modifier
+            modifier = Modifier
                 .animateContentSize()
                 .fillMaxSize()
                 .then(
@@ -174,7 +174,7 @@ fun ModalScreenContent(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Column(
-                modifier = Modifier
+                modifier = modifier
                     .widthIn(max = MaxModalWidthDp.dp)
                     .heightIn(min = LocalContentSizeDp.current.height.dp),
                 verticalArrangement = verticalArrangement,
@@ -218,9 +218,9 @@ fun FooterScreenContent(modifier: Modifier = Modifier) {
                     )
                 )
                 Row(
-                    modifier = Modifier.padding(horizontal = 8.dp),
+                    modifier = Modifier.padding(start = 8.dp),
                     verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.spacedBy(4.dp)
+                    horizontalArrangement = Arrangement.spacedBy(6.dp)
                 ) {
                     SocialLogo(
                         tag = Res.string.contacts_discord_tag,
@@ -273,7 +273,6 @@ fun SocialLogo(
             .clickable {
                 window.open(url)
             }
-            .padding(start = 10.dp, end = 4.dp)
             .size(size),
         model = asset.url,
         tint = tint,

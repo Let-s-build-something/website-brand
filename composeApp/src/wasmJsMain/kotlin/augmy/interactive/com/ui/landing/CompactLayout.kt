@@ -112,7 +112,7 @@ internal fun CompactLayout(
             }
         }
 
-        Spacer(Modifier.height(verticalPadding * 2))
+        Spacer(Modifier.height(verticalPadding))
 
         MessagesSection(
             scrollState = scrollState,
@@ -137,8 +137,7 @@ internal fun CompactLayout(
             }
         )
 
-        Spacer(Modifier)
-
+        Spacer(Modifier.height(verticalPadding))
 
         Box(
             Modifier

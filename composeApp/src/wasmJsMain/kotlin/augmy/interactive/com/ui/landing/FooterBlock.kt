@@ -4,7 +4,6 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.sizeIn
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.material3.Text
@@ -13,7 +12,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import augmy.interactive.com.theme.LocalTheme
 import io.github.alexzhirkevich.compottie.LottieCompositionSpec
@@ -26,11 +24,9 @@ import website_brand.composeapp.generated.resources.landing_block_3_content
 import website_brand.composeapp.generated.resources.landing_block_3_heading
 
 @Composable
-internal fun ColumnScope.FooterBlock(verticalPadding: Dp) {
+internal fun ColumnScope.FooterBlock() {
     Text(
-        modifier = Modifier
-            .padding(top = verticalPadding)
-            .fillMaxWidth(),
+        modifier = Modifier.fillMaxWidth(),
         text = stringResource(Res.string.landing_block_3_heading),
         style = LocalTheme.current.styles.heading.copy(textAlign = TextAlign.Center)
     )
