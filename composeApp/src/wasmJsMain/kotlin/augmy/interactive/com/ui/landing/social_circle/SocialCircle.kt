@@ -170,7 +170,7 @@ fun SocialCircle(
                     Layout(
                         modifier = Modifier
                             .background(
-                                color = category.color.copy(alpha = .65f),
+                                color = category.color,
                                 shape = CircleShape
                             )
                             .clip(CircleShape)
