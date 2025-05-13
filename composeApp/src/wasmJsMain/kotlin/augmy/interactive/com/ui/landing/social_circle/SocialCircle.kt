@@ -86,7 +86,7 @@ fun SocialCircle(
         mutableStateOf(true)
     }
     val itemPaddingPx = with(density) { 2.dp.toPx() }
-    val layerPadding = 12.dp
+    val layerPadding = 6.dp
 
     LaunchedEffect(isVisible.value) {
         // we extend from family and backwards
@@ -130,12 +130,12 @@ fun SocialCircle(
 
             var previousShares = 0.0
             var startingIndex = 0
-            NetworkProximityCategory.entries.forEach { category ->
+            NetworkProximityCategory.entries.forEachIndexed { i, category ->
                 if(categories.value.contains(category)) {
                     val additionalShares = category.share / presentShares * missingShares
                     val shares = category.share + additionalShares + previousShares
 
-                    val zIndex = categories.value.size - categories.value.indexOf(category) + 1f
+                    val zIndex = categories.value.size - i + 1f
 
                     val items = mutableListOf<NetworkItemIO?>()
                     var finished = false
@@ -170,7 +170,7 @@ fun SocialCircle(
                     Layout(
                         modifier = Modifier
                             .background(
-                                color = category.color,
+                                color = category.color.copy(alpha = .75f),
                                 shape = CircleShape
                             )
                             .clip(CircleShape)
@@ -182,7 +182,7 @@ fun SocialCircle(
                                 )
                             )
                             .zIndex(zIndex)
-                            .size((contentSize * shares).dp),
+                            .size((with(density) { contentSize.toDp().value } * shares).dp),
                         content = {
                             items.forEach { data ->
                                 NetworkItemCompact(
@@ -278,7 +278,7 @@ private fun NetworkItemCompact(
     val density = LocalDensity.current
     val textSize = with(density) { (size / 6).toSp() }
     val imageSize = size - with(density) { textSize.toDp() } - 4.dp
-    val textColor = if(backgroundColor.luminance() > .5f) Colors.Coffee else Colors.GrayLight
+    val textColor = if(backgroundColor.luminance() > .4f) Color.White else Colors.GrayLight
 
     Column(
         modifier = modifier
