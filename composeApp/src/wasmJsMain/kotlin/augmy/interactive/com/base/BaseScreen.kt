@@ -188,6 +188,45 @@ fun ModalScreenContent(
 
 @Composable
 fun FooterScreenContent(modifier: Modifier = Modifier) {
+    val isCompact = LocalDeviceType.current == WindowWidthSizeClass.Compact
+
+    val socialIcons = @Composable {
+        Row(
+            modifier = Modifier.padding(start = 8.dp),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
+            SocialLogo(
+                tag = Res.string.contacts_discord_tag,
+                link = Res.string.contacts_discord,
+                asset = Asset.Logo.Discord,
+                tint = if(isDarkTheme) Color.White else Color.Black
+            )
+            SocialLogo(
+                size = 28.dp,
+                tag = Res.string.contacts_twitter_tag,
+                link = Res.string.contacts_twitter,
+                asset = Asset.Logo.Twitter,
+                tint = if(isDarkTheme) Color.White else Color.Black
+            )
+            SocialLogo(
+                tag = Res.string.contacts_bluesky_tag,
+                link = Res.string.contacts_bluesky,
+                asset = Asset.Logo.Bluesky
+            )
+            SocialLogo(
+                tag = Res.string.contacts_instagram_tag,
+                link = Res.string.contacts_instagram,
+                asset = Asset.Logo.Instagram
+            )
+            SocialLogo(
+                tag = Res.string.contacts_linkedin_tag,
+                link = Res.string.contacts_linkedin,
+                asset = Asset.Logo.LinkedIn
+            )
+        }
+    }
+
     Row(
         modifier = modifier
             .padding(top = 16.dp)
@@ -199,57 +238,30 @@ fun FooterScreenContent(modifier: Modifier = Modifier) {
         horizontalArrangement = Arrangement.Center
     ) {
         SelectionContainer {
-            Row(
-                modifier = Modifier
-                    .widthIn(max = MaxModalWidthDp.dp)
-                    .fillMaxWidth(),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceBetween
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.spacedBy(6.dp)
             ) {
-                Text(
-                    text = stringResource(
-                        Res.string.website_footer,
-                        Clock.System.now().toLocalDateTime(
-                            TimeZone.currentSystemDefault()
-                        ).year
-                    ),
-                    style = LocalTheme.current.styles.category.copy(
-                        textAlign = TextAlign.Center
-                    )
-                )
+                if(isCompact) socialIcons()
                 Row(
-                    modifier = Modifier.padding(start = 8.dp),
+                    modifier = Modifier
+                        .widthIn(max = MaxModalWidthDp.dp)
+                        .fillMaxWidth(),
                     verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.spacedBy(6.dp)
+                    horizontalArrangement = if(isCompact) Arrangement.Center else Arrangement.SpaceBetween
                 ) {
-                    SocialLogo(
-                        tag = Res.string.contacts_discord_tag,
-                        link = Res.string.contacts_discord,
-                        asset = Asset.Logo.Discord,
-                        tint = if(isDarkTheme) Color.White else Color.Black
+                    Text(
+                        text = stringResource(
+                            Res.string.website_footer,
+                            Clock.System.now().toLocalDateTime(
+                                TimeZone.currentSystemDefault()
+                            ).year
+                        ),
+                        style = LocalTheme.current.styles.category.copy(
+                            textAlign = TextAlign.Center
+                        )
                     )
-                    SocialLogo(
-                        size = 28.dp,
-                        tag = Res.string.contacts_twitter_tag,
-                        link = Res.string.contacts_twitter,
-                        asset = Asset.Logo.Twitter,
-                        tint = if(isDarkTheme) Color.White else Color.Black
-                    )
-                    SocialLogo(
-                        tag = Res.string.contacts_bluesky_tag,
-                        link = Res.string.contacts_bluesky,
-                        asset = Asset.Logo.Bluesky
-                    )
-                    SocialLogo(
-                        tag = Res.string.contacts_instagram_tag,
-                        link = Res.string.contacts_instagram,
-                        asset = Asset.Logo.Instagram
-                    )
-                    SocialLogo(
-                        tag = Res.string.contacts_linkedin_tag,
-                        link = Res.string.contacts_linkedin,
-                        asset = Asset.Logo.LinkedIn
-                    )
+                    if(!isCompact) socialIcons()
                 }
             }
         }

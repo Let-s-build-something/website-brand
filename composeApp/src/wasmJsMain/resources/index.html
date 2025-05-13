@@ -5,8 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Augmy—Expressive Messaging</title>
-    <meta name="description" content="Do you spend as much time practicing your expressions in the mirror as you do choosing an emoji? Sometimes, expressing yourself can be challenging, and there are moments when you may simply lack the energy to explain. It's time to make it more natural and automatic.
-Our goal is to make communication expressive again. You don't have to ponder which emoji best expresses your feelings anymore; be understood without overthinking.">
+    <meta name="description" content="Augmy is an app that empowers you to express your true feelings with clarity and emotion, offering a deeper way to connect through chat beyond words and labels." />
     <meta name="keywords" content="communication app, chatting app, app for couples, partner communication, online communication, psychology, social network app, quality communication, augmented, enriched, instant messaging">
     <meta name="author" content="Augmy Interactive">
 
@@ -20,8 +19,8 @@ Our goal is to make communication expressive again. You don't have to ponder whi
     <meta name="robots" content="index, follow"> <!-- Allows indexing and following links -->
 
     <!-- Open Graph Metadata (for social media) -->
-    <meta property="og:title" content="Augmy—Expressive Messaging">
-    <meta property="og:description" content="Even in online messages, you can now say it in full length. Send messages that convey how you mean it—not how you said it.">
+    <meta property="og:title" content="Augmy—Say What You Mean, Express What You Feel">
+    <meta property="og:description" content="Augmy is an app that empowers you to express your true feelings with clarity and emotion, offering a deeper way to connect through chat beyond words and labels." />
     <meta property="og:url" content="https://augmy.org">
     <meta property="og:image" content="https://augmy.org/storage/img/thumbnail/tn_7b270e82-4ceb-43dc-bbc1-b5d47ff1cfc0.jpg">
     <meta property="og:type" content="website">
@@ -35,6 +34,11 @@ Our goal is to make communication expressive again. You don't have to ponder whi
     <meta name="twitter:site" content="@AugmyInteractiv">
 
     <!-- Favicon -->
+    <!-- Android Chrome Favicon (192x192) -->
+    <link rel="icon" sizes="192x192" href="https://augmy.org/favicon.svg">
+    <!-- iOS Apple Touch Icon (180x180) -->
+    <link rel="apple-touch-icon" sizes="180x180" href="https://augmy.org/favicon.svg">
+    <!-- Default Icon -->
     <link rel="icon" href="https://augmy.org/favicon.svg">
     <link type="text/css" rel="stylesheet" href="styles.css">
     <link rel="preload" href="./composeResources/website_brand.composeapp.generated.resources/font/quicksand_medium.ttf" as="fetch" type="font/ttf" crossorigin/>
@@ -83,7 +87,38 @@ Our goal is to make communication expressive again. You don't have to ponder whi
     </style>
 </head>
     <body>
-        <div id="loader-container">
+    <div style="display:none;">
+        <!-- Landing Header -->
+        <h1>The New Era of Communication</h1>
+        <p>Talk online like you do in real life. Digital communication, reflective of the physical you, with agency in your hands.</p>
+
+        <!-- Social Circle -->
+        <h2>People Are Not Ones and Zeros</h2>
+        <p>Friend list? Followers? Do those really reflect your relationships? "Friend" or "not friend"? Forget about shallow, meaningless labels. Welcome to a social space built with depth in mind.</p>
+
+        <!-- Rediscover the Colors of Communication -->
+        <h2>Rediscover the Colors of Communication</h2>
+        <p>You miss their voice, but hear only text. You feel so much, but can’t say the rest. A message sent—but something’s lost. The warmth, the tone, the human cost.
+            To say "I’m here" without a word, To show you’ve felt, to feel you're heard— That’s what we made Augmy for.</p>
+
+        <!-- Allow Your Digital Body to Speak up -->
+        <h2>Allow Your Digital Body to Speak up</h2>
+        <p>Your digital nonverbal communication is as important as your physical. You don't have to ponder which emoji best expresses your feelings anymore; be understood without overthinking.</p>
+
+        <!-- It Wasn't Made for You -->
+        <h2>It Wasn't Made for You</h2>
+        <p>Sometimes, expressing yourself can be challenging, and there are moments when you may simply lack the energy to explain. The messaging tools you use weren’t designed for moments like these, but Augmy Messenger is.</p>
+
+        <!-- Communication Matters -->
+        <h2>Communication Matters</h2>
+        <p>If you want to understand someone more deeply — or help them truly understand you — we’re here for that. Because connection takes more than words. The people around you matter. Give it a try.</p>
+
+        <!-- Footer Section -->
+        <h2>The problem statement</h2>
+        <p>Messaging online as we know it is not enough—it lacks nuance in how we express ourselves, in the way we move, in the way we talk, and fails at synchronizing us with others. We often rely on oversimplified keywords and impersonal emojis or curate the impressions others may have of us, leaving the true expressions behind. It's time for online messaging that truly conveys how we mean it—not just what we type.</p>
+    </div>
+
+    <div id="loader-container">
             <canvas id="canvas" height="150px" width="150px"></canvas>
         </div>
 
@@ -116,11 +151,58 @@ Our goal is to make communication expressive again. You don't have to ponder whi
         <script type="application/javascript" >
             const unhandledError = (event, error) => {
                 if (error instanceof WebAssembly.CompileError) {
-                    document.getElementById('loader-container').innerHTML = '<p>Error loading the app. Safari browser is unfortunately not support yet.</p>';
+                    document.getElementById('loader-container').innerHTML = '<p>Error loading the app.</p>';
                 }
             }
             document.addEventListener("error", (event) => unhandledError(event, event.error));
             document.addEventListener("unhandledrejection", (event) => unhandledError(event, event.reason));
+
+
+             // Function to update meta tags dynamically based on the current route
+        function updateMetaTags(route) {
+            let title = "Augmy—Expressive Messaging";
+            let description = "Even in online messages, you can now say it in full length. Send messages that convey how you mean it—not how you said it.";
+            let image = "https://augmy.org/storage/img/thumbnail/tn_7b270e82-4ceb-43dc-bbc1-b5d47ff1cfc0.jpg";
+
+            if (route === "/research") {
+                title = "Augmy | Research";
+                description = "We aim to redefine what computer-mediated communication can look like and we can't work on this alone. Join us, as we are opening a Research Platform that lets you test, modify, and experiment with communication interfaces to drive real-world impact and contribute to advancing science in the field and helping people communicate meaningfully.";
+                image = "https://augmy.org/storage/img/thumbnail/tn_95b14a4e-5182-4375-b78f-d0f6fd504926.jpg";
+            }
+            if (route === "/business") {
+                title = "Augmy | Business";
+                description = "We help your business be step ahead in the new era of online communication. Our solutions go beyond offering tools to users and customers—we create and facilitate social environments where users enjoy being and can build their social networks with great accuracy.";
+                image = "https://augmy.org/storage/img/thumbnail/tn_e4d1017e-d7d1-442c-ab1f-8a588d67b5b0.jpg";
+            }
+
+            // Update the <title> tag
+            document.title = title;
+
+            // Update <meta name="description">
+            const descriptionMeta = document.querySelector('meta[name="description"]');
+            if (descriptionMeta) descriptionMeta.content = description;
+
+            // Update Open Graph meta tags
+            const ogTitleMeta = document.querySelector('meta[property="og:title"]');
+            const ogDescriptionMeta = document.querySelector('meta[property="og:description"]');
+            const ogImageMeta = document.querySelector('meta[property="og:image"]');
+
+            if (ogTitleMeta) ogTitleMeta.content = title;
+            if (ogDescriptionMeta) ogDescriptionMeta.content = description;
+            if (ogImageMeta) ogImageMeta.content = image;
+        }
+
+             // Function to handle route changes
+        function handleRouteChange() {
+            const currentPath = window.location.pathname;
+            updateMetaTags(currentPath);
+        }
+
+        // Listen for route changes and update meta tags accordingly
+        window.addEventListener('popstate', handleRouteChange);
+
+        // Initial meta tags update based on the current route
+        handleRouteChange();
         </script>
     </body>
 </html>

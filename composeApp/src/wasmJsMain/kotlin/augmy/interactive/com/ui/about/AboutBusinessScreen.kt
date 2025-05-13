@@ -161,54 +161,56 @@ private fun largeLayout(
     horizontalPadding: Dp,
     verticalPadding: Dp
 ) {
-    Column {
-        Row(
-            modifier = Modifier.padding(top = 24.dp),
-            horizontalArrangement = Arrangement.spacedBy(horizontalPadding)
-        ) {
-            Column(modifier = Modifier.weight(1f).padding(end = 12.dp)) {
-                Text(
-                    text = stringResource(Res.string.about_business_heading),
-                    style = LocalTheme.current.styles.heading
-                )
-                Text(
-                    modifier = Modifier.padding(top = 32.dp),
-                    text = buildAnnotatedLinkString(
-                        stringResource(Res.string.about_business_summary),
-                        onLinkClicked = { link ->
-                            window.open(link)
-                        }
-                    ),
-                    style = LocalTheme.current.styles.regular
-                )
-
-                GetInTouchText()
-            }
-            Box(
-                Modifier
-                    .weight(1f)
-                    .padding(top = 32.dp)
-                    .background(
-                        LocalTheme.current.colors.brandMain,
-                        LocalTheme.current.shapes.roundShape
-                    )
-                    .padding(verticalPadding / 7)
+    SelectionContainer {
+        Column {
+            Row(
+                modifier = Modifier.padding(top = 24.dp),
+                horizontalArrangement = Arrangement.spacedBy(horizontalPadding)
             ) {
-                AsyncImageThumbnail(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .clip(LocalTheme.current.shapes.componentShape),
-                    thumbnail = Asset.Image.EarHelp.thumbnail,
-                    url = Asset.Image.EarHelp.url
-                )
+                Column(modifier = Modifier.weight(1f).padding(end = 12.dp)) {
+                    Text(
+                        text = stringResource(Res.string.about_business_heading),
+                        style = LocalTheme.current.styles.heading
+                    )
+                    Text(
+                        modifier = Modifier.padding(top = 32.dp),
+                        text = buildAnnotatedLinkString(
+                            stringResource(Res.string.about_business_summary),
+                            onLinkClicked = { link ->
+                                window.open(link)
+                            }
+                        ),
+                        style = LocalTheme.current.styles.regular
+                    )
+
+                    GetInTouchText()
+                }
+                Box(
+                    Modifier
+                        .weight(1f)
+                        .padding(top = 32.dp)
+                        .background(
+                            LocalTheme.current.colors.brandMain,
+                            LocalTheme.current.shapes.roundShape
+                        )
+                        .padding(verticalPadding / 7)
+                ) {
+                    AsyncImageThumbnail(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .clip(LocalTheme.current.shapes.componentShape),
+                        thumbnail = Asset.Image.EarHelp.thumbnail,
+                        url = Asset.Image.EarHelp.url
+                    )
+                }
             }
+
+            Content(verticalPadding, isMobile = false)
+
+            GetInTouchText(modifier = Modifier.align(Alignment.CenterHorizontally))
+
+            Spacer(Modifier.height(verticalPadding))
         }
-
-        Content(verticalPadding, isMobile = false)
-
-        GetInTouchText(modifier = Modifier.align(Alignment.CenterHorizontally))
-
-        Spacer(Modifier.height(verticalPadding))
     }
 }
 

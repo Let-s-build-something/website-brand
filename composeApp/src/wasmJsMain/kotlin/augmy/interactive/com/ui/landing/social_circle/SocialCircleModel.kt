@@ -31,8 +31,8 @@ class SocialCircleModel: ViewModel() {
 
     fun changeCategories(categories: List<NetworkProximityCategory>) {
         viewModelScope.launch(Dispatchers.Default) {
-            _categories.value = categories.distinct().sortedBy {
-                NetworkProximityCategory.entries.indexOf(it) + 1
+            _categories.value = categories.distinct().sortedByDescending {
+                it.range.endInclusive
             }
         }
     }
