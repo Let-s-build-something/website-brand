@@ -28,6 +28,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.layout.positionInWindow
 import androidx.compose.ui.unit.dp
+import augmy.interactive.com.base.LocalContentSizeDp
 import augmy.interactive.com.theme.LocalTheme
 import augmy.interactive.com.ui.landing.SimulatedMessage.Companion.beerAttention
 import augmy.interactive.com.ui.landing.SimulatedMessage.Companion.beerBackground
@@ -139,7 +140,7 @@ fun MessagesSection(
         Animatable(0.15f)
     }
     val cornerRadius = attentionFraction.value
-        .times(64f)
+        .times(LocalContentSizeDp.current.width / 20)
         .dp
 
     LaunchedEffect(isEnhanced.value, isVisible.value) {
