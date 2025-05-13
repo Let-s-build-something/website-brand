@@ -199,8 +199,7 @@ private fun largeLayout(
                         modifier = Modifier
                             .fillMaxWidth()
                             .clip(LocalTheme.current.shapes.componentShape),
-                        thumbnail = Asset.Image.EarHelp.thumbnail,
-                        url = Asset.Image.EarHelp.url
+                        asset = Asset.Image.Cooperation
                     )
                 }
             }
