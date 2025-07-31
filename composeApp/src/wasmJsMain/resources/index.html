@@ -126,47 +126,65 @@
 
         <script>
             (function redirectIfJvmSSO() {
+              console.log("[SSO] Running SSO redirect script...");
+
               const userAgent = navigator.userAgent.toLowerCase();
               const isJvmPlatform =
                 userAgent.includes("windows") ||
                 userAgent.includes("linux") ||
                 userAgent.includes("macintosh");
 
-              const queryParams = new URLSearchParams(window.location.search);
-              const urlCode = queryParams.get("code");
-              const urlState = queryParams.get("state");
-              const urlNonce = queryParams.get("nonce");
-              const platformParam = queryParams.get("platform");
-
+              const platformParam = new URLSearchParams(window.location.search).get("platform");
               const platform = platformParam || (isJvmPlatform ? "jvm" : "web");
+              console.log("[SSO] Detected platform:", platform);
 
-              function redirect(code, state, nonce) {
+              function redirectIfValid(code, state, nonce, source) {
+                console.log(`[SSO] Trying redirect from ${source}:`, { code, state, nonce });
+
                 if (platform === "jvm" && code && state === "matrix_sso") {
                   const baseUrl = `augmy://login?code=${encodeURIComponent(code)}&state=${encodeURIComponent(state)}`;
                   const finalUrl = nonce ? `${baseUrl}&nonce=${encodeURIComponent(nonce)}` : baseUrl;
+
+                  console.log("[SSO] Redirecting to:", finalUrl);
                   window.location.href = finalUrl;
+                } else {
+                  console.warn("[SSO] Redirect conditions not met.", { platform, code, state });
                 }
               }
 
-              // Case 1: Google — params are in URL
-              if (urlCode && urlState) {
-                redirect(urlCode, urlState, urlNonce);
+              // Case 1: Google — everything is in the query string
+              const queryParams = new URLSearchParams(window.location.search);
+              const codeFromUrl = queryParams.get("code");
+              const stateFromUrl = queryParams.get("state");
+              const nonceFromUrl = queryParams.get("nonce");
+
+              if (codeFromUrl && stateFromUrl) {
+                console.log("[SSO] Found code/state in URL — assuming Google login.");
+                redirectIfValid(codeFromUrl, stateFromUrl, nonceFromUrl, "query string");
                 return;
+              } else {
+                console.log("[SSO] No code/state in URL — checking for Apple form post.");
               }
 
-              // Case 2: Apple — code is POSTed in a form
+              // Case 2: Apple — values come via POST form
               window.addEventListener("DOMContentLoaded", () => {
                 const form = document.querySelector("form");
-                if (!form) return;
-
-                const formData = new FormData(form);
-                const code = formData.get("code");
-                const state = formData.get("state");
-                const nonce = formData.get("nonce");
-
-                if (code && state) {
-                  redirect(code, state, nonce);
+                if (!form) {
+                  console.warn("[SSO] No form found in DOM (Apple login fallback not triggered)");
+                  return;
                 }
+
+                const code = form.querySelector("input[name=code]")?.value;
+                const state = form.querySelector("input[name=state]")?.value;
+                const nonce = form.querySelector("input[name=nonce]")?.value;
+
+                if (code || state || nonce) {
+                  console.log("[SSO] Found form values from Apple:", { code, state, nonce });
+                } else {
+                  console.warn("[SSO] Form exists but inputs were empty");
+                }
+
+                redirectIfValid(code, state, nonce, "form post");
               });
             })();
         </script>
