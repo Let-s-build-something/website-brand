@@ -131,7 +131,8 @@
                 const userAgent = navigator.userAgent.toLowerCase();
                 const isAndroid = userAgent.includes("android");
                 const isJvmPlatform = userAgent.includes("windows") || userAgent.includes("linux");
-                const platformParam = new URLSearchParams(window.location.search).get("platform");
+                const queryParams = new URLSearchParams(window.location.search);
+                const platformParam = queryParams.get("platform");
                 const platform = platformParam || (isAndroid ? "android" : isJvmPlatform ? "jvm" : "web");
                 console.log("[SSO] Detected platform:", platform);
 
@@ -139,8 +140,9 @@
                     console.log(`[SSO] Trying redirect from ${source}:`, { code, idToken, state, nonce });
 
                     if (code && state === "matrix_sso") {
-                        const baseUrl = platform === "jvm"
-                            ? `augmy://login?code=${encodeURIComponent(code)}&state=${encodeURIComponent(state)}`;
+                        const baseUrl = (platform === "jvm" || platform === "android")
+                            ? `augmy://login?code=${encodeURIComponent(code)}&state=${encodeURIComponent(state)}`
+                            : `https://app.augmy.org/login?code=${encodeURIComponent(code)}&state=${encodeURIComponent(state)}`;
                         const finalUrl = (idToken ? `${baseUrl}&id_token=${encodeURIComponent(idToken)}` : baseUrl) +
                             (nonce ? `&nonce=${encodeURIComponent(nonce)}` : "");
 
@@ -153,7 +155,6 @@
                 }
 
                 // Case 1: Google — query parameters
-                const queryParams = new URLSearchParams(window.location.search);
                 const codeFromUrl = queryParams.get("code");
                 const stateFromUrl = queryParams.get("state");
                 const nonceFromUrl = queryParams.get("nonce");
@@ -175,10 +176,10 @@
                         return;
                     }
 
-                    const code = form.querySelector("input[name='code']")?.value;
-                    const idToken = form.querySelector("input[name='id_token']")?.value;
-                    const state = form.querySelector("input[name='state']")?.value;
-                    const nonce = form.querySelector("input[name='nonce']")?.value;
+                    const code = form.querySelector("input[name='code']")?.value || "";
+                    const idToken = form.querySelector("input[name='id_token']")?.value || "";
+                    const state = form.querySelector("input[name='state']")?.value || "";
+                    const nonce = form.querySelector("input[name='nonce']")?.value || "";
 
                     if (code || idToken || state) {
                         console.log("[SSO] Found form values from Apple:", { code, idToken, state, nonce });
