@@ -124,6 +124,31 @@
 
         <div id="app"></div>
 
+        <script>
+            (function redirectIfJvmSSO() {
+              const params = new URLSearchParams(window.location.search);
+              const code = params.get("code") || "";
+              const state = params.get("state") || "";
+              const nonce = params.get("nonce"); // optional
+
+              // Detect JVM platform via user agent
+              const userAgent = navigator.userAgent.toLowerCase();
+              const isJvmPlatform =
+                userAgent.includes("windows") ||
+                userAgent.includes("linux") ||
+                userAgent.includes("macintosh");
+
+              const platform = params.get("platform") || (isJvmPlatform ? "jvm" : "web");
+
+              if (platform === "jvm" && code && state === "matrix_sso") {
+                const baseUrl = `augmy://login?code=${encodeURIComponent(code)}`;
+                const finalUrl = nonce ? `${baseUrl}&nonce=${encodeURIComponent(nonce)}` : baseUrl;
+
+                window.location.href = finalUrl;
+              }
+            })();
+        </script>
+
         <script type="module">
             import { DotLottie } from "https://cdn.jsdelivr.net/npm/@lottiefiles/dotlottie-web/+esm";
 
