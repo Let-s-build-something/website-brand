@@ -126,26 +126,48 @@
 
         <script>
             (function redirectIfJvmSSO() {
-              const params = new URLSearchParams(window.location.search);
-              const code = params.get("code") || "";
-              const state = params.get("state") || "";
-              const nonce = params.get("nonce"); // optional
-
-              // Detect JVM platform via user agent
               const userAgent = navigator.userAgent.toLowerCase();
               const isJvmPlatform =
                 userAgent.includes("windows") ||
                 userAgent.includes("linux") ||
                 userAgent.includes("macintosh");
 
-              const platform = params.get("platform") || (isJvmPlatform ? "jvm" : "web");
+              const queryParams = new URLSearchParams(window.location.search);
+              const urlCode = queryParams.get("code");
+              const urlState = queryParams.get("state");
+              const urlNonce = queryParams.get("nonce");
+              const platformParam = queryParams.get("platform");
 
-              if (platform === "jvm" && code && state === "matrix_sso") {
-                const baseUrl = `augmy://login?code=${encodeURIComponent(code)}`;
-                const finalUrl = nonce ? `${baseUrl}&nonce=${encodeURIComponent(nonce)}` : baseUrl;
+              const platform = platformParam || (isJvmPlatform ? "jvm" : "web");
 
-                window.location.href = finalUrl;
+              function redirect(code, state, nonce) {
+                if (platform === "jvm" && code && state === "matrix_sso") {
+                  const baseUrl = `augmy://login?code=${encodeURIComponent(code)}&state=${encodeURIComponent(state)}`;
+                  const finalUrl = nonce ? `${baseUrl}&nonce=${encodeURIComponent(nonce)}` : baseUrl;
+                  window.location.href = finalUrl;
+                }
               }
+
+              // Case 1: Google — params are in URL
+              if (urlCode && urlState) {
+                redirect(urlCode, urlState, urlNonce);
+                return;
+              }
+
+              // Case 2: Apple — code is POSTed in a form
+              window.addEventListener("DOMContentLoaded", () => {
+                const form = document.querySelector("form");
+                if (!form) return;
+
+                const formData = new FormData(form);
+                const code = formData.get("code");
+                const state = formData.get("state");
+                const nonce = formData.get("nonce");
+
+                if (code && state) {
+                  redirect(code, state, nonce);
+                }
+              });
             })();
         </script>
 
