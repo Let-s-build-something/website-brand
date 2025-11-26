@@ -76,8 +76,6 @@ import website_brand.composeapp.generated.resources.contacts_kofi
 import website_brand.composeapp.generated.resources.kofi_link_text
 import website_brand.composeapp.generated.resources.logo
 import website_brand.composeapp.generated.resources.toolbar_action_about
-import website_brand.composeapp.generated.resources.toolbar_action_about_business
-import website_brand.composeapp.generated.resources.toolbar_action_about_research
 import website_brand.composeapp.generated.resources.toolbar_action_contacts
 
 /**
@@ -144,7 +142,7 @@ fun HorizontalToolbar(
                             verticalAlignment = Alignment.CenterVertically
                         ) {
                             Row(
-                                horizontalArrangement = Arrangement.spacedBy(6.dp),
+                                horizontalArrangement = Arrangement.spacedBy(10.dp),
                                 verticalAlignment = Alignment.CenterVertically
                             ) {
                                 ToolbarActions()
@@ -247,8 +245,8 @@ private fun ThemeSwitch(
 
 @Composable
 private fun ToolbarActions(onCollapse: () -> Unit = {}) {
-    KofiAction()
-    ToolbarAction(
+    //KofiAction()
+    /*ToolbarAction(
         onCollapse = onCollapse,
         text = stringResource(Res.string.toolbar_action_about_business),
         route = NavigationNode.BusinessAbout.route
@@ -257,7 +255,7 @@ private fun ToolbarActions(onCollapse: () -> Unit = {}) {
         onCollapse = onCollapse,
         text = stringResource(Res.string.toolbar_action_about_research),
         route = NavigationNode.ResearchAbout.route
-    )
+    )*/
     ToolbarAction(
         onCollapse = onCollapse,
         text = stringResource(Res.string.toolbar_action_about),
@@ -328,6 +326,7 @@ private fun ToolbarAction(
             Text(
                 modifier = m,
                 text = text,
+                maxLines = 1,
                 style = LocalTheme.current.styles.title.copy(
                     color = LocalTheme.current.colors.secondary
                 )

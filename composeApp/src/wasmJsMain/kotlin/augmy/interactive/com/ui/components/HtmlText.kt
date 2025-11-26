@@ -142,7 +142,7 @@ fun buildAnnotatedLink(
 ) = buildAnnotatedString {
     append(text.substring(
         startIndex = 0,
-        endIndex = linkTexts.firstOrNull()?.let { text.indexOf(it) } ?: text.length
+        endIndex = linkTexts.firstOrNull()?.let { text.indexOf(it) }?.takeIf { it != -1 } ?: text.length
     ))
     linkTexts.forEachIndexed { index, linkTextWithin ->
         withLink(

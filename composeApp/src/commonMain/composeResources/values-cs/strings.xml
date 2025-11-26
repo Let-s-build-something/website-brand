@@ -1,8 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
+  <string name="landing_demo_others_message">Ty: co že máš ultra chill kytičku?:D</string>
+
+  <string name="landing_heading">Kompas tvojí nálady a tvých oblíbených lidí</string>
+  <string name="landing_heading_description">Appka pro ty, kterým záleží na tom, jak se ostatní cítí.\nV reálném čase, bez otravných dotazníků a check-inů.</string>
+
+
   <string name="app_name">Augmy</string>
-
   <string name="website_footer">© %1$d Augmy Interactive</string>
-
   <string name="landing_header_heading">The New Era of Communication</string>
   <string name="landing_header_content">Talk online like you do in real life. Digital communication, reflective of the physical you, with agency in your hands.</string>
 
@@ -30,35 +35,32 @@
   <string name="category_public">Public</string>
 
   <string name="landing_heading_preprint">Tired of deciphering?</string>
-  <string name="landing_heading">Compass of how you and your favorite people feel</string>
-  <string name="landing_heading_description">App for those, who care how others feel.\nIn real-time, with no annoying questionnaires or check-ins.</string>
-  <string name="landing_sign_up">Upcoming beta release</string>
-  <string name="landing_sign_up_send">Count me in!</string>
-  <string name="landing_sign_up_disabled">Sign up closed.</string>
-  <string name="landing_sign_up_hint">Your email (the real one, pls)</string>
-  <string name="landing_sign_up_info">Closed release launch in %1$s</string>
-  <string name="landing_sign_up_info_slots">Free slots left: %1$d</string>
-  <string name="landing_problem_heading">Be there for others</string>
-  <string name="landing_garden_description">Shared as avatar. Automatic. No exposure.</string>
-  <string name="landing_problem_quote_0">When you feel bad, there's no energy or time to explain.</string>
-  <string name="landing_problem_quote_1">She always responds with „I'm okay“ or „I'm fine“. I don't know what's behind that.</string>
-  <string name="landing_problem_quote_2">I don't want to burden them. So I keep it for myself.</string>
+  <string name="landing_sign_up">První zkušební verze</string>
+  <string name="landing_sign_up_send">Počítej se mnou!</string>
+  <string name="landing_sign_up_disabled">První verze uzavřena.</string>
+  <string name="landing_sign_up_hint">Tvůj e-mail (ten opravdový, pls)</string>
+  <string name="landing_sign_up_info">Vydání první testovací verze za %1$s</string>
+  <string name="landing_sign_up_info_slots">Zbývající volné místa: %1$d</string>
+  <string name="landing_problem_heading">Buď tam pro ostatní</string>
+  <string name="landing_garden_description">Sdíleno přes avatar. Automaticky. Bez odhalení.</string>
+  <string name="landing_problem_quote_0">Když se cítím špatně, nemám čas ani energii to vysvětlovat.</string>
+  <string name="landing_problem_quote_1">Vždycky odpoví „Jsem OK“ nebo „Jsem v pohodě“. Ale nikdy nevím, co je za tím.</string>
+  <string name="landing_problem_quote_2">Nechci je zatěžovat. Tak to radši nebudu psát.</string>
   <string name="landing_heading_message_0">How are you?</string>
   <string name="landing_heading_message_1">I'm good</string>
   <string name="landing_social_circle_heading">People Are Not Ones and Zeros</string>
   <string name="landing_social_circle_text">Friend list? Followers? Do those really reflect your relationships? "Friend" or "not friend"? Forget about shallow, meaningless labels. Welcome to a social space built with depth in mind.</string>
 
-  <string name="landing_demo_you_heading">What you see</string>
-  <string name="landing_demo_others_heading">What others see</string>
-  <string name="landing_demo_others_message">You: how come your flower is so chill?:D</string>
-  <string name="landing_demo_others_action_closeness">Closeness</string>
-  <string name="landing_demo_others_action_interact">Chat</string>
-  <string name="landing_demo_disclaimer">*Prototype visuals, subject to change.</string>
-  <string name="landing_crisis_heading">This time, let's connect meaningfully</string>
-  <string name="landing_crisis_description">It starts with you, family and friends, and then professionals. Augmy is the bridge connecting you.</string>
+  <string name="landing_demo_you_heading">Co vidíš ty</string>
+  <string name="landing_demo_others_heading">Co vidí ostatní</string>
+  <string name="landing_demo_others_action_closeness">Blízkost</string>
+  <string name="landing_demo_others_action_interact">Konverzace</string>
+  <string name="landing_demo_disclaimer">*Vizuály prototypu, může se ještě změnit.</string>
+  <string name="landing_crisis_heading">Tentokrát se spojme doopravdy.</string>
+  <string name="landing_crisis_description">Začíná to u tebe, pokračuje v rodině a s přáteli, až k profesionálům. Augmy je to, co spojuje.</string>
 
   <string name="wellbeing_garden_info_mechanics">This is your garden — it grows with you. When you’re low, it feels it too. As your mood steadies and brightens, the garden blooms right along with you.</string>
-  <string name="wellbeing_garden_sharing_count">You’re opening up to %1$d people.</string>
+  <string name="wellbeing_garden_sharing_count">Otevíráš se %1$d lidem.</string>
 
   <string name="landing_block_0_heading">Rediscover the Colors of Communication</string>
   <string name="landing_block_0_content">You miss their voice, but hear only text.\nYou feel so much, but can’t say the rest.\nA message sent—but something’s lost.\nThe warmth, the tone, the human cost.\n\nTo say "I’m here" without a word,\nTo show you’ve felt, to feel you're heard—\nThat’s what we made Augmy for.</string>
@@ -69,8 +71,8 @@
   <string name="landing_block_2_heading">It Wasn't Made for You</string>
   <string name="landing_block_2_content">Sometimes, expressing yourself can be challenging, and there are moments when you may simply lack the energy to explain. The messaging tools you use weren’t designed for moments like these, but Augmy Messenger is.</string>
 
-  <string name="landing_block_3_heading">Communication Matters</string>
-  <string name="landing_block_3_content">Being there for others saves lives, knowing others are okay saves sleepless nights. The people around you matter. Give it a try.</string>
+  <string name="landing_block_3_heading">Na komunikaci záleží</string>
+  <string name="landing_block_3_content">Být tam pro ostatní zachraňuje životy, jistota, že jsou ostatní v pořádku zachraňuje tvůj spánek.\nNa lidech kolem tebe záleží. Dej tomu šanci.</string>
 
   <string name="landing_block_demo_heading">Peek into the future of social spaces</string>
 
@@ -84,22 +86,22 @@
 
   <string name="toolbar_action_about_business">Business</string>
   <string name="toolbar_action_about_research">Research</string>
-  <string name="toolbar_action_about">About&#160;us</string>
-  <string name="toolbar_action_contacts">Contacts</string>
+  <string name="toolbar_action_about">O&#160;nás</string>
+  <string name="toolbar_action_contacts">Kontakty</string>
 
-  <string name="emotion_prompt">Click on an emotion to see how it maps</string>
-  <string name="emotion_anger">Annoyance</string>
-  <string name="emotion_fear">Panic</string>
-  <string name="emotion_joy">Fulfillment</string>
-  <string name="emotion_love">Love</string>
-  <string name="emotion_cheerfulness">Cheerfulness</string>
-  <string name="emotion_sadness">Grief</string>
+  <string name="emotion_prompt">Klikni na emoci, kterou chceš vidět</string>
+  <string name="emotion_anger">Mrzutost</string>
+  <string name="emotion_fear">Panika</string>
+  <string name="emotion_joy">Naplněnost</string>
+  <string name="emotion_love">Láska</string>
+  <string name="emotion_cheerfulness">Jásot</string>
+  <string name="emotion_sadness">Žal</string>
 
-  <string name="contacts_workplace">Workplace</string>
-  <string name="contacts_workplace_value">Prague, Czechia</string>
+  <string name="contacts_workplace">Sídlo</string>
+  <string name="contacts_workplace_value">Praha, Česko</string>
   <string name="contacts_email">Email</string>
   <string name="kofi_link_text">Support us</string>
-  <string name="contacts_email_value">brand@augmy.org</string>
+  <string name="contacts_email_value">info@augmy.org</string>
   <string name="contacts_twitter">https://www.twitter.com/AugmyInteractiv</string>
   <string name="contacts_instagram">https://www.instagram.com/augmy_interactive</string>
   <string name="contacts_linkedin">https://www.linkedin.com/company/augmy-interactive</string>
@@ -112,17 +114,18 @@
   <string name="contacts_linkedin_tag">@augmy-interactive</string>
   <string name="contacts_bluesky_tag">@augmyinteractive.bsky.social</string>
 
-  <string name="about_content_0">We understand the limitations of technology and will never claim it can replace a real human connection. Yet we also believe technology is the tool that can make a positive change. Augmy is a promise of technology (the one already embedded in everyone's daily life) to embrace the humanness in our interactions and connections online.</string>
-  <string name="about_content_1">We are humans too, and much of our motivation and inspiration comes from real struggles we, or the people around us, have experienced. That’s why we also want to hear what makes it hard for <b>you</b> to connect with others, and how we can improve it. We are here to tackle real problems, not just to build „cool“ stuff (while we also do that, of course:-D).</string>
-  <string name="about_future_content">There's so much that we want to create together with you. But one step at a time. First, let's make sure we all share our feelings and truly listen to people around us.</string>
+  <string name="about_content_0">Rozumíme jaké má technologie limity a nikdy nebudeme tvrdit, že může nahradit pravý lidský kontakt. Věříme však, že technologie je správný nástroj pro pozitivní změnu. Augmy je příslibem technologie (té samé, která je už součástí našich životů), že posílí lidskost v našich interakcích a spojení online.</string>
+  <string name="about_content_1">Jsme jen lidi, a tak velká část naší motivace a inspirace vychází z našich zkušeností, které jsme my nebo lidé okolo nás prožili. Proto chceme vědět, co <b>vám</b> ztěžuje hlubší spojení s druhými a jak to můžeme změnit. Jsme tu, abychom se pustili do skutečných problémů, nejen abychom programovali „cool“ věci (i když to samozřejmě děláme taky:-D)</string>
+  <string name="about_future_content">Věcí, kterých společně s vámi chceme v budoucnu dosáhnout je mnoho. Musíme však jít krok za krokem. Začněme tím, že spolu začneme sdílet emoce a naslouchat lidem kolem nás.</string>
   <string name="about_title_jacob">Founder, CEO</string>
-  <string name="about_quote_jacob">Can't promise it'll work the first time, but I don't give up easily.</string>
+  <string name="about_quote_jacob">Nemůžu slíbit, že to bude hned fungovat, ale jen tak se nevzdám.</string>
   <string name="about_title_honza">Co-founder, COO</string>
-  <string name="about_quote_honza">I make sure Augmy has a clear direction, meaningful processes, and a happy team.</string>
+  <string name="about_quote_honza">Hlídám, aby Augmy mělo jasný směr, smysluplné procesy a spokojený tým.</string>
   <string name="about_title_rafail">Co-founder, CTO</string>
-  <string name="about_quote_rafail">Everything works in the end. If it doesn't, it’s part of the show.</string>
+  <string name="about_quote_rafail">Ve finále vše funguje. A když ne, je to součást představení.</string>
   <string name="about_title_marek">Co-founder, CFO</string>
-  <string name="about_quote_marek">I ensure we don't run out of fuel in the middle of a drive. We need to eat eventually, duh.</string>
+  <string name="about_quote_marek">Stárám se o to, aby nám nedošlo palivo v půlce jízdy. Eventuálně se potřebujeme najíst, že jo.</string>
+
 
   <string name="about_business_heading">The Future of Communication, Together.</string>
   <string name="about_business_summary">We help your business be step ahead in the new era of online communication. Our solutions go beyond offering tools to users and customers—we create and facilitate social environments where users enjoy being and can build their social networks with great accuracy.</string>
@@ -262,5 +265,5 @@
   <string name="accessibility_menu">Open side menu</string>
   <string name="accessibility_play_video">Play video</string>
   <string name="accessibility_button_expand">Expand</string>
-  <string name="accessibility_signatures">Signatures of all the team members</string>
+  <string name="accessibility_signatures">Podpisy všech členů týmu</string>
 </resources>

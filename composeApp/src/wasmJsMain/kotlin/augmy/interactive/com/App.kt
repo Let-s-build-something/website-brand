@@ -1,5 +1,8 @@
 package augmy.interactive.com
 
+import androidx.compose.foundation.hoverable
+import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.interaction.collectIsHoveredAsState
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Scaffold
@@ -10,12 +13,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import augmy.interactive.com.base.BaseScreen
 import augmy.interactive.com.base.BaseSnackbarHost
 import augmy.interactive.com.base.LocalDeviceType
+import augmy.interactive.com.base.LocalIsMouseUser
 import augmy.interactive.com.base.LocalNavController
 import augmy.interactive.com.base.LocalSnackbarHost
 import augmy.interactive.com.base.theme.AugmyTheme
@@ -36,6 +42,20 @@ fun App(
     val windowSizeClass = calculateWindowSizeClass()
     val snackbarHostState = remember { SnackbarHostState() }
 
+    val mouseUser = rememberSaveable {
+        mutableStateOf(false)
+    }
+    val hoverInteractionSource = if (!mouseUser.value) {
+        remember { MutableInteractionSource() }
+    }else null
+    val isHovered = hoverInteractionSource?.collectIsHoveredAsState()
+
+    LaunchedEffect(isHovered?.value) {
+        if (isHovered?.value == true) {
+            mouseUser.value = true
+        }
+    }
+
     LaunchedEffect(Unit) {
         viewModel.initApp()
     }
@@ -48,6 +68,15 @@ fun App(
         }
     ) {
         Scaffold(
+            modifier = Modifier
+                .then(
+                    if (hoverInteractionSource != null) {
+                        Modifier.hoverable(
+                            enabled = !mouseUser.value,
+                            interactionSource = hoverInteractionSource
+                        )
+                    }else Modifier
+                ),
             snackbarHost = {
                 BaseSnackbarHost(hostState = snackbarHostState)
             },
@@ -57,7 +86,8 @@ fun App(
             CompositionLocalProvider(
                 LocalNavController provides navController,
                 LocalSnackbarHost provides snackbarHostState,
-                LocalDeviceType provides windowSizeClass.widthSizeClass
+                LocalDeviceType provides windowSizeClass.widthSizeClass,
+                LocalIsMouseUser provides mouseUser.value
             ) {
                 BaseScreen(
                     modifier = Modifier.fillMaxSize(),
@@ -65,7 +95,8 @@ fun App(
                 ) {
                     NavigationHost(
                         navController = navController,
-                        startDestination = startDestination
+                        startDestination = startDestination,
+                        model = viewModel
                     )
                 }
             }

@@ -16,7 +16,7 @@ import org.koin.core.context.startKoin
 private var isAppInitialized = false
 
 
-@OptIn(ExperimentalComposeUiApi::class)
+@OptIn(ExperimentalComposeUiApi::class, ExperimentalWasmJsInterop::class)
 fun main() {
     if(isAppInitialized.not()) {
         document.getElementById("loader-container")?.remove()

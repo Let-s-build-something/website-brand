@@ -51,7 +51,6 @@ import augmy.interactive.com.ui.components.AsyncSvgImage
 import augmy.interactive.com.ui.components.HorizontalToolbar
 import augmy.interactive.com.ui.components.ScrollBarProgressIndicator
 import kotlinx.browser.window
-import kotlinx.datetime.Clock
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
 import org.jetbrains.compose.resources.StringResource
@@ -68,6 +67,8 @@ import website_brand.composeapp.generated.resources.contacts_linkedin_tag
 import website_brand.composeapp.generated.resources.contacts_twitter
 import website_brand.composeapp.generated.resources.contacts_twitter_tag
 import website_brand.composeapp.generated.resources.website_footer
+import kotlin.time.Clock
+import kotlin.time.ExperimentalTime
 
 /**
  * Most basic all-in-one implementation of a screen with action bar, without bottom bar
@@ -186,6 +187,7 @@ fun ModalScreenContent(
     }
 }
 
+@OptIn(ExperimentalTime::class)
 @Composable
 fun FooterScreenContent(modifier: Modifier = Modifier) {
     val isCompact = LocalDeviceType.current == WindowWidthSizeClass.Compact
@@ -301,6 +303,8 @@ val LocalOnBackPress = staticCompositionLocalOf<(() -> Unit)?> { null }
 
 /** size in DP of the available content for screens */
 val LocalContentSizeDp = staticCompositionLocalOf { Size(0f, 0f) }
+
+val LocalIsMouseUser = staticCompositionLocalOf { false }
 
 /** Indication of whether the scope below is within a screen */
 val LocalHeyIamScreen = staticCompositionLocalOf { false }

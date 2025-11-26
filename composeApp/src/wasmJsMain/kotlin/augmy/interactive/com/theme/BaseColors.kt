@@ -6,9 +6,12 @@ interface BaseColors {
 
     /** Brand color */
     val brandMain: Color
+    val disabledComponent: Color
 
     /** Darker version of brand color */
     val brandMainDark: Color
+    val gardenHead: Color
+    val backgroundContrast: Color
 
     /** contrasting color to the brand color */
     val tetrial: Color
