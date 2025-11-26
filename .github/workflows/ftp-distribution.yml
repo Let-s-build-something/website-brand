@@ -24,6 +24,9 @@ jobs:
       # Step 3: Prepare access to everything
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
+      - name: Decode local.properties
+        run: |
+          echo "${{ secrets.LOCAL_PROPERTIES }}" | base64 --decode > ${{ github.workspace }}/local.properties
 
       # Step 4: Run WasmJsBrowserDistribution script to generate web assembly files
       - name: Run WasmJsBrowserDistribution
