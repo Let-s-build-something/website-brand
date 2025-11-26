@@ -1,24 +1,24 @@
 
-import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
+import com.codingfeline.buildkonfig.compiler.FieldSpec.Type.STRING
 import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
 import org.jetbrains.kotlin.gradle.targets.js.webpack.KotlinWebpackConfig
 import org.jetbrains.kotlin.gradle.targets.js.yarn.YarnLockMismatchReport
 import org.jetbrains.kotlin.gradle.targets.js.yarn.YarnRootExtension
+import java.io.FileInputStream
+import java.util.Properties
 
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.jetbrainsCompose)
     alias(libs.plugins.compose.compiler)
+
+    kotlin("plugin.serialization") version libs.versions.kotlin
+    id("com.codingfeline.buildkonfig") version libs.versions.buildkonfig
 }
 
 kotlin {
     @OptIn(ExperimentalWasmDsl::class)
     wasmJs {
-        compilerOptions {
-            freeCompilerArgs.addAll("-opt-in=kotlin.RequiresOptIn", "-Xjsr305=strict")
-        }
-
-        moduleName = "composeApp"
         browser {
             val projectDirPath = project.projectDir.path
             commonWebpackConfig {
@@ -44,6 +44,8 @@ kotlin {
 
             implementation(compose.components.resources)
             implementation(compose.materialIconsExtended)
+            implementation(libs.compottie.lite)
+            implementation(libs.compottie.dot)
             implementation(libs.compottie.network)
             implementation(libs.navigation.compose)
             implementation(libs.material3.window.size)
@@ -53,8 +55,28 @@ kotlin {
             implementation(libs.coil.compose)
             implementation(libs.coil.svg)
             implementation(libs.coil.network.ktor)
+
+            implementation(libs.ktor.client.core)
+            implementation(libs.ktor.client.content.negotiation)
+            implementation(libs.ktor.serialization.kotlinx.json)
         }
     }
+}
+
+buildkonfig {
+    packageName = "augmy.interactive.com"
+
+    val keystoreProperties = Properties()
+    keystoreProperties.load(FileInputStream(rootProject.file("local.properties")))
+
+    defaultConfigs {
+        buildConfigField(STRING, "BearerToken", keystoreProperties["bearerToken"] as String)
+    }
+}
+
+kotlin.sourceSets.all {
+    languageSettings.optIn("kotlin.experimental.ExperimentalObjCName")
+    languageSettings.optIn("kotlin.time.ExperimentalTime")
 }
 
 rootProject.plugins.withType(org.jetbrains.kotlin.gradle.targets.js.yarn.YarnPlugin::class.java) {

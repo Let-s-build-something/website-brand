@@ -10,11 +10,14 @@ object DarkAppColors: BaseColors {
     override val disabled: Color = secondary.copy(alpha = .6f)
 
     override val brandMain: Color = Colors.Asparagus
+    override val disabledComponent: Color = Colors.White7
 
     override val brandMainDark: Color = Colors.HunterGreen
+    override val backgroundContrast: Color = Colors.EerieBlackLight
+    override val tetrial: Color = Colors.DutchWhite
 
-    override val tetrial: Color = Colors.Flax
     override val quartial: Color = Colors.AtomicTangerine
+    override val gardenHead: Color = tetrial
 
     override val backgroundLight: Color = Colors.Night
 

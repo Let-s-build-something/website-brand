@@ -1,405 +1,463 @@
 package augmy.interactive.com.ui.about
 
 import androidx.compose.animation.Crossfade
+import androidx.compose.animation.animateContentSize
+import androidx.compose.animation.core.animateDpAsState
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.gestures.Orientation
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.selection.SelectionContainer
-import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.AlternateEmail
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.text.LinkAnnotation
-import androidx.compose.ui.text.buildAnnotatedString
-import androidx.compose.ui.text.withLink
+import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.layout.onSizeChanged
+import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import augmy.interactive.com.base.LocalContentSizeDp
 import augmy.interactive.com.base.LocalDeviceType
-import augmy.interactive.com.base.LocalNavController
 import augmy.interactive.com.base.ModalScreenContent
+import augmy.interactive.com.base.theme.draggable
+import augmy.interactive.com.base.theme.scalingClickable
 import augmy.interactive.com.data.Asset
-import augmy.interactive.com.navigation.NavigationNode
+import augmy.interactive.com.data.MediaIO
+import augmy.interactive.com.data.NetworkItemIO
 import augmy.interactive.com.theme.LocalTheme
-import augmy.interactive.com.ui.components.AsyncImageThumbnail
-import augmy.interactive.com.ui.components.BulletText
-import augmy.interactive.com.ui.components.IndicatedAction
-import augmy.interactive.com.ui.components.SocialMediaBottomSheet
+import augmy.interactive.com.ui.components.AsyncSvgImage
+import augmy.interactive.com.ui.components.AvatarImage
+import augmy.interactive.com.ui.components.buildAnnotatedLink
 import augmy.interactive.com.ui.components.buildAnnotatedLinkString
-import coil3.compose.AsyncImage
+import augmy.interactive.com.ui.landing.components.isNanOrInfinite
+import kotlinx.browser.window
+import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import website_brand.composeapp.generated.resources.Res
-import website_brand.composeapp.generated.resources.about_content
-import website_brand.composeapp.generated.resources.about_content_demo
-import website_brand.composeapp.generated.resources.about_content_introduction_0
-import website_brand.composeapp.generated.resources.about_content_introduction_1
-import website_brand.composeapp.generated.resources.about_content_introduction_2
-import website_brand.composeapp.generated.resources.about_content_introduction_3
-import website_brand.composeapp.generated.resources.about_content_join_us_0
-import website_brand.composeapp.generated.resources.about_content_join_us_1
-import website_brand.composeapp.generated.resources.about_content_join_us_2
-import website_brand.composeapp.generated.resources.about_content_join_us_3
-import website_brand.composeapp.generated.resources.about_content_join_us_4
-import website_brand.composeapp.generated.resources.about_content_join_us_share
-import website_brand.composeapp.generated.resources.about_content_problem
-import website_brand.composeapp.generated.resources.about_content_roadmap
-import website_brand.composeapp.generated.resources.about_content_roadmap_here
-import website_brand.composeapp.generated.resources.about_content_solution_0
-import website_brand.composeapp.generated.resources.about_content_solution_1
-import website_brand.composeapp.generated.resources.about_content_summary
-import website_brand.composeapp.generated.resources.about_header_demo
-import website_brand.composeapp.generated.resources.about_header_introduction
-import website_brand.composeapp.generated.resources.about_header_join_us
-import website_brand.composeapp.generated.resources.about_header_problem
-import website_brand.composeapp.generated.resources.about_header_roadmap
-import website_brand.composeapp.generated.resources.about_header_solution
-import website_brand.composeapp.generated.resources.about_header_summary
-import website_brand.composeapp.generated.resources.accessibility_about_poster
-import website_brand.composeapp.generated.resources.landing_download_not_distributed
+import website_brand.composeapp.generated.resources.about_content_0
+import website_brand.composeapp.generated.resources.about_content_1
+import website_brand.composeapp.generated.resources.about_future_content
+import website_brand.composeapp.generated.resources.about_quote_honza
+import website_brand.composeapp.generated.resources.about_quote_jacob
+import website_brand.composeapp.generated.resources.about_quote_marek
+import website_brand.composeapp.generated.resources.about_quote_rafail
+import website_brand.composeapp.generated.resources.about_title_honza
+import website_brand.composeapp.generated.resources.about_title_jacob
+import website_brand.composeapp.generated.resources.about_title_marek
+import website_brand.composeapp.generated.resources.about_title_rafail
+import website_brand.composeapp.generated.resources.accessibility_signatures
+import website_brand.composeapp.generated.resources.logo_monochrome
+import website_brand.composeapp.generated.resources.signatures
 import website_brand.composeapp.generated.resources.toolbar_action_about
 
 /** Screen with general information about the project for wide public */
 @Composable
 fun AboutScreen() {
-    val verticalPadding = (LocalContentSizeDp.current.height / 8).dp
-    val horizontalPadding = (LocalContentSizeDp.current.width / 20).dp
+    val verticalPadding = (LocalContentSizeDp.current.height / 8)
+        .takeIf { !it.isNanOrInfinite() }
+        ?.dp
+        ?: 32.dp
 
     ModalScreenContent(scrollState = rememberScrollState()) {
         Crossfade(LocalDeviceType.current == WindowWidthSizeClass.Compact) { isCompact ->
             if(isCompact) {
-                compactLayout(verticalPadding = verticalPadding)
+                compactLayout(verticalPadding)
             }else {
-                largeLayout(
-                    verticalPadding = verticalPadding,
-                    horizontalPadding = horizontalPadding
-                )
+                largeLayout(verticalPadding)
             }
         }
     }
 }
 
 @Composable
-private fun compactLayout(
-    verticalPadding: Dp
-) {
+private fun compactLayout(verticalPadding: Dp) {
+    val density = LocalDensity.current
+    val contentWidthDp = remember { mutableFloatStateOf(0f) }
+
     Column(
-        modifier = Modifier.padding(top = 24.dp, start = 12.dp, end = 12.dp),
-        verticalArrangement = Arrangement.spacedBy(verticalPadding)
+        modifier = Modifier
+            .onSizeChanged {
+                with(density) {
+                    contentWidthDp.value = it.width.toDp().value
+                }
+            }
+            .padding(start = 12.dp, end = 12.dp)
     ) {
-        SelectionContainer {
-            Column(
-                Modifier.fillMaxWidth(),
-                verticalArrangement = Arrangement.spacedBy(12.dp)
-            ) {
-                Text(
-                    text = stringResource(Res.string.toolbar_action_about),
-                    style = LocalTheme.current.styles.heading
-                )
-                Box(
-                    Modifier
-                        .background(
-                            LocalTheme.current.colors.brandMain,
-                            LocalTheme.current.shapes.roundShape
-                        )
-                        .padding(verticalPadding / 7)
-                ) {
-                    AsyncImageThumbnail(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .clip(LocalTheme.current.shapes.componentShape),
-                        asset = Asset.Image.DesignConstruction
-                    )
-                }
-                Text(
-                    modifier = Modifier.padding(top = 32.dp, start = 12.dp),
-                    text = stringResource(Res.string.about_content),
-                    style = LocalTheme.current.styles.regular
-                )
-            }
-        }
-        SelectionContainer {
-            Column(Modifier.fillMaxWidth()) {
-                Text(
-                    text = stringResource(Res.string.about_header_summary),
-                    style = LocalTheme.current.styles.heading
-                )
-                Text(
-                    modifier = Modifier.padding(top = 32.dp, start = 12.dp),
-                    text = stringResource(Res.string.about_content_summary),
-                    style = LocalTheme.current.styles.regular
-                )
-            }
-        }
-        verticalContent()
-    }
-}
-
-@Composable
-private fun largeLayout(
-    horizontalPadding: Dp,
-    verticalPadding: Dp
-) {
-    Column(
-        modifier = Modifier.padding(top = 24.dp, start = 12.dp, end = 12.dp),
-        verticalArrangement = Arrangement.spacedBy(verticalPadding)
-    ) {
-        SelectionContainer {
-            Row(
-                modifier = Modifier.padding(top = 24.dp),
-                horizontalArrangement = Arrangement.spacedBy(horizontalPadding)
-            ) {
-                Column(Modifier.weight(1f)) {
-                    Text(
-                        text = stringResource(Res.string.toolbar_action_about),
-                        style = LocalTheme.current.styles.heading
-                    )
-                    Text(
-                        modifier = Modifier.padding(top = 32.dp, start = 12.dp),
-                        text = stringResource(Res.string.about_content),
-                        style = LocalTheme.current.styles.regular
-                    )
-
-                    Text(
-                        modifier = Modifier.padding(top = 32.dp),
-                        text = stringResource(Res.string.about_header_summary),
-                        style = LocalTheme.current.styles.heading
-                    )
-                    Text(
-                        modifier = Modifier.padding(top = 32.dp, start = 12.dp),
-                        text = stringResource(Res.string.about_content_summary),
-                        style = LocalTheme.current.styles.regular
-                    )
-                }
-                Box(
-                    Modifier
-                        .weight(1f)
-                        .padding(top = 32.dp)
-                        .background(
-                            LocalTheme.current.colors.brandMain,
-                            LocalTheme.current.shapes.roundShape
-                        )
-                        .padding(verticalPadding / 7)
-                ) {
-                    AsyncImageThumbnail(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .clip(LocalTheme.current.shapes.componentShape),
-                        asset = Asset.Image.DesignConstruction
-                    )
-                }
-            }
-        }
-
-        verticalContent(fraction = .75f)
-    }
-}
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-private fun verticalContent(fraction: Float = 1f) {
-    val navController = LocalNavController.current
-    val showSocialModal = rememberSaveable {
-        mutableStateOf(false)
-    }
-
-    if(showSocialModal.value) {
-        SocialMediaBottomSheet(
-            text = stringResource(Res.string.landing_download_not_distributed),
-            onDismissRequest = {
-                showSocialModal.value = false
-            }
+        TextBlock(
+            modifier = Modifier.fillMaxWidth(),
+            verticalPadding = verticalPadding
         )
-    }
 
-    SelectionContainer {
-        Column(Modifier.fillMaxWidth(fraction)) {
-            Text(
-                text = stringResource(Res.string.about_header_introduction),
-                style = LocalTheme.current.styles.heading
-            )
-            Spacer(Modifier.height(32.dp))
-            listOf(
-                Res.string.about_content_introduction_0,
-                Res.string.about_content_introduction_1,
-                Res.string.about_content_introduction_2,
-                Res.string.about_content_introduction_3,
-            ).forEach {
-                BulletText(
-                    modifier = Modifier.padding(top = 8.dp, start = 12.dp),
-                    text = stringResource(it),
-                    style = LocalTheme.current.styles.regular
-                )
-            }
-        }
-    }
+        Spacer(Modifier.height(verticalPadding))
 
-    SelectionContainer {
-        Column(Modifier.fillMaxWidth(fraction)) {
-            Text(
-                text = stringResource(Res.string.about_header_problem),
-                style = LocalTheme.current.styles.heading
+        Column(
+            modifier = Modifier.background(
+                color = LocalTheme.current.colors.backgroundDark,
+                shape = LocalTheme.current.shapes.componentShape
             )
-            Text(
-                modifier = Modifier.padding(top = 32.dp, start = 12.dp),
-                text = stringResource(Res.string.about_content_problem),
-                style = LocalTheme.current.styles.regular
-            )
-        }
-    }
-
-    SelectionContainer {
-        Column(Modifier.fillMaxWidth(fraction)) {
-            Text(
-                text = stringResource(Res.string.about_header_solution),
-                style = LocalTheme.current.styles.heading
-            )
-
-            Text(
-                modifier = Modifier.padding(top = 32.dp, start = 12.dp),
-                text = stringResource(Res.string.about_content_solution_0),
-                style = LocalTheme.current.styles.regular
-            )
-            Text(
-                modifier = Modifier.padding(start = 12.dp),
-                text = stringResource(Res.string.about_content_solution_1),
-                style = LocalTheme.current.styles.regular
-            )
-        }
-    }
-
-    SelectionContainer {
-        Column(Modifier.fillMaxWidth(fraction)) {
-            Text(
-                text = stringResource(Res.string.about_header_demo),
-                style = LocalTheme.current.styles.heading
-            )
-            Text(
-                modifier = Modifier.padding(top = 32.dp, start = 12.dp),
-                text = stringResource(Res.string.about_content_demo),
-                style = LocalTheme.current.styles.regular
-            )
-        }
-    }
-
-    val poster = remember {
-        listOf(
-            "https://augmy.org/storage/img/poster1.webp",
-            "https://augmy.org/storage/img/poster2.webp"
-        ).random()
-    }
-
-    Row(
-        modifier = Modifier.height(IntrinsicSize.Max),
-        horizontalArrangement = Arrangement.spacedBy(8.dp)
-    ) {
-        Column(Modifier.fillMaxWidth(fraction)) {
-            SelectionContainer {
-                Text(
-                    text = stringResource(Res.string.about_header_join_us),
-                    style = LocalTheme.current.styles.heading
-                )
-            }
-            Spacer(Modifier.height(32.dp))
-            listOf(
-                Res.string.about_content_join_us_0,
-                Res.string.about_content_join_us_1,
-                Res.string.about_content_join_us_2,
-                Res.string.about_content_join_us_3,
-                Res.string.about_content_join_us_4,
-            ).forEach {
-                SelectionContainer {
-                    BulletText(
-                        modifier = Modifier.padding(top = 8.dp, start = 12.dp),
-                        text = buildAnnotatedLinkString(stringResource(it)),
-                        style = LocalTheme.current.styles.regular
-                    )
-                }
-            }
-            IndicatedAction(
-                modifier = Modifier
-                    .padding(top = 16.dp)
-                    .fillMaxWidth(fraction),
-                content = { modifier ->
-                    Text(
-                        modifier = modifier.fillMaxWidth(),
-                        text = stringResource(Res.string.about_content_join_us_share),
-                        style = LocalTheme.current.styles.subheading
-                    )
-                },
-                onPress = {
-                    showSocialModal.value = true
-                }
-            )
-        }
-        if(LocalDeviceType.current == WindowWidthSizeClass.Expanded) {
-            AsyncImage(
-                modifier = Modifier
-                    .weight(1f)
-                    .fillMaxHeight(),
-                model = poster,
-                contentDescription = stringResource(Res.string.accessibility_about_poster)
-            )
-        }
-    }
-
-    if(LocalDeviceType.current != WindowWidthSizeClass.Expanded) {
-        AsyncImage(
-            modifier = Modifier
-                .padding(top = 32.dp)
-                .heightIn(max = 600.dp)
+        ) {
+            val sharedModifier = Modifier
+                .padding(horizontal = 8.dp, vertical = 12.dp)
                 .fillMaxWidth()
-                .clip(RoundedCornerShape(8.dp))
-                .padding(8.dp),
-            model = poster,
-            contentDescription = stringResource(Res.string.accessibility_about_poster)
-        )
+
+            PersonBlock(
+                modifier = sharedModifier,
+                data = NetworkItemIO(
+                    userId = "@jacob:augmy.org",
+                    displayName = "Jakub Kostka",
+                    avatar = MediaIO(
+                        url = "https://augmy.org/storage/company/kostka_jakub_rectangle.jpg",
+                        thumbnail = "https://augmy.org/storage/company/thumbnails/tn_kostka_jakub_rectangle.jpg"
+                    )
+                ),
+                linkedIn = "https://www.linkedin.com/in/jakub-kostka-augmy",
+                email = "jakub.kostka@augmy.org",
+                title = stringResource(Res.string.about_title_jacob),
+                quote = stringResource(Res.string.about_quote_jacob)
+            )
+            PersonBlock(
+                modifier = sharedModifier,
+                data = NetworkItemIO(
+                    userId = "@marek_lan:augmy.org",
+                    displayName = "Marek Langer",
+                    avatar = MediaIO(
+                        url = "https://augmy.org/storage/company/langer_marek_rectangle.jpg",
+                        thumbnail = "https://augmy.org/storage/company/thumbnails/tn_langer_marek_rectangle.jpg"
+                    )
+                ),
+                linkedIn = "https://www.linkedin.com/in/marek-langer-6215221b4/",
+                email = "marek.langer@augmy.org",
+                title = stringResource(Res.string.about_title_marek),
+                quote = stringResource(Res.string.about_quote_marek)
+            )
+            PersonBlock(
+                modifier = sharedModifier,
+                data = NetworkItemIO(
+                    userId = "@rafail:augmy.org",
+                    displayName = "Rafail Daskos",
+                    avatar = MediaIO(
+                        url = "https://augmy.org/storage/company/daskos_rafail.jpg",
+                        thumbnail = "https://augmy.org/storage/company/thumbnails/tn_daskos_rafail.jpg"
+                    )
+                ),
+                linkedIn = "https://www.linkedin.com/in/rafail-daskos-3a3229151/",
+                email = "rafail.daskos@augmy.org",
+                title = stringResource(Res.string.about_title_rafail),
+                quote = stringResource(Res.string.about_quote_rafail),
+            )
+            PersonBlock(
+                modifier = sharedModifier,
+                data = NetworkItemIO(
+                    userId = "@honza:augmy.org",
+                    displayName = "Jan Jelínek",
+                    avatar = MediaIO(
+                        url = "https://augmy.org/storage/company/jelinek_jan.jpg",
+                        thumbnail = "https://augmy.org/storage/company/thumbnails/tn_jelinek_jan.jpg"
+                    )
+                ),
+                linkedIn = "https://www.linkedin.com/in/jan-jel%C3%ADnek-lead/",
+                email = "jan.jelinek@augmy.org",
+                title = stringResource(Res.string.about_title_honza),
+                quote = stringResource(Res.string.about_quote_honza)
+            )
+        }
+
+        Spacer(Modifier.height(verticalPadding))
     }
+}
 
+@Composable
+private fun largeLayout(verticalPadding: Dp) {
+    val density = LocalDensity.current
+    val membersScrollState = rememberScrollState()
+    val contentWidthDp = remember { mutableFloatStateOf(0f) }
+    val tileHeightDp = remember { mutableFloatStateOf(0f) }
 
+    Column(
+        modifier = Modifier
+            .onSizeChanged {
+                with(density) {
+                    contentWidthDp.value = it.width.toDp().value
+                }
+            }
+            .padding(start = 12.dp, end = 12.dp),
+        verticalArrangement = Arrangement.spacedBy(verticalPadding / 2)
+    ) {
+        TextBlock(
+            modifier = Modifier.fillMaxWidth(),
+            verticalPadding = verticalPadding
+        )
+        Row(
+            modifier = Modifier
+                .background(
+                    color = LocalTheme.current.colors.backgroundDark,
+                    shape = LocalTheme.current.shapes.componentShape
+                )
+                .padding(horizontal = 16.dp, vertical = 12.dp)
+                .align(Alignment.CenterHorizontally)
+                .horizontalScroll(membersScrollState)
+                .draggable(state = membersScrollState, orientation = Orientation.Horizontal),
+            horizontalArrangement = Arrangement.spacedBy(12.dp)
+        ) {
+            val sharedModifier = Modifier
+                .widthIn(
+                    max = contentWidthDp.value.div(4).dp - 12.dp - 8.dp,
+                    min = 250.dp
+                )
+                .animateContentSize()
+                .heightIn(min = tileHeightDp.value.dp)
+                .onSizeChanged {
+                    with(density) {
+                        if (it.height > tileHeightDp.value) {
+                            tileHeightDp.value = it.width.toDp().value
+                        }
+                    }
+                }
+
+            PersonBlock(
+                modifier = sharedModifier,
+                data = NetworkItemIO(
+                    userId = "@jacob:augmy.org",
+                    displayName = "Jakub Kostka",
+                    avatar = MediaIO(
+                        url = "https://augmy.org/storage/company/kostka_jakub_rectangle.jpg",
+                        thumbnail = "https://augmy.org/storage/company/thumbnails/tn_kostka_jakub_rectangle.jpg"
+                    )
+                ),
+                linkedIn = "https://www.linkedin.com/in/jakub-kostka-augmy",
+                email = "jakub.kostka@augmy.org",
+                title = stringResource(Res.string.about_title_jacob),
+                quote = stringResource(Res.string.about_quote_jacob)
+            )
+            PersonBlock(
+                modifier = sharedModifier,
+                data = NetworkItemIO(
+                    userId = "@marek_lan:augmy.org",
+                    displayName = "Marek Langer",
+                    avatar = MediaIO(
+                        url = "https://augmy.org/storage/company/langer_marek_rectangle.jpg",
+                        thumbnail = "https://augmy.org/storage/company/thumbnails/tn_langer_marek_rectangle.jpg"
+                    )
+                ),
+                linkedIn = "https://www.linkedin.com/in/marek-langer-6215221b4/",
+                email = "marek.langer@augmy.org",
+                title = stringResource(Res.string.about_title_marek),
+                quote = stringResource(Res.string.about_quote_marek)
+            )
+            PersonBlock(
+                modifier = sharedModifier,
+                data = NetworkItemIO(
+                    userId = "@rafail:augmy.org",
+                    displayName = "Rafail Daskos",
+                    avatar = MediaIO(
+                        url = "https://augmy.org/storage/company/daskos_rafail.jpg",
+                        thumbnail = "https://augmy.org/storage/company/thumbnails/tn_daskos_rafail.jpg"
+                    )
+                ),
+                linkedIn = "https://www.linkedin.com/in/rafail-daskos-3a3229151/",
+                email = "rafail.daskos@augmy.org",
+                title = stringResource(Res.string.about_title_rafail),
+                quote = stringResource(Res.string.about_quote_rafail),
+            )
+            PersonBlock(
+                modifier = sharedModifier,
+                data = NetworkItemIO(
+                    userId = "@honza:augmy.org",
+                    displayName = "Jan Jelínek",
+                    avatar = MediaIO(
+                        url = "https://augmy.org/storage/company/jelinek_jan.jpg",
+                        thumbnail = "https://augmy.org/storage/company/thumbnails/tn_jelinek_jan.jpg"
+                    )
+                ),
+                linkedIn = "https://www.linkedin.com/in/jan-jel%C3%ADnek-lead/",
+                email = "jan.jelinek@augmy.org",
+                title = stringResource(Res.string.about_title_honza),
+                quote = stringResource(Res.string.about_quote_honza)
+            )
+        }
+        Spacer(Modifier.height(verticalPadding))
+    }
+}
+
+@Composable
+private fun PersonBlock(
+    modifier: Modifier = Modifier,
+    data: NetworkItemIO,
+    email: String,
+    linkedIn: String,
+    title: String,
+    quote: String
+) {
+    val isHovered = remember(data.userId) { mutableStateOf(false) }
+    val corners = animateDpAsState(if (isHovered.value) 10.dp else 32.dp)
 
     SelectionContainer {
-        Column(Modifier.fillMaxWidth(fraction)) {
-            Text(
-                text = stringResource(Res.string.about_header_roadmap),
-                style = LocalTheme.current.styles.heading
+        Column(
+            modifier = modifier
+                .scalingClickable(
+                    scaleInto = 1f,
+                    onHover = { hovered -> isHovered.value = hovered }
+                )
+                .padding(vertical = 18.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.spacedBy(4.dp)
+        ) {
+            AvatarImage(
+                modifier = Modifier
+                    .fillMaxWidth(.6f)
+                    .aspectRatio(1f),
+                shape = RoundedCornerShape(corners.value),
+                media = data.avatar,
+                name = data.displayName,
+                tag = null
             )
             Text(
-                modifier = Modifier.padding(top = 32.dp, start = 12.dp),
-                text = buildAnnotatedString {
-                    append(stringResource(Res.string.about_content_roadmap))
-                    withLink(
-                        link = LinkAnnotation.Clickable(
-                            tag = "ACTION",
-                            styles = LocalTheme.current.styles.link,
-                            linkInteractionListener = {
-                                navController?.navigate(NavigationNode.Roadmap.route)
-                            },
+                modifier = Modifier.padding(horizontal = 16.dp),
+                text = title,
+                style = LocalTheme.current.styles.title.copy(
+                    textAlign = TextAlign.Center
+                )
+            )
+            Row(
+                modifier = Modifier.padding(top = 10.dp),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
+                Icon(
+                    modifier = Modifier.size(24.dp),
+                    imageVector = Icons.Outlined.AlternateEmail,
+                    tint = LocalTheme.current.colors.disabled,
+                    contentDescription = null
+                )
+                Text(
+                    text = buildAnnotatedLinkString(email),
+                    style = LocalTheme.current.styles.regular
+                )
+            }
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
+                Icon(
+                    modifier = Modifier.size(24.dp),
+                    painter = painterResource(Res.drawable.logo_monochrome),
+                    tint = LocalTheme.current.colors.disabled,
+                    contentDescription = null
+                )
+                data.userId?.let { userId ->
+                    Text(
+                        text = buildAnnotatedLink(
+                            text = userId,
+                            linkTexts = listOf(userId),
+                            onLinkClicked = { link, _ ->
+                                window.open("https://augmy.org/users/$userId")
+                            }
                         ),
-                    ) {
-                        append(" " + stringResource(Res.string.about_content_roadmap_here))
+                        style = LocalTheme.current.styles.regular.copy(
+                            color = LocalTheme.current.colors.disabled
+                        )
+                    )
+                }
+            }
+            AsyncSvgImage(
+                modifier = Modifier
+                    .scalingClickable(scaleInto = .95f) {
+                        window.open(linkedIn)
                     }
-                    append(".")
-                },
+                    .size(32.dp),
+                model = Asset.Logo.LinkedIn.url,
+                contentDescription = "LinkedIn"
+            )
+
+            if (quote.isNotBlank()) {
+                Text(
+                    modifier = Modifier
+                        .padding(horizontal = 16.dp)
+                        .padding(top = 16.dp)
+                        .background(
+                            color = LocalTheme.current.colors.backgroundLight,
+                            shape = LocalTheme.current.shapes.rectangularActionShape
+                        )
+                        .padding(vertical = 4.dp, horizontal = 6.dp),
+                    text = quote,
+                    style = LocalTheme.current.styles.regular.copy(
+                        textAlign = TextAlign.Center
+                    )
+                )
+            }
+        }
+    }
+}
+
+@Composable
+private fun TextBlock(
+    modifier: Modifier = Modifier,
+    verticalPadding: Dp
+) {
+    val isCompact = LocalDeviceType.current == WindowWidthSizeClass.Compact
+
+    SelectionContainer {
+        Column(
+            modifier = modifier,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Text(
+                modifier = Modifier.padding(top = verticalPadding / 3),
+                text = stringResource(Res.string.toolbar_action_about),
+                style = LocalTheme.current.styles.heading
+            )
+
+            Text(
+                modifier = Modifier
+                    .fillMaxWidth(if (isCompact) 1f else .5f)
+                    .padding(top = verticalPadding / 2),
+                text = stringResource(Res.string.about_content_0),
                 style = LocalTheme.current.styles.regular
+            )
+            Text(
+                modifier = Modifier
+                    .fillMaxWidth(if (isCompact) 1f else .5f)
+                    .padding(top = 16.dp),
+                text = stringResource(Res.string.about_content_1),
+                style = LocalTheme.current.styles.regular
+            )
+            Image(
+                modifier = Modifier.padding(top = 16.dp),
+                painter = painterResource(Res.drawable.signatures),
+                colorFilter = ColorFilter.tint(color = LocalTheme.current.colors.secondary),
+                contentDescription = stringResource(Res.string.accessibility_signatures)
+            )
+            Text(
+                modifier = Modifier
+                    .fillMaxWidth(if (isCompact) 1f else .5f)
+                    .padding(top = verticalPadding / 2),
+                text = stringResource(Res.string.about_future_content),
+                style = LocalTheme.current.styles.regular.copy(
+                    textAlign = TextAlign.Center
+                )
             )
         }
     }
-
-    Spacer(Modifier)
 }

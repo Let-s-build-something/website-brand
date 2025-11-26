@@ -2,8 +2,11 @@ package augmy.interactive.com.ui.landing
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.sizeIn
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.text.selection.SelectionContainer
@@ -13,6 +16,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import augmy.interactive.com.theme.LocalTheme
 import io.github.alexzhirkevich.compottie.LottieCompositionSpec
@@ -23,11 +27,29 @@ import org.jetbrains.compose.resources.stringResource
 import website_brand.composeapp.generated.resources.Res
 import website_brand.composeapp.generated.resources.landing_block_3_content
 import website_brand.composeapp.generated.resources.landing_block_3_heading
+import website_brand.composeapp.generated.resources.landing_crisis_description
+import website_brand.composeapp.generated.resources.landing_crisis_heading
 
 @Composable
-internal fun FooterBlock() {
-    SelectionContainer {
+internal fun FooterBlock(verticalPadding: Dp) {
+    SelectionContainer(Modifier.padding(horizontal = 12.dp)) {
         Column {
+            Text(
+                modifier = Modifier.fillMaxWidth(),
+                text = stringResource(Res.string.landing_crisis_heading),
+                style = LocalTheme.current.styles.heading.copy(textAlign = TextAlign.Center)
+            )
+            Text(
+                modifier = Modifier
+                    .align(Alignment.CenterHorizontally)
+                    .widthIn(max = 700.dp)
+                    .fillMaxWidth(),
+                text = stringResource(Res.string.landing_crisis_description),
+                style = LocalTheme.current.styles.regular.copy(textAlign = TextAlign.Center)
+            )
+
+            Spacer(Modifier.height(verticalPadding * 2f))
+
             Text(
                 modifier = Modifier.fillMaxWidth(),
                 text = stringResource(Res.string.landing_block_3_heading),

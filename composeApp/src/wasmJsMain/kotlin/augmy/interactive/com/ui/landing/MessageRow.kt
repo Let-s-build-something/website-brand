@@ -151,7 +151,7 @@ private fun MessageBubble(
             )
         }
 
-        Spacer(Modifier.width(6.dp))
+        Spacer(Modifier.width(8.dp))
 
         Box(
             modifier = modifier
@@ -168,7 +168,7 @@ private fun MessageBubble(
                     .background(
                         color = if(message.isCurrentUser) {
                             LocalTheme.current.colors.brandMainDark
-                        }else LocalTheme.current.colors.brandMain,
+                        }else LocalTheme.current.colors.backgroundContrast,
                         shape = shape
                     )
             )

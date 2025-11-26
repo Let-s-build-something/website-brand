@@ -126,7 +126,9 @@ private object DefaultValues {
         override val secondary: Color = Color(0x00000000)
         override val disabled: Color = Color(0x00000000)
         override val brandMain: Color = Color(0x00000000)
+        override val disabledComponent: Color = Color(0x00000000)
         override val brandMainDark: Color = Color(0x00000000)
+        override val gardenHead: Color = Color(0x00000000)
         override val tetrial: Color = Color(0x00000000)
         override val quartial: Color = Color(0x00000000)
         override val shimmer: Color = Color(0x00000000)
@@ -134,6 +136,7 @@ private object DefaultValues {
         override val backgroundLight: Color = Color(0x00000000)
         override val backgroundDark: Color = Color(0x00000000)
         override val toolbarColor: Color = Color(0x00000000)
+        override val backgroundContrast: Color = Color(0x00000000)
     }
 }
 

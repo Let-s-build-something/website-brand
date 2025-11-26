@@ -11,9 +11,12 @@ object LightAppColors: BaseColors {
 
     override val brandMain: Color = Colors.Asparagus
 
+    override val gardenHead: Color = Colors.ProximityIntimate
     override val brandMainDark: Color = Colors.HunterGreen
+    override val disabledComponent: Color = Colors.Coffee18
+    override val backgroundContrast: Color = Colors.AzureWebDark
 
-    override val tetrial: Color = Colors.Flax
+    override val tetrial: Color = Colors.DutchWhite
 
     override val quartial: Color = Colors.AtomicTangerine
 
