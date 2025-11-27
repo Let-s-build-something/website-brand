@@ -136,7 +136,6 @@ fun between(dateTime: LocalDateTime?, dateTime2: LocalDateTime?): Duration? {
 @Composable
 fun LandingScreen(model: SharedViewModel) {
     val verticalPadding = (LocalContentSizeDp.current.height / 8).dp
-    val horizontalPadding = (LocalContentSizeDp.current.width / 20).dp
     val freeSpots = model.betaSpots.collectAsState()
     val signedUp = rememberSaveable { mutableStateOf(false) }
     val showSignUp = rememberSaveable { mutableStateOf(false) }
@@ -292,25 +291,15 @@ fun LandingScreen(model: SharedViewModel) {
             }
         }
 
-        Spacer(Modifier.height(verticalPadding))
-
         Column {
             Crossfade(LocalDeviceType.current == WindowWidthSizeClass.Compact) { isCompact ->
                 if(isCompact) {
-                    CompactLayout(
-                        verticalPadding = verticalPadding,
-                        scrollState = scrollState
-                    )
+                    CompactLayout(verticalPadding = verticalPadding)
                 }else {
-                    LargeLayout(
-                        verticalPadding = verticalPadding,
-                        horizontalPadding = horizontalPadding,
-                        scrollState = scrollState
-                    )
+                    LargeLayout(verticalPadding = verticalPadding)
                 }
             }
 
-            Spacer(Modifier.height(verticalPadding))
             FooterBlock(verticalPadding)
         }
 
@@ -322,45 +311,57 @@ fun LandingScreen(model: SharedViewModel) {
 fun Quote(
     modifier: Modifier = Modifier,
     showBackground: Boolean = true,
+    author: String,
     text: String,
 ) {
-    Row(
-        modifier = if (showBackground) {
-            modifier
-                .background(
-                    color = LocalTheme.current.colors.backgroundDark.copy(alpha = .7f),
-                    shape = LocalTheme.current.shapes.componentShape
-                )
-                .padding(vertical = 8.dp, horizontal = 16.dp)
-        }else modifier
-    ) {
-        Icon(
-            modifier = Modifier
-                .size(24.dp)
-                .rotate(180f),
-            imageVector = Icons.Outlined.FormatQuote,
-            tint = LocalTheme.current.colors.secondary,
-            contentDescription = null
-        )
+    Column(modifier) {
+        Row(
+            modifier = if (showBackground) {
+                Modifier
+                    .background(
+                        color = LocalTheme.current.colors.backgroundDark.copy(alpha = .7f),
+                        shape = LocalTheme.current.shapes.componentShape
+                    )
+                    .padding(vertical = 8.dp, horizontal = 16.dp)
+            }else Modifier
+        ) {
+            Icon(
+                modifier = Modifier
+                    .size(24.dp)
+                    .rotate(180f),
+                imageVector = Icons.Outlined.FormatQuote,
+                tint = LocalTheme.current.colors.secondary,
+                contentDescription = null
+            )
 
+            Text(
+                modifier = Modifier
+                    .padding(horizontal = 8.dp, vertical = 6.dp)
+                    .align(Alignment.CenterVertically)
+                    .weight(1f, fill = false),
+                text = text,
+                style = LocalTheme.current.styles.regular.copy(
+                    textAlign = TextAlign.Center
+                )
+            )
+
+            Icon(
+                modifier = Modifier
+                    .align(Alignment.Bottom)
+                    .size(24.dp),
+                imageVector = Icons.Outlined.FormatQuote,
+                tint = LocalTheme.current.colors.secondary,
+                contentDescription = null
+            )
+        }
         Text(
             modifier = Modifier
-                .padding(horizontal = 8.dp, vertical = 6.dp)
-                .align(Alignment.CenterVertically)
-                .weight(1f, fill = false),
-            text = text,
+                .padding(top = 2.dp, bottom = 6.dp)
+                .align(Alignment.End),
+            text = author,
             style = LocalTheme.current.styles.regular.copy(
-                textAlign = TextAlign.Center
+                fontSize = 16.sp
             )
-        )
-
-        Icon(
-            modifier = Modifier
-                .align(Alignment.Bottom)
-                .size(24.dp),
-            imageVector = Icons.Outlined.FormatQuote,
-            tint = LocalTheme.current.colors.secondary,
-            contentDescription = null
         )
     }
 }

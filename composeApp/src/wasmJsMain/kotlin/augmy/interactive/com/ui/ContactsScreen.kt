@@ -15,33 +15,33 @@ import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.AlternateEmail
 import androidx.compose.material.icons.outlined.LocationCity
+import androidx.compose.material.icons.outlined.Phone
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import augmy.interactive.com.base.LocalContentSizeDp
 import augmy.interactive.com.base.LocalDeviceType
 import augmy.interactive.com.base.ModalScreenContent
-import augmy.interactive.com.data.Asset
+import augmy.interactive.com.data.MediaIO
 import augmy.interactive.com.theme.LocalTheme
-import augmy.interactive.com.ui.components.AsyncImageThumbnail
+import augmy.interactive.com.ui.components.AvatarImage
 import augmy.interactive.com.ui.components.buildAnnotatedLinkString
 import org.jetbrains.compose.resources.stringResource
 import website_brand.composeapp.generated.resources.Res
 import website_brand.composeapp.generated.resources.contacts_email
 import website_brand.composeapp.generated.resources.contacts_email_value
+import website_brand.composeapp.generated.resources.contacts_heading
+import website_brand.composeapp.generated.resources.contacts_phone
+import website_brand.composeapp.generated.resources.contacts_phone_value
 import website_brand.composeapp.generated.resources.contacts_workplace
 import website_brand.composeapp.generated.resources.contacts_workplace_value
-import website_brand.composeapp.generated.resources.toolbar_action_contacts
 
-/** home/landing screen which is initially shown on the application */
 @Composable
 fun ContactsScreen() {
     val verticalPadding = (LocalContentSizeDp.current.height / 8).dp
@@ -52,7 +52,7 @@ fun ContactsScreen() {
     )
 
     ModalScreenContent(scrollState = rememberScrollState()) {
-        SelectionContainer {
+        SelectionContainer(Modifier.padding(top = verticalPadding / 2)) {
             Crossfade(LocalDeviceType.current == WindowWidthSizeClass.Compact) { isCompact ->
                 if(isCompact) {
                     CompactLayout(
@@ -71,7 +71,6 @@ fun ContactsScreen() {
     }
 }
 
-
 @Composable
 private fun CompactLayout(
     emailValue: AnnotatedString,
@@ -86,24 +85,30 @@ private fun CompactLayout(
             verticalArrangement = Arrangement.spacedBy(12.dp)
         ) {
             Text(
-                text = stringResource(Res.string.toolbar_action_contacts),
+                modifier = Modifier.align(Alignment.CenterHorizontally),
+                text = stringResource(Res.string.contacts_heading),
                 style = LocalTheme.current.styles.heading
             )
             Box(
                 Modifier
+                    .align(Alignment.CenterHorizontally)
                     .background(
-                        LocalTheme.current.colors.brandMainDark,
+                        LocalTheme.current.colors.brandMainDark.copy(alpha = .4f),
                         LocalTheme.current.shapes.roundShape
                     )
-                    .padding(verticalPadding / 7)
+                    .padding(8.dp)
             ) {
-                AsyncImageThumbnail(
+                AvatarImage(
                     modifier = Modifier
-                        .fillMaxWidth()
-                        .aspectRatio(1.4123377f)
-                        .clip(LocalTheme.current.shapes.componentShape),
-                    asset = Asset.Image.EarHelp,
-                    contentScale = ContentScale.Fit
+                        .fillMaxWidth(.6f)
+                        .aspectRatio(1f),
+                    shape = LocalTheme.current.shapes.componentShape,
+                    media = MediaIO(
+                        url = "https://augmy.org/storage/company/kostka_jakub_rectangle.jpg",
+                        thumbnail = "https://augmy.org/storage/company/thumbnails/tn_kostka_jakub_rectangle.jpg"
+                    ),
+                    name = "Jakub Kostka",
+                    tag = null
                 )
             }
 
@@ -156,6 +161,34 @@ private fun CompactLayout(
                 }
                 Text(
                     text = emailValue,
+                    style = LocalTheme.current.styles.title
+                )
+            }
+            Row(
+                modifier = Modifier.fillMaxWidth().padding(top = 12.dp),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                Row(
+                    modifier = Modifier.padding(end = 6.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
+                    Icon(
+                        modifier = Modifier.size(32.dp),
+                        imageVector = Icons.Outlined.Phone,
+                        contentDescription = null,
+                        tint = LocalTheme.current.colors.secondary
+                    )
+                    Text(
+                        text = stringResource(Res.string.contacts_phone),
+                        style = LocalTheme.current.styles.regular
+                    )
+                }
+                Text(
+                    text = buildAnnotatedLinkString(
+                        stringResource(Res.string.contacts_phone_value)
+                    ),
                     style = LocalTheme.current.styles.title
                 )
             }
@@ -170,12 +203,14 @@ private fun LargeLayout(
     verticalPadding: Dp
 ) {
     Row(
-        modifier = Modifier.padding(top = 24.dp),
+        modifier = Modifier
+            .padding(top = 24.dp)
+            .padding(horizontal = 16.dp),
         horizontalArrangement = Arrangement.spacedBy(horizontalPadding)
     ) {
         Column(Modifier.weight(1f)) {
             Text(
-                text = stringResource(Res.string.toolbar_action_contacts),
+                text = stringResource(Res.string.contacts_heading),
                 style = LocalTheme.current.styles.heading
             )
 
@@ -231,24 +266,56 @@ private fun LargeLayout(
                     style = LocalTheme.current.styles.title
                 )
             }
+            Row(
+                modifier = Modifier.fillMaxWidth().padding(top = 12.dp),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                Row(
+                    modifier = Modifier.padding(end = 6.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
+                    Icon(
+                        modifier = Modifier.size(32.dp),
+                        imageVector = Icons.Outlined.Phone,
+                        contentDescription = null,
+                        tint = LocalTheme.current.colors.secondary
+                    )
+                    Text(
+                        text = stringResource(Res.string.contacts_phone),
+                        style = LocalTheme.current.styles.regular
+                    )
+                }
+                Text(
+                    text = buildAnnotatedLinkString(
+                        stringResource(Res.string.contacts_phone_value)
+                    ),
+                    style = LocalTheme.current.styles.title
+                )
+            }
         }
         Box(
             Modifier
-                .weight(1f)
+                .weight(1f, fill = false)
                 .padding(top = 32.dp)
                 .background(
                     LocalTheme.current.colors.brandMainDark,
                     LocalTheme.current.shapes.roundShape
                 )
-                .padding(verticalPadding / 7)
+                .padding(8.dp)
         ) {
-            AsyncImageThumbnail(
+            AvatarImage(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .aspectRatio(1.4123377f)
-                    .clip(LocalTheme.current.shapes.componentShape),
-                asset = Asset.Image.EarHelp,
-                contentScale = ContentScale.Fit
+                    .fillMaxWidth(.45f)
+                    .aspectRatio(1f),
+                shape = LocalTheme.current.shapes.componentShape,
+                media = MediaIO(
+                    url = "https://augmy.org/storage/company/kostka_jakub_rectangle.jpg",
+                    thumbnail = "https://augmy.org/storage/company/thumbnails/tn_kostka_jakub_rectangle.jpg"
+                ),
+                name = "Jakub Kostka",
+                tag = null
             )
         }
     }

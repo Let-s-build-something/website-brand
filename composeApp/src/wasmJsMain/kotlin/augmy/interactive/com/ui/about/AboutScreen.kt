@@ -1,5 +1,6 @@
 package augmy.interactive.com.ui.about
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.Crossfade
 import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.animateDpAsState
@@ -17,7 +18,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.widthIn
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.selection.SelectionContainer
@@ -222,10 +223,7 @@ private fun largeLayout(verticalPadding: Dp) {
             horizontalArrangement = Arrangement.spacedBy(12.dp)
         ) {
             val sharedModifier = Modifier
-                .widthIn(
-                    max = contentWidthDp.value.div(4).dp - 12.dp - 8.dp,
-                    min = 250.dp
-                )
+                .width(contentWidthDp.value.div(4).dp - 24.dp)
                 .animateContentSize()
                 .heightIn(min = tileHeightDp.value.dp)
                 .onSizeChanged {
@@ -335,8 +333,15 @@ private fun PersonBlock(
             )
             Text(
                 modifier = Modifier.padding(horizontal = 16.dp),
-                text = title,
+                text = data.displayName ?: "",
                 style = LocalTheme.current.styles.title.copy(
+                    textAlign = TextAlign.Center
+                )
+            )
+            Text(
+                modifier = Modifier.padding(horizontal = 16.dp),
+                text = title,
+                style = LocalTheme.current.styles.regular.copy(
                     textAlign = TextAlign.Center
                 )
             )
@@ -391,21 +396,23 @@ private fun PersonBlock(
                 contentDescription = "LinkedIn"
             )
 
-            if (quote.isNotBlank()) {
-                Text(
-                    modifier = Modifier
-                        .padding(horizontal = 16.dp)
-                        .padding(top = 16.dp)
-                        .background(
-                            color = LocalTheme.current.colors.backgroundLight,
-                            shape = LocalTheme.current.shapes.rectangularActionShape
+            AnimatedVisibility(isHovered.value) {
+                if (quote.isNotBlank()) {
+                    Text(
+                        modifier = Modifier
+                            .padding(horizontal = 16.dp)
+                            .padding(top = 16.dp)
+                            .background(
+                                color = LocalTheme.current.colors.backgroundLight,
+                                shape = LocalTheme.current.shapes.rectangularActionShape
+                            )
+                            .padding(vertical = 4.dp, horizontal = 6.dp),
+                        text = quote,
+                        style = LocalTheme.current.styles.regular.copy(
+                            textAlign = TextAlign.Center
                         )
-                        .padding(vertical = 4.dp, horizontal = 6.dp),
-                    text = quote,
-                    style = LocalTheme.current.styles.regular.copy(
-                        textAlign = TextAlign.Center
                     )
-                )
+                }
             }
         }
     }

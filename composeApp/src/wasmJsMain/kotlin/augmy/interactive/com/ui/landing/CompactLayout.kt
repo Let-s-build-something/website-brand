@@ -1,7 +1,6 @@
 package augmy.interactive.com.ui.landing
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.Orientation
 import androidx.compose.foundation.horizontalScroll
@@ -52,10 +51,7 @@ import website_brand.composeapp.generated.resources.landing_problem_quote_1
 import website_brand.composeapp.generated.resources.landing_problem_quote_2
 
 @Composable
-internal fun CompactLayout(
-    scrollState: ScrollState,
-    verticalPadding: Dp
-) {
+internal fun CompactLayout(verticalPadding: Dp) {
     val density = LocalDensity.current
     val language = Locale.current.language
     val contentWidthDp = remember { mutableFloatStateOf(0f) }
@@ -91,13 +87,16 @@ internal fun CompactLayout(
 
                 Quote(
                     modifier = Modifier.padding(top = 8.dp),
-                    text = stringResource(Res.string.landing_problem_quote_2)
+                    text = stringResource(Res.string.landing_problem_quote_2),
+                    author = "-Petra, 16"
                 )
                 Quote(
-                    text = stringResource(Res.string.landing_problem_quote_0)
+                    text = stringResource(Res.string.landing_problem_quote_0),
+                    author = "-Adam, 12"
                 )
                 Quote(
-                    text = stringResource(Res.string.landing_problem_quote_1)
+                    text = stringResource(Res.string.landing_problem_quote_1),
+                    author = "-Lucie, 35"
                 )
             }
         }
