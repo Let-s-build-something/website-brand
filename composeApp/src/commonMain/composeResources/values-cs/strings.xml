@@ -40,7 +40,7 @@
   <string name="landing_sign_up_disabled">První verze uzavřena.</string>
   <string name="landing_sign_up_hint">Tvůj e-mail (ten opravdový, pls)</string>
   <string name="landing_sign_up_info">Vydání první testovací verze za %1$s</string>
-  <string name="landing_sign_up_info_slots">Zbývající volné místa: %1$d</string>
+  <string name="landing_sign_up_info_slots">Zbývající volná místa: %1$d</string>
   <string name="landing_problem_heading">Buď tam pro ostatní</string>
   <string name="landing_garden_description">Sdíleno přes avatar. Automaticky. Bez odhalení.</string>
   <string name="landing_problem_quote_0">Když se cítím špatně, nemám čas ani energii to vysvětlovat.</string>
