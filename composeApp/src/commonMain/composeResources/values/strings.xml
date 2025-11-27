@@ -38,7 +38,7 @@
   <string name="landing_sign_up_hint">Your email (the real one, pls)</string>
   <string name="landing_sign_up_info">Closed release launch in %1$s</string>
   <string name="landing_sign_up_info_slots">Free slots left: %1$d</string>
-  <string name="landing_problem_heading">Be there for others</string>
+  <string name="landing_problem_heading">What people think</string>
   <string name="landing_garden_description">Shared as avatar. Automatic. No exposure.</string>
   <string name="landing_problem_quote_0">When you feel bad, there's no energy or time to explain.</string>
   <string name="landing_problem_quote_1">She always responds with „I'm okay“ or „I'm fine“. I don't know what's behind that.</string>
@@ -95,11 +95,14 @@
   <string name="emotion_cheerfulness">Cheerfulness</string>
   <string name="emotion_sadness">Grief</string>
 
+  <string name="contacts_heading">Get in touch</string>
   <string name="contacts_workplace">Workplace</string>
-  <string name="contacts_workplace_value">Prague, Czechia</string>
+  <string name="contacts_workplace_value">Chrastavska 89/68, Prague</string>
   <string name="contacts_email">Email</string>
+  <string name="contacts_email_value">jakub.kostka@augmy.org</string>
+  <string name="contacts_phone">Mobile</string>
+  <string name="contacts_phone_value">+420 774 907 358</string>
   <string name="kofi_link_text">Support us</string>
-  <string name="contacts_email_value">brand@augmy.org</string>
   <string name="contacts_twitter">https://www.twitter.com/AugmyInteractiv</string>
   <string name="contacts_instagram">https://www.instagram.com/augmy_interactive</string>
   <string name="contacts_linkedin">https://www.linkedin.com/company/augmy-interactive</string>

@@ -9,7 +9,6 @@ import androidx.compose.animation.fadeOut
 import androidx.compose.animation.scaleIn
 import androidx.compose.animation.scaleOut
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -87,11 +86,7 @@ import website_brand.composeapp.generated.resources.landing_problem_quote_2
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-internal fun LargeLayout(
-    scrollState: ScrollState,
-    horizontalPadding: Dp,
-    verticalPadding: Dp
-) {
+internal fun LargeLayout(verticalPadding: Dp) {
     val language = Locale.current.language
 
     Column(Modifier.padding(horizontal = 12.dp)) {
@@ -112,13 +107,16 @@ internal fun LargeLayout(
 
                     Quote(
                         modifier = Modifier.padding(top = 8.dp),
-                        text = stringResource(Res.string.landing_problem_quote_2)
+                        text = stringResource(Res.string.landing_problem_quote_2),
+                        author = "-Petra, 16"
                     )
                     Quote(
-                        text = stringResource(Res.string.landing_problem_quote_0)
+                        text = stringResource(Res.string.landing_problem_quote_0),
+                        author = "-Adam, 12"
                     )
                     Quote(
-                        text = stringResource(Res.string.landing_problem_quote_1)
+                        text = stringResource(Res.string.landing_problem_quote_1),
+                        author = "-Lucie, 35"
                     )
                 }
             }

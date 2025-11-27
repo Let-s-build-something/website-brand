@@ -2,7 +2,7 @@
 <resources>
   <string name="landing_demo_others_message">Ty: co že máš ultra chill kytičku?:D</string>
 
-  <string name="landing_heading">Kompas tvojí nálady a tvých oblíbených lidí</string>
+  <string name="landing_heading">Kompas Tvojí nálady a Tvých blízkých</string>
   <string name="landing_heading_description">Appka pro ty, kterým záleží na tom, jak se ostatní cítí.\nV reálném čase, bez otravných dotazníků a check-inů.</string>
 
 
@@ -41,9 +41,9 @@
   <string name="landing_sign_up_hint">Tvůj e-mail (ten opravdový, pls)</string>
   <string name="landing_sign_up_info">Vydání první testovací verze za %1$s</string>
   <string name="landing_sign_up_info_slots">Zbývající volná místa: %1$d</string>
-  <string name="landing_problem_heading">Buď tam pro ostatní</string>
+  <string name="landing_problem_heading">Co si lidi myslí</string>
   <string name="landing_garden_description">Sdíleno přes avatar. Automaticky. Bez odhalení.</string>
-  <string name="landing_problem_quote_0">Když se cítím špatně, nemám čas ani energii to vysvětlovat.</string>
+  <string name="landing_problem_quote_0">Když se cítím špatně, nemám čas ani energii to vysvětlovat. -</string>
   <string name="landing_problem_quote_1">Vždycky odpoví „Jsem OK“ nebo „Jsem v pohodě“. Ale nikdy nevím, co je za tím.</string>
   <string name="landing_problem_quote_2">Nechci je zatěžovat. Tak to radši nebudu psát.</string>
   <string name="landing_heading_message_0">How are you?</string>
@@ -97,11 +97,14 @@
   <string name="emotion_cheerfulness">Jásot</string>
   <string name="emotion_sadness">Žal</string>
 
+  <string name="contacts_heading">Kontaktní informace</string>
   <string name="contacts_workplace">Sídlo</string>
-  <string name="contacts_workplace_value">Praha, Česko</string>
+  <string name="contacts_workplace_value">Chrastavská 89/68, Praha</string>
   <string name="contacts_email">Email</string>
+  <string name="contacts_email_value">jakub.kostka@augmy.org</string>
+  <string name="contacts_phone">Tel. číslo</string>
+  <string name="contacts_phone_value">+420 774 907 358</string>
   <string name="kofi_link_text">Support us</string>
-  <string name="contacts_email_value">info@augmy.org</string>
   <string name="contacts_twitter">https://www.twitter.com/AugmyInteractiv</string>
   <string name="contacts_instagram">https://www.instagram.com/augmy_interactive</string>
   <string name="contacts_linkedin">https://www.linkedin.com/company/augmy-interactive</string>
