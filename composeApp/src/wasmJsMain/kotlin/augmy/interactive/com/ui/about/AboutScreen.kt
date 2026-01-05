@@ -396,7 +396,9 @@ private fun PersonBlock(
                 contentDescription = "LinkedIn"
             )
 
-            AnimatedVisibility(isHovered.value) {
+            AnimatedVisibility(
+                visible = isHovered.value || LocalDeviceType.current == WindowWidthSizeClass.Compact
+            ) {
                 if (quote.isNotBlank()) {
                     Text(
                         modifier = Modifier
