@@ -1,41 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <string name="landing_demo_others_message">Ty: co že máš ultra chill kytičku?:D</string>
-
   <string name="landing_heading">Kompas Tvojí nálady a Tvých blízkých</string>
-  <string name="landing_heading_description">Appka pro ty, kterým záleží na tom, jak se ostatní cítí.\nV reálném čase, bez otravných dotazníků a check-inů.</string>
-
+  <string name="landing_heading_prefix">Appka pro ty, kterým záleží na sobě a druhých.</string>
+  <string name="landing_heading_suffix">V reálném čase, bez otravných dotazníků a check-inů.</string>
 
   <string name="app_name">Augmy</string>
   <string name="website_footer">© %1$d Augmy Interactive</string>
-  <string name="landing_header_heading">The New Era of Communication</string>
-  <string name="landing_header_content">Talk online like you do in real life. Digital communication, reflective of the physical you, with agency in your hands.</string>
-
-  <string name="landing_messages_heading">Regular chat</string>
-  <string name="landing_messages_text">Billions of people all over the world are being misunderstood and can't express themselves.\n\nPeople want to express themselves while messaging but there was no natural ways of showing that.</string>
-  <string name="landing_message_0">how are you?</string>
-  <string name="landing_message_1">I'm okay</string>
-  <string name="landing_message_2">You sure? After yesterday...</string>
-  <string name="landing_message_3">I'm okay</string>
-  <string name="landing_message_4">Okay</string>
-
-  <string name="landing_messages_enhanced_heading">Powered by Augmy</string>
-  <string name="landing_messages_enhanced_text">Imagine being understood in how you said it, not just what you said. We invent new ways for expressing what you feel beyond just what you type.</string>
-  <string name="landing_message_0_enhanced">how are you?</string>
-  <string name="landing_message_1_enhanced">I'm okay</string>
-  <string name="landing_message_2_enhanced">Dude I really didn't mean it, I'm sorry...</string>
-  <string name="landing_message_3_enhanced">Oh, I thought you did it purposefully. It's alright</string>
-  <string name="landing_message_4_enhanced">cool cool cool</string>
-  <string name="landing_message_5_enhanced">beer tomorrow?</string>
-  <string name="landing_message_6_enhanced">you bet</string>
 
   <string name="category_intimate">Intimate</string>
   <string name="category_personal">Personal</string>
   <string name="category_social">Social</string>
   <string name="category_public">Public</string>
 
-  <string name="landing_heading_preprint">Tired of deciphering?</string>
-  <string name="landing_sign_up">První zkušební verze</string>
+  <string name="landing_sign_up">Přihlásit do čekací listiny</string>
   <string name="landing_sign_up_send">Počítej se mnou!</string>
   <string name="landing_sign_up_disabled">První verze uzavřena.</string>
   <string name="landing_sign_up_hint">Tvůj e-mail (ten opravdový, pls)</string>
@@ -46,18 +23,46 @@
   <string name="landing_problem_quote_0">Když se cítím špatně, nemám čas ani energii to vysvětlovat. -</string>
   <string name="landing_problem_quote_1">Vždycky odpoví „Jsem OK“ nebo „Jsem v pohodě“. Ale nikdy nevím, co je za tím.</string>
   <string name="landing_problem_quote_2">Nechci je zatěžovat. Tak to radši nebudu psát.</string>
-  <string name="landing_heading_message_0">How are you?</string>
-  <string name="landing_heading_message_1">I'm good</string>
-  <string name="landing_social_circle_heading">People Are Not Ones and Zeros</string>
-  <string name="landing_social_circle_text">Friend list? Followers? Do those really reflect your relationships? "Friend" or "not friend"? Forget about shallow, meaningless labels. Welcome to a social space built with depth in mind.</string>
 
+  <string name="landing_story_0_title">Jsi v pohodě?</string>
+  <string name="landing_story_0_content">Emma poslední týdny moc nereagovala.\nNechtěla jsem ji pořád spamovat zprávami „jsi v pohodě?“, ale stejně jsem měla pocit, že mi něco uniká.</string>
+  <string name="landing_story_0_resolution">Kouknu na kytky a bylo jasno. Tak jsme jí napsali, ať jde dnes večer s námi. Bez tlaku, bez velkých otázek.\nNemusela nic vysvětlovat. Jen jsme zareagovali na to, co jsme viděli.</string>
+
+  <string name="landing_story_1_title">Jak bylo ve škole?</string>
+  <string name="landing_story_1_content">Když přijdu ze školy, jsem úplně hotová.\nVšechno mě štve, ale nechci to rozebírat. Zalezu do pokoje a doufám, že se mě nikdo nebude ptát, jak jsem se měla.</string>
+  <string name="landing_story_1_resolution">Konečně naši chápou, že dneska to není ono.\nNemusím nic vysvětlovat. Vidí zvadlé kytičky a nechají mě chvíli být.</string>
+
+  <string name="landing_story_2_title">Jaký jsi měl den?</string>
+  <string name="landing_story_2_content">Když se vrací domů, nikdy nevím, v jaké náladě přijde: vyčerpaný, naštvaný, nebo úplně v pohodě.\nStačí maličkost a celý večer je v háji.</string>
+  <string name="landing_story_2_resolution">Dneska to vypadá na dobrej den. Je čas to oslavit!</string>
+
+  <string name="landing_story_3_title">Jsem v pohodě.</string>
+  <string name="landing_story_3_content">Jedu tramvají, sluchátka na plný pecky, metal, protože jsem po testu pořád vytočenej.\nJen automaticky scrolluju Instagram. Všechno mě vytáčí.</string>
+  <string name="landing_story_3_resolution">Augmy pozná, že to není „nic“.\nHudba, čas na mobilu a spánek z posledních dní mění moje kytičky.\nJeště než dorazím domů, moji kámoši už vidí, že moje zahrada je K.O. Herní večer!</string>
+  <string name="landing_story_cta">Řekni to beze slov</string>
+
+  <string name="animated_garden_helper">Zahrady naznačují, jak se ostatní cítí. S dobrou náladou rostou a s rostoucí intenzitou pohupují.</string>
+
+  <string name="landing_demo_you_automatic_analysis">Automatická analýza</string>
+  <string name="landing_demo_you_music">Hudba</string>
+  <string name="landing_demo_you_screen_time">Čas na mobilu</string>
+  <string name="landing_demo_you_health">Chytré hodinky</string>
   <string name="landing_demo_you_heading">Co vidíš ty</string>
+  <string name="landing_demo_you_content">Pečuj o svou vnitřní zahrádku.</string>
+  <string name="landing_demo_you_cta">Stát se zahradníkem</string>
+
   <string name="landing_demo_others_heading">Co vidí ostatní</string>
+  <string name="landing_demo_others_content">Nebuď na to sám/sama.</string>
+  <string name="landing_demo_others_cta">Chci vidět ostatní</string>
+  <string name="landing_demo_others_message">Ty: jaktože máš tak chill kytku? :D</string>
   <string name="landing_demo_others_action_closeness">Blízkost</string>
-  <string name="landing_demo_others_action_interact">Konverzace</string>
-  <string name="landing_demo_disclaimer">*Vizuály prototypu, může se ještě změnit.</string>
-  <string name="landing_crisis_heading">Tentokrát se spojme doopravdy.</string>
-  <string name="landing_crisis_description">Začíná to u tebe, pokračuje v rodině a s přáteli, až k profesionálům. Augmy je to, co spojuje.</string>
+  <string name="landing_demo_others_action_interact">Chat</string>
+  <string name="landing_demo_disclaimer">*První vizuály, může se ještě změnit.</string>
+
+  <string name="landing_summary_heading">Jak to funguje?</string>
+  <string name="landing_summary_description">Automaticky sleduj náladu podle hudby, času na mobilu a chytrých hodinek. Sdílej ji jen s okruhy, které si vybereš, a uvidíš, jak se cítí ostatní.</string>
+  <string name="landing_summary_action">Mám otázky</string>
+
 
   <string name="wellbeing_garden_info_mechanics">This is your garden — it grows with you. When you’re low, it feels it too. As your mood steadies and brightens, the garden blooms right along with you.</string>
   <string name="wellbeing_garden_sharing_count">Otevíráš se %1$d lidem.</string>
@@ -107,7 +112,7 @@
   <string name="kofi_link_text">Support us</string>
   <string name="contacts_twitter">https://www.twitter.com/AugmyInteractiv</string>
   <string name="contacts_instagram">https://www.instagram.com/augmy_interactive</string>
-  <string name="contacts_linkedin">https://www.linkedin.com/company/augmy-interactive</string>
+  <string name="contacts_linkedin">https://www.linkedin.com/company/augmy</string>
   <string name="contacts_bluesky">https://bsky.app/profile/augmyinteractive.bsky.social</string>
   <string name="contacts_kofi">https://ko-fi.com/augmy</string>
   <string name="contacts_discord">https://discord.gg/TFn8u9AE</string>
@@ -120,13 +125,13 @@
   <string name="about_content_0">Rozumíme jaké má technologie limity a nikdy nebudeme tvrdit, že může nahradit pravý lidský kontakt. Věříme však, že technologie je správný nástroj pro pozitivní změnu. Augmy je příslibem technologie (té samé, která je už součástí našich životů), že posílí lidskost v našich interakcích a spojení online.</string>
   <string name="about_content_1">Jsme jen lidi, a tak velká část naší motivace a inspirace vychází z našich zkušeností, které jsme my nebo lidé okolo nás prožili. Proto chceme vědět, co <b>vám</b> ztěžuje hlubší spojení s druhými a jak to můžeme změnit. Jsme tu, abychom se pustili do skutečných problémů, nejen abychom programovali „cool“ věci (i když to samozřejmě děláme taky:-D)</string>
   <string name="about_future_content">Věcí, kterých společně s vámi chceme v budoucnu dosáhnout je mnoho. Musíme však jít krok za krokem. Začněme tím, že spolu začneme sdílet emoce a naslouchat lidem kolem nás.</string>
-  <string name="about_title_jacob">Founder, CEO</string>
+  <string name="about_title_jacob">CEO</string>
   <string name="about_quote_jacob">Nemůžu slíbit, že to bude hned fungovat, ale jen tak se nevzdám.</string>
-  <string name="about_title_honza">Co-founder, COO</string>
+  <string name="about_title_honza">COO</string>
   <string name="about_quote_honza">Hlídám, aby Augmy mělo jasný směr, smysluplné procesy a spokojený tým.</string>
-  <string name="about_title_rafail">Co-founder, CTO</string>
+  <string name="about_title_rafail">CTO</string>
   <string name="about_quote_rafail">Ve finále vše funguje. A když ne, je to součást představení.</string>
-  <string name="about_title_marek">Co-founder, CFO</string>
+  <string name="about_title_marek">CFO</string>
   <string name="about_quote_marek">Stárám se o to, aby nám nedošlo palivo v půlce jízdy. Eventuálně se potřebujeme najíst, že jo.</string>
 
 
@@ -150,6 +155,39 @@
   <string name="about_business_footer_link_0_url">mailto:brand@augmy.org</string>
   <string name="about_business_footer_link_1">schedule a call</string>
   <string name="about_business_footer_link_1_url">https://calendar.app.google/YK5wVD5Eq3n2BQ1L6</string>
+
+  <string name="landing_illustrator_credit">Všechny ilustrace jsou originální tvorbou Terezy Born.</string>
+  <string name="landing_illustrator_credit_link_text">Tereza Born</string>
+
+  <string name="faq_heading">Nejčastější dotazy</string>
+
+  <string name="faq_0_question">Můžu si vybrat, s kým budu sdílet?</string>
+  <string name="faq_0_answer">Ano. Můžeš si lidi rozdělit podle blízkosti a rozhodnout, co která skupina uvidí. Je to modernější alternativa ke starému systému „seznam přátel“.</string>
+
+  <string name="faq_1_question">Co přesně se sdílí?</string>
+  <string name="faq_1_answer">Jen aktuální stav zahrady. Vychází z toho, jak se tvoje nálada mění oproti předchozím dnům. V budoucnu máme v plánu i odlišení krátkodobého (květina) a dlouhodobého (strom) stavu.</string>
+
+  <string name="faq_2_question">Jak funguje automatická analýza?</string>
+  <string name="faq_2_answer">Kombinuje hudbu, počasí, čas na mobilu a zdraví (chytré hodinky/prsten). Ty si přiřadíš playlisty, interprety a aplikace, které používáš, k pocitům. Pak se to na pozadí vyhodnocuje a odhaduje náladu podle toho, kolik času posloucháš/používáš appky.\nU zdraví používáme vlastní anonymizované modely strojového učení.\nSurová data ani kontext, který používáme, neukládáme do našich databází. Zůstává to v aplikaci.</string>
+
+  <string name="faq_3_question">Co když se analýza netrefí?</string>
+  <string name="faq_3_answer">Máte možnost upravit jakoukoliv hodinu v dnu v kalendáři nebo v deníku. Pracujeme na zlepšování systému a na personalizaci, která to časem výrazně zpřesní.</string>
+
+  <string name="faq_4_question">Je to bezpečné?</string>
+  <string name="faq_4_answer">Augmy funguje na end-to-end šifrování. Sdílení nálady je tedy stejné jako poslat zprávu přes WhatsApp nebo Signal.</string>
+
+  <string name="faq_5_question">Jak pracujete s mými daty?</string>
+  <string name="faq_5_answer">Neprodáváme a nikdy nebudeme prodávat žádná tvoje data ani je neposkytneme třetím stranám. Kdykoliv to jde, data zůstávají v zařízení. Pokud je potřeba je odeslat, jsou odeslané šifrovaně a ukládají se jen v nezbytném minimu.</string>
+
+  <string name="faq_6_question">A co terapeuti?</string>
+  <string name="faq_6_answer">Největší dopad na psychickou pohodu máš ty, lidi kolem tebe a profesionálové. Tudíž chceme propojit všechny tři a motivovat každou stranu, aby to fungovalo. Patří sem třeba rodinný přehled, měsíční rekapitulace, gamifikace a odborné posudky s personalizovanými doporučeními.</string>
+
+  <string name="faq_7_question">Nebudou mě pak lidi otravovat?</string>
+  <string name="faq_7_answer">Stavy typu "neptej se" jsou důležité a máme to v plánu.\nJe ale důležité podotknout, že není problém jen v obtížnosti sdílení emocí a nálad, ale často i v samotných vztazích a komunikaci. K pozici mediátora se chceme postavit vpřed a pomoct kde je možné. Tvoříme síť expertů a pracujeme co to jde, tak snad brzy:-).\nDo té doby jsi mediátorem ty. Vezmi to do vlastních rukou.</string>
+
+  <string name="faq_footer">Zbyla otázka bez odpovědi?</string>
+  <string name="faq_action">Napiš nám</string>
+
 
   <string name="about_research_summary">Anyone can talk about the theoretical benefits of their work, but very few actively try to disprove their own theories and assumptions to seek the answers to their questions. Not only is our focus to measure and observe how our solutions affect people and subsequent communication, but we also want to contribute to the collective knowledge about computer-mediated communication. In the form of in-house research and providing the right tools for individuals, groups, and organizations that share our collective quest of advancing science and applying the solutions in practice.</string>
   <string name="about_research_platform_heading">Work with us!</string>

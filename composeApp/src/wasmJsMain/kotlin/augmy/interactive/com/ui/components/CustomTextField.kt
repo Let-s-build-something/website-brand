@@ -59,8 +59,6 @@ import augmy.interactive.com.theme.LocalTheme
 import augmy.interactive.com.theme.SharedColors
 import augmy.interactive.com.ui.landing.components.MinimalisticIcon
 
-const val DELAY_BETWEEN_TYPING_SHORT = 400L
-
 /**
  * Brand specific customized [BasicTextField] supporting error state via [errorText], [suggestText], [isCorrect], and trailing icon
  */

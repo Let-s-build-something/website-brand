@@ -117,7 +117,7 @@ private fun ContentLayout(
                     .aspectRatio(1f)
                     .scale(liveScaleBackground)
                     .background(
-                        color = tagToColor(tag) ?: LocalTheme.current.colors.tetrial,
+                        color = tagToColor(tag) ?: LocalTheme.current.colors.tertial,
                         shape = shape
                     )
             )
@@ -145,7 +145,7 @@ private fun ContentLayout(
         Box(
             modifier = modifier
                 .background(
-                    color = tagToColor(tag) ?: LocalTheme.current.colors.tetrial,
+                    color = tagToColor(tag) ?: LocalTheme.current.colors.tertial,
                     shape = shape
                 )
                 .height(IntrinsicSize.Max)
@@ -200,7 +200,7 @@ private fun ContentElement(
                 contentScale = ContentScale.Crop
             )
         }else if (name != null || tag != null) {
-            val backgroundColor = tagToColor(tag) ?: LocalTheme.current.colors.tetrial
+            val backgroundColor = tagToColor(tag) ?: LocalTheme.current.colors.tertial
             val textColor = if (backgroundColor.luminance() > .5f) Colors.Coffee else Colors.GrayLight
 
             Box(

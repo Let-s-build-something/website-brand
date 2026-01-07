@@ -2,16 +2,10 @@ package augmy.interactive.com.ui.landing
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateContentSize
-import androidx.compose.animation.core.Spring
-import androidx.compose.animation.core.spring
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
-import androidx.compose.animation.scaleIn
-import androidx.compose.animation.scaleOut
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -20,473 +14,401 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredWidthIn
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.sizeIn
-import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.pager.HorizontalPager
+import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.Chat
-import androidx.compose.material.icons.outlined.TrackChanges
 import androidx.compose.material3.BottomSheetDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.ColorFilter
-import androidx.compose.ui.graphics.TransformOrigin
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.layout.layout
-import androidx.compose.ui.layout.onSizeChanged
-import androidx.compose.ui.platform.LocalDensity
-import androidx.compose.ui.text.SpanStyle
-import androidx.compose.ui.text.buildAnnotatedString
-import androidx.compose.ui.text.intl.Locale
+import androidx.compose.ui.text.AnnotatedString
+import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import androidx.compose.ui.zIndex
 import augmy.interactive.com.base.LocalDeviceType
 import augmy.interactive.com.base.theme.Colors
-import augmy.interactive.com.data.NetworkItemIO
+import augmy.interactive.com.base.theme.scalingClickable
 import augmy.interactive.com.theme.LocalTheme
 import augmy.interactive.com.theme.SharedColors
-import augmy.interactive.com.ui.components.AvatarImage
+import augmy.interactive.com.ui.components.BrandHeaderButton
 import augmy.interactive.com.ui.components.ComponentHeaderButton
-import augmy.interactive.com.ui.components.NetworkItemRow
-import augmy.interactive.com.ui.landing.demo.GardenContent
-import augmy.interactive.com.ui.landing.demo.MiniatureIndicator
-import augmy.interactive.com.ui.landing.demo.RandomFlowerField
+import augmy.interactive.com.ui.components.simulation.buildTempoStringHeuristic
+import augmy.interactive.com.ui.landing.components.AnimatedGarden
+import augmy.interactive.com.ui.landing.components.InfoBox
+import augmy.interactive.com.ui.landing.components.avatar.AvatarColorConfiguration
+import augmy.interactive.com.ui.landing.components.avatar.AvatarConfiguration
+import augmy.interactive.com.ui.landing.components.avatar.AvatarFloorConfiguration
+import augmy.interactive.com.ui.landing.components.avatar.AvatarFlowerConfiguration
+import augmy.interactive.com.ui.landing.components.avatar.AvatarHeadConfiguration
+import kotlinx.coroutines.cancelChildren
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
+import org.jetbrains.compose.resources.DrawableResource
+import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import website_brand.composeapp.generated.resources.Res
-import website_brand.composeapp.generated.resources.app_calendar
-import website_brand.composeapp.generated.resources.app_calendar_cs
-import website_brand.composeapp.generated.resources.app_graph
-import website_brand.composeapp.generated.resources.app_graph_cs
-import website_brand.composeapp.generated.resources.app_home
-import website_brand.composeapp.generated.resources.app_home_cs
-import website_brand.composeapp.generated.resources.head
-import website_brand.composeapp.generated.resources.landing_demo_disclaimer
-import website_brand.composeapp.generated.resources.landing_demo_others_action_closeness
+import website_brand.composeapp.generated.resources.animated_garden_helper
+import website_brand.composeapp.generated.resources.character_man_0
+import website_brand.composeapp.generated.resources.character_man_1
+import website_brand.composeapp.generated.resources.character_woman_0
+import website_brand.composeapp.generated.resources.character_woman_1
 import website_brand.composeapp.generated.resources.landing_demo_others_action_interact
-import website_brand.composeapp.generated.resources.landing_demo_others_heading
-import website_brand.composeapp.generated.resources.landing_demo_others_message
-import website_brand.composeapp.generated.resources.landing_demo_you_heading
-import website_brand.composeapp.generated.resources.landing_garden_description
-import website_brand.composeapp.generated.resources.landing_problem_heading
-import website_brand.composeapp.generated.resources.landing_problem_quote_0
-import website_brand.composeapp.generated.resources.landing_problem_quote_1
-import website_brand.composeapp.generated.resources.landing_problem_quote_2
+import website_brand.composeapp.generated.resources.landing_story_0_content
+import website_brand.composeapp.generated.resources.landing_story_0_resolution
+import website_brand.composeapp.generated.resources.landing_story_0_title
+import website_brand.composeapp.generated.resources.landing_story_1_content
+import website_brand.composeapp.generated.resources.landing_story_1_resolution
+import website_brand.composeapp.generated.resources.landing_story_1_title
+import website_brand.composeapp.generated.resources.landing_story_2_content
+import website_brand.composeapp.generated.resources.landing_story_2_resolution
+import website_brand.composeapp.generated.resources.landing_story_2_title
+import website_brand.composeapp.generated.resources.landing_story_3_content
+import website_brand.composeapp.generated.resources.landing_story_3_resolution
+import website_brand.composeapp.generated.resources.landing_story_3_title
+import website_brand.composeapp.generated.resources.landing_story_cta
+import kotlin.uuid.ExperimentalUuidApi
+import kotlin.uuid.Uuid
+
+data class LandingStory @OptIn(ExperimentalUuidApi::class) constructor(
+    val avatar: AvatarConfiguration,
+    val valence: Float,
+    val arousal: Float,
+    val name: String? = null,
+    val image: DrawableResource,
+    val titleText: StringResource,
+    val contentText: StringResource,
+    val resolutionText: StringResource,
+    val uuid: String = Uuid.random().toString()
+)
+
+val landingStories = listOf(
+    LandingStory(
+        valence = -.1f,
+        arousal = .05f,
+        contentText = Res.string.landing_story_0_content,
+        resolutionText = Res.string.landing_story_0_resolution,
+        titleText = Res.string.landing_story_0_title,
+        name = "Emma",
+        image = Res.drawable.character_woman_1,
+        avatar = AvatarConfiguration(
+            flower = AvatarFlowerConfiguration.Dandelion(),
+            color = AvatarColorConfiguration(
+                primary = Colors.ProximitySocial,
+                secondary = Colors.HunterGreen,
+                tertial = SharedColors.YELLOW,
+            )
+        )
+    ),
+    LandingStory(
+        valence = .1f,
+        arousal = .3f,
+        contentText = Res.string.landing_story_1_content,
+        resolutionText = Res.string.landing_story_1_resolution,
+        titleText = Res.string.landing_story_1_title,
+        image = Res.drawable.character_woman_0,
+        avatar = AvatarConfiguration(
+            flower = AvatarFlowerConfiguration.Generic(),
+            head = AvatarHeadConfiguration.Piercing(),
+            color = AvatarColorConfiguration(
+                secondary = Colors.Asparagus,
+                tertial = Colors.DutchWhite,
+            )
+        )
+    ),
+    LandingStory(
+        valence = 1f,
+        arousal = .1f,
+        contentText = Res.string.landing_story_2_content,
+        resolutionText = Res.string.landing_story_2_resolution,
+        titleText = Res.string.landing_story_2_title,
+        name = "John",
+        image = Res.drawable.character_man_0,
+        avatar = AvatarConfiguration(
+            flower = AvatarFlowerConfiguration.Sunflower(),
+            color = AvatarColorConfiguration(
+                primary = Colors.ProximityIntimate,
+                secondary = Colors.HunterGreen,
+                tertial = SharedColors.YELLOW,
+            )
+        )
+    ),
+    LandingStory(
+        valence = -.1f,
+        arousal = .3f,
+        contentText = Res.string.landing_story_3_content,
+        resolutionText = Res.string.landing_story_3_resolution,
+        titleText = Res.string.landing_story_3_title,
+        image = Res.drawable.character_man_1,
+        avatar = AvatarConfiguration(
+            flower = AvatarFlowerConfiguration.Cactus(),
+            head = AvatarHeadConfiguration.Piercing(),
+            floor = AvatarFloorConfiguration.Sand(),
+            color = AvatarColorConfiguration(
+                primary = Colors.Asparagus,
+                secondary = Colors.HunterGreen,
+                tertial = SharedColors.YELLOW,
+            )
+        )
+    ),
+)
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-internal fun LargeLayout(verticalPadding: Dp) {
-    val language = Locale.current.language
+internal fun LargeLayout(verticalPadding: Dp, showSignUp: MutableState<Boolean>) {
+    val colors = LocalTheme.current.colors
+    val isCompact = LocalDeviceType.current == WindowWidthSizeClass.Compact
+
+    val carousalScope = rememberCoroutineScope()
+    val storiesPagerState = rememberPagerState(
+        initialPage = 0,
+        pageCount = { landingStories.size }
+    )
+
+    val currentPage = remember { mutableStateOf(0) }
+    val showResolution = remember { mutableStateOf(false) }
+
+    LaunchedEffect(storiesPagerState) {
+        snapshotFlow { storiesPagerState.currentPage }.collectLatest {
+            currentPage.value = it
+        }
+    }
+
 
     Column(Modifier.padding(horizontal = 12.dp)) {
         Spacer(Modifier.height(verticalPadding * 1.5f))
         Row {
-            SelectionContainer(
-                modifier = Modifier.weight(.7f)
-            ) {
+            HorizontalPager(
+                modifier = Modifier
+                    .animateContentSize()
+                    .weight(.8f)
+                    .background(
+                        color = colors.backgroundDark,
+                        shape = LocalTheme.current.shapes.componentShape
+                    )
+                    .padding(12.dp),
+                state = storiesPagerState,
+                key = { landingStories[it].uuid },
+                verticalAlignment = Alignment.Top
+            ) { index ->
+                val story = landingStories[index]
+
                 Column(
                     modifier = Modifier.fillMaxWidth(),
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.spacedBy(8.dp)
+                    horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    Text(
-                        text = stringResource(Res.string.landing_problem_heading),
-                        style = LocalTheme.current.styles.heading.copy(textAlign = TextAlign.Center)
-                    )
+                    AnimatedVisibility(showResolution.value) {
+                        val content = buildTempoStringHeuristic(
+                            text = AnnotatedString(stringResource(story.resolutionText)),
+                            style = LocalTheme.current.styles.regular.toSpanStyle(),
+                            enabled = true,
+                            onFinish = {}
+                        )
 
-                    Quote(
-                        modifier = Modifier.padding(top = 8.dp),
-                        text = stringResource(Res.string.landing_problem_quote_2),
-                        author = "-Petra, 16"
-                    )
-                    Quote(
-                        text = stringResource(Res.string.landing_problem_quote_0),
-                        author = "-Adam, 12"
-                    )
-                    Quote(
-                        text = stringResource(Res.string.landing_problem_quote_1),
-                        author = "-Lucie, 35"
-                    )
+                        Text(
+                            modifier = Modifier
+                                .animateContentSize()
+                                .padding(vertical = 12.dp)
+                                .fillMaxWidth(),
+                            text = content,
+                            style = LocalTheme.current.styles.regular.copy(textAlign = TextAlign.Center)
+                        )
+                    }
+
+                    Column(
+                        modifier = Modifier
+                            .align(Alignment.CenterHorizontally)
+                            .fillMaxWidth(if (isCompact) 1f else .85f)
+                            .padding(top = 24.dp)
+                            .background(
+                                color = colors.backgroundLight,
+                                shape = RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp)
+                            )
+                            .padding(
+                                start = if (isCompact) 4.dp else 8.dp,
+                                end = if (isCompact) 8.dp else 16.dp,
+                                bottom = if (isCompact) 12.dp else 24.dp
+                            ),
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                        BottomSheetDefaults.DragHandle(color = colors.secondary)
+
+                        Row(
+                            modifier = Modifier.padding(horizontal = 12.dp),
+                            horizontalArrangement = Arrangement.spacedBy(6.dp),
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Image(
+                                modifier = Modifier
+                                    .size(62.dp)
+                                    .background(
+                                        color = (story.avatar.color.primary ?: colors.primary).copy(
+                                            alpha = .7f
+                                        ),
+                                        shape = LocalTheme.current.shapes.rectangularActionShape
+                                    )
+                                    .clip(LocalTheme.current.shapes.rectangularActionShape),
+                                painter = painterResource(story.image),
+                                contentDescription = null,
+                                contentScale = ContentScale.Crop
+                            )
+                            Column(
+                                modifier = Modifier
+                                    .weight(1f)
+                                    .padding(start = 6.dp, top = 8.dp)
+                            ) {
+                                Text(
+                                    text = story.name ?: "You",
+                                    style = LocalTheme.current.styles.category
+                                )
+                                Text(
+                                    text = story.name?.let { name ->
+                                        "@${name.lowercase()}:augmy.org"
+                                    } ?: "@you:augmy.org",
+                                    style = LocalTheme.current.styles.category.copy(
+                                        color = LocalTheme.current.colors.disabled
+                                    )
+                                )
+                            }
+                            ComponentHeaderButton(
+                                endImageVector = Icons.AutoMirrored.Outlined.Chat,
+                                text = stringResource(Res.string.landing_demo_others_action_interact),
+                                onClick = {}
+                            )
+                        }
+
+                        AnimatedGarden(
+                            modifier = Modifier
+                                .padding(top = 12.dp)
+                                .requiredWidthIn(max = 400.dp),
+                            configuration = story.avatar,
+                            valence = story.valence,
+                            arousal = story.arousal,
+                            seed = story.avatar.toString()
+                        )
+                        InfoBox(
+                            modifier = Modifier.padding(vertical = 4.dp, horizontal = 12.dp),
+                            text = stringResource(Res.string.animated_garden_helper),
+                            style = LocalTheme.current.styles.regular
+                        )
+                    }
                 }
             }
 
-            Spacer(Modifier.weight(.1f))
+            Spacer(modifier = Modifier.weight(.1f))
 
             Column(
-                modifier = Modifier
-                    .weight(.8f, fill = false)
-                    .padding(top = 6.dp)
+                modifier = Modifier.weight(.6f),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.spacedBy(8.dp)
             ) {
-                SelectionContainer {
-                    Text(
-                        text = stringResource(Res.string.landing_garden_description),
-                        style = LocalTheme.current.styles.subheading.copy(textAlign = TextAlign.Center)
-                    )
-                }
-
-                AnimatedGarden()
-            }
-        }
-
-        Spacer(Modifier.height(verticalPadding * 2))
-
-        SelectionContainer(modifier = Modifier.align(Alignment.CenterHorizontally)) {
-            Text(
-                text = stringResource(Res.string.landing_demo_you_heading),
-                style = LocalTheme.current.styles.heading
-            )
-        }
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 10.dp)
-                .background(
-                    color = Colors.ProximityIntimate.copy(alpha = .4f),
-                    shape = LocalTheme.current.shapes.rectangularActionShape
-                ),
-            horizontalArrangement = Arrangement.spacedBy(12.dp)
-        ) {
-            GardenContent(
-                modifier = Modifier
-                    .weight(1f)
-                    .padding(LocalTheme.current.shapes.componentCornerRadius)
-                    .background(
-                        color = LocalTheme.current.colors.backgroundLight,
-                        shape = LocalTheme.current.shapes.componentShape
-                    )
-            )
-            Image(
-                modifier = Modifier
-                    .weight(1f)
-                    .padding(LocalTheme.current.shapes.componentCornerRadius)
-                    .background(
-                        color = LocalTheme.current.colors.backgroundLight,
-                        shape = LocalTheme.current.shapes.componentShape
-                    )
-                    .padding(LocalTheme.current.shapes.componentCornerRadius),
-                painter = painterResource(
-                    if (language == "cs") Res.drawable.app_graph_cs else Res.drawable.app_graph
-                ),
-                contentDescription = null,
-                contentScale = ContentScale.FillWidth
-            )
-            Image(
-                modifier = Modifier
-                    .weight(1f)
-                    .padding(LocalTheme.current.shapes.componentCornerRadius)
-                    .background(
-                        color = LocalTheme.current.colors.backgroundLight,
-                        shape = LocalTheme.current.shapes.componentShape
-                    )
-                    .padding(LocalTheme.current.shapes.componentCornerRadius),
-                painter = painterResource(
-                    if (language == "cs") Res.drawable.app_calendar_cs else Res.drawable.app_calendar
-                ),
-                contentDescription = null,
-                contentScale = ContentScale.FillWidth
-            )
-        }
-        SelectionContainer(
-            modifier = Modifier
-                .padding(top = 2.dp)
-                .align(Alignment.End)
-        ) {
-            Text(
-                text = stringResource(Res.string.landing_demo_disclaimer),
-                style = LocalTheme.current.styles.regular.copy(
-                    fontSize = 14.sp,
-                    color = LocalTheme.current.colors.disabled
-                )
-            )
-        }
-
-        Spacer(Modifier.height(verticalPadding))
-
-        SelectionContainer(
-            modifier = Modifier
-                .align(Alignment.CenterHorizontally)
-                .padding(top = verticalPadding)
-        ) {
-            Text(
-                text = stringResource(Res.string.landing_demo_others_heading),
-                style = LocalTheme.current.styles.heading.copy(textAlign = TextAlign.Center)
-            )
-        }
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 10.dp)
-                .background(
-                    color = Colors.ProximityContacts.copy(alpha = .4f),
-                    shape = LocalTheme.current.shapes.rectangularActionShape
-                )
-        ) {
-            DemoOthersUser(modifier = Modifier.weight(1f))
-            Spacer(Modifier.weight(.3f))
-            Row(
-                modifier = Modifier.weight(.7f),
-                horizontalArrangement = Arrangement.spacedBy(12.dp)
-            ) {
-                Image(
-                    modifier = Modifier
-                        .weight(1f)
-                        .padding(LocalTheme.current.shapes.componentCornerRadius)
-                        .background(
-                            color = LocalTheme.current.colors.backgroundLight,
-                            shape = LocalTheme.current.shapes.componentShape
-                        )
-                        .padding(LocalTheme.current.shapes.componentCornerRadius),
-                    painter = painterResource(
-                        if (language == "cs") Res.drawable.app_home_cs else Res.drawable.app_home
-                    ),
-                    contentDescription = null,
-                    contentScale = ContentScale.FillWidth
-                )
-            }
-        }
-        SelectionContainer(
-            modifier = Modifier
-                .padding(top = 2.dp)
-                .align(Alignment.End)
-        ) {
-            Text(
-                text = stringResource(Res.string.landing_demo_disclaimer),
-                style = LocalTheme.current.styles.regular.copy(
-                    fontSize = 14.sp,
-                    color = LocalTheme.current.colors.disabled
-                )
-            )
-        }
-
-        Spacer(Modifier.height(verticalPadding * 2))
-    }
-}
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun DemoOthersUser(modifier: Modifier = Modifier) {
-    val isCompact = LocalDeviceType.current == WindowWidthSizeClass.Compact
-
-    Column(modifier = modifier) {
-        val item = NetworkItemIO(
-            displayName = "jacob",
-            userId = "@jacob:augmy.org",
-            lastMessage = stringResource(Res.string.landing_demo_others_message)
-        )
-
-        NetworkItemRow(
-            modifier = Modifier
-                .padding(LocalTheme.current.shapes.componentCornerRadius)
-                .background(
-                    color = LocalTheme.current.colors.backgroundLight,
-                    shape = LocalTheme.current.shapes.componentShape
-                )
-                .padding(start = 6.dp, end = 10.dp),
-            avatarSize = if (isCompact) 28.dp else 48.dp,
-            data = item,
-            content = {
-                Row(
-                    modifier = Modifier.align(Alignment.CenterVertically),
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.spacedBy(8.dp)
-                ) {
-                    val unreadCount = 2
-                    AnimatedVisibility(
-                        visible = unreadCount > 0,
-                        exit = scaleOut(
-                            animationSpec = spring(
-                                dampingRatio = Spring.DampingRatioNoBouncy,
-                                stiffness = Spring.StiffnessMedium
-                            ),
-                            transformOrigin = TransformOrigin.Center
-                        ) + fadeOut(),
-                        enter = scaleIn(
-                            animationSpec = spring(
-                                dampingRatio = Spring.DampingRatioMediumBouncy,
-                                stiffness = Spring.StiffnessMedium
-                            ),
-                            transformOrigin = TransformOrigin.Center
-                        ) + fadeIn(),
-                    ) {
-                        Box(
-                            modifier = Modifier
-                                .padding(end = 4.dp)
-                                .background(
-                                    color = LocalTheme.current.colors.brandMain,
+                landingStories.forEachIndexed { index, story ->
+                    Row(
+                        modifier = Modifier
+                            .align(if (index % 2 == 0) Alignment.Start else Alignment.End)
+                            .padding(bottom = 16.dp)
+                            .scalingClickable(scaleInto = .985f) {
+                                showResolution.value = false
+                                carousalScope.coroutineContext.cancelChildren()
+                                carousalScope.launch {
+                                    storiesPagerState.animateScrollToPage(index)
+                                }
+                            }
+                            .then(
+                                if(currentPage.value == index) {
+                                    Modifier.background(
+                                        color = colors.backgroundDark,
+                                        shape = LocalTheme.current.shapes.rectangularActionShape
+                                    )
+                                }else Modifier.border(
+                                    width = 2.dp,
+                                    color = colors.backgroundDark,
                                     shape = LocalTheme.current.shapes.rectangularActionShape
                                 )
-                                .minWidthEqualsHeight()
+                            )
+                            .padding(10.dp),
+                        horizontalArrangement = Arrangement.spacedBy(12.dp)
+                    ) {
+                        if (index % 2 == 0) {
+                            Image(
+                                painter = painterResource(story.image),
+                                contentDescription = null
+                            )
+                        }
+
+                        Column(
+                            modifier = Modifier
+                                .weight(1f)
+                                .animateContentSize()
                         ) {
                             Text(
-                                modifier = Modifier
-                                    .padding(vertical = 4.dp, horizontal = 6.dp)
-                                    .align(Alignment.Center),
-                                text = when {
-                                    unreadCount > 99 -> "99+"
-                                    unreadCount > 0 -> unreadCount.toString()
-                                    else -> ""
-                                },
-                                style = LocalTheme.current.styles.category.copy(
-                                    color = LocalTheme.current.colors.brandMainDark
+                                modifier = Modifier.align(
+                                    if (index % 2 == 0) Alignment.Start else Alignment.End
+                                ),
+                                text = stringResource(story.titleText),
+                                style = if (currentPage.value == index) {
+                                    LocalTheme.current.styles.title
+                                }else LocalTheme.current.styles.regular
+                            )
+                            if (currentPage.value == index) {
+                                val content = buildTempoStringHeuristic(
+                                    text = AnnotatedString(stringResource(story.contentText)),
+                                    style = LocalTheme.current.styles.regular.toSpanStyle(),
+                                    enabled = true,
+                                    onFinish = {
+                                        showResolution.value = true
+                                    }
                                 )
+
+                                Text(
+                                    modifier = Modifier
+                                        .background(
+                                            color = colors.backgroundLight,
+                                            shape = LocalTheme.current.shapes.rectangularActionShape
+                                        )
+                                        .padding(vertical = 8.dp, horizontal = 12.dp),
+                                    text = content,
+                                    style = LocalTheme.current.styles.regular.copy(
+                                        fontStyle = FontStyle.Italic
+                                    )
+                                )
+                            }
+                        }
+
+                        if (index % 2 != 0) {
+                            Image(
+                                painter = painterResource(story.image),
+                                contentDescription = null
                             )
                         }
                     }
-
-                    MiniatureIndicator(
-                        valence = Emotion.Fulfillment.valence,
-                        arousal = Emotion.Fulfillment.arousal,
-                        seed = 101L
-                    )
                 }
-            }
-        )
-
-        Column(
-            modifier = Modifier
-                .align(Alignment.CenterHorizontally)
-                .fillMaxWidth(if (isCompact) 1f else .85f)
-                .padding(top = 24.dp)
-                .background(
-                    color = LocalTheme.current.colors.backgroundLight,
-                    shape = RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp)
-                )
-                .padding(
-                    start = if (isCompact) 4.dp else 8.dp,
-                    end = if (isCompact) 8.dp else 16.dp,
-                    bottom = if (isCompact) 12.dp else 24.dp
-                ),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            BottomSheetDefaults.DragHandle(color = LocalTheme.current.colors.secondary)
-
-            Column(
-                modifier = Modifier.padding(start = 8.dp),
-                verticalArrangement = Arrangement.spacedBy(6.dp)
-            ) {
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(top = 16.dp),
-                    horizontalArrangement = Arrangement.spacedBy(8.dp)
-                ) {
-                    Box {
-                        AvatarImage(
-                            modifier = Modifier.sizeIn(
-                                maxWidth = 125.dp,
-                                maxHeight = 125.dp
-                            ),
-                            media = item.avatar,
-                            name = item.displayName,
-                            tag = item.tag,
-                            animate = true
-                        )
-                        Box(
-                            modifier = Modifier
-                                .align(Alignment.BottomEnd)
-                                .size(24.dp)
-                                .background(
-                                    color = LocalTheme.current.colors.backgroundLight,
-                                    shape = CircleShape
-                                )
-                                .padding(2.dp)
-                                .background(
-                                    color = SharedColors.GREEN_CORRECT,
-                                    shape = CircleShape
-                                )
-                        )
-                    }
-                    Text(
-                        modifier = Modifier.padding(top = 4.dp),
-                        text = buildAnnotatedString {
-                            item.displayName?.let {
-                                withStyle(SpanStyle(fontSize = LocalTheme.current.styles.subheading.fontSize)) {
-                                    append(it)
-                                }
-                            }
-                            item.userId?.let { userId ->
-                                withStyle(SpanStyle(color = LocalTheme.current.colors.disabled)) {
-                                    append(" (${userId})")
-                                }
-                            }
-                        },
-                        style = LocalTheme.current.styles.regular.copy(
-                            color = LocalTheme.current.colors.secondary
-                        )
-                    )
-                }
-                Row(
-                    horizontalArrangement = Arrangement.spacedBy(6.dp, Alignment.End)
-                ) {
-                    ComponentHeaderButton(
-                        modifier = Modifier.animateContentSize(),
-                        endImageVector = Icons.Outlined.TrackChanges,
-                        text = stringResource(Res.string.landing_demo_others_action_closeness),
-                        onClick = {}
-                    )
-                    ComponentHeaderButton(
-                        endImageVector = Icons.AutoMirrored.Outlined.Chat,
-                        text = stringResource(Res.string.landing_demo_others_action_interact),
-                        onClick = {}
-                    )
-                }
-            }
-
-            Column(
-                Modifier
-                    .padding(top = 32.dp)
-                    .requiredWidthIn(max = 250.dp)
-            ) {
-                val density = LocalDensity.current
-                val potHeightDp = remember { mutableStateOf(0f) }
-
-                Box(
-                    Modifier
-                        .padding(end = 4.dp)
-                        .fillMaxWidth(.917f)
-                        .align(Alignment.End),
-                    contentAlignment = Alignment.BottomCenter
-                ) {
-                    RandomFlowerField(
-                        baseString = "garden",
-                        potHeightDp = potHeightDp,
-                        growth = 1f,
-                        arousal = 0.1f
-                    )
-                }
-                Image(
-                    modifier = Modifier
-                        .zIndex(10f)
-                        .onSizeChanged { coordinates ->
-                            potHeightDp.value = with(density) { coordinates.height.toDp().value }
-                        },
-                    painter = painterResource(Res.drawable.head),
-                    contentDescription = null,
-                    colorFilter = ColorFilter.tint(color = LocalTheme.current.colors.gardenHead),
-                    alpha = .6f,
-                    contentScale = ContentScale.FillWidth
-                )
             }
         }
-    }
-}
 
-fun Modifier.minWidthEqualsHeight(): Modifier = layout { measurable, constraints ->
-    val placeable = measurable.measure(constraints)
-    val width = maxOf(placeable.width, placeable.height)
-    val height = placeable.height
-    layout(width, height) {
-        placeable.placeRelative((width - placeable.width) / 2, 0)
+        BrandHeaderButton(
+            modifier = Modifier
+                .padding(top = 12.dp)
+                .align(Alignment.CenterHorizontally),
+            text = stringResource(Res.string.landing_story_cta)
+        ) {
+            showSignUp.value = true
+        }
+
+        Spacer(Modifier.height(verticalPadding * 2))
     }
 }
