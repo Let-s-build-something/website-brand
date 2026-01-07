@@ -3,38 +3,17 @@
 
   <string name="website_footer">© %1$d Augmy Interactive</string>
 
-  <string name="landing_header_heading">The New Era of Communication</string>
-  <string name="landing_header_content">Talk online like you do in real life. Digital communication, reflective of the physical you, with agency in your hands.</string>
-
-  <string name="landing_messages_heading">Regular chat</string>
-  <string name="landing_messages_text">Billions of people all over the world are being misunderstood and can't express themselves.\n\nPeople want to express themselves while messaging but there was no natural ways of showing that.</string>
-  <string name="landing_message_0">how are you?</string>
-  <string name="landing_message_1">I'm okay</string>
-  <string name="landing_message_2">You sure? After yesterday...</string>
-  <string name="landing_message_3">I'm okay</string>
-  <string name="landing_message_4">Okay</string>
-
-  <string name="landing_messages_enhanced_heading">Powered by Augmy</string>
-  <string name="landing_messages_enhanced_text">Imagine being understood in how you said it, not just what you said. We invent new ways for expressing what you feel beyond just what you type.</string>
-  <string name="landing_message_0_enhanced">how are you?</string>
-  <string name="landing_message_1_enhanced">I'm okay</string>
-  <string name="landing_message_2_enhanced">Dude I really didn't mean it, I'm sorry...</string>
-  <string name="landing_message_3_enhanced">Oh, I thought you did it purposefully. It's alright</string>
-  <string name="landing_message_4_enhanced">cool cool cool</string>
-  <string name="landing_message_5_enhanced">beer tomorrow?</string>
-  <string name="landing_message_6_enhanced">you bet</string>
-
   <string name="category_intimate">Intimate</string>
   <string name="category_personal">Personal</string>
   <string name="category_social">Social</string>
   <string name="category_public">Public</string>
 
-  <string name="landing_heading_preprint">Tired of deciphering?</string>
   <string name="landing_heading">Compass of how you and your favorite people feel</string>
-  <string name="landing_heading_description">App for those, who care how others feel.\nIn real-time, with no annoying questionnaires or check-ins.</string>
-  <string name="landing_sign_up">Upcoming beta release</string>
+  <string name="landing_heading_prefix">App for those, who care.</string>
+  <string name="landing_heading_suffix">In real-time, with no annoying questionnaires or check-ins.</string>
+
+  <string name="landing_sign_up">Join the waiting list</string>
   <string name="landing_sign_up_send">Count me in!</string>
-  <string name="landing_sign_up_disabled">Sign up closed.</string>
   <string name="landing_sign_up_hint">Your email (the real one, pls)</string>
   <string name="landing_sign_up_info">Closed release launch in %1$s</string>
   <string name="landing_sign_up_info_slots">Free slots left: %1$d</string>
@@ -43,19 +22,45 @@
   <string name="landing_problem_quote_0">When you feel bad, there's no energy or time to explain.</string>
   <string name="landing_problem_quote_1">She always responds with „I'm okay“ or „I'm fine“. I don't know what's behind that.</string>
   <string name="landing_problem_quote_2">I don't want to burden them. So I keep it for myself.</string>
-  <string name="landing_heading_message_0">How are you?</string>
-  <string name="landing_heading_message_1">I'm good</string>
-  <string name="landing_social_circle_heading">People Are Not Ones and Zeros</string>
-  <string name="landing_social_circle_text">Friend list? Followers? Do those really reflect your relationships? "Friend" or "not friend"? Forget about shallow, meaningless labels. Welcome to a social space built with depth in mind.</string>
 
+  <string name="landing_story_0_title">Are you okay?</string>
+  <string name="landing_story_0_content">Emma hasn’t really been replying much these past few weeks.\nI didn’t want to keep spamming her with “are you ok?”, but I couldn’t shake the feeling something was up.</string>
+  <string name="landing_story_0_resolution">From the flowers, it was pretty clear she's down. So we asked her to join us tonight, no pressure, no big questions.\nShe didn’t have to explain anything; we just responded to what we could see.</string>
+
+  <string name="landing_story_1_title">How was school?</string>
+  <string name="landing_story_1_content">When I get home from school, I’m completely wiped.\nEverything annoys me, but I don’t want to talk about it. I just go to my room and hope nobody asks how my day was.</string>
+  <string name="landing_story_1_resolution">Now my parents get it when I’m having a rough day.\nI don’t have to explain anything. They see my flowers wilting and give me some space.</string>
+
+  <string name="landing_story_2_title">How was your day?</string>
+  <string name="landing_story_2_content">When he’s on his way home, I never know which version of him I’m getting. Exhausted, annoyed, or totally fine.\nOne tiny thing can ruin the whole evening.</string>
+  <string name="landing_story_2_resolution">Clearly a good day. Time to celebrate!</string>
+
+  <string name="landing_story_3_title">I'm fine.</string>
+  <string name="landing_story_3_content">I’m on the tram, headphones blasting metal because I’m still pissed after that test.\nI’m just scrolling Instagram on autopilot. Everything annoys me.</string>
+  <string name="landing_story_3_resolution">Augmy can tell it’s not “nothing.” Music, screen time, and sleep from the last few days show up in my flowers.\nBefore I even get home, my friends can see my garden isn’t doing hot today.Game night!</string>
+  <string name="landing_story_cta">Say it without words</string>
+
+  <string name="animated_garden_helper">Gardens hint at how others feel. They bloom as mood improves and sway as intensity grows.</string>
+
+  <string name="landing_demo_you_automatic_analysis">Automatic analysis</string>
+  <string name="landing_demo_you_music">Music</string>
+  <string name="landing_demo_you_screen_time">Screen time</string>
+  <string name="landing_demo_you_health">Smart watch</string>
   <string name="landing_demo_you_heading">What you see</string>
+  <string name="landing_demo_you_content">Take care for your inner garden.</string>
+  <string name="landing_demo_you_cta">Become a gardener</string>
+
   <string name="landing_demo_others_heading">What others see</string>
+  <string name="landing_demo_others_content">Never worry alone.</string>
+  <string name="landing_demo_others_cta">See how others feel</string>
   <string name="landing_demo_others_message">You: how come your flower is so chill?:D</string>
   <string name="landing_demo_others_action_closeness">Closeness</string>
   <string name="landing_demo_others_action_interact">Chat</string>
-  <string name="landing_demo_disclaimer">*Prototype visuals, subject to change.</string>
-  <string name="landing_crisis_heading">This time, let's connect meaningfully</string>
-  <string name="landing_crisis_description">It starts with you, family and friends, and then professionals. Augmy is the bridge connecting you.</string>
+  <string name="landing_demo_disclaimer">*Early visuals, subject to change.</string>
+
+  <string name="landing_summary_heading">How does it work?</string>
+  <string name="landing_summary_description">Automatically track mood from music, screen time, and wearables. Share it only with the circles you choose, and see how others feel.</string>
+  <string name="landing_summary_action">I've got questions</string>
 
   <string name="wellbeing_garden_info_mechanics">This is your garden — it grows with you. When you’re low, it feels it too. As your mood steadies and brightens, the garden blooms right along with you.</string>
   <string name="wellbeing_garden_sharing_count">You’re opening up to %1$d people.</string>
@@ -100,12 +105,14 @@
   <string name="contacts_workplace_value">Chrastavska 89/68, Prague</string>
   <string name="contacts_email">Email</string>
   <string name="contacts_email_value">jakub.kostka@augmy.org</string>
+  <string name="contacts_augmy">Augmy</string>
+  <string name="contacts_augmy_value">@jacob:augmy.org</string>
   <string name="contacts_phone">Mobile</string>
   <string name="contacts_phone_value">+420 774 907 358</string>
   <string name="kofi_link_text">Support us</string>
   <string name="contacts_twitter">https://www.twitter.com/AugmyInteractiv</string>
   <string name="contacts_instagram">https://www.instagram.com/augmy_interactive</string>
-  <string name="contacts_linkedin">https://www.linkedin.com/company/augmy-interactive</string>
+  <string name="contacts_linkedin">https://www.linkedin.com/company/augmy</string>
   <string name="contacts_bluesky">https://bsky.app/profile/augmyinteractive.bsky.social</string>
   <string name="contacts_kofi">https://ko-fi.com/augmy</string>
   <string name="contacts_discord">https://discord.gg/TFn8u9AE</string>
@@ -115,7 +122,7 @@
   <string name="contacts_linkedin_tag">@augmy-interactive</string>
   <string name="contacts_bluesky_tag">@augmyinteractive.bsky.social</string>
 
-  <string name="about_content_0">We understand the limitations of technology and will never claim it can replace a real human connection. Yet we also believe technology is the tool that can make a positive change. Augmy is a promise of technology (the one already embedded in everyone's daily life) to embrace the humanness in our interactions and connections online.</string>
+  <string name="about_content_0">We understand the limitations of technology and will never claim to replace a real human connection. Yet we also believe technology is the tool that can make a positive change. Augmy is a promise of technology (the one already embedded in everyone's daily life) to embrace the humanness in our interactions and connections online.</string>
   <string name="about_content_1">We are humans too, and much of our motivation and inspiration comes from real struggles we, or the people around us, have experienced. That’s why we also want to hear what makes it hard for <b>you</b> to connect with others, and how we can improve it. We are here to tackle real problems, not just to build „cool“ stuff (while we also do that, of course:-D).</string>
   <string name="about_future_content">There's so much that we want to create together with you. But one step at a time. First, let's make sure we all share our feelings and truly listen to people around us.</string>
   <string name="about_title_jacob">CEO</string>
@@ -147,6 +154,30 @@
   <string name="about_business_footer_link_0_url">mailto:brand@augmy.org</string>
   <string name="about_business_footer_link_1">schedule a call</string>
   <string name="about_business_footer_link_1_url">https://calendar.app.google/YK5wVD5Eq3n2BQ1L6</string>
+
+  <string name="landing_illustrator_credit">All illustrations are the original work of Tereza Born.</string>
+  <string name="landing_illustrator_credit_link_text">Tereza Born</string>
+
+  <string name="faq_heading">Most commonly asked questions</string>
+  <string name="faq_0_question">Can I choose who I share with?</string>
+  <string name="faq_0_answer">Yes. You can group people by closeness and decide what each circle (group) sees. This replaces the outdated "friend list" system.</string>
+  <string name="faq_1_question">What exactly is being shared?</string>
+  <string name="faq_1_answer">Just the latest flower state. Calculated as a relative change in your mood compared to the days before. We intend to advance this further in the future: splitting short-term (a flower) and long-term (a tree) changes.</string>
+  <string name="faq_2_question">How does automatic analysis work?</string>
+  <string name="faq_2_answer">It combines music, weather, screen time, and health (smart watch/ring). You associate the different playlists, artists, and apps you use with feelings. Then, in the background, it is evaluated and estimates your mood based on the amount of listening time/use time.\nWith health, we use custom anonymized machine learning models.\nThe raw data and the context we use is never stored in our databases. Instead, it stays in the app.</string>
+  <string name="faq_3_question">What if the analysis is wrong?</string>
+  <string name="faq_3_answer">Any hour of the day can be altered in your calendar or through a diary. We work on improving our system and bringing personalization, which will significantly improve things in the future.</string>
+  <string name="faq_4_question">Is it secure?</string>
+  <string name="faq_4_answer">Augmy is built on end-to-end encryption. So sharing your mood is the same as sending a message through WhatsApp or Signal.</string>
+  <string name="faq_5_question">How do you handle my data?</string>
+  <string name="faq_5_answer">We don't, and never will, sell any of your data, nor will we provide it to any third party. Whenever possible, your data stays on the device, or it is encrypted en route and minimally stored.</string>
+  <string name="faq_6_question">What about therapists?</string>
+  <string name="faq_6_answer">The most impactful actors in improving mental well-being are you, people around you, and professionals. We intend to bring all three together and focus on motivating all parties involved. For example, these include family plans, monthly recaps, gamification, and professional reviews with personalized recommendations.</string>
+  <string name="faq_7_question">Won’t people just annoy me more?</string>
+  <string name="faq_7_answer">States like “don’t ask” are important, and they’re on our roadmap.\nThat said, it’s worth noting the challenge isn’t only about the difficulty of sharing emotions and mood. Often it’s also about the relationship itself and how we communicate. We want to step up as a mediator where it makes sense and help whenever we can. We’re building a network of experts and working hard on it, so hopefully soon :-).\nUntil then, you're the mediator. Take an active role.</string>
+
+  <string name="faq_footer">Question left unanswered?</string>
+  <string name="faq_action">Message us</string>
 
   <string name="about_research_summary">Anyone can talk about the theoretical benefits of their work, but very few actively try to disprove their own theories and assumptions to seek the answers to their questions. Not only is our focus to measure and observe how our solutions affect people and subsequent communication, but we also want to contribute to the collective knowledge about computer-mediated communication. In the form of in-house research and providing the right tools for individuals, groups, and organizations that share our collective quest of advancing science and applying the solutions in practice.</string>
   <string name="about_research_platform_heading">Work with us!</string>

@@ -53,12 +53,12 @@ fun AugmyTheme(
         MaterialTheme(
             colorScheme = ColorScheme(
                 primary = colors.brandMain,
-                onPrimary = colors.tetrial,
+                onPrimary = colors.tertial,
                 primaryContainer = colors.backgroundLight,
                 onPrimaryContainer = colors.backgroundDark,
-                inversePrimary = colors.tetrial,
+                inversePrimary = colors.tertial,
                 secondary = colors.brandMainDark,
-                onSecondary = colors.tetrial,
+                onSecondary = colors.tertial,
                 secondaryContainer = colors.brandMainDark,
                 onSecondaryContainer = colors.primary,
                 tertiary = Color.Transparent,

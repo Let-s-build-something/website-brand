@@ -11,16 +11,14 @@ import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Lightbulb
 import androidx.compose.material3.Icon
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import augmy.interactive.com.theme.LocalTheme
-import augmy.interactive.com.ui.components.AutoResizeText
-import augmy.interactive.com.ui.components.FontSizeRange
 
 @Composable
 fun InfoBox(
@@ -56,14 +54,10 @@ fun InfoBox(
     ) {
         prefixContent?.invoke()
         SelectionContainer(modifier = Modifier.weight(1f)) {
-            AutoResizeText(
+            Text(
                 modifier = Modifier.padding(start = if (prefixContent != null) 8.dp else 0.dp),
                 text = text,
-                style = style,
-                fontSizeRange = FontSizeRange(
-                    min = 2.sp,
-                    max = style.fontSize * 1.5f
-                )
+                style = style
             )
         }
         suffixContent?.invoke()

@@ -14,6 +14,7 @@ import augmy.interactive.com.ui.RoadmapScreen
 import augmy.interactive.com.ui.about.AboutBusinessScreen
 import augmy.interactive.com.ui.about.AboutResearchScreen
 import augmy.interactive.com.ui.about.AboutScreen
+import augmy.interactive.com.ui.faq.FaqScreen
 import augmy.interactive.com.ui.landing.LandingScreen
 
 val DEFAULT_START_DESTINATION = NavigationNode.Landing.route
@@ -36,6 +37,9 @@ fun NavigationHost(
     ) {
         composable(NavigationNode.Landing.route) {
             LandingScreen(model)
+        }
+        composable(NavigationNode.Faq.route) {
+            FaqScreen()
         }
         composable(NavigationNode.BusinessAbout.route) {
             AboutBusinessScreen()

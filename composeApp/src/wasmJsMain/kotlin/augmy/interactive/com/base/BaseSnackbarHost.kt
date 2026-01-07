@@ -31,13 +31,13 @@ fun BaseSnackbarHost(
                 }else LocalTheme.current.colors.brandMainDark,
                 contentColor = if((data.visuals as? CustomSnackbarVisuals)?.isError == true) {
                     Color.White
-                }else LocalTheme.current.colors.tetrial,
+                }else LocalTheme.current.colors.tertial,
                 actionColor = if((data.visuals as? CustomSnackbarVisuals)?.isError == true) {
                     Color.White
-                }else LocalTheme.current.colors.tetrial,
+                }else LocalTheme.current.colors.tertial,
                 dismissActionContentColor = if((data.visuals as? CustomSnackbarVisuals)?.isError == true) {
                     Color.White
-                }else LocalTheme.current.colors.tetrial,
+                }else LocalTheme.current.colors.tertial,
             )
         }
     )

@@ -56,10 +56,6 @@ import kotlinx.datetime.toLocalDateTime
 import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.stringResource
 import website_brand.composeapp.generated.resources.Res
-import website_brand.composeapp.generated.resources.contacts_bluesky
-import website_brand.composeapp.generated.resources.contacts_bluesky_tag
-import website_brand.composeapp.generated.resources.contacts_discord
-import website_brand.composeapp.generated.resources.contacts_discord_tag
 import website_brand.composeapp.generated.resources.contacts_instagram
 import website_brand.composeapp.generated.resources.contacts_instagram_tag
 import website_brand.composeapp.generated.resources.contacts_linkedin
@@ -199,22 +195,11 @@ fun FooterScreenContent(modifier: Modifier = Modifier) {
             horizontalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             SocialLogo(
-                tag = Res.string.contacts_discord_tag,
-                link = Res.string.contacts_discord,
-                asset = Asset.Logo.Discord,
-                tint = if(isDarkTheme) Color.White else Color.Black
-            )
-            SocialLogo(
                 size = 28.dp,
                 tag = Res.string.contacts_twitter_tag,
                 link = Res.string.contacts_twitter,
                 asset = Asset.Logo.Twitter,
                 tint = if(isDarkTheme) Color.White else Color.Black
-            )
-            SocialLogo(
-                tag = Res.string.contacts_bluesky_tag,
-                link = Res.string.contacts_bluesky,
-                asset = Asset.Logo.Bluesky
             )
             SocialLogo(
                 tag = Res.string.contacts_instagram_tag,

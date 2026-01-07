@@ -16,7 +16,7 @@ object LightAppColors: BaseColors {
     override val disabledComponent: Color = Colors.Coffee18
     override val backgroundContrast: Color = Colors.AzureWebDark
 
-    override val tetrial: Color = Colors.DutchWhite
+    override val tertial: Color = Colors.DutchWhite
 
     override val quartial: Color = Colors.AtomicTangerine
 

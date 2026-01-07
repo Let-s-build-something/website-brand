@@ -14,7 +14,7 @@ interface BaseColors {
     val backgroundContrast: Color
 
     /** contrasting color to the brand color */
-    val tetrial: Color
+    val tertial: Color
 
     /** contrasting color to the brand and tetrial color */
     val quartial: Color

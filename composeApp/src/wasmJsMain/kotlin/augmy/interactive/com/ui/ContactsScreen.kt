@@ -31,9 +31,14 @@ import augmy.interactive.com.base.ModalScreenContent
 import augmy.interactive.com.data.MediaIO
 import augmy.interactive.com.theme.LocalTheme
 import augmy.interactive.com.ui.components.AvatarImage
+import augmy.interactive.com.ui.components.buildAnnotatedLink
 import augmy.interactive.com.ui.components.buildAnnotatedLinkString
+import kotlinx.browser.window
+import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import website_brand.composeapp.generated.resources.Res
+import website_brand.composeapp.generated.resources.contacts_augmy
+import website_brand.composeapp.generated.resources.contacts_augmy_value
 import website_brand.composeapp.generated.resources.contacts_email
 import website_brand.composeapp.generated.resources.contacts_email_value
 import website_brand.composeapp.generated.resources.contacts_heading
@@ -41,6 +46,7 @@ import website_brand.composeapp.generated.resources.contacts_phone
 import website_brand.composeapp.generated.resources.contacts_phone_value
 import website_brand.composeapp.generated.resources.contacts_workplace
 import website_brand.composeapp.generated.resources.contacts_workplace_value
+import website_brand.composeapp.generated.resources.logo_monochrome
 
 @Composable
 fun ContactsScreen() {
@@ -62,7 +68,6 @@ fun ContactsScreen() {
                 }else {
                     LargeLayout(
                         emailValue = emailValue,
-                        verticalPadding = verticalPadding,
                         horizontalPadding = horizontalPadding
                     )
                 }
@@ -126,7 +131,7 @@ private fun CompactLayout(
                         modifier = Modifier.size(32.dp),
                         imageVector = Icons.Outlined.LocationCity,
                         contentDescription = null,
-                        tint = LocalTheme.current.colors.secondary
+                        tint = LocalTheme.current.colors.disabled
                     )
                     Text(
                         text = stringResource(Res.string.contacts_workplace),
@@ -152,7 +157,7 @@ private fun CompactLayout(
                         modifier = Modifier.size(32.dp),
                         imageVector = Icons.Outlined.AlternateEmail,
                         contentDescription = null,
-                        tint = LocalTheme.current.colors.secondary
+                        tint = LocalTheme.current.colors.disabled
                     )
                     Text(
                         text = stringResource(Res.string.contacts_email),
@@ -176,9 +181,42 @@ private fun CompactLayout(
                 ) {
                     Icon(
                         modifier = Modifier.size(32.dp),
+                        painter = painterResource(Res.drawable.logo_monochrome),
+                        contentDescription = null,
+                        tint = LocalTheme.current.colors.disabled
+                    )
+                    Text(
+                        text = stringResource(Res.string.contacts_augmy),
+                        style = LocalTheme.current.styles.regular
+                    )
+                }
+                val userId = stringResource(Res.string.contacts_augmy_value)
+                Text(
+                    text = buildAnnotatedLink(
+                        text = userId,
+                        linkTexts = listOf(userId),
+                        onLinkClicked = { link, _ ->
+                            window.open("https://augmy.org/users/$userId")
+                        }
+                    ),
+                    style = LocalTheme.current.styles.title
+                )
+            }
+            Row(
+                modifier = Modifier.fillMaxWidth().padding(top = 12.dp),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                Row(
+                    modifier = Modifier.padding(end = 6.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
+                    Icon(
+                        modifier = Modifier.size(32.dp),
                         imageVector = Icons.Outlined.Phone,
                         contentDescription = null,
-                        tint = LocalTheme.current.colors.secondary
+                        tint = LocalTheme.current.colors.disabled
                     )
                     Text(
                         text = stringResource(Res.string.contacts_phone),
@@ -199,8 +237,7 @@ private fun CompactLayout(
 @Composable
 private fun LargeLayout(
     emailValue: AnnotatedString,
-    horizontalPadding: Dp,
-    verticalPadding: Dp
+    horizontalPadding: Dp
 ) {
     Row(
         modifier = Modifier
@@ -228,7 +265,7 @@ private fun LargeLayout(
                         modifier = Modifier.size(32.dp),
                         imageVector = Icons.Outlined.LocationCity,
                         contentDescription = null,
-                        tint = LocalTheme.current.colors.secondary
+                        tint = LocalTheme.current.colors.disabled
                     )
                     Text(
                         text = stringResource(Res.string.contacts_workplace),
@@ -252,9 +289,42 @@ private fun LargeLayout(
                 ) {
                     Icon(
                         modifier = Modifier.size(32.dp),
+                        painter = painterResource(Res.drawable.logo_monochrome),
+                        contentDescription = null,
+                        tint = LocalTheme.current.colors.disabled
+                    )
+                    Text(
+                        text = stringResource(Res.string.contacts_augmy),
+                        style = LocalTheme.current.styles.regular
+                    )
+                }
+                val userId = stringResource(Res.string.contacts_augmy_value)
+                Text(
+                    text = buildAnnotatedLink(
+                        text = userId,
+                        linkTexts = listOf(userId),
+                        onLinkClicked = { link, _ ->
+                            window.open("https://augmy.org/users/$userId")
+                        }
+                    ),
+                    style = LocalTheme.current.styles.title
+                )
+            }
+            Row(
+                modifier = Modifier.fillMaxWidth().padding(top = 12.dp),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                Row(
+                    modifier = Modifier.padding(end = 6.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
+                    Icon(
+                        modifier = Modifier.size(32.dp),
                         imageVector = Icons.Outlined.AlternateEmail,
                         contentDescription = null,
-                        tint = LocalTheme.current.colors.secondary
+                        tint = LocalTheme.current.colors.disabled
                     )
                     Text(
                         text = stringResource(Res.string.contacts_email),
@@ -280,7 +350,7 @@ private fun LargeLayout(
                         modifier = Modifier.size(32.dp),
                         imageVector = Icons.Outlined.Phone,
                         contentDescription = null,
-                        tint = LocalTheme.current.colors.secondary
+                        tint = LocalTheme.current.colors.disabled
                     )
                     Text(
                         text = stringResource(Res.string.contacts_phone),

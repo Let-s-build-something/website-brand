@@ -145,10 +145,10 @@ open class DefaultThemeStyles: ThemeStyle {
 
     override val chipColorsDefault: SelectableChipColors
         @Composable get() = FilterChipDefaults.filterChipColors(
-            containerColor = LocalTheme.current.colors.tetrial,
+            containerColor = LocalTheme.current.colors.tertial,
             labelColor = LocalTheme.current.colors.brandMain,
             selectedContainerColor = LocalTheme.current.colors.brandMain,
-            selectedLabelColor = LocalTheme.current.colors.tetrial
+            selectedLabelColor = LocalTheme.current.colors.tertial
         )
 
     override val heading: TextStyle

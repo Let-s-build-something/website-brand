@@ -18,10 +18,6 @@ import augmy.interactive.com.base.theme.isDarkTheme
 import augmy.interactive.com.data.Asset
 import augmy.interactive.com.theme.LocalTheme
 import website_brand.composeapp.generated.resources.Res
-import website_brand.composeapp.generated.resources.contacts_bluesky
-import website_brand.composeapp.generated.resources.contacts_bluesky_tag
-import website_brand.composeapp.generated.resources.contacts_discord
-import website_brand.composeapp.generated.resources.contacts_discord_tag
 import website_brand.composeapp.generated.resources.contacts_instagram
 import website_brand.composeapp.generated.resources.contacts_instagram_tag
 import website_brand.composeapp.generated.resources.contacts_linkedin
@@ -56,22 +52,11 @@ fun SocialMediaBottomSheet(
             horizontalArrangement = Arrangement.spacedBy(4.dp, alignment = Alignment.CenterHorizontally)
         ) {
             SocialLogo(
-                tag = Res.string.contacts_discord_tag,
-                link = Res.string.contacts_discord,
-                asset = Asset.Logo.Discord,
-                tint = if(isDarkTheme) Color.White else Color.Black
-            )
-            SocialLogo(
                 size = 28.dp,
                 tag = Res.string.contacts_twitter_tag,
                 link = Res.string.contacts_twitter,
                 asset = Asset.Logo.Twitter,
                 tint = if(isDarkTheme) Color.White else Color.Black
-            )
-            SocialLogo(
-                tag = Res.string.contacts_bluesky_tag,
-                link = Res.string.contacts_bluesky,
-                asset = Asset.Logo.Bluesky
             )
             SocialLogo(
                 tag = Res.string.contacts_instagram_tag,

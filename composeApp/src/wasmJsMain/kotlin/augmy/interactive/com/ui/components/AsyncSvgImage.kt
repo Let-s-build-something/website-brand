@@ -57,7 +57,7 @@ fun AsyncSvgImage(
                     .zIndex(1f)
                     .requiredSize(18.dp),
                 color = LocalTheme.current.colors.brandMainDark,
-                trackColor = LocalTheme.current.colors.tetrial
+                trackColor = LocalTheme.current.colors.tertial
             )
         }
     }
