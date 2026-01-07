@@ -225,8 +225,8 @@ fun DemoOthersUser(modifier: Modifier = Modifier) {
                 modifier = Modifier
                     .padding(top = 32.dp)
                     .requiredWidthIn(max = 250.dp),
-                configuration = AvatarConfiguration(), // TODO
-                seed = "garden" // TODO
+                configuration = AvatarConfiguration(),
+                seed = "garden"
             )
         }
     }

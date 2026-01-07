@@ -30,7 +30,7 @@ import kotlin.random.Random
 fun AnimatedGarden(
     modifier: Modifier = Modifier,
     configuration: AvatarConfiguration,
-    valence: Float = 0f,
+    valence: Float = 1f,
     arousal: Float = .2f,
     seed: String
 ) {
