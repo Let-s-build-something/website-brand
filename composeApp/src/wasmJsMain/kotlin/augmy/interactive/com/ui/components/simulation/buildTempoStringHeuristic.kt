@@ -26,11 +26,11 @@ fun buildTempoStringHeuristic(
     text: AnnotatedString,
     style: SpanStyle,
     enabled: Boolean,
-    baseDelayMs: Long = 35L,
-    jitterMs: Long = 25L,
+    baseDelayMs: Long = 25L,
+    jitterMs: Long = 15L,
     onFinish: () -> Unit
 ): AnnotatedString {
-    val graphemes = remember(text, key) { mutableStateOf<List<String>>(text.text.chunked(1)) }
+    val graphemes = remember(text, key) { mutableStateOf(text.text.chunked(1)) }
     val emphasisStarts = remember(text, key) { mutableStateOf<Set<Int>>(emptySet()) }
     val generatedTimings = remember(text, key) { mutableStateOf<List<Long>>(emptyList()) }
 
@@ -77,9 +77,9 @@ fun buildTempoStringHeuristic(
 
                 // punctuation pauses
                 d += when (c) {
-                    ',', ';', ':' -> 180L
-                    '.', '!', '?' -> 520L
-                    '\n' -> 700L
+                    ',', ';', ':' -> 130L
+                    '.', '!', '?' -> 320L
+                    '\n' -> 500L
                     ' ' -> 10L
                     else -> 0L
                 }
