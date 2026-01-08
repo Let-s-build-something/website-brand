@@ -32,6 +32,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.intl.Locale
 import androidx.compose.ui.text.style.TextAlign
@@ -443,39 +444,61 @@ fun LandingScreen(model: SharedViewModel) {
                     .minus(12f)
                     .dp
 
-                Image(
-                    modifier = Modifier
-                        .width(screenWidth)
-                        .padding(LocalTheme.current.shapes.componentCornerRadius)
-                        .background(
-                            color = LocalTheme.current.colors.backgroundLight,
-                            shape = LocalTheme.current.shapes.componentShape
-                        )
-                        .padding(LocalTheme.current.shapes.componentCornerRadius),
-                    painter = painterResource(Res.drawable.app_feed),
-                    contentDescription = null,
-                    contentScale = ContentScale.FillWidth
-                )
                 DemoOthersUser(
                     modifier = Modifier
                         .align(Alignment.Bottom)
                         .width(screenWidth)
                 )
-                Image(
-                    modifier = Modifier
-                        .width(screenWidth)
-                        .padding(LocalTheme.current.shapes.componentCornerRadius)
-                        .background(
-                            color = LocalTheme.current.colors.backgroundLight,
-                            shape = LocalTheme.current.shapes.componentShape
-                        )
-                        .padding(LocalTheme.current.shapes.componentCornerRadius),
-                    painter = painterResource(
-                        if (language == "cs") Res.drawable.app_home_cs else Res.drawable.app_home
-                    ),
-                    contentDescription = null,
-                    contentScale = ContentScale.FillWidth
-                )
+                Box {
+                    Image(
+                        modifier = Modifier
+                            .width(screenWidth)
+                            .padding(LocalTheme.current.shapes.componentCornerRadius)
+                            .background(
+                                color = LocalTheme.current.colors.backgroundLight,
+                                shape = LocalTheme.current.shapes.componentShape
+                            )
+                            .padding(LocalTheme.current.shapes.componentCornerRadius),
+                        painter = painterResource(
+                            if (language == "cs") Res.drawable.app_home_cs else Res.drawable.app_home
+                        ),
+                        contentDescription = null,
+                        contentScale = ContentScale.FillWidth
+                    )
+                    Box(
+                        modifier = Modifier
+                            .padding(LocalTheme.current.shapes.componentCornerRadius)
+                            .background(
+                                color = Color.Black.copy(alpha = .3f),
+                                shape = LocalTheme.current.shapes.componentShape
+                            )
+                            .matchParentSize()
+                    )
+                }
+                Box {
+                    Image(
+                        modifier = Modifier
+                            .width(screenWidth)
+                            .padding(LocalTheme.current.shapes.componentCornerRadius)
+                            .background(
+                                color = LocalTheme.current.colors.backgroundLight,
+                                shape = LocalTheme.current.shapes.componentShape
+                            )
+                            .padding(LocalTheme.current.shapes.componentCornerRadius),
+                        painter = painterResource(Res.drawable.app_feed),
+                        contentDescription = null,
+                        contentScale = ContentScale.FillWidth
+                    )
+                    Box(
+                        modifier = Modifier
+                            .padding(LocalTheme.current.shapes.componentCornerRadius)
+                            .background(
+                                color = Color.Black.copy(alpha = .4f),
+                                shape = LocalTheme.current.shapes.componentShape
+                            )
+                            .matchParentSize()
+                    )
+                }
             }
             SelectionContainer(
                 modifier = Modifier

@@ -37,6 +37,7 @@ import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import augmy.interactive.com.base.LocalDeviceType
+import augmy.interactive.com.data.MediaIO
 import augmy.interactive.com.data.NetworkItemIO
 import augmy.interactive.com.theme.LocalTheme
 import augmy.interactive.com.theme.SharedColors
@@ -60,6 +61,10 @@ fun DemoOthersUser(modifier: Modifier = Modifier) {
         val item = NetworkItemIO(
             displayName = "jacob",
             userId = "@jacob:augmy.org",
+            avatar = MediaIO(
+                url = "https://augmy.org/storage/company/kostka_jakub_rectangle.jpg",
+                thumbnail = "https://augmy.org/storage/company/thumbnails/tn_kostka_jakub_rectangle.jpg"
+            ),
             lastMessage = stringResource(Res.string.landing_demo_others_message)
         )
 
@@ -168,7 +173,7 @@ fun DemoOthersUser(modifier: Modifier = Modifier) {
                             media = item.avatar,
                             name = item.displayName,
                             tag = item.tag,
-                            animate = true
+                            animate = false
                         )
                         Box(
                             modifier = Modifier
