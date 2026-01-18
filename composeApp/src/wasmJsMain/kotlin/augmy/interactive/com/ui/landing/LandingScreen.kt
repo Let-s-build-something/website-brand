@@ -87,6 +87,7 @@ import website_brand.composeapp.generated.resources.landing_sign_up_disabled
 import website_brand.composeapp.generated.resources.landing_sign_up_hint
 import website_brand.composeapp.generated.resources.landing_sign_up_info
 import website_brand.composeapp.generated.resources.landing_sign_up_info_slots
+import website_brand.composeapp.generated.resources.landing_sign_up_launched
 import website_brand.composeapp.generated.resources.landing_sign_up_send
 import kotlin.time.Clock
 import kotlin.time.Duration
@@ -182,10 +183,12 @@ fun LandingScreen(model: SharedViewModel) {
             SelectionContainer {
                 Text(
                     modifier = Modifier.animateContentSize(),
-                    text = stringResource(
-                        Res.string.landing_sign_up_info,
-                        durationToLaunch.value?.toPrettyComponents() ?: ""
-                    ),
+                    text = if (durationToLaunch.value?.isNegative() == false) {
+                        stringResource(
+                            Res.string.landing_sign_up_info,
+                            durationToLaunch.value?.toPrettyComponents() ?: ""
+                        )
+                    }else stringResource(Res.string.landing_sign_up_launched),
                     maxLines = 1,
                     style = LocalTheme.current.styles.subheading
                 )
