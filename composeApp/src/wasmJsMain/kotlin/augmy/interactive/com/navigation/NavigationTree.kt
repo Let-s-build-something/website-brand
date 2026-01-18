@@ -1,56 +1,42 @@
 package augmy.interactive.com.navigation
 
-
-/** Main holder of all navigation nodes */
 sealed class NavigationNode {
-
-    /**
-     * Deeplink is the appendix of a brand link, which is shared between all client apps.
-     * Null if deeplink isn't supported
-     */
     abstract val route: String
 
-    /** home/landing screen of the whole app */
-    data object Landing: NavigationNode() {
-        override val route: String = "/"
+    data object Landing : NavigationNode() {
+        override val route = "/"
     }
 
-    /** Business screen for business-related audience */
-    data object BusinessAbout: NavigationNode() {
-        override val route: String = "/business"
+    data object BusinessAbout : NavigationNode() {
+        override val route = "/business"
     }
 
-    /** About screen for scientific audience */
-    data object ResearchAbout: NavigationNode() {
-        override val route: String = "/research"
+    data object ResearchAbout : NavigationNode() {
+        override val route = "/research"
     }
 
-    /** General about screen for the wider public */
-    data object PublicAbout: NavigationNode() {
-        override val route: String = "/about"
+    data object PublicAbout : NavigationNode() {
+        override val route = "/about"
     }
 
-    /** Screen for ways of contacting both the team, and the company */
-    data object Contacts: NavigationNode() {
-        override val route: String = "/contacts"
+    data object Contacts : NavigationNode() {
+        override val route = "/contacts"
     }
 
-    data object Faq: NavigationNode() {
-        override val route: String = "/faq"
+    data object Faq : NavigationNode() {
+        override val route = "/faq"
     }
 
-    data object Login: NavigationNode() {
-        override val route: String = "login?nonce={nonce}&loginToken={loginToken}"
+    data object Login : NavigationNode() {
+        override val route = "/login?nonce={nonce}&loginToken={loginToken}"
     }
 
-    /** Screen for outlining the project's roadmap */
-    data object Roadmap: NavigationNode() {
-        override val route: String = "/roadmap"
+    data object Roadmap : NavigationNode() {
+        override val route = "/roadmap"
     }
 
-    /** Screen for users to remove themselves from the database */
-    data object DeleteMe: NavigationNode() {
-        override val route: String = "/delete-me"
+    data object DeleteMe : NavigationNode() {
+        override val route = "/delete-me"
     }
 
     companion object {
@@ -58,9 +44,9 @@ sealed class NavigationNode {
             Landing.route,
             Faq.route,
             Login.route,
-            "/business",//BusinessAbout.route,
+            BusinessAbout.route,
             ResearchAbout.route,
-            PublicAbout.route,
+            "/about",
             Roadmap.route,
             DeleteMe.route,
             Contacts.route

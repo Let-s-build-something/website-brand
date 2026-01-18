@@ -36,10 +36,11 @@ fun main() {
                 val currentEntry by navController.currentBackStackEntryAsState()
 
                 val initialUrl = remember {
-                    window.location.pathname.removePrefix("/") + window.location.search
+                    window.location.pathname + window.location.search
                 }
 
                 CompositionLocalProvider(LocalOnBackPress provides { window.history.go(-1) }) {
+                    println("kostka_test, initialUrl: $initialUrl")
                     App(
                         navController = navController,
                         startDestination = initialUrl

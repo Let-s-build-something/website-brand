@@ -34,9 +34,13 @@ fun NavigationHost(
         val destinations = allDestinations
         println("kostka_test, start: $startDestination, destinations: $destinations")
 
+
         if (!startDestination.isNullOrBlank()) {
-            val base = startDestination.substringBefore("?")
-            val exists = destinations.any { it.startsWith(base) }
+            val base = startDestination
+                .takeWhile { it != '?' }
+                .takeWhile { it != '&' }
+                .ifBlank { DEFAULT_START_DESTINATION }
+            val exists = destinations.any { it.contains(base) }
             if (exists) startDestination else DEFAULT_START_DESTINATION
         } else {
             DEFAULT_START_DESTINATION
