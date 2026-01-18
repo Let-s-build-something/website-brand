@@ -43,7 +43,7 @@ jobs:
           find "$wasm_dir" -type f -name "*.wasm" -exec brotli -Z {} \;
 
 
-      # Step 7: Upload files to FTP, excluding .wasm files but including .wasm.br files
+            # Step 7: Upload files to FTP, excluding .wasm files but including .wasm.br files
       - name: Upload files to FTP using cURL
         run: |
           base_dir="${{ github.workspace }}/composeApp/build/dist/wasmJs/productionExecutable"
@@ -51,15 +51,20 @@ jobs:
           ftp_username="${{ secrets.FTP_USERNAME }}"
           ftp_password="${{ secrets.FTP_PASSWORD }}"
 
-          # Change to the base directory
+          # Change to the build directory
           cd "$base_dir"
 
-          for file in $(find . -type f ! -name "*.wasm"); do
-            if [[ -f "$file" ]]; then
-              relative_path="$file"
-              ftp_url="ftp://$ftp_server/www/$relative_path"
+          # Loop through files, excluding raw .wasm but including .wasm.br
+          find . -type f ! -name "*.wasm" | while read -r file; do
+            # Remove the leading ./ from the find result
+            relative_path="${file#./}"
+          
+            # For Namecheap Business, the target directory is public_html
+            # Ensure the FTP_URL ends with the relative_path
+            ftp_url="ftp://$ftp_server/public_html/$relative_path"
 
-              # Create directories and upload the file
-              curl --ftp-create-dirs -T "$file" -u "${ftp_username}:${ftp_password}" "$ftp_url"
-            fi
+            echo "Uploading $relative_path to $ftp_url"
+          
+            # Use --ftp-create-dirs to handle subfolders automatically
+            curl --ftp-create-dirs -T "$file" -u "${ftp_username}:${ftp_password}" "$ftp_url"
           done
