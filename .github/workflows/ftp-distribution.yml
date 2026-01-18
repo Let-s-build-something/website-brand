@@ -50,16 +50,21 @@ jobs:
           ftp_server="${{ secrets.FTP_SERVER_DOMAIN }}"
           ftp_username="${{ secrets.FTP_USERNAME }}"
           ftp_password="${{ secrets.FTP_PASSWORD }}"
-
-          # Change to the base directory
+          
+          # Change to the build directory
           cd "$base_dir"
-
-          for file in $(find . -type f ! -name "*.wasm"); do
-            if [[ -f "$file" ]]; then
-              relative_path="$file"
-              ftp_url="ftp://$ftp_server/www/$relative_path"
-
-              # Create directories and upload the file
-              curl --ftp-create-dirs -T "$file" -u "${ftp_username}:${ftp_password}" "$ftp_url"
-            fi
+          
+          # Loop through files, excluding raw .wasm but including .wasm.br
+          find . -type f ! -name "*.wasm" | while read -r file; do
+            # Remove the leading ./ from the find result
+            relative_path="${file#./}"
+          
+            # For Namecheap Business, the target directory is public_html
+            # Ensure the FTP_URL ends with the relative_path
+            ftp_url="ftp://$ftp_server/public_html/$relative_path"
+          
+            echo "Uploading $relative_path to $ftp_url"
+          
+            # Use --ftp-create-dirs to handle subfolders automatically
+            curl --ftp-create-dirs -T "$file" -u "${ftp_username}:${ftp_password}" "$ftp_url"
           done
