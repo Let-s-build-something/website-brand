@@ -16,6 +16,7 @@
   <string name="landing_sign_up_send">Count me in!</string>
   <string name="landing_sign_up_hint">Your email (the real one, pls)</string>
   <string name="landing_sign_up_info">Closed release launch in %1$s</string>
+  <string name="landing_sign_up_launched">We've successfully launched. Join us!</string>
   <string name="landing_sign_up_info_slots">Free slots left: %1$d</string>
   <string name="landing_problem_heading">What people think</string>
   <string name="landing_garden_description">Shared as avatar. Automatic. No exposure.</string>
@@ -57,6 +58,9 @@
   <string name="landing_demo_others_action_closeness">Closeness</string>
   <string name="landing_demo_others_action_interact">Chat</string>
   <string name="landing_demo_disclaimer">*Early visuals, subject to change.</string>
+
+  <string name="login_success">Successfully signed in. Let's return the result to our app:-).</string>
+  <string name="login_success_action">Return to Augmy app</string>
 
   <string name="landing_summary_heading">How does it work?</string>
   <string name="landing_summary_description">Automatically track mood from music, screen time, and wearables. Share it only with the circles you choose, and see how others feel.</string>

@@ -17,6 +17,7 @@
   <string name="landing_sign_up_disabled">První verze uzavřena.</string>
   <string name="landing_sign_up_hint">Tvůj e-mail (ten opravdový, pls)</string>
   <string name="landing_sign_up_info">Vydání první testovací verze za %1$s</string>
+  <string name="landing_sign_up_launched">Úspěšně jsme vydali. Přidej se!</string>
   <string name="landing_sign_up_info_slots">Zbývající volná místa: %1$d</string>
   <string name="landing_problem_heading">Co si lidi myslí</string>
   <string name="landing_garden_description">Sdíleno přes avatar. Automaticky. Bez odhalení.</string>
@@ -58,6 +59,9 @@
   <string name="landing_demo_others_action_closeness">Blízkost</string>
   <string name="landing_demo_others_action_interact">Chat</string>
   <string name="landing_demo_disclaimer">*První vizuály, může se ještě změnit.</string>
+
+  <string name="login_success">Úspěšně přihlášeno. Teď pojďme vrátit výsledek do appky:-).</string>
+  <string name="login_success_action">Vrátit se do Augmy appky</string>
 
   <string name="landing_summary_heading">Jak to funguje?</string>
   <string name="landing_summary_description">Automaticky sleduj náladu podle hudby, času na mobilu a chytrých hodinek. Sdílej ji jen s okruhy, které si vybereš, a uvidíš, jak se cítí ostatní.</string>

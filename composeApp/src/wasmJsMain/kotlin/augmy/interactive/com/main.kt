@@ -2,6 +2,8 @@ package augmy.interactive.com
 
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.window.ComposeViewport
 import androidx.navigation.compose.currentBackStackEntryAsState
@@ -31,23 +33,28 @@ fun main() {
         try {
             ComposeViewport(body) {
                 val navController = rememberNavController()
-                val currentEntry = navController.currentBackStackEntryAsState()
-                val currentRoute = currentEntry.value?.destination?.route ?: window.location.pathname
+                val currentEntry by navController.currentBackStackEntryAsState()
 
-                CompositionLocalProvider(
-                    LocalOnBackPress provides {
-                        window.history.go(-1)
-                    }
-                ) {
+                val initialUrl = remember {
+                    window.location.pathname.removePrefix("/") + window.location.search
+                }
+
+                CompositionLocalProvider(LocalOnBackPress provides { window.history.go(-1) }) {
                     App(
                         navController = navController,
-                        startDestination = currentRoute
+                        startDestination = initialUrl
                     )
                 }
 
-                LaunchedEffect(currentRoute) {
-                    if(window.location.pathname != currentRoute) {
-                        window.history.pushState(null, "", currentRoute)
+                LaunchedEffect(currentEntry) {
+                    val destination = currentEntry?.destination?.route ?: return@LaunchedEffect
+
+                    if (!destination.contains("{")) {
+                        val browserPath = if (destination.startsWith("/")) destination else "/$destination"
+
+                        if (window.location.pathname != browserPath) {
+                            window.history.pushState(null, "", browserPath)
+                        }
                     }
                 }
 
@@ -61,6 +68,7 @@ fun main() {
                     }
                 }
             }
+
         }catch (e: Exception) {
             e.printStackTrace()
         }

@@ -156,7 +156,7 @@ private fun compactLayout(verticalPadding: Dp) {
             PersonBlock(
                 modifier = sharedModifier,
                 data = NetworkItemIO(
-                    userId = "@rafail:augmy.org",
+                    userId = "@rafail_daskos:augmy.org",
                     displayName = "Rafail Daskos",
                     avatar = MediaIO(
                         url = "https://augmy.org/storage/company/daskos_rafail.jpg",
@@ -267,7 +267,7 @@ private fun largeLayout(verticalPadding: Dp) {
             PersonBlock(
                 modifier = sharedModifier,
                 data = NetworkItemIO(
-                    userId = "@rafail:augmy.org",
+                    userId = "@rafail_daskos:augmy.org",
                     displayName = "Rafail Daskos",
                     avatar = MediaIO(
                         url = "https://augmy.org/storage/company/daskos_rafail.jpg",

@@ -39,6 +39,10 @@ sealed class NavigationNode {
         override val route: String = "/faq"
     }
 
+    data object Login: NavigationNode() {
+        override val route: String = "login?nonce={nonce}&loginToken={loginToken}"
+    }
+
     /** Screen for outlining the project's roadmap */
     data object Roadmap: NavigationNode() {
         override val route: String = "/roadmap"
@@ -53,6 +57,7 @@ sealed class NavigationNode {
         val allDestinations = listOf(
             Landing.route,
             Faq.route,
+            Login.route,
             "/business",//BusinessAbout.route,
             ResearchAbout.route,
             PublicAbout.route,
