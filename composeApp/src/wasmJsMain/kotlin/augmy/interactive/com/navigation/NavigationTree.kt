@@ -41,15 +41,15 @@ sealed class NavigationNode {
 
     companion object {
         val allDestinations = listOf(
-            Landing.route,
-            Faq.route,
-            Login.route,
-            BusinessAbout.route,
-            ResearchAbout.route,
+            "/",
+            "/faq",
+            "/login?nonce={nonce}&loginToken={loginToken}",
+            "/business",
+            "/research",
             "/about",
-            Roadmap.route,
-            DeleteMe.route,
-            Contacts.route
+            "/roadmap",
+            "/delete-me",
+            "/contacts"
         )
     }
 }

@@ -32,8 +32,6 @@ fun NavigationHost(
 ) {
     val finalStart = remember(startDestination) {
         val destinations = allDestinations
-        println("kostka_test, start: $startDestination, destinations: $destinations")
-
 
         if (!startDestination.isNullOrBlank()) {
             val base = startDestination
@@ -47,7 +45,6 @@ fun NavigationHost(
         }
     }
 
-    println("kostka_test, destination: $startDestination, contains: ${allDestinations.contains(startDestination)}, allDestinations: $allDestinations")
     NavHost(
         modifier = modifier.fillMaxSize(),
         navController = navController,
