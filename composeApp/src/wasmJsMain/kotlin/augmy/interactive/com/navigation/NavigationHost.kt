@@ -64,8 +64,6 @@ fun NavigationHost(
                 backStackEntry.arguments?.read { getString("loginToken") }
             }
 
-            println("kostka_test, startDestination: $startDestination, nonce: $nonce, token: $token")
-
             LoginScreen(
                 nonce = nonce,
                 loginToken = token
