@@ -40,7 +40,6 @@ fun main() {
                 }
 
                 CompositionLocalProvider(LocalOnBackPress provides { window.history.go(-1) }) {
-                    println("kostka_test, initialUrl: $initialUrl")
                     App(
                         navController = navController,
                         startDestination = initialUrl
@@ -48,25 +47,28 @@ fun main() {
                 }
 
                 LaunchedEffect(currentEntry) {
-                    val destination = currentEntry?.destination?.route ?: return@LaunchedEffect
-
-                    if (!destination.contains("{")) {
-                        val browserPath = if (destination.startsWith("/")) destination else "/$destination"
-
-                        if (window.location.pathname != browserPath) {
-                            window.history.pushState(null, "", browserPath)
+                    currentEntry?.destination?.route?.let { destination ->
+                        if (!destination.contains("{")) {
+                            val browserPath = if (destination.startsWith("/")) destination else "/$destination"
+                            try {
+                                if (window.location.pathname != browserPath) {
+                                    window.history.pushState(null, "", browserPath)
+                                }
+                            } catch (_: Exception) { }
                         }
                     }
                 }
 
                 window.onpopstate = {
-                    // if pop back fails, user goes forward
-                    if(!navController.popBackStack(
+                    try {
+                        val success = navController.popBackStack(
                             route = window.location.pathname,
                             inclusive = false
-                        )) {
-                        navController.navigate(window.location.pathname)
-                    }
+                        )
+                        if (!success) {
+                            navController.navigate(window.location.pathname)
+                        }
+                    } catch (_: Exception) {}
                 }
             }
 
