@@ -53,8 +53,7 @@ fun LoginScreen(
         BrandHeaderButton(
             text = stringResource(Res.string.login_success_action),
             onClick = {
-                window.open("https://augmy.org/login?nonce=${nonce}&loginToken=${loginToken}")
-                println("kostka_test, navigating to https://augmy.org/login?nonce=${nonce}&loginToken=${loginToken}")
+                window.location.href = "https://augmy.org/login?nonce=${nonce}&loginToken=${loginToken}"
             }
         )
     }
