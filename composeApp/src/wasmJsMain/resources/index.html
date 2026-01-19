@@ -87,6 +87,17 @@
     </style>
 </head>
     <body>
+    <div id="open-in-app-banner" style="display: none; position: fixed; top: 0; left: 0; right: 0; z-index: 10000; background-color: #121212; border-bottom: 1px solid #333; color: #fff; font-family: -apple-system, BlinkMacSystemFont, sans-serif; font-size: 14px; line-height: 1.4; padding: 12px 16px; text-align: center;">
+        <div style="display: flex; align-items: center; justify-content: space-between; max-width: 500px; margin: 0 auto;">
+            <div style="flex: 1; text-align: left; white-space: nowrap;">
+                <strong style="font-weight: 500;">Continue in Augmy</strong>
+                <div style="font-size: 12px; color: #888;">Open in the app for full access</div>
+            </div>
+            <button id="open-app-btn" style="background-color: #007AFF; color: white; border: none; border-radius: 6px; padding: 6px 12px; font-size: 14px; font-weight: 600; cursor: pointer;">
+                Open
+            </button>
+        </div>
+    </div>
     <div style="display:none;">
         <header>
             <p class="muted">App for those, who care.</p>
@@ -231,6 +242,49 @@
         </div>
 
         <div id="app"></div>
+
+        <script>
+            // Only run on /login, not on other pages
+            if (window.location.pathname === '/login') {
+              const urlParams = new URLSearchParams(window.location.search);
+              const nonce = urlParams.get('nonce');
+              const loginToken = urlParams.get('loginToken');
+
+              if (nonce && loginToken) {
+                const appUrl = `augmy://login?nonce=${encodeURIComponent(nonce)}&loginToken=${encodeURIComponent(loginToken)}`;
+                window.location.href = appUrl;
+              }
+            }
+        </script>
+
+        <script>
+            // Only show the banner on /login
+            if (window.location.pathname === '/login') {
+              const urlParams = new URLSearchParams(window.location.search);
+              const nonce = urlParams.get('nonce');
+              const loginToken = urlParams.get('loginToken');
+
+              // Only show if we have the tokens
+              if (nonce && loginToken) {
+                const appUrl = `augmy://login?nonce=${encodeURIComponent(nonce)}&loginToken=${encodeURIComponent(loginToken)}`;
+                const storeUrl = 'https://apps.apple.com/app/augmy/idYOUR_APP_ID_HERE';
+
+                const banner = document.getElementById('open-in-app-banner');
+                const openBtn = document.getElementById('open-app-btn');
+
+                // Show the banner on iOS (and optionally on mobile everywhere)
+                const isiOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+                if (isiOS) {
+                  banner.style.display = 'block';
+                }
+
+                // Handle “Open” button
+                openBtn.addEventListener('click', () => {
+                  window.location.href = appUrl;
+                });
+              }
+            }
+        </script>
 
         <script type="module">
             import { DotLottie } from "https://cdn.jsdelivr.net/npm/@lottiefiles/dotlottie-web/+esm";
