@@ -32,7 +32,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.intl.Locale
 import androidx.compose.ui.text.style.TextAlign
@@ -72,7 +72,6 @@ import website_brand.composeapp.generated.resources.app_feed
 import website_brand.composeapp.generated.resources.app_graph
 import website_brand.composeapp.generated.resources.app_graph_cs
 import website_brand.composeapp.generated.resources.app_home
-import website_brand.composeapp.generated.resources.app_home_cs
 import website_brand.composeapp.generated.resources.apple_store_badge
 import website_brand.composeapp.generated.resources.google_store_badge
 import website_brand.composeapp.generated.resources.landing_demo_others_content
@@ -445,56 +444,24 @@ fun LandingScreen(model: SharedViewModel) {
                         .align(Alignment.Bottom)
                         .width(screenWidth)
                 )
-                Box {
-                    Image(
-                        modifier = Modifier
-                            .width(screenWidth)
-                            .padding(LocalTheme.current.shapes.componentCornerRadius)
-                            .background(
-                                color = LocalTheme.current.colors.backgroundLight,
-                                shape = LocalTheme.current.shapes.componentShape
-                            )
-                            .padding(LocalTheme.current.shapes.componentCornerRadius),
-                        painter = painterResource(
-                            if (language == "cs") Res.drawable.app_home_cs else Res.drawable.app_home
-                        ),
-                        contentDescription = null,
-                        contentScale = ContentScale.FillWidth
-                    )
-                    Box(
-                        modifier = Modifier
-                            .padding(LocalTheme.current.shapes.componentCornerRadius)
-                            .background(
-                                color = Color.Black.copy(alpha = .3f),
-                                shape = LocalTheme.current.shapes.componentShape
-                            )
-                            .matchParentSize()
-                    )
-                }
-                Box {
-                    Image(
-                        modifier = Modifier
-                            .width(screenWidth)
-                            .padding(LocalTheme.current.shapes.componentCornerRadius)
-                            .background(
-                                color = LocalTheme.current.colors.backgroundLight,
-                                shape = LocalTheme.current.shapes.componentShape
-                            )
-                            .padding(LocalTheme.current.shapes.componentCornerRadius),
-                        painter = painterResource(Res.drawable.app_feed),
-                        contentDescription = null,
-                        contentScale = ContentScale.FillWidth
-                    )
-                    Box(
-                        modifier = Modifier
-                            .padding(LocalTheme.current.shapes.componentCornerRadius)
-                            .background(
-                                color = Color.Black.copy(alpha = .4f),
-                                shape = LocalTheme.current.shapes.componentShape
-                            )
-                            .matchParentSize()
-                    )
-                }
+                Image(
+                    modifier = Modifier
+                        .width(screenWidth)
+                        .padding(LocalTheme.current.shapes.componentCornerRadius)
+                        .clip(LocalTheme.current.shapes.componentShape),
+                    painter = painterResource(Res.drawable.app_feed),
+                    contentDescription = null,
+                    contentScale = ContentScale.FillWidth
+                )
+                Image(
+                    modifier = Modifier
+                        .width(screenWidth)
+                        .padding(LocalTheme.current.shapes.componentCornerRadius)
+                        .clip(LocalTheme.current.shapes.componentShape),
+                    painter = painterResource(Res.drawable.app_home),
+                    contentDescription = null,
+                    contentScale = ContentScale.FillWidth
+                )
             }
 
             val demoOthersInstall = remember { mutableStateOf(false) }

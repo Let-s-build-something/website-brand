@@ -73,17 +73,15 @@ fun UserDetailScreen(userId: String?) {
             )
         )
 
-        if (avatarMedia != null) {
-            AvatarImage(
-                modifier = Modifier
-                    .zIndex(1f)
-                    .padding(top = 16.dp)
-                    .sizeIn(maxHeight = 200.dp, maxWidth = 200.dp),
-                media = avatarMedia,
-                name = response.value.data?.displayName ?: response.value.data?.userId,
-                tag = response.value.data?.copy(userId = userId)?.tag,
-            )
-        }
+        AvatarImage(
+            modifier = Modifier
+                .zIndex(1f)
+                .padding(top = 16.dp)
+                .sizeIn(maxHeight = 200.dp, maxWidth = 200.dp),
+            media = avatarMedia,
+            name = response.value.data?.displayName ?: response.value.data?.userId,
+            tag = response.value.data?.copy(userId = userId)?.tag,
+        )
         SelectionContainer {
             Text(
                 modifier = Modifier.padding(top = 2.dp),
