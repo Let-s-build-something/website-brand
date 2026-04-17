@@ -1,73 +1,110 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- Basic Metadata -->
     <base href="/">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Augmy—App For Those Who Care</title>
-    <meta name="description" content="App for those, who care how others feel. In real-time, with no annoying questionnaires or check-ins." />
-    <meta name="keywords" content="emotion sharing, mood tracking, long-distance, family tracking, mental healt app, loneliness intervention app for couples, chatting app, psychology, social network app, quality communication, instant messaging">
+
+    <title>About Augmy | Team, Mission, and Product Quality</title>
+    <meta name="description" content="Learn about Augmy, the team behind a family and friends well-being app built to support more human, private, and thoughtful communication.">
     <meta name="author" content="Augmy">
+    <meta name="robots" content="index,follow,max-image-preview:large">
+    <link rel="canonical" href="https://augmy.org/about.html">
 
-    <!-- Preload WASM files -->
-    <link rel="preload" href="2eaba8643e2ccdf352b4.wasm" as="fetch" crossorigin/>
-
-    <!-- Canonical URL (SEO Best Practice for duplicate content) -->
-    <link rel="canonical" href="https://augmy.org/about">
-
-    <!-- Robots Meta Tag -->
-    <meta name="robots" content="index, follow"> <!-- Allows indexing and following links -->
-
-    <!-- Open Graph Metadata (for social media) -->
-    <meta property="og:title" content="About | Augmy">
-    <meta property="og:description" content="Augmy is an app that empowers you to express your true feelings with clarity and emotion, offering a deeper way to connect through chat beyond words and labels." />
-    <meta property="og:url" content="https://augmy.org/about">
+    <meta property="og:title" content="About Augmy | Team, Mission, and Product Quality">
+    <meta property="og:description" content="Meet the team behind Augmy and learn how we design technology to support more human communication.">
+    <meta property="og:url" content="https://augmy.org/about.html">
     <meta property="og:image" content="https://augmy.org/storage/img/thumbnail/tn_90c610ff-e2e1-48e5-82c9-3c9440b765c3.jpg">
     <meta property="og:type" content="website">
     <meta property="og:locale" content="en_US">
 
-    <!-- Twitter Card Metadata -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="About | Augmy">
-    <meta name="twitter:description" content="Even in online messages, you can now say it in full length. Send messages that convey how you mean it—not how you said it.">
+    <meta name="twitter:title" content="About Augmy | Team, Mission, and Product Quality">
+    <meta name="twitter:description" content="Meet the people and philosophy behind Augmy.">
     <meta name="twitter:image" content="https://augmy.org/storage/img/thumbnail/tn_90c610ff-e2e1-48e5-82c9-3c9440b765c3.jpg">
     <meta name="twitter:site" content="@AugmyInteractiv">
 
-    <!-- Favicon -->
-    <!-- Android Chrome Favicon (192x192) -->
     <link rel="icon" sizes="192x192" href="https://augmy.org/favicon.svg">
-    <!-- iOS Apple Touch Icon (180x180) -->
     <link rel="apple-touch-icon" sizes="180x180" href="https://augmy.org/favicon.svg">
-    <!-- Default Icon -->
     <link rel="icon" href="https://augmy.org/favicon.svg">
-    <link type="text/css" rel="stylesheet" href="styles.css">
-    <link rel="preload" href="/composeResources/website_brand.composeapp.generated.resources/font/quicksand_medium.ttf" as="fetch" type="font/ttf" crossorigin/>
-    <!--<link rel="preload" href="composeApp.wasm" as="fetch" type="application/wasm" crossorigin="anonymous">-->
 
-    <!-- Additional Metadata for SEO (structured data) -->
+    <link rel="preload" href="/2eaba8643e2ccdf352b4.wasm" as="fetch" crossorigin>
+    <link rel="preload" href="/composeResources/website_brand.composeapp.generated.resources/font/quicksand_medium.ttf" as="fetch" type="font/ttf" crossorigin>
+    <link rel="stylesheet" href="/styles.css">
+
     <script type="application/ld+json">
         {
             "@context": "https://schema.org",
-            "@type": "Organization",
-            "name": "Augmy",
-            "url": "https://augmy.org",
-            "logo": "https://augmy.org/favicon.svg",
-            "sameAs": [
-                "https://www.twitter.com/AugmyInteractiv",
-                "https://www.instagram.com/augmy_interactive",
-                "https://www.linkedin.com/company/augmy-interactive"
-            ],
-            "contactPoint": {}
+            "@type": "AboutPage",
+            "name": "About Augmy",
+            "url": "https://augmy.org/about.html",
+            "mainEntity": {
+                "@type": "Organization",
+                "name": "Augmy",
+                "url": "https://augmy.org",
+                "logo": "https://augmy.org/favicon.svg",
+                "sameAs": [
+                    "https://www.twitter.com/AugmyInteractiv",
+                    "https://www.instagram.com/augmy_interactive",
+                    "https://www.linkedin.com/company/augmy-interactive"
+                ]
+            }
         }
     </script>
 
     <style>
-        /* Splash screen styling */
+        html, body {
+            margin: 0;
+            min-height: 100%;
+            background-color: #121212;
+            color: #f3f3f3;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        }
+
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+
+        .seo-nav {
+            position: absolute;
+            left: -9999px;
+            top: auto;
+            width: 1px;
+            height: 1px;
+            overflow: hidden;
+        }
+
+        .seo-nav:focus-within {
+            left: 16px;
+            top: 16px;
+            width: auto;
+            height: auto;
+            overflow: visible;
+            z-index: 10000;
+            background: #1d1d1d;
+            padding: 12px 16px;
+            border-radius: 12px;
+        }
+
+        .seo-nav a {
+            color: #fff;
+            margin-right: 12px;
+        }
+
         #loader-container {
             position: fixed;
-            top: 0;
-            left: 0;
+            inset: 0;
             width: 100vw;
             height: 100vh;
             background-color: #121212;
@@ -78,86 +115,115 @@
             font-size: 24px;
             color: #81A263;
             flex-direction: column;
-            display: flex
         }
 
-        /* Initially hide the app content */
         #app {
             background-color: #121212;
+            min-height: 100vh;
         }
     </style>
 </head>
-    <body>
-    <div style="display:none;">
-        <!-- Landing Header -->
-        <h1>The New Era of Communication</h1>
-        <p>Talk online like you do in real life. Digital communication, reflective of the physical you, with agency in your hands.</p>
+<body>
+<a class="sr-only" href="#app">Skip to app</a>
 
-        <!-- Social Circle -->
-        <h2>People Are Not Ones and Zeros</h2>
-        <p>Friend list? Followers? Do those really reflect your relationships? "Friend" or "not friend"? Forget about shallow, meaningless labels. Welcome to a social space built with depth in mind.</p>
+<nav class="seo-nav" aria-label="Primary">
+    <a href="/">Home</a>
+    <a href="/research.html">Research</a>
+    <a href="/business.html">Business</a>
+    <a href="/contacts.html">Contact</a>
+    <a href="/privacy-policy.html">Privacy Policy</a>
+    <a href="/terms-of-use.html">Terms of Use</a>
+</nav>
 
-        <!-- Rediscover the Colors of Communication -->
-        <h2>Rediscover the Colors of Communication</h2>
-        <p>You miss their voice, but hear only text. You feel so much, but can’t say the rest. A message sent—but something’s lost. The warmth, the tone, the human cost.
-            To say "I’m here" without a word, To show you’ve felt, to feel you're heard— That’s what we made Augmy for.</p>
+<header class="sr-only">
+    <h1>About Augmy</h1>
+    <p>Augmy is building a more human way to stay connected with family and friends.</p>
+    <p>We design technology to support real emotional understanding, not replace real human connection.</p>
+</header>
 
-        <!-- Allow Your Digital Body to Speak up -->
-        <h2>Allow Your Digital Body to Speak up</h2>
-        <p>Your digital nonverbal communication is as important as your physical. You don't have to ponder which emoji best expresses your feelings anymore; be understood without overthinking.</p>
+<main class="sr-only">
+    <section aria-labelledby="mission">
+        <h2 id="mission">Our mission</h2>
+        <p>We understand the limitations of technology and will never claim to replace real human connection. At the same time, we believe technology can make a positive difference when it is designed to support how people naturally care for each other.</p>
+        <p>Augmy is our promise to use the technology already embedded in everyday life to make online interactions feel more human, thoughtful, and emotionally honest.</p>
+    </section>
 
-        <!-- It Wasn't Made for You -->
-        <h2>It Wasn't Made for You</h2>
-        <p>Sometimes, expressing yourself can be challenging, and there are moments when you may simply lack the energy to explain. The messaging tools you use weren’t designed for moments like these, but Augmy Messenger is.</p>
+    <section aria-labelledby="why-we-build">
+        <h2 id="why-we-build">Why we build</h2>
+        <p>We are humans too, and much of our motivation comes from real struggles that we or the people around us have experienced. We want to solve meaningful problems in communication and well-being, not just build something that looks cool.</p>
+        <p>We also want to hear what makes it hard for you to connect with others and how Augmy can improve. The product is shaped by real needs, not abstract theories.</p>
+    </section>
 
-        <!-- Communication Matters -->
-        <h2>Communication Matters</h2>
-        <p>If you want to understand someone more deeply — or help them truly understand you — we’re here for that. Because connection takes more than words. The people around you matter. Give it a try.</p>
+    <section aria-labelledby="product-quality">
+        <h2 id="product-quality">How we think about product quality</h2>
+        <p>For us, product quality means more than polished screens. It means designing communication tools that feel safe, understandable, respectful, and genuinely useful in real relationships.</p>
+        <p>We focus on clarity, emotional sensitivity, privacy, and long-term trust because those qualities matter more than novelty in a well-being product.</p>
+    </section>
 
-        <!-- Footer Section -->
-        <h2>The problem statement</h2>
-        <p>Messaging online as we know it is not enough—it lacks nuance in how we express ourselves, in the way we move, in the way we talk, and fails at synchronizing us with others. We often rely on oversimplified keywords and impersonal emojis or curate the impressions others may have of us, leaving the true expressions behind. It's time for online messaging that truly conveys how we mean it—not just what we type.</p>
-    </div>
+    <section aria-labelledby="team">
+        <h2 id="team">The team behind Augmy</h2>
 
-    <div id="loader-container">
-            <canvas id="canvas" height="150px" width="150px"></canvas>
-        </div>
+        <article>
+            <h3>Jakub — CEO</h3>
+            <p>“Can't promise it'll work the first time, but I don't give up easily.”</p>
+        </article>
 
-        <div id="app"></div>
+        <article>
+            <h3>Honza — COO</h3>
+            <p>“I make sure Augmy has a clear direction, meaningful processes, and a happy team.”</p>
+        </article>
 
-        <script type="module">
-            import { DotLottie } from "https://cdn.jsdelivr.net/npm/@lottiefiles/dotlottie-web/+esm";
+        <article>
+            <h3>Rafail — CTO</h3>
+            <p>“Everything works in the end. If it doesn't, it’s part of the show.”</p>
+        </article>
 
-            function loadSplashImage() {
-                new DotLottie({
-                    autoplay: true,
-                    loop: true,
-                    direction: -1,
-                    canvas: document.getElementById("canvas"),
-                    src: "https://lottie.host/cb47031e-dc67-4366-9921-6d1fdb3ca398/FblXP0xkN8.json",
-                });
-            }
+        <article>
+            <h3>Marek — CFO</h3>
+            <p>“I ensure we don't run out of fuel in the middle of a drive. We need to eat eventually, duh.”</p>
+        </article>
+    </section>
 
-            function checkIfSplash() {
-                loadSplashImage()
-            }
+    <section aria-labelledby="future">
+        <h2 id="future">What comes next</h2>
+        <p>There is much more we want to build together with our users, but one step at a time. First, we want to help people share their feelings more honestly and listen more closely to the people around them.</p>
+    </section>
+</main>
 
-            checkIfSplash()
+<div id="loader-container" aria-hidden="true">
+    <canvas id="canvas" height="150" width="150"></canvas>
+</div>
 
-            import { loadIndex } from '/preloader.js';
+<div id="app"></div>
 
-            document.addEventListener('DOMContentLoaded', loadIndex);
-        </script>
+<script type="module">
+    import { DotLottie } from "https://cdn.jsdelivr.net/npm/@lottiefiles/dotlottie-web/+esm";
 
-        <script type="application/javascript" >
-            const unhandledError = (event, error) => {
-                if (error instanceof WebAssembly.CompileError) {
-                    document.getElementById('loader-container').innerHTML = '<p>Error loading the app.</p>';
-                }
-            }
-            document.addEventListener("error", (event) => unhandledError(event, event.error));
-            document.addEventListener("unhandledrejection", (event) => unhandledError(event, event.reason));
+    function loadSplashImage() {
+        new DotLottie({
+            autoplay: true,
+            loop: true,
+            direction: -1,
+            canvas: document.getElementById("canvas"),
+            src: "https://lottie.host/cb47031e-dc67-4366-9921-6d1fdb3ca398/FblXP0xkN8.json",
+        });
+    }
 
-        </script>
-    </body>
+    loadSplashImage();
+
+    import { loadIndex } from '/preloader.js';
+    document.addEventListener('DOMContentLoaded', loadIndex);
+</script>
+
+<script type="application/javascript">
+    const unhandledError = (event, error) => {
+        if (error instanceof WebAssembly.CompileError) {
+            document.getElementById('loader-container').innerHTML = '<p>Error loading the app.</p>';
+        }
+    };
+
+    document.addEventListener("error", (event) => unhandledError(event, event.error));
+    document.addEventListener("unhandledrejection", (event) => unhandledError(event, event.reason));
+</script>
+</body>
 </html>

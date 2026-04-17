@@ -64,7 +64,7 @@
   <string name="login_success_action">Vrátit se do Augmy appky</string>
 
   <string name="landing_summary_heading">Jak to funguje?</string>
-  <string name="landing_summary_description">Automaticky sleduj náladu podle hudby, času na mobilu a chytrých hodinek. Sdílej ji jen s okruhy, které si vybereš, a uvidíš, jak se cítí ostatní.</string>
+  <string name="landing_summary_description">Automaticky sleduj náladu podle hudby, času na mobilu, chytrých hodinek a počasí. Sdílej ji jen s okruhy, které si vybereš, a uvidíš, jak se cítí ostatní.</string>
   <string name="landing_summary_action">Mám otázky</string>
 
 

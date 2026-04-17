@@ -1,7 +1,7 @@
 <resources>
   <string name="app_name">Augmy</string>
 
-  <string name="website_footer">© %1$d Augmy</string>
+  <string name="website_footer">© %1$d Augmy s.r.o.</string>
 
   <string name="category_intimate">Intimate</string>
   <string name="category_personal">Personal</string>
@@ -63,7 +63,7 @@
   <string name="login_success_action">Return to Augmy app</string>
 
   <string name="landing_summary_heading">How does it work?</string>
-  <string name="landing_summary_description">Automatically track mood from music, screen time, and wearables. Share it only with the circles you choose, and see how others feel.</string>
+  <string name="landing_summary_description">Automatically track mood from music, screen time, smart watch, or weather. Share it only with the circles you choose, and see how others feel.</string>
   <string name="landing_summary_action">I've got questions</string>
 
   <string name="wellbeing_garden_info_mechanics">This is your garden — it grows with you. When you’re low, it feels it too. As your mood steadies and brightens, the garden blooms right along with you.</string>
