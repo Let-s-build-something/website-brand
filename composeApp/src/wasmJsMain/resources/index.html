@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <!-- Basic Metadata -->
+    <base href="/">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Augmy—App For Those Who Care</title>
@@ -10,7 +11,7 @@
     <meta name="author" content="Augmy">
 
     <!-- Preload WASM files -->
-    <link rel="preload" href="2eaba8643e2ccdf352b4.wasm" as="fetch" crossorigin/>
+    <link rel="preload" href="/2eaba8643e2ccdf352b4.wasm" as="fetch" crossorigin/>
 
     <!-- Canonical URL (SEO Best Practice for duplicate content) -->
     <link rel="canonical" href="https://augmy.org">
@@ -40,8 +41,8 @@
     <link rel="apple-touch-icon" sizes="180x180" href="https://augmy.org/favicon.svg">
     <!-- Default Icon -->
     <link rel="icon" href="https://augmy.org/favicon.svg">
-    <link type="text/css" rel="stylesheet" href="styles.css">
-    <link rel="preload" href="./composeResources/website_brand.composeapp.generated.resources/font/quicksand_medium.ttf" as="fetch" type="font/ttf" crossorigin/>
+    <link type="text/css" rel="stylesheet" href="/styles.css">
+    <link rel="preload" href="/composeResources/website_brand.composeapp.generated.resources/font/quicksand_medium.ttf" as="fetch" type="font/ttf" crossorigin/>
     <!--<link rel="preload" href="composeApp.wasm" as="fetch" type="application/wasm" crossorigin="anonymous">-->
 
     <!-- Additional Metadata for SEO (structured data) -->
@@ -265,7 +266,7 @@
 
             checkIfSplash()
 
-            import { loadIndex } from './preloader.js';
+            import { loadIndex } from '/preloader.js';
 
             document.addEventListener('DOMContentLoaded', loadIndex);
         </script>

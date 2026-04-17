@@ -1,6 +1,7 @@
 package augmy.interactive.com.ui.landing
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.Crossfade
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -25,7 +26,6 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -169,7 +169,7 @@ val landingStories = listOf(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-internal fun LargeLayout(verticalPadding: Dp, showSignUp: MutableState<Boolean>) {
+internal fun LargeLayout(verticalPadding: Dp) {
     val colors = LocalTheme.current.colors
     val isCompact = LocalDeviceType.current == WindowWidthSizeClass.Compact
 
@@ -400,13 +400,24 @@ internal fun LargeLayout(verticalPadding: Dp, showSignUp: MutableState<Boolean>)
             }
         }
 
-        BrandHeaderButton(
+        val storyInstall = remember { mutableStateOf(false) }
+
+        Crossfade(
             modifier = Modifier
                 .padding(top = 12.dp)
-                .align(Alignment.CenterHorizontally),
-            text = stringResource(Res.string.landing_story_cta)
-        ) {
-            showSignUp.value = true
+                .align(Alignment.CenterHorizontally)
+                .animateContentSize(),
+            targetState = storyInstall.value
+        ) { show ->
+            if (show) {
+                StoreBadgeRow()
+            }else {
+                BrandHeaderButton(
+                    text = stringResource(Res.string.landing_story_cta)
+                ) {
+                    storyInstall.value = true
+                }
+            }
         }
 
         Spacer(Modifier.height(verticalPadding * 2))

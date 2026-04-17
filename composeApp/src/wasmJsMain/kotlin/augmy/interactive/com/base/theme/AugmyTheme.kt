@@ -21,9 +21,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.composed
-import androidx.compose.ui.draw.scale
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.input.pointer.pointerInput
 import augmy.interactive.com.base.LocalIsMouseUser
 import augmy.interactive.com.theme.LocalTheme
@@ -143,6 +143,7 @@ fun Modifier.scalingClickable(
     onLongPress: ((Offset) -> Unit)? = null,
     onPress: ((Offset, isPressed: Boolean) -> Unit)? = null,
     onHover: ((isHovered: Boolean) -> Unit)? = null,
+    onScaled: ((isScaled: Boolean) -> Unit)? = null,
     scaleInto: Float = 0.85f,
     onTap: ((Offset) -> Unit)? = null
 ): Modifier = composed {
@@ -154,9 +155,13 @@ fun Modifier.scalingClickable(
             if ((isPressed.value || isHovered.value) && enabled) scaleInto else 1f,
             label = "scalingClickableAnimation"
         )
+        onScaled?.invoke((isPressed.value || isHovered.value) && enabled)
         onHover?.invoke(isHovered.value)
 
-        scale(scale.value)
+        graphicsLayer {
+            scaleX = scale.value
+            scaleY = scale.value
+        }
             .hoverable(
                 enabled = enabled && hoverEnabled,
                 interactionSource = hoverInteractionSource
@@ -164,16 +169,18 @@ fun Modifier.scalingClickable(
             .pointerInput(Unit, key ?: onTap) {
                 detectTapGestures(
                     onPress = {
-                        if (enabled) onPress?.invoke(it, true)
-                        isPressed.value = true
-                        tryAwaitRelease()
-                        if (enabled) onPress?.invoke(it, false)
-                        isPressed.value = false
+                        if (enabled) {
+                            onPress?.invoke(it, true)
+                            isPressed.value = true
+                            tryAwaitRelease()
+                            onPress?.invoke(it, false)
+                            isPressed.value = false
+                        }
                     },
                     onTap = onTap,
                     onDoubleTap = onDoubleTap,
                     onLongPress = onLongPress
                 )
             }
-    }else this
+    } else this
 }

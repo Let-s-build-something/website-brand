@@ -37,13 +37,14 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.intl.Locale
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import augmy.interactive.com.base.LocalContentSizeDp
 import augmy.interactive.com.base.LocalDeviceType
 import augmy.interactive.com.base.MaxModalWidthDp
 import augmy.interactive.com.base.ModalScreenContent
 import augmy.interactive.com.base.theme.Colors
 import augmy.interactive.com.base.theme.draggable
+import augmy.interactive.com.base.theme.scalingClickable
+import augmy.interactive.com.encodeURIComponent
 import augmy.interactive.com.shared.SharedViewModel
 import augmy.interactive.com.shared.Utils.onEnter
 import augmy.interactive.com.theme.LocalTheme
@@ -63,6 +64,8 @@ import kotlinx.datetime.toLocalDateTime
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import website_brand.composeapp.generated.resources.Res
+import website_brand.composeapp.generated.resources.accessibility_apple_store
+import website_brand.composeapp.generated.resources.accessibility_google_store
 import website_brand.composeapp.generated.resources.app_calendar
 import website_brand.composeapp.generated.resources.app_calendar_cs
 import website_brand.composeapp.generated.resources.app_feed
@@ -70,7 +73,8 @@ import website_brand.composeapp.generated.resources.app_graph
 import website_brand.composeapp.generated.resources.app_graph_cs
 import website_brand.composeapp.generated.resources.app_home
 import website_brand.composeapp.generated.resources.app_home_cs
-import website_brand.composeapp.generated.resources.landing_demo_disclaimer
+import website_brand.composeapp.generated.resources.apple_store_badge
+import website_brand.composeapp.generated.resources.google_store_badge
 import website_brand.composeapp.generated.resources.landing_demo_others_content
 import website_brand.composeapp.generated.resources.landing_demo_others_cta
 import website_brand.composeapp.generated.resources.landing_demo_others_heading
@@ -293,24 +297,13 @@ fun LandingScreen(model: SharedViewModel) {
             }
         }
 
-        BrandHeaderButton(
-            text = stringResource(Res.string.landing_sign_up),
-            endImageVector = if (showSignUp.value) Icons.AutoMirrored.Outlined.Send else null,
-            onClick = {
-                showSignUp.value = true
-            }
-        )
+        StoreBadgeRow(modifier = Modifier.padding(top = 12.dp))
 
         Column {
             Crossfade(LocalDeviceType.current == WindowWidthSizeClass.Compact) { isCompact ->
                 if(isCompact) {
                     CompactLayout(verticalPadding = verticalPadding)
-                }else {
-                    LargeLayout(
-                        verticalPadding = verticalPadding,
-                        showSignUp = showSignUp
-                    )
-                }
+                }else LargeLayout(verticalPadding = verticalPadding)
             }
 
             SelectionContainer(modifier = Modifier.align(Alignment.CenterHorizontally)) {
@@ -388,24 +381,24 @@ fun LandingScreen(model: SharedViewModel) {
                     contentScale = ContentScale.FillWidth
                 )
             }
-            SelectionContainer(
+            val demoYouInstall = remember { mutableStateOf(false) }
+
+            Crossfade(
                 modifier = Modifier
-                    .padding(top = 2.dp)
-                    .align(Alignment.End)
-            ) {
-                Text(
-                    text = stringResource(Res.string.landing_demo_disclaimer),
-                    style = LocalTheme.current.styles.regular.copy(
-                        fontSize = 14.sp,
-                        color = LocalTheme.current.colors.disabled
-                    )
-                )
-            }
-            BrandHeaderButton(
-                modifier = Modifier.align(Alignment.CenterHorizontally),
-                text = stringResource(Res.string.landing_demo_you_cta)
-            ) {
-                showSignUp.value = true
+                    .padding(top = 8.dp)
+                    .align(Alignment.CenterHorizontally)
+                    .animateContentSize(),
+                targetState = demoYouInstall.value
+            ) { show ->
+                if (show) {
+                    StoreBadgeRow()
+                }else {
+                    BrandHeaderButton(
+                        text = stringResource(Res.string.landing_demo_you_cta)
+                    ) {
+                        demoYouInstall.value = true
+                    }
+                }
             }
 
             Spacer(Modifier.height(verticalPadding))
@@ -503,25 +496,25 @@ fun LandingScreen(model: SharedViewModel) {
                     )
                 }
             }
-            SelectionContainer(
-                modifier = Modifier
-                    .padding(top = 2.dp)
-                    .align(Alignment.End)
-            ) {
-                Text(
-                    text = stringResource(Res.string.landing_demo_disclaimer),
-                    style = LocalTheme.current.styles.regular.copy(
-                        fontSize = 14.sp,
-                        color = LocalTheme.current.colors.disabled
-                    )
-                )
-            }
 
-            BrandHeaderButton(
-                modifier = Modifier.align(Alignment.CenterHorizontally),
-                text = stringResource(Res.string.landing_demo_others_cta)
-            ) {
-                showSignUp.value = true
+            val demoOthersInstall = remember { mutableStateOf(false) }
+
+            Crossfade(
+                modifier = Modifier
+                    .padding(top = 8.dp)
+                    .align(Alignment.CenterHorizontally)
+                    .animateContentSize(),
+                targetState = demoOthersInstall.value
+            ) { show ->
+                if (show) {
+                    StoreBadgeRow()
+                }else {
+                    BrandHeaderButton(
+                        text = stringResource(Res.string.landing_demo_others_cta)
+                    ) {
+                        demoOthersInstall.value = true
+                    }
+                }
             }
 
             Spacer(Modifier.height(verticalPadding * 2))
@@ -537,11 +530,51 @@ fun LandingScreen(model: SharedViewModel) {
                 linkTexts = listOf(
                     stringResource(Res.string.landing_illustrator_credit_link_text),
                 ),
-                onLinkClicked = { _, index ->
+                onLinkClicked = { _, _ ->
                     window.open("https://www.instagram.com/_ilustraterka_/")
                 }
             ),
             style = LocalTheme.current.styles.regular
+        )
+    }
+}
+
+@Composable
+fun StoreBadgeRow(
+    modifier: Modifier = Modifier,
+    referrer: String? = null
+) {
+    Row(
+        modifier = modifier,
+        horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.CenterHorizontally),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Image(
+            modifier = Modifier
+                .widthIn(max = 270.5.dp)
+                .weight(1f, fill = false)
+                .fillMaxWidth()
+                .scalingClickable {
+                    window.open(
+                        "https://play.google.com/store/apps/details?id=augmy.interactive.com" +
+                        if (referrer != null) "&referrer=${encodeURIComponent("ref=${referrer}")}" else ""
+                    )
+                },
+            painter = painterResource(Res.drawable.google_store_badge),
+            contentDescription = stringResource(Res.string.accessibility_google_store),
+            contentScale = ContentScale.FillWidth
+        )
+        Image(
+            modifier = Modifier
+                .widthIn(max = 240.dp)
+                .weight(1f, fill = false)
+                .fillMaxWidth()
+                .scalingClickable {
+                    window.open("https://apps.apple.com/us/app/augmy/id6737480584")
+                },
+            painter = painterResource(Res.drawable.apple_store_badge),
+            contentDescription = stringResource(Res.string.accessibility_apple_store),
+            contentScale = ContentScale.FillWidth
         )
     }
 }

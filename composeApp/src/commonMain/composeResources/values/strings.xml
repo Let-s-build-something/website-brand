@@ -56,8 +56,8 @@
   <string name="landing_demo_others_cta">See how others feel</string>
   <string name="landing_demo_others_message">You: how come your flower is so chill?:D</string>
   <string name="landing_demo_others_action_closeness">Closeness</string>
+  <string name="landing_demo_others_action_alarm">Set alarm</string>
   <string name="landing_demo_others_action_interact">Chat</string>
-  <string name="landing_demo_disclaimer">*Early visuals, subject to change.</string>
 
   <string name="login_success">Successfully signed in. Let's return the result to our app:-).</string>
   <string name="login_success_action">Return to Augmy app</string>
@@ -95,6 +95,9 @@
   <string name="toolbar_action_about_research">Research</string>
   <string name="toolbar_action_about">About&#160;us</string>
   <string name="toolbar_action_contacts">Contacts</string>
+
+    <string name="user_profile_not_found">Couldn't find that user.</string>
+    <string name="user_profile_headline">Hoooold on. You still don't have Augmy installed?</string>
 
   <string name="emotion_prompt">Click on an emotion to see how it maps</string>
   <string name="emotion_anger">Annoyance</string>
@@ -293,6 +296,8 @@
   <string name="delete_me_reason_long_hint">You offer too many cookies but I'm on a diet...</string>
   <string name="delete_me_button_send">Send as an email</string>
 
+  <string name="accessibility_google_store">Download Augmy on Google Play</string>
+  <string name="accessibility_apple_store">Download Augmy on App Store</string>
   <string name="accessibility_about_poster">Poster employing people to join the project as team members.</string>
   <string name="accessibility_light_mode">Light mode</string>
   <string name="accessibility_logo">Logo containing a puffer fish in a defensive state</string>

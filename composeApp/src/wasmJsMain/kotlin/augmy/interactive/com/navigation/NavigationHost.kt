@@ -2,13 +2,16 @@ package augmy.interactive.com.navigation
 
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.navigation.NavDeepLinkRequest
 import androidx.navigation.NavHostController
+import androidx.navigation.NavUri
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.navOptions
 import androidx.savedstate.read
-import augmy.interactive.com.navigation.NavigationNode.Companion.allDestinations
 import augmy.interactive.com.shared.SharedViewModel
 import augmy.interactive.com.ui.ContactsScreen
 import augmy.interactive.com.ui.DeleteMeScreen
@@ -19,6 +22,7 @@ import augmy.interactive.com.ui.about.AboutResearchScreen
 import augmy.interactive.com.ui.about.AboutScreen
 import augmy.interactive.com.ui.faq.FaqScreen
 import augmy.interactive.com.ui.landing.LandingScreen
+import augmy.interactive.com.ui.users.UserDetailScreen
 
 val DEFAULT_START_DESTINATION = NavigationNode.Landing.route
 
@@ -30,25 +34,27 @@ fun NavigationHost(
     model: SharedViewModel,
     startDestination: String? = null
 ) {
-    val finalStart = remember(startDestination) {
-        val destinations = allDestinations
+    LaunchedEffect(startDestination) {
+        try {
+            val uri = NavUri("https://augmy.org$startDestination")
+            val request = NavDeepLinkRequest.Builder.fromUri(uri).build()
+            val match = navController.graph.matchDeepLink(request)
 
-        if (!startDestination.isNullOrBlank()) {
-            val base = startDestination
-                .takeWhile { it != '?' }
-                .takeWhile { it != '&' }
-                .ifBlank { DEFAULT_START_DESTINATION }
-            val exists = destinations.any { it.contains(base) }
-            if (exists) startDestination else DEFAULT_START_DESTINATION
-        } else {
-            DEFAULT_START_DESTINATION
-        }
+            if (match != null) {
+                navController.navigate(
+                    uri,
+                    navOptions {
+                        launchSingleTop = true
+                    }
+                )
+            }
+        }catch (e: Exception) { e.printStackTrace() }
     }
 
     NavHost(
         modifier = modifier.fillMaxSize(),
         navController = navController,
-        startDestination = finalStart
+        startDestination = DEFAULT_START_DESTINATION
     ) {
         composable(NavigationNode.Landing.route) {
             LandingScreen(model)
@@ -56,7 +62,10 @@ fun NavigationHost(
         composable(NavigationNode.Faq.route) {
             FaqScreen()
         }
-        composable(NavigationNode.Login.route) { backStackEntry ->
+        composable(
+            NavigationNode.Login.route,
+            deepLinks = NavigationNode.Login.deeplink?.let { listOf(it) }.orEmpty(),
+        ) { backStackEntry ->
             val nonce = remember {
                 backStackEntry.arguments?.read { getString("nonce") }
             }
@@ -71,6 +80,16 @@ fun NavigationHost(
         }
         composable(NavigationNode.BusinessAbout.route) {
             AboutBusinessScreen()
+        }
+        composable(
+            NavigationNode.UserDetail.route,
+            deepLinks = NavigationNode.UserDetail.deeplink?.let { listOf(it) }.orEmpty(),
+        ) { backStackEntry ->
+            val userId = remember {
+                backStackEntry.arguments?.read { getString("userId") }
+            }
+
+            UserDetailScreen(userId)
         }
         composable(NavigationNode.ResearchAbout.route) {
             AboutResearchScreen()

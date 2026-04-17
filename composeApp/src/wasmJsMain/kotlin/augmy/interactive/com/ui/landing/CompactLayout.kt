@@ -1,6 +1,7 @@
 package augmy.interactive.com.ui.landing
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.Crossfade
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -39,6 +40,7 @@ import androidx.compose.ui.unit.dp
 import augmy.interactive.com.base.LocalDeviceType
 import augmy.interactive.com.base.theme.scalingClickable
 import augmy.interactive.com.theme.LocalTheme
+import augmy.interactive.com.ui.components.BrandHeaderButton
 import augmy.interactive.com.ui.components.ComponentHeaderButton
 import augmy.interactive.com.ui.components.simulation.buildTempoStringHeuristic
 import augmy.interactive.com.ui.landing.components.AnimatedGarden
@@ -48,6 +50,7 @@ import org.jetbrains.compose.resources.stringResource
 import website_brand.composeapp.generated.resources.Res
 import website_brand.composeapp.generated.resources.animated_garden_helper
 import website_brand.composeapp.generated.resources.landing_demo_others_action_interact
+import website_brand.composeapp.generated.resources.landing_story_cta
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -67,6 +70,7 @@ internal fun CompactLayout(verticalPadding: Dp) {
             }
         }
     ) {
+        Spacer(Modifier.height(verticalPadding * 1.5f))
         Column(
             modifier = Modifier.align(Alignment.CenterHorizontally),
             horizontalAlignment = Alignment.CenterHorizontally,
@@ -255,6 +259,26 @@ internal fun CompactLayout(verticalPadding: Dp) {
                             )
                         }
                     }
+                }
+            }
+        }
+
+        val storyInstall = remember { mutableStateOf(false) }
+
+        Crossfade(
+            modifier = Modifier
+                .padding(top = 12.dp)
+                .align(Alignment.CenterHorizontally)
+                .animateContentSize(),
+            targetState = storyInstall.value
+        ) { show ->
+            if (show) {
+                StoreBadgeRow()
+            }else {
+                BrandHeaderButton(
+                    text = stringResource(Res.string.landing_story_cta)
+                ) {
+                    storyInstall.value = true
                 }
             }
         }

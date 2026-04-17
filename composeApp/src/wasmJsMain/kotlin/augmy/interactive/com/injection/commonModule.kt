@@ -1,9 +1,9 @@
 package augmy.interactive.com.injection
 
-import augmy.interactive.com.BuildKonfig
 import augmy.interactive.com.shared.BaseRepository
 import augmy.interactive.com.shared.SharedDataManager
 import augmy.interactive.com.shared.SharedViewModel
+import augmy.interactive.com.ui.users.UserDetailModel
 import coil3.annotation.ExperimentalCoilApi
 import coil3.network.NetworkFetcher
 import coil3.network.ktor3.asNetworkClient
@@ -20,6 +20,7 @@ import io.ktor.http.URLProtocol
 import io.ktor.http.contentType
 import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.json.Json
+import org.koin.core.module.dsl.viewModel
 import org.koin.core.module.dsl.viewModelOf
 import org.koin.dsl.module
 
@@ -29,6 +30,9 @@ internal val commonModule = module {
     factory { BaseRepository() }
     single { Settings() }
     viewModelOf(::SharedViewModel)
+    viewModel { (userId: String?) ->
+        UserDetailModel(userId)
+    }
     single<HttpClient> {
         HttpClient().config {
             install(ContentNegotiation) {
@@ -43,7 +47,6 @@ internal val commonModule = module {
             }
 
             defaultRequest {
-                header(HttpHeaders.Authorization, "Bearer ${BuildKonfig.BearerToken}")
                 contentType(ContentType.Application.Json)
                 accept(ContentType.Application.Json)
 

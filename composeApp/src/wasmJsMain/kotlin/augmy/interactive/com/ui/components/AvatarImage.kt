@@ -4,10 +4,12 @@ import androidx.compose.animation.Crossfade
 import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.RepeatMode
+import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.animateFloat
 import androidx.compose.animation.core.infiniteRepeatable
 import androidx.compose.animation.core.keyframes
 import androidx.compose.animation.core.rememberInfiniteTransition
+import androidx.compose.animation.core.spring
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.IntrinsicSize
@@ -106,7 +108,9 @@ private fun ContentLayout(
             modifier = modifier
                 .height(IntrinsicSize.Max)
                 .width(IntrinsicSize.Max)
-                .animateContentSize()
+                .animateContentSize(
+                    animationSpec = spring(stiffness = Spring.StiffnessHigh)
+                )
         ) {
             Box(
                 Modifier

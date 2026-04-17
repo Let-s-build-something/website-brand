@@ -70,7 +70,7 @@ buildkonfig {
     keystoreProperties.load(FileInputStream(rootProject.file("local.properties")))
 
     defaultConfigs {
-        buildConfigField(STRING, "BearerToken", keystoreProperties["bearerToken"] as String)
+        buildConfigField(STRING, "MatrixMediaToken", keystoreProperties["matrixMediaToken"] as String)
     }
 }
 
