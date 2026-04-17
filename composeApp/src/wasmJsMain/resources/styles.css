@@ -1,6 +1,6 @@
 @font-face {
     font-family: 'QuicksandMedium';
-    src: url('./composeResources/website_brand.composeapp.generated.resources/font/quicksand_regular.ttf') format('truetype');
+    src: url('/composeResources/website_brand.composeapp.generated.resources/font/quicksand_regular.ttf') format('truetype');
     font-weight: 400;
     font-style: normal;
     font-display: swap;

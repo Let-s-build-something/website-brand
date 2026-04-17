@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <!-- Basic Metadata -->
+    <base href="/">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Augmy—App For Those Who Care</title>
@@ -41,7 +42,7 @@
     <!-- Default Icon -->
     <link rel="icon" href="https://augmy.org/favicon.svg">
     <link type="text/css" rel="stylesheet" href="styles.css">
-    <link rel="preload" href="./composeResources/website_brand.composeapp.generated.resources/font/quicksand_medium.ttf" as="fetch" type="font/ttf" crossorigin/>
+    <link rel="preload" href="/composeResources/website_brand.composeapp.generated.resources/font/quicksand_medium.ttf" as="fetch" type="font/ttf" crossorigin/>
     <!--<link rel="preload" href="composeApp.wasm" as="fetch" type="application/wasm" crossorigin="anonymous">-->
 
     <!-- Additional Metadata for SEO (structured data) -->
@@ -143,7 +144,7 @@
 
             checkIfSplash()
 
-            import { loadIndex } from './preloader.js';
+            import { loadIndex } from '/preloader.js';
 
             document.addEventListener('DOMContentLoaded', loadIndex);
         </script>

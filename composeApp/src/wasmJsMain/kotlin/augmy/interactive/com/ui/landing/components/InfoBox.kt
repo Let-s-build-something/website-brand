@@ -10,15 +10,19 @@ import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Lightbulb
+import androidx.compose.material.icons.outlined.Warning
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
+import augmy.interactive.com.base.theme.Colors
 import augmy.interactive.com.theme.LocalTheme
+import augmy.interactive.com.theme.SharedColors
 
 @Composable
 fun InfoBox(
@@ -30,10 +34,11 @@ fun InfoBox(
     ),
     boxColor: Color = LocalTheme.current.colors.disabledComponent,
     style: TextStyle = LocalTheme.current.styles.regular,
+    imageVector: ImageVector = Icons.Outlined.Lightbulb,
     prefixContent: (@Composable () -> Unit)? = {
         Icon(
             modifier = Modifier.size(32.dp),
-            imageVector = Icons.Outlined.Lightbulb,
+            imageVector = imageVector,
             contentDescription = null,
             tint = style.color
         )
@@ -62,4 +67,22 @@ fun InfoBox(
         }
         suffixContent?.invoke()
     }
+}
+
+@Composable
+fun ErrorInfoBox(
+    modifier: Modifier = Modifier,
+    text: String
+) {
+    InfoBox(
+        modifier = modifier,
+        text = text,
+        paddingValues = PaddingValues(
+            vertical = 12.dp,
+            horizontal = 8.dp
+        ),
+        boxColor = SharedColors.RED_ERROR,
+        style = LocalTheme.current.styles.category.copy(Colors.GrayLight),
+        imageVector = Icons.Outlined.Warning,
+    )
 }

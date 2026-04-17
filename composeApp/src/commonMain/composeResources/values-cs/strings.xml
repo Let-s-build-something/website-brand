@@ -57,8 +57,8 @@
   <string name="landing_demo_others_cta">Chci vidět ostatní</string>
   <string name="landing_demo_others_message">Ty: jaktože máš tak chill kytku? :D</string>
   <string name="landing_demo_others_action_closeness">Blízkost</string>
+  <string name="landing_demo_others_action_alarm">Nastavit alarm</string>
   <string name="landing_demo_others_action_interact">Chat</string>
-  <string name="landing_demo_disclaimer">*První vizuály, může se ještě změnit.</string>
 
   <string name="login_success">Úspěšně přihlášeno. Teď pojďme vrátit výsledek do appky:-).</string>
   <string name="login_success_action">Vrátit se do Augmy appky</string>
@@ -97,6 +97,8 @@
   <string name="toolbar_action_about_research">Research</string>
   <string name="toolbar_action_about">O&#160;nás</string>
   <string name="toolbar_action_contacts">Kontakty</string>
+    <string name="user_profile_not_found">Uživatele se nepodařilo najít.</string>
+    <string name="user_profile_headline">Počkej počkej počkej... Ty ještě nemáš Augmy stažený?</string>
 
   <string name="emotion_prompt">Klikni na emoci, kterou chceš vidět</string>
   <string name="emotion_anger">Mrzutost</string>
@@ -303,6 +305,8 @@
   <string name="delete_me_reason_long_hint">You offer too many cookies but I'm on a diet...</string>
   <string name="delete_me_button_send">Send as an email</string>
 
+    <string name="accessibility_google_store">Stáhni si Augmy na Google Play</string>
+    <string name="accessibility_apple_store">Stáhni si Augmy na App Store</string>
   <string name="accessibility_about_poster">Poster employing people to join the project as team members.</string>
   <string name="accessibility_light_mode">Light mode</string>
   <string name="accessibility_logo">Logo containing a puffer fish in a defensive state</string>

@@ -1,7 +1,14 @@
 package augmy.interactive.com.navigation
 
+import androidx.navigation.NavDeepLink
+
 sealed class NavigationNode {
     abstract val route: String
+
+    protected open val deeplinkPath: String? = null
+
+    val deeplink
+        get() = deeplinkPath?.let { NavDeepLink("https://augmy.org$it") }
 
     data object Landing : NavigationNode() {
         override val route = "/"
@@ -28,7 +35,13 @@ sealed class NavigationNode {
     }
 
     data object Login : NavigationNode() {
-        override val route = "/login?nonce={nonce}&loginToken={loginToken}"
+        override val route = "/login"
+        override val deeplinkPath: String = "/login?nonce={nonce}&loginToken={loginToken}"
+    }
+
+    data object UserDetail : NavigationNode() {
+        override val route = "/users/{userId}"
+        override val deeplinkPath: String = "/users/{userId}"
     }
 
     data object Roadmap : NavigationNode() {
@@ -37,19 +50,5 @@ sealed class NavigationNode {
 
     data object DeleteMe : NavigationNode() {
         override val route = "/delete-me"
-    }
-
-    companion object {
-        val allDestinations = listOf(
-            "/",
-            "/faq",
-            "/login?nonce={nonce}&loginToken={loginToken}",
-            "/business",
-            "/research",
-            "/about",
-            "/roadmap",
-            "/delete-me",
-            "/contacts"
-        )
     }
 }

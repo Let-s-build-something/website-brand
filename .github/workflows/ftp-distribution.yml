@@ -6,7 +6,7 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest  # Use Ubuntu instead of Windows
+    runs-on: ubuntu-latest
 
     steps:
       # Step 1: Checkout Code

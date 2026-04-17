@@ -8,8 +8,10 @@ import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.window.ComposeViewport
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import androidx.savedstate.read
 import augmy.interactive.com.base.LocalOnBackPress
 import augmy.interactive.com.injection.commonModule
+import augmy.interactive.com.navigation.NavigationNode
 import kotlinx.browser.document
 import kotlinx.browser.window
 import org.koin.core.context.startKoin
@@ -17,6 +19,9 @@ import org.koin.core.context.startKoin
 // paranoid check
 private var isAppInitialized = false
 
+@OptIn(ExperimentalWasmJsInterop::class)
+@JsFun("(s) => encodeURIComponent(s)")
+external fun encodeURIComponent(s: String): String
 
 @OptIn(ExperimentalComposeUiApi::class, ExperimentalWasmJsInterop::class)
 fun main() {
@@ -36,8 +41,13 @@ fun main() {
                 val currentEntry by navController.currentBackStackEntryAsState()
 
                 val initialUrl = remember {
-                    window.location.pathname + window.location.search
+                    window.location.pathname
+                        .trimEnd('/')
+                        .split("/")
+                        .joinToString("/") { if (it.startsWith("@") || it.contains(":")) encodeURIComponent(it) else it } +
+                            window.location.search
                 }
+
 
                 CompositionLocalProvider(LocalOnBackPress provides { window.history.go(-1) }) {
                     App(
@@ -47,26 +57,36 @@ fun main() {
                 }
 
                 LaunchedEffect(currentEntry) {
-                    currentEntry?.destination?.route?.let { destination ->
-                        if (!destination.contains("{")) {
-                            val browserPath = if (destination.startsWith("/")) destination else "/$destination"
-                            try {
-                                if (window.location.pathname != browserPath) {
-                                    window.history.pushState(null, "", browserPath)
-                                }
-                            } catch (_: Exception) { }
+                    val entry = currentEntry ?: return@LaunchedEffect
+                    val route = entry.destination.route ?: return@LaunchedEffect
+
+                    val browserPath = when {
+                        route == NavigationNode.UserDetail.route || route.startsWith("/users") -> {
+                            val userId = entry.arguments?.read { getString("userId") }
+                            if (userId != null) "/users/${encodeURIComponent(userId)}" else "/users"
                         }
+                        !route.contains("{") -> {
+                            if (route.startsWith("/")) route else "/$route"
+                        }
+                        else -> return@LaunchedEffect
                     }
+
+                    try {
+                        if (window.location.pathname != browserPath) {
+                            window.history.pushState(null, "", browserPath)
+                        }
+                    } catch (_: Exception) {}
                 }
 
                 window.onpopstate = {
                     try {
+                        val path = window.location.pathname.trimEnd('/').ifBlank { "/" }
                         val success = navController.popBackStack(
-                            route = window.location.pathname,
+                            route = path,
                             inclusive = false
                         )
                         if (!success) {
-                            navController.navigate(window.location.pathname)
+                            navController.navigate(path)
                         }
                     } catch (_: Exception) {}
                 }

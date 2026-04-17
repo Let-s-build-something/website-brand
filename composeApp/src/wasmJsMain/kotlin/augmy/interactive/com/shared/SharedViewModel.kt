@@ -4,10 +4,10 @@ package augmy.interactive.com.shared
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import augmy.interactive.com.data.NetworkItemIO
 import com.russhwolf.settings.Settings
 import com.russhwolf.settings.set
 import io.ktor.client.HttpClient
-import io.ktor.client.call.body
 import io.ktor.client.request.get
 import io.ktor.client.request.post
 import io.ktor.client.request.setBody
@@ -26,11 +26,6 @@ data class BetaSignUpPost(
     val email: String
 )
 
-@Serializable
-data class BetaSignUpResponse(
-    val spots: Int
-)
-
 class BaseRepository {
     private val httpClient by lazy { KoinPlatform.getKoin().get<HttpClient>() }
 
@@ -40,15 +35,11 @@ class BaseRepository {
         }
     }
 
-    suspend fun getBetaSpots() = withContext(Dispatchers.Default) {
-        try {
-            httpClient.get(
-                urlString = "https://dev-platform.augmy.org/api/v1/beta/sign-up"
-            ).body<BetaSignUpResponse>()
-        } catch (e: Exception) {
-            e.printStackTrace()
-            null
-        }
+    suspend fun getRemoteUser(
+        userId: String,
+        homeserver: String = "homeserver.augmy.org"
+    ) = httpClient.safeRequest<NetworkItemIO> {
+        get(urlString = "https://$homeserver/_matrix/client/v3/profile/$userId")
     }
 }
 
@@ -64,14 +55,6 @@ open class SharedViewModel: ViewModel() {
     val localSettings = dataManager.localSettings.asStateFlow()
     private val _betaSpots = MutableStateFlow(0)
     val betaSpots = _betaSpots.asStateFlow()
-
-    init {
-        viewModelScope.launch {
-            repository.getBetaSpots()?.spots?.let {
-                _betaSpots.value = it
-            }
-        }
-    }
 
     /** Sets the theme of the app */
     fun updateTheme(isDarkTheme: Boolean) {

@@ -14,6 +14,10 @@ config.optimization.minimizer = [
 ];
 
 ;(function (config) {
+    config.output = {
+        ...config.output,
+        publicPath: "/",
+    };
     config.devServer = {
         ...config.devServer,
 
@@ -28,9 +32,18 @@ config.optimization.minimizer = [
 
         historyApiFallback: {
             index: "/index.html",
+            disableDotRule: true,
             rewrites: [
                 { from: /^\/skiko\.wasm$/, to: "/skiko.wasm" },
                 { from: /^\/composeApp\.wasm\.br$/, to: "/composeApp.wasm.br" },
+                {
+                            from: /\.(js|mjs|css|wasm|br|ttf|woff|woff2|png|svg|json|ico)(\?.*)?$/,
+                            to: (context) => {
+                                const parts = context.parsedUrl.pathname.split('/');
+                                const filename = parts[parts.length - 1];
+                                return '/' + filename;
+                            },
+                        },
             ],
         },
 
