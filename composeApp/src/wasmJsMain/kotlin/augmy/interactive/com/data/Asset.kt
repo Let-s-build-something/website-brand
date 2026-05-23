@@ -37,6 +37,7 @@ sealed class Asset {
         data object Twitter: Logo("twitter.svg")
         data object Instagram: Logo("instagram.svg")
         data object LinkedIn: Logo("linkedin.svg")
+        data object TikTok: Logo("tiktok.svg")
         data object Youtube: Logo("youtube.svg")
         data object Bluesky: Logo("bluesky.svg")
         data object Discord: Logo("discord.svg")

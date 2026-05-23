@@ -60,6 +60,8 @@ import website_brand.composeapp.generated.resources.contacts_instagram
 import website_brand.composeapp.generated.resources.contacts_instagram_tag
 import website_brand.composeapp.generated.resources.contacts_linkedin
 import website_brand.composeapp.generated.resources.contacts_linkedin_tag
+import website_brand.composeapp.generated.resources.contacts_tiktok
+import website_brand.composeapp.generated.resources.contacts_tiktok_tag
 import website_brand.composeapp.generated.resources.contacts_twitter
 import website_brand.composeapp.generated.resources.contacts_twitter_tag
 import website_brand.composeapp.generated.resources.website_footer
@@ -195,11 +197,9 @@ fun FooterScreenContent(modifier: Modifier = Modifier) {
             horizontalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             SocialLogo(
-                size = 28.dp,
-                tag = Res.string.contacts_twitter_tag,
-                link = Res.string.contacts_twitter,
-                asset = Asset.Logo.Twitter,
-                tint = if(isDarkTheme) Color.White else Color.Black
+                tag = Res.string.contacts_tiktok_tag,
+                link = Res.string.contacts_tiktok,
+                asset = Asset.Logo.TikTok
             )
             SocialLogo(
                 tag = Res.string.contacts_instagram_tag,
@@ -210,6 +210,13 @@ fun FooterScreenContent(modifier: Modifier = Modifier) {
                 tag = Res.string.contacts_linkedin_tag,
                 link = Res.string.contacts_linkedin,
                 asset = Asset.Logo.LinkedIn
+            )
+            SocialLogo(
+                size = 28.dp,
+                tag = Res.string.contacts_twitter_tag,
+                link = Res.string.contacts_twitter,
+                asset = Asset.Logo.Twitter,
+                tint = if(isDarkTheme) Color.White else Color.Black
             )
         }
     }
