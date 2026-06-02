@@ -131,7 +131,7 @@ fun DemoOthersUser(modifier: Modifier = Modifier) {
                         valence = 1f,
                         arousal = .2f,
                         configuration = AvatarConfiguration(),
-                        seed = "garden"
+                        seed = "garden".hashCode()
                     )
                 }
             }

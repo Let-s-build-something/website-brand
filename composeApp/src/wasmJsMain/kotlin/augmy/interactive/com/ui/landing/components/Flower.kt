@@ -2,6 +2,8 @@ package augmy.interactive.com.ui.landing.components
 
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.Spring
+import androidx.compose.animation.core.StartOffset
+import androidx.compose.animation.core.StartOffsetType
 import androidx.compose.animation.core.animateFloat
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.infiniteRepeatable
@@ -21,21 +23,25 @@ import androidx.compose.ui.graphics.lerp
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
 import augmy.interactive.com.theme.LocalTheme
+import ui.account.affect.components.flower.FlowerFrame
+import ui.account.affect.components.flower.FlowerUtils
 import kotlin.math.PI
 import kotlin.math.sin
+import kotlin.math.sqrt
 import kotlin.random.Random
 
 @Composable
 fun Flower(
     modifier: Modifier = Modifier,
     breezeStrength: Float = .2f,
-    flower: FlowerModel,
-    random: Random = Random,
-    shadow: FlowerShadow? = FlowerShadow(
+    flower: FlowerModel<out FlowerFrame>,
+    seed: Int,
+    shadow: FlowerUtils.FlowerShadow? = FlowerUtils.FlowerShadow(
         color = LocalTheme.current.colors.backgroundDark
     )
 ) {
     val density = LocalDensity.current
+    val random = remember(seed) { Random(seed) }
 
     val safeBreezeStrength = breezeStrength
         .takeUnless { it.isNaN() || it <= 0f }
@@ -46,6 +52,9 @@ fun Flower(
     val bendSign = remember { if (random.nextBoolean()) 1f else -1f }
     val animationStrengthFactor = 1f - flower.witherAmount * 0.9f
 
+    val randomOffsetMillis = remember {
+        (random.nextFloat() * 4500f / safeBreezeStrength).toInt()
+    }
     val transition = rememberInfiniteTransition(label = "phase")
     val phase by transition.animateFloat(
         initialValue = 0f,
@@ -54,15 +63,22 @@ fun Flower(
             animation = tween(
                 durationMillis = (4500f / safeBreezeStrength).toInt(),
                 easing = LinearEasing
+            ),
+            initialStartOffset = StartOffset(
+                offsetMillis = randomOffsetMillis,
+                offsetType = StartOffsetType.FastForward
             )
         ),
         label = "phase"
     )
-    val scaleFactor = (with(density) { flower.height.toPx() / 120.dp.toPx() }).coerceAtLeast(0.3f)
+    val rawScale    = with(density) { flower.height.toPx() / 120.dp.toPx() }
+    val scaleFactor = sqrt(rawScale.coerceAtLeast(0.09f))
     val permanentBendPx = remember(flower.witherAmount) {
-        bendSign * 6f * (0.25f + flower.witherAmount) * scaleFactor
+        (bendSign * 6f * (0.25f + flower.witherAmount) * scaleFactor)
+            .coerceIn(-20f, 20f)
     }
-    val swayAmplitudePx = 5f * breezeStrength * animationStrengthFactor * scaleFactor
+    val swayAmplitudePx = (5f * breezeStrength * animationStrengthFactor * scaleFactor)
+        .coerceAtMost(14f)
     val totalSwayPx = sin(phase + swayOffset) * swayAmplitudePx
 
     val p2xPx = permanentBendPx * 0.5f - totalSwayPx * 0.25f

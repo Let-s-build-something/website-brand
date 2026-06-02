@@ -148,8 +148,11 @@
             checkIfSplash()
 
             import { loadIndex } from '/preloader.js';
-
-            document.addEventListener('DOMContentLoaded', loadIndex);
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', loadIndex, { once: true });
+            } else {
+                loadIndex();
+            }
         </script>
 
         <script type="application/javascript" >

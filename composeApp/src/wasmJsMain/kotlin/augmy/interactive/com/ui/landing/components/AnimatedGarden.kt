@@ -22,7 +22,6 @@ import augmy.interactive.com.ui.landing.components.avatar.AvatarConfiguration
 import augmy.interactive.com.ui.landing.components.avatar.AvatarHeadConfiguration
 import augmy.interactive.com.ui.landing.demo.RandomFlowerField
 import org.jetbrains.compose.resources.painterResource
-import kotlin.random.Random
 
 @Composable
 fun AnimatedGarden(
@@ -52,11 +51,11 @@ fun AnimatedGarden(
                 modifier = Modifier
                     .fillMaxWidth(head.scalpFraction)
                     .padding(head.padding),
-                random = remember(seed) { Random(seed.hashCode()) },
+                seed = seed.hashCode(),
                 potHeightDp = potHeightDp,
                 valence = valence,
                 arousal = arousal,
-                configuration = configuration
+                configurations = listOf(configuration)
             )
         }
 
