@@ -3,6 +3,7 @@ package augmy.interactive.com.ui.landing.components.avatar
 import androidx.compose.ui.unit.Dp
 import augmy.interactive.com.theme.BaseColors
 import augmy.interactive.com.ui.landing.components.FlowerModel
+import ui.account.affect.components.flower.FlowerFrame
 
 sealed class AvatarFlowerConfiguration {
     class Generic(): AvatarFlowerConfiguration()
@@ -22,8 +23,8 @@ sealed class AvatarFlowerConfiguration {
         configuration: AvatarConfiguration,
         growthScale: Float, // .5f to 1f
         witherAmount: Float,
-        stemHeight: Dp
-    ): FlowerModel = when (this) {
+        stemHeight: Dp,
+    ): FlowerModel<out FlowerFrame> = when (this) {
         is Cactus -> FlowerModel.Cactus(
             growthScale = growthScale,
             witherAmount = witherAmount,
@@ -59,14 +60,12 @@ sealed class AvatarFlowerConfiguration {
             petalColor = configuration.color.tertial ?: colors.tertial,
             stemColor = configuration.color.secondary ?: colors.brandMainDark
         )
-        else -> {
-            FlowerModel.Generic(
-                growthScale = growthScale,
-                witherAmount = witherAmount,
-                stemHeight = stemHeight,
-                flowerColor = configuration.color.tertial ?: colors.tertial,
-                stemColor = configuration.color.secondary ?: colors.brandMainDark
-            )
-        }
+        else -> FlowerModel.Generic(
+            growthScale = growthScale,
+            witherAmount = witherAmount,
+            stemHeight = stemHeight,
+            flowerColor = configuration.color.tertial ?: colors.tertial,
+            stemColor = configuration.color.secondary ?: colors.brandMainDark
+        )
     }
 }

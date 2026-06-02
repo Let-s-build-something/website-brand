@@ -112,6 +112,56 @@
             z-index: 9999;
             color: #81A263;
             flex-direction: column;
+            padding: 24px 16px;
+            gap: 14px;
+        }
+
+        .store-badge-row {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            flex-wrap: wrap;
+            padding-top: 40px;
+            width: 100%;
+            max-width: 560px;
+        }
+
+        .store-badge-link {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            transform: scale(1);
+            transform-origin: center center;
+            transition: transform 180ms ease, opacity 180ms ease;
+            text-decoration: none;
+            outline: none;
+        }
+
+        .store-badge-link:hover,
+        .store-badge-link:focus-visible {
+            transform: scale(0.85);
+        }
+
+        .store-badge-link:active {
+            transform: scale(0.85);
+        }
+
+        .store-badge-link.google-play {
+            max-width: 270.5px;
+            flex: 1 1 270px;
+        }
+
+        .store-badge-link.app-store {
+            max-width: 240px;
+            flex: 1 1 240px;
+        }
+
+        .store-badge-image {
+            display: block;
+            width: 100%;
+            height: auto;
+            max-width: 100%;
         }
 
         #app {
@@ -214,6 +264,42 @@
 
 <div id="loader-container">
     <canvas id="canvas" height="150" width="150"></canvas>
+
+    <div class="store-badge-row" aria-label="Download Augmy">
+        <a
+                class="store-badge-link google-play"
+                href="https://play.google.com/store/apps/details?id=augmy.interactive.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Download Augmy on Google Play"
+        >
+            <img
+                    src="/badges/google_store_badge.svg"
+                    alt="Get it on Google Play"
+                    class="store-badge-image"
+                    width="271"
+                    height="80"
+                    loading="eager"
+            />
+        </a>
+
+        <a
+                class="store-badge-link app-store"
+                href="https://apps.apple.com/us/app/augmy/id6737480584"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Download Augmy on the App Store"
+        >
+            <img
+                    src="/badges/apple_store_badge.svg"
+                    alt="Download on the App Store"
+                    class="store-badge-image"
+                    width="240"
+                    height="80"
+                    loading="eager"
+            />
+        </a>
+    </div>
 </div>
 
 <div id="app"></div>
@@ -247,7 +333,11 @@
     loadSplashImage();
 
     import { loadIndex } from '/preloader.js';
-    document.addEventListener('DOMContentLoaded', loadIndex);
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', loadIndex, { once: true });
+    } else {
+        loadIndex();
+    }
 </script>
 
 <script>

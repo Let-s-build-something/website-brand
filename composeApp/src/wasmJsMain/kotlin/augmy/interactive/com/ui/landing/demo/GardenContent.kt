@@ -42,6 +42,7 @@ import augmy.interactive.com.ui.components.AutoResizeText
 import augmy.interactive.com.ui.components.FontSizeRange
 import augmy.interactive.com.ui.landing.components.CurvyGrassFloor
 import augmy.interactive.com.ui.landing.components.Flower
+import augmy.interactive.com.ui.landing.components.FlowerModel
 import augmy.interactive.com.ui.landing.components.NetworkProximityCategory
 import augmy.interactive.com.ui.landing.components.SandyDesertFloor
 import augmy.interactive.com.ui.landing.components.SocialCircleSample
@@ -49,11 +50,13 @@ import augmy.interactive.com.ui.landing.components.avatar.AvatarConfiguration
 import augmy.interactive.com.ui.landing.components.avatar.AvatarFloorConfiguration
 import augmy.interactive.com.ui.landing.components.avatar.AvatarFlowerConfiguration
 import augmy.interactive.com.ui.landing.components.avatar.AvatarHeadConfiguration
+import augmy.interactive.com.ui.landing.components.orZero
 import augmy.interactive.com.ui.landing.components.rememberAvatarFloorState
 import augmy.interactive.com.ui.landing.demo.Garden.FLOWER_GRASS_RATIO
 import augmy.interactive.com.ui.landing.demo.Garden.FLOWER_POT_RATIO
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
+import ui.account.affect.components.flower.FlowerFrame
 import website_brand.composeapp.generated.resources.Res
 import website_brand.composeapp.generated.resources.ic_data_usage
 import website_brand.composeapp.generated.resources.ic_relax
@@ -63,6 +66,8 @@ import website_brand.composeapp.generated.resources.landing_demo_you_music
 import website_brand.composeapp.generated.resources.landing_demo_you_screen_time
 import website_brand.composeapp.generated.resources.logo_spotify
 import website_brand.composeapp.generated.resources.wellbeing_garden_sharing_count
+import kotlin.math.abs
+import kotlin.math.max
 import kotlin.random.Random
 
 private enum class IntegrationType {
@@ -142,11 +147,11 @@ fun GardenContent(
                     modifier = Modifier
                         .fillMaxWidth(head.scalpFraction)
                         .padding(head.padding),
-                    random = remember(seed) { Random(seed.hashCode()) },
+                    seed = seed.hashCode(),
                     potHeightDp = potHeightDp,
                     valence = 1f,
                     arousal = .2f,
-                    configuration = configuration
+                    configurations = listOf(configuration),
                 )
             }
             Image(
@@ -200,80 +205,157 @@ fun GardenContent(
     }
 }
 
+enum class FlowerPlacement {
+    Random,
+    SecondQuarter
+}
+
+private fun smallestDivisor(n: Int): Int {
+    val x = abs(n)
+    if (x < 2L) return x
+    if (x % 2L == 0L) return 2
+
+    var i = 3
+    while (i <= x / i) {
+        if (x % i == 0) return i
+        i += 2
+    }
+    return x
+}
+
 @Composable
 fun RandomFlowerField(
     modifier: Modifier = Modifier,
-    configuration: AvatarConfiguration,
-    random: Random,
-    flowerCount: Int = 5,
+    configurations: List<AvatarConfiguration>,
+    seed: Int,
+    flowerCount: Int = max(configurations.size, 5),
     potHeightDp: MutableState<Float>,
-    valence: Float,
-    arousal: Float
+    valence: Float?,
+    arousal: Float?,
+    stemHeight: Dp = (potHeightDp.value * FLOWER_POT_RATIO).dp,
+    maxBladeHeight: Dp = (potHeightDp.value * FLOWER_GRASS_RATIO).dp,
+    placement: FlowerPlacement = FlowerPlacement.Random,
 ) {
-    if (potHeightDp.value != 0f) {
+    if (stemHeight.value != 0f) {
+        val colors = LocalTheme.current.colors
+        val firstConfig = configurations.first()
+        val breezeStrength = arousal.orZero()
+            .plus(0.3f)
+            .coerceAtLeast(0.05f) * 4.5f
+
         BoxWithConstraints(
             modifier = modifier.fillMaxWidth(),
             contentAlignment = Alignment.BottomStart
         ) {
-            val growthNew = 1f + valence.coerceAtMost(0.5f)
-            val wither = ((valence - 1f) * -0.5f).coerceIn(0f, 1f)
+            val growthNew = 1f + valence.orZero().coerceAtMost(0.5f)
+            val wither = ((valence.orZero() - 1f) * -0.5f).coerceIn(0f, 1f)
             val growthScale = ((growthNew.coerceIn(-1f, 1f) + 1f) / 2f).coerceAtLeast(0f)
 
-            val flower = (configuration.flower ?: AvatarFlowerConfiguration.Generic()).toFlowerModel(
-                colors = LocalTheme.current.colors,
-                stemHeight = (potHeightDp.value * FLOWER_POT_RATIO).dp,
-                growthScale = growthScale,
-                witherAmount = wither,
-                configuration = configuration
-            )
+            fun getFlower(index: Int): FlowerModel<out FlowerFrame> {
+                val configuration = configurations.getOrNull(index)
+                    ?: configurations.getOrNull(smallestDivisor(index + 1) - 1)
+                    ?: firstConfig
 
+                return (configuration.flower ?: AvatarFlowerConfiguration.Generic()).toFlowerModel(
+                    colors = colors,
+                    stemHeight = stemHeight,
+                    growthScale = growthScale,
+                    witherAmount = wither,
+                    configuration = configuration
+                )
+            }
+
+            val firstFlower = getFlower(0)
             val parentWidthDp = maxWidth
-            val halfFlower = flower.width / 2f
+            val halfFlower = firstFlower.width / 2f
             val sideMargin = 4.dp
 
             val minCenterX = sideMargin + halfFlower
             val maxCenterX = parentWidthDp - sideMargin - halfFlower
 
-            val normalizedCenters = remember(random, flowerCount) {
-                List(flowerCount) { random.nextFloat() }.sorted()
-            }
+            val centers = remember(seed, flowerCount, parentWidthDp, potHeightDp.value, placement) {
+                val availableWidth = (parentWidthDp - 2 * sideMargin).value
+                val flowerWidthPx = firstFlower.width.value
+                val minSpacing = flowerWidthPx * 0.8f
 
-            val centers = remember(normalizedCenters, parentWidthDp) {
-                val availableWidth = parentWidthDp - 2 * sideMargin
+                when (placement) {
+                    FlowerPlacement.SecondQuarter -> {
+                        val quarterStart = availableWidth * 0.25f
+                        val quarterWidth = availableWidth * 0.25f
 
-                val maxOverlapRatio = 0.2f
-                val minDistanceRatio = ((flower.width / parentWidthDp) * (1f - maxOverlapRatio))
-
-                val adjustedNormalized = mutableListOf<Float>()
-                for (i in normalizedCenters.indices) {
-                    var proposed = normalizedCenters[i]
-                    if (i > 0) {
-                        val prev = adjustedNormalized.last()
-                        val minAllowed = prev + minDistanceRatio
-                        if (proposed < minAllowed) proposed = minAllowed
+                        List(flowerCount) { index ->
+                            val spacing = if (flowerCount > 1) quarterWidth / (flowerCount - 1) else 0f
+                            val pos = quarterStart + index * spacing
+                            (sideMargin.value + pos).dp.coerceIn(minCenterX, maxCenterX)
+                        }
                     }
-                    adjustedNormalized.add(proposed.coerceAtMost(1f))
-                }
 
-                adjustedNormalized.map { n ->
-                    (sideMargin + availableWidth * n).coerceIn(minCenterX, maxCenterX)
+                    FlowerPlacement.Random -> {
+                        val seededRandom = Random(seed)
+                        val requiredWidth = (flowerCount - 1) * minSpacing
+
+                        if (requiredWidth > availableWidth) {
+                            List(flowerCount) { position ->
+                                val spacing = availableWidth / (flowerCount - 1).coerceAtLeast(1)
+                                (sideMargin.value + position * spacing).dp.coerceIn(minCenterX, maxCenterX)
+                            }
+                        } else {
+                            val positions = mutableListOf<Float>()
+                            val maxAttempts = 100
+
+                            repeat(flowerCount) {
+                                var attempts = 0
+                                var validPosition: Float? = null
+
+                                while (attempts < maxAttempts && validPosition == null) {
+                                    val candidate = seededRandom.nextFloat() * availableWidth
+                                    val hasOverlap = positions.any { existing ->
+                                        abs(candidate - existing) < minSpacing
+                                    }
+                                    if (!hasOverlap) validPosition = candidate
+                                    attempts++
+                                }
+
+                                if (validPosition == null) {
+                                    validPosition = if (positions.isEmpty()) {
+                                        availableWidth / 2f
+                                    } else {
+                                        val sorted = positions.sorted()
+                                        var maxGap = sorted.first()
+                                        var bestPos = maxGap / 2f
+                                        for (i in 0 until sorted.size - 1) {
+                                            val gap = sorted[i + 1] - sorted[i]
+                                            if (gap > maxGap) {
+                                                maxGap = gap
+                                                bestPos = sorted[i] + gap / 2f
+                                            }
+                                        }
+                                        val lastGap = availableWidth - sorted.last()
+                                        if (lastGap > maxGap) bestPos = sorted.last() + lastGap / 2f
+                                        bestPos
+                                    }
+                                }
+                                positions.add(validPosition)
+                            }
+
+                            positions.map { pos ->
+                                (sideMargin.value + pos).dp.coerceIn(minCenterX, maxCenterX)
+                            }
+                        }
+                    }
                 }
             }
-
-            val breezeStrength = arousal
-                .plus(0.3f)
-                .coerceAtLeast(0.05f) * 4.5f
 
             centers.forEachIndexed { index, centerXDp ->
                 val leftOffset = centerXDp - halfFlower
 
-                if (arousal != 0f) {
+                if (arousal != null) {
                     Flower(
                         modifier = Modifier
                             .offset(x = leftOffset)
                             .zIndex(index + 1f),
-                        random = random,
-                        flower = flower,
+                        seed = seed + index,
+                        flower = getFlower(index),
                         breezeStrength = breezeStrength
                     )
                 }
@@ -283,24 +365,24 @@ fun RandomFlowerField(
                 .align(Alignment.BottomCenter)
                 .zIndex((flowerCount + 1).toFloat())
             val state = rememberAvatarFloorState(
-                maxBladeHeight = (potHeightDp.value * FLOWER_GRASS_RATIO).dp
+                maxBladeHeight = maxBladeHeight
             )
 
-            when (configuration.floor) {
+            when (firstConfig.floor) {
                 is AvatarFloorConfiguration.Sand -> SandyDesertFloor(
                     modifier = modifier,
-                    witherProgress = valence * -1f,
+                    witherProgress = valence.orZero() * -1f,
                     breezeStrength = breezeStrength,
-                    random = random,
+                    seed = seed,
                     state = state
                 )
                 else -> CurvyGrassFloor(
                     modifier = modifier,
-                    witherProgress = valence * -1f,
+                    witherProgress = valence.orZero() * -1f,
                     breezeStrength = breezeStrength,
-                    random = random,
-                    grassColor = configuration.color.secondary ?: LocalTheme.current.colors.brandMainDark,
-                    floorColor = configuration.color.primary ?: LocalTheme.current.colors.brandMain,
+                    seed = seed,
+                    grassColor = firstConfig.color.secondary ?: LocalTheme.current.colors.brandMainDark,
+                    floorColor = firstConfig.color.primary ?: LocalTheme.current.colors.brandMain,
                     state = state
                 )
             }
@@ -313,11 +395,12 @@ fun MiniatureIndicator(
     modifier: Modifier = Modifier,
     configuration: AvatarConfiguration,
     stemHeight: Dp = 24.dp,
-    seed: String,
+    floorRatio: Float = .35f,
+    seed: Int,
+    clip: Boolean = true,
     arousal: Float,
     valence: Float
 ) {
-    val random = remember(seed) { Random(seed.hashCode()) }
     val breezeStrength = arousal
         .plus(0.3f)
         .coerceAtLeast(0.05f) * 4.5f
@@ -326,8 +409,8 @@ fun MiniatureIndicator(
         modifier = modifier.width(IntrinsicSize.Min),
         contentAlignment = Alignment.BottomCenter
     ) {
-        val growthNew = 1f + valence.coerceAtMost(0.5f)
-        val wither = ((valence - 1f) * -0.5f).coerceIn(0f, 1f)
+        val growthNew = 1f + valence.orZero().coerceAtMost(0.5f)
+        val wither = ((valence.orZero() - 1f) * -0.5f).coerceIn(0f, 1f)
         val growthScale = ((growthNew.coerceIn(-1f, 1f) + 1f) / 2f).coerceAtLeast(0f)
 
         val flower = (configuration.flower ?: AvatarFlowerConfiguration.Generic()).toFlowerModel(
@@ -338,11 +421,11 @@ fun MiniatureIndicator(
             configuration = configuration
         )
         val floorState = rememberAvatarFloorState(
-            maxBladeHeight = stemHeight * 0.5f,
+            maxBladeHeight = stemHeight * floorRatio,
         )
 
         Flower(
-            random = random,
+            seed = seed,
             flower = flower,
             breezeStrength = breezeStrength
         )
@@ -355,12 +438,13 @@ fun MiniatureIndicator(
                 modifier = floorModifier,
                 witherProgress = valence * -1f,
                 breezeStrength = breezeStrength,
-                random = random,
+                clip = clip,
+                seed = seed,
                 state = floorState
             )
             else -> CurvyGrassFloor(
                 modifier = floorModifier,
-                random = random,
+                seed = seed,
                 witherProgress = valence * -1f,
                 breezeStrength = breezeStrength,
                 grassColor = configuration.color.secondary ?: LocalTheme.current.colors.brandMainDark,

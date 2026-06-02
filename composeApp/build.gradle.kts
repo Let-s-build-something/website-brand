@@ -52,6 +52,7 @@ kotlin {
             implementation(libs.koin.compose.view.model)
             implementation(libs.settings.no.arg)
             implementation(libs.kotlinx.datetime)
+            implementation(libs.jetbrains.compose.material3)
             implementation(libs.coil.compose)
             implementation(libs.coil.svg)
             implementation(libs.coil.network.ktor)
