@@ -11,6 +11,9 @@
   <string name="landing_heading">Compass of how you and your favorite people feel</string>
   <string name="landing_heading_prefix">App for those, who care.</string>
   <string name="landing_heading_suffix">In real-time, with no annoying questionnaires or check-ins.</string>
+  <string name="landing_crowdfunding_new">New!</string>
+  <string name="landing_crowdfunding_title">Support us on crowdfunding</string>
+  <string name="landing_crowdfunding_subtitle">Be part of the change.</string>
 
   <string name="landing_sign_up">Join the waiting list</string>
   <string name="landing_sign_up_send">Count me in!</string>
@@ -298,6 +301,7 @@
   <string name="delete_me_reason_long_hint">You offer too many cookies but I'm on a diet...</string>
   <string name="delete_me_button_send">Send as an email</string>
 
+  <string name="accessibility_landing_crowdfunding">crowdfunding Startovac</string>
   <string name="accessibility_google_store">Download Augmy on Google Play</string>
   <string name="accessibility_apple_store">Download Augmy on App Store</string>
   <string name="accessibility_about_poster">Poster employing people to join the project as team members.</string>

@@ -3,6 +3,9 @@
   <string name="landing_heading">Kompas Tvojí nálady a Tvých blízkých</string>
   <string name="landing_heading_prefix">Appka pro ty, kterým záleží na sobě a druhých.</string>
   <string name="landing_heading_suffix">V reálném čase, bez otravných dotazníků a check-inů.</string>
+  <string name="landing_crowdfunding_new">Novinka!</string>
+  <string name="landing_crowdfunding_title">Podpoř nás</string>
+  <string name="landing_crowdfunding_subtitle">Buď součástí změny.</string>
 
   <string name="app_name">Augmy</string>
   <string name="website_footer">© %1$d Augmy</string>
@@ -307,6 +310,7 @@
   <string name="delete_me_reason_long_hint">You offer too many cookies but I'm on a diet...</string>
   <string name="delete_me_button_send">Send as an email</string>
 
+  <string name="accessibility_landing_crowdfunding">crowdfunding Startovač</string>
     <string name="accessibility_google_store">Stáhni si Augmy na Google Play</string>
     <string name="accessibility_apple_store">Stáhni si Augmy na App Store</string>
   <string name="accessibility_about_poster">Poster employing people to join the project as team members.</string>
