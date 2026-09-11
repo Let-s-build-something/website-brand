@@ -33,7 +33,6 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.intl.Locale
 import androidx.compose.ui.text.style.TextAlign
@@ -67,7 +66,6 @@ import org.jetbrains.compose.resources.stringResource
 import website_brand.composeapp.generated.resources.Res
 import website_brand.composeapp.generated.resources.accessibility_apple_store
 import website_brand.composeapp.generated.resources.accessibility_google_store
-import website_brand.composeapp.generated.resources.accessibility_landing_crowdfunding
 import website_brand.composeapp.generated.resources.app_calendar
 import website_brand.composeapp.generated.resources.app_calendar_cs
 import website_brand.composeapp.generated.resources.app_feed
@@ -76,9 +74,6 @@ import website_brand.composeapp.generated.resources.app_graph_cs
 import website_brand.composeapp.generated.resources.app_home
 import website_brand.composeapp.generated.resources.apple_store_badge
 import website_brand.composeapp.generated.resources.google_store_badge
-import website_brand.composeapp.generated.resources.landing_crowdfunding_new
-import website_brand.composeapp.generated.resources.landing_crowdfunding_subtitle
-import website_brand.composeapp.generated.resources.landing_crowdfunding_title
 import website_brand.composeapp.generated.resources.landing_demo_others_content
 import website_brand.composeapp.generated.resources.landing_demo_others_cta
 import website_brand.composeapp.generated.resources.landing_demo_others_heading
@@ -97,7 +92,6 @@ import website_brand.composeapp.generated.resources.landing_sign_up_info
 import website_brand.composeapp.generated.resources.landing_sign_up_info_slots
 import website_brand.composeapp.generated.resources.landing_sign_up_launched
 import website_brand.composeapp.generated.resources.landing_sign_up_send
-import website_brand.composeapp.generated.resources.logo_startovac
 import kotlin.time.Clock
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.days
@@ -287,7 +281,7 @@ fun LandingScreen(model: SharedViewModel) {
                 .padding(horizontal = 12.dp)
         ) {
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                Row(
+                /*Row(
                     modifier = Modifier
                         .scalingClickable(scaleInto = .96f) {
                             window.open("https://www.startovac.cz/projekty/augmy-kdyz-emoji-nestaci")
@@ -330,7 +324,7 @@ fun LandingScreen(model: SharedViewModel) {
                             )
                         )
                     }
-                }
+                }*/
                 Spacer(Modifier.height(verticalPadding))
                 Text(
                     text = stringResource(Res.string.landing_heading_prefix),
