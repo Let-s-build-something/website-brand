@@ -583,7 +583,7 @@ fun StoreBadgeRow(
                 .weight(1f, fill = false)
                 .fillMaxWidth()
                 .scalingClickable {
-                    window.open("https://apps.apple.com/us/app/augmy/id6737480584")
+                    window.open("https://apps.apple.com/us/app/augmy-nudge-vibes-connect/id6737480584")
                 },
             painter = painterResource(Res.drawable.apple_store_badge),
             contentDescription = stringResource(Res.string.accessibility_apple_store),
