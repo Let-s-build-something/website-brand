@@ -1,8 +1,13 @@
 package augmy.interactive.com.injection
 
+import augmy.interactive.com.BuildKonfig
+import augmy.interactive.com.network.RequestAuth
+import augmy.interactive.com.network.RequestAuthKey
 import augmy.interactive.com.shared.BaseRepository
 import augmy.interactive.com.shared.SharedDataManager
 import augmy.interactive.com.shared.SharedViewModel
+import augmy.interactive.com.tracking.AdTrackingRepository
+import augmy.interactive.com.tracking.AdTrackingService
 import augmy.interactive.com.ui.users.UserDetailModel
 import coil3.annotation.ExperimentalCoilApi
 import coil3.network.NetworkFetcher
@@ -12,8 +17,8 @@ import io.ktor.client.HttpClient
 import io.ktor.client.plugins.HttpSend
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.client.plugins.defaultRequest
+import io.ktor.client.plugins.plugin
 import io.ktor.client.request.accept
-import io.ktor.client.request.header
 import io.ktor.http.ContentType
 import io.ktor.http.HttpHeaders
 import io.ktor.http.URLProtocol
@@ -54,8 +59,29 @@ internal val commonModule = module {
                     protocol = URLProtocol.HTTPS
                 }
             }
-            install(HttpSend)
+        }.apply {
+            plugin(HttpSend).intercept { request ->
+                val authType = request.attributes.getOrNull(RequestAuthKey)
+
+                if (authType == RequestAuth.AdTracking) {
+                    request.headers[HttpHeaders.Authorization] =
+                        "Bearer "+ BuildKonfig.AdTrackingBearerToken
+                }
+                execute(request)
+            }
         }
+    }
+
+    single {
+        AdTrackingRepository(
+            httpClient = get()
+        )
+    }
+
+    single {
+        AdTrackingService(
+            repository = get()
+        )
     }
 
     single {

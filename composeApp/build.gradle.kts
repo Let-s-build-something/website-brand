@@ -67,11 +67,13 @@ kotlin {
 buildkonfig {
     packageName = "augmy.interactive.com"
 
-    val keystoreProperties = Properties()
-    keystoreProperties.load(FileInputStream(rootProject.file("local.properties")))
+    val properties = Properties()
+    properties.load(FileInputStream(rootProject.file("local.properties")))
 
     defaultConfigs {
-        buildConfigField(STRING, "MatrixMediaToken", keystoreProperties["matrixMediaToken"] as String)
+        buildConfigField(STRING, "MatrixMediaToken", properties["matrixMediaToken"] as String)
+        buildConfigField(STRING, "HttpsHostName", properties["httpsHostName"] as String)
+        buildConfigField(STRING, "AdTrackingBearerToken", properties["adTrackingBearerToken"] as String)
     }
 }
 
