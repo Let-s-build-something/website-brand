@@ -29,6 +29,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -48,6 +49,7 @@ import augmy.interactive.com.encodeURIComponent
 import augmy.interactive.com.shared.SharedViewModel
 import augmy.interactive.com.shared.Utils.onEnter
 import augmy.interactive.com.theme.LocalTheme
+import augmy.interactive.com.tracking.AdTrackingService
 import augmy.interactive.com.ui.components.BrandHeaderButton
 import augmy.interactive.com.ui.components.CustomTextField
 import augmy.interactive.com.ui.components.SimpleModalBottomSheet
@@ -57,12 +59,14 @@ import augmy.interactive.com.ui.landing.components.avatar.AvatarConfiguration
 import augmy.interactive.com.ui.landing.demo.GardenContent
 import kotlinx.browser.window
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import kotlinx.datetime.LocalDateTime
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toInstant
 import kotlinx.datetime.toLocalDateTime
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
+import org.koin.compose.koinInject
 import website_brand.composeapp.generated.resources.Res
 import website_brand.composeapp.generated.resources.accessibility_apple_store
 import website_brand.composeapp.generated.resources.accessibility_google_store
@@ -557,6 +561,8 @@ fun StoreBadgeRow(
     modifier: Modifier = Modifier,
     referrer: String? = null
 ) {
+    val adTrackingService = koinInject<AdTrackingService>()
+    val coroutineScope = rememberCoroutineScope()
     Row(
         modifier = modifier,
         horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.CenterHorizontally),
@@ -568,10 +574,20 @@ fun StoreBadgeRow(
                 .weight(1f, fill = false)
                 .fillMaxWidth()
                 .scalingClickable {
-                    window.open(
-                        "https://play.google.com/store/apps/details?id=augmy.interactive.com" +
-                        if (referrer != null) "&referrer=${encodeURIComponent("ref=${referrer}")}" else ""
-                    )
+                    coroutineScope.launch {
+                        val redirectUrl = adTrackingService.trackStoreButton(
+                            redirectType = "googleplay",
+                            utmContent = "google_store_from_website",
+                            referralUserId = referrer
+                        )
+                        if (redirectUrl != null) window.location.assign(redirectUrl)
+                        else {
+                            window.location.assign(
+                                "https://play.google.com/store/apps/details?id=augmy.interactive.com" +
+                                        if (referrer != null) "&referrer=${encodeURIComponent("ref=${referrer}")}" else ""
+                            )
+                        }
+                    }
                 },
             painter = painterResource(Res.drawable.google_store_badge),
             contentDescription = stringResource(Res.string.accessibility_google_store),
@@ -583,7 +599,19 @@ fun StoreBadgeRow(
                 .weight(1f, fill = false)
                 .fillMaxWidth()
                 .scalingClickable {
-                    window.open("https://apps.apple.com/us/app/augmy-nudge-vibes-connect/id6737480584")
+                    coroutineScope.launch {
+                        val redirectUrl =
+                            adTrackingService
+                                .trackStoreButton(
+                                    redirectType = "appstore",
+                                    utmContent = "app_store_badge"
+                                )
+
+                        if (redirectUrl != null) window.location.assign(redirectUrl)
+                        else window.location.assign("https://apps.apple.com/us/app/augmy-nudge-vibes-connect/id6737480584")
+                    }
+
+
                 },
             painter = painterResource(Res.drawable.apple_store_badge),
             contentDescription = stringResource(Res.string.accessibility_apple_store),
