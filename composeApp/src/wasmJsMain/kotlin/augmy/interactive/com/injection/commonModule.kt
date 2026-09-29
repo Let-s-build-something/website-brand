@@ -13,9 +13,7 @@ import io.ktor.client.plugins.HttpSend
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.client.plugins.defaultRequest
 import io.ktor.client.request.accept
-import io.ktor.client.request.header
 import io.ktor.http.ContentType
-import io.ktor.http.HttpHeaders
 import io.ktor.http.URLProtocol
 import io.ktor.http.contentType
 import io.ktor.serialization.kotlinx.json.json
@@ -57,7 +55,6 @@ internal val commonModule = module {
             install(HttpSend)
         }
     }
-
     single {
         NetworkFetcher.Factory(
             networkClient = { get<HttpClient>().asNetworkClient() }

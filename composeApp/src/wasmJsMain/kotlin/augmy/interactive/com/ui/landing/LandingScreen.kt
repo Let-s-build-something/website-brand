@@ -570,7 +570,7 @@ fun StoreBadgeRow(
                 .scalingClickable {
                     window.open(
                         "https://play.google.com/store/apps/details?id=augmy.interactive.com" +
-                        if (referrer != null) "&referrer=${encodeURIComponent("ref=${referrer}")}" else ""
+                                if (referrer != null) "&referrer=${encodeURIComponent("ref=${referrer}")}" else ""
                     )
                 },
             painter = painterResource(Res.drawable.google_store_badge),
