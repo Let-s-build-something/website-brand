@@ -12,11 +12,8 @@ import androidx.savedstate.read
 import augmy.interactive.com.base.LocalOnBackPress
 import augmy.interactive.com.injection.commonModule
 import augmy.interactive.com.navigation.NavigationNode
-import augmy.interactive.com.tracking.AdTrackingService
-import augmy.interactive.com.tracking.captureAdRedirect
 import kotlinx.browser.document
 import kotlinx.browser.window
-import org.koin.compose.koinInject
 import org.koin.core.context.startKoin
 
 // paranoid check
@@ -28,7 +25,6 @@ external fun encodeURIComponent(s: String): String
 
 @OptIn(ExperimentalComposeUiApi::class, ExperimentalWasmJsInterop::class)
 fun main() {
-    val adRedirectRequest = captureAdRedirect()
     if(isAppInitialized.not()) {
         document.getElementById("loader-container")?.remove()
 
@@ -43,7 +39,6 @@ fun main() {
             ComposeViewport(body) {
                 val navController = rememberNavController()
                 val currentEntry by navController.currentBackStackEntryAsState()
-                val adTrackingService = koinInject<AdTrackingService>()
 
                 val initialUrl = remember {
                     window.location.pathname
@@ -59,29 +54,6 @@ fun main() {
                         navController = navController,
                         startDestination = initialUrl
                     )
-                }
-
-                LaunchedEffect(adRedirectRequest) {
-                    val request = adRedirectRequest ?: return@LaunchedEffect
-
-                    val redirectUrl =
-                        adTrackingService.trackRedirect(request)
-
-                    if (redirectUrl != null) {
-                        window.location.replace(redirectUrl)
-                    } else {
-                        when (request.redirect) {
-                            "googleplay" ->
-                                window.location.replace(
-                                    "https://play.google.com/store/apps/details?id=augmy.interactive.com"
-                                )
-
-                            "appstore" ->
-                                window.location.replace(
-                                    "https://apps.apple.com/us/app/augmy-nudge-vibes-connect/id6737480584"
-                                )
-                        }
-                    }
                 }
 
                 LaunchedEffect(currentEntry) {

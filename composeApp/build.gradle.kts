@@ -6,6 +6,7 @@ import org.jetbrains.kotlin.gradle.targets.js.yarn.YarnLockMismatchReport
 import org.jetbrains.kotlin.gradle.targets.js.yarn.YarnRootExtension
 import java.io.FileInputStream
 import java.util.Properties
+import org.gradle.api.tasks.Copy
 
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
@@ -64,16 +65,58 @@ kotlin {
     }
 }
 
+val localProperties = Properties().apply {
+    FileInputStream(rootProject.file("local.properties")).use {
+        load(it)
+    }
+}
+tasks.named<Copy>("wasmJsProcessResources") {
+    filesMatching("preloader.js") {
+        filter { line ->
+            line
+                .replace(
+                    "__HTTPS_HOST_NAME__",
+                    localProperties.getProperty("httpsHostName", "")
+                )
+                .replace(
+                    "__AD_TRACKING_BEARER_TOKEN__",
+                    localProperties.getProperty("adTrackingBearerToken", "")
+                )
+                .replace(
+                    "__APPLE_PROVIDER_TOKEN__",
+                    localProperties.getProperty("appleProviderToken", "")
+                )
+        }
+    }
+}
+
 buildkonfig {
     packageName = "augmy.interactive.com"
 
-    val properties = Properties()
-    properties.load(FileInputStream(rootProject.file("local.properties")))
-
     defaultConfigs {
-        buildConfigField(STRING, "MatrixMediaToken", properties["matrixMediaToken"] as String)
-        buildConfigField(STRING, "HttpsHostName", properties["httpsHostName"] as String)
-        buildConfigField(STRING, "AdTrackingBearerToken", properties["adTrackingBearerToken"] as String)
+        buildConfigField(
+            STRING,
+            "MatrixMediaToken",
+            localProperties.getProperty("matrixMediaToken", "")
+        )
+
+        buildConfigField(
+            STRING,
+            "HttpsHostName",
+            localProperties.getProperty("httpsHostName", "")
+        )
+
+        buildConfigField(
+            STRING,
+            "AdTrackingBearerToken",
+            localProperties.getProperty("adTrackingBearerToken", "")
+        )
+
+        buildConfigField(
+            STRING,
+            "AppleProviderToken",
+            localProperties.getProperty("appleProviderToken", "")
+        )
     }
 }
 
